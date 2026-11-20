@@ -130,6 +130,7 @@ To make the window removable instead of bonded, you would need a screwed front f
   None of this has been load-tested.
 
 **Lock (SELECT):**
+- **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a fully printable wafer lock and key (with 8 small metal springs). It fits the same pod, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**
@@ -249,7 +250,7 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 1. Make a cardboard mock-up on the bike (178 × 85 mm). Measure the bar and choose the clamp spacing.
 2. Print and fit the clamps and base plate. Check the clearance and steering lock.
 3. Measure the phone. Print the shell and back cover. Check the phone fit, the O-ring fit and the camera relief before bonding the window.
-4. Buy the 16 mm lock, the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list) and the grommets. `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, receiver and yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
+4. Buy the 16 mm lock (or print the [printed lock](PRINTED_LOCK.md)), the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list) and the grommets. `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, receiver and yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
 5. Do a spray test with dry tissue inside, then a ride test without the phone, then a heat test with the phone.
 
 ## Exporting

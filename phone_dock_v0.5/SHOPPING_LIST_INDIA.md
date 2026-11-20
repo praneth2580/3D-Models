@@ -63,6 +63,18 @@ The case, the dock, the printed parts and the components are identical. Only the
 
 You get 5 of each board, so spares or a second set cost nothing more.
 
+## Optional: printed lock instead of the cam lock
+
+If you print the lock ([`PRINTED_LOCK.md`](PRINTED_LOCK.md)), leave out the ₹270 cam lock and the 3.2 mm drill bit, and add:
+
+| Item | Where | Price |
+|---|---|---|
+| Printing the lock parts (about 5 cm³, 7 g) | Add them to the main print order | ₹50–100 (est.) |
+| Mini compression springs, 2 mm OD, 0.2–0.3 mm wire (8 needed) | A spring assortment kit (e.g. [this 2 × 0.3 mm kit](https://www.cart2india.com/compression/unifizz-30-pcs-compression-springs-assortment-kitstainless-steel-springs-wire-diameter-0012od-008free-length-039-small-spring-assortment-for-home-repairs-machinery-construction-industrial/00000000004390075286)), or Lamington Road | ₹150–350 (est.) |
+| M3 × 4 grub screw + 1 short M3 heat-set insert | Nagdevi Street (the insert can come from the 50-pack) | ₹10–20 (est.) |
+
+The total is about the same as the store lock. Choose it for your own key code and no drilling, not to save money.
+
 ## Buy locally to save money
 
 | Part | Where |

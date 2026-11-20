@@ -237,6 +237,31 @@ Update 11 (2026-11-20): **one design; the budget/full split is removed.**
   - snap bumps vs shoe: 1.15 mm³ docked (preload), 3.75 mm³ at 5 mm, clear at 15 mm;
   - plate and clamps vs dock: no overlap.
 
+
+Update 12 (2026-11-20): **optional printed lock and key** (`printed_lock.scad`, `PRINTED_LOCK.md`, STLs in `printed_lock/`).
+- **Design:**
+  - A 4-wafer lock in the store lock's exact envelope: 16 mm D-shaped body, retaining C-clip in the nut cavity, crank with the same outline and 7 mm pin radius.
+  - The receiver is unchanged.
+  - The wafers and key print flat. Each wafer has 2 metal springs (2 mm OD).
+  - `lock_code`: 3 depths in 0.5 mm steps, 81 codes.
+  - `lock_type = "printed"` shows it in the assembly.
+- **Asserts:** walls at least 1 mm at the channels and groove, spring working length 2.0–3.9 mm, key tip under dropped wafers, clip fits the cavity.
+- **Checks (built in as `PART="plock_check_*"`):**
+  - Body and clip vs receiver: no overlap.
+  - Crank and pin vs receiver and yoke, at turn 0, 0.5 and 1: no overlap.
+  - Right key, turned 0°, 45° and 90°: no overlap.
+  - Wafers in the plug at -0.9, 0 and +1.0 mm: no overlap.
+  - Key vs plug: touching only.
+  - No key, turned 8°: blocked, 1.68 mm³.
+  - Wrong key (each wafer one step off), turned 8°: blocked, 0.59 mm³.
+  - Wafers at the unlocked position, moved to release the key: blocked, so the key comes out only when locked.
+  - Lock, key and flange vs case, shoe and strike, docked and sliding at 5, 20 and 40 mm: no overlap.
+- **STLs:** all watertight single bodies, in print orientation.
+- **Changed during design:**
+  - The first version used a printed nut on a printed thread. It could not be fitted, because the nut would have to pass over the body's rear part, so it was replaced by a C-clip in a groove.
+  - The wafer body was narrowed, so only its 4 mm tab enters a channel; the wide body's corners gave only a weak, corner-only block.
+- **Spotted, not changed:** the store lock's own cam screw or nut, on the axis behind the crank, has only 0.5 mm to the yoke (`crank_x0 - yoke_x1`). Check your lock's cam fixing; the yoke may need a relief pocket. The printed crank has nothing on the axis behind it.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

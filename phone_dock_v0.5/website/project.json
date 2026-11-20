@@ -20,6 +20,14 @@
     {
       "src": "images/v05_rear_view.png",
       "caption": "From behind: the lock pod sits behind the top corner"
+    },
+    {
+      "src": "images/plock_exploded.png",
+      "caption": "Optional printed lock: key, body, plug, 4 wafers with springs, clip, crank"
+    },
+    {
+      "src": "images/plock_cutaway.png",
+      "caption": "Printed lock cut through a wafer: the right key holds it flush with the plug"
     }
   ],
   "viewer_default": "receiver",
@@ -126,6 +134,76 @@
       "qty": "1",
       "material": "6 mm steel plate",
       "optional": true
+    },
+    "plock_body": {
+      "name": "Printed lock: body",
+      "what": "Optional printed lock (instead of the store cam lock): D-shaped body with the wafer channels",
+      "qty": "1",
+      "material": "PETG or ASA, 100 % infill, 0.15 mm layers, flange down",
+      "optional": true
+    },
+    "plock_plug": {
+      "name": "Printed lock: plug",
+      "what": "Turns with the key and drives the crank; holds the 4 wafers and 8 springs",
+      "qty": "1",
+      "material": "PETG, 0.15 mm layers, lying on its flat",
+      "optional": true
+    },
+    "plock_wafer_1": {
+      "name": "Printed lock: wafer 1",
+      "what": "Front wafer. The 4 wafers differ (they set the key code): print your own from lock_code",
+      "qty": "1",
+      "material": "PETG, flat, 0.15 mm layers",
+      "optional": true
+    },
+    "plock_wafer_2": {
+      "name": "Printed lock: wafer 2",
+      "what": "",
+      "qty": "1",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "plock_wafer_3": {
+      "name": "Printed lock: wafer 3",
+      "what": "",
+      "qty": "1",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "plock_wafer_4": {
+      "name": "Printed lock: wafer 4",
+      "what": "Rear wafer",
+      "qty": "1",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "plock_wafers": {
+      "name": "Printed lock: all 4 wafers",
+      "what": "The 4 wafers on one plate, in order",
+      "qty": "1 set",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "plock_key": {
+      "name": "Printed lock: key",
+      "what": "Flat key cut to lock_code (the example code here: make your own)",
+      "qty": "1+",
+      "material": "PETG (or PC / PA), 100 % infill, flat",
+      "optional": true
+    },
+    "plock_clip": {
+      "name": "Printed lock: clip",
+      "what": "C-clip that holds the body in the pod (snaps into its groove)",
+      "qty": "1",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "plock_crank": {
+      "name": "Printed lock: crank",
+      "what": "Replaces the drilled steel cam: M3 insert for the crank pin, grub screw onto the plug",
+      "qty": "1",
+      "material": "PETG, 100 % infill, flat",
+      "optional": true
     }
   },
   "dxf": {
@@ -155,6 +233,10 @@
     {
       "label": "Wiring: circuit, parts, perfboard or PCB, bring-up",
       "file": "WIRING.md"
+    },
+    {
+      "label": "Printed lock and key (optional alternative to the store lock)",
+      "file": "PRINTED_LOCK.md"
     },
     {
       "label": "Shopping list with links and prices (India)",

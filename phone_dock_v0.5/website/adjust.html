@@ -54,6 +54,10 @@ openscad -D 'PART="case_back"'  -D 'phone_w=71.5' -D 'phone_l=146.7' -o case_bac
           <tr><td><code>steel_keeper</code></td><td>Set it to <code>true</code> for a laser-cut 6 mm steel strike (<code>strike_keeper_2d.dxf</code>) instead of the printed one with a steel block. It is stronger, but needs a fabricator.</td></tr>
         </table>
         <p class="adj-note">Use a 16 mm tubular cam lock that turns a <strong>quarter turn</strong>, with a key that comes out only when locked.</p>
+        <table class="params">
+          <tr><td><code>lock_type</code>, <code>lock_code</code></td><td><strong>Or print the lock:</strong> a wafer lock and key that fit the same pod (<code>printed_lock.scad</code>). Set <code>lock_code</code> to your own key code (4 digits, 0&ndash;2), then export the <code>plock_*</code> parts. See <a href="https://github.com/praneth2580/3D-Models/blob/main/phone_dock_v0.5/PRINTED_LOCK.md">the printed lock guide</a>.</td></tr>
+          <tr><td><code>plk_clear</code>, <code>plk_wclear</code>, <code>plk_step</code></td><td>Printed lock fit: clearance of the plug and of the wafers, and the depth step between key cuts. Tune them after the fit test.</td></tr>
+        </table>
       </details>
 
       <details class="adj">

@@ -33,7 +33,9 @@
 // "assembly", "case_shell", "case_back", "window_template", "shoe", "receiver", "dock_lid",
 // "base_plate", "base_plate_2d" (DXF), "clamp_body", "clamp_cap", "bar_shim", "pad_spacer",
 // "lock_yoke", "crank_template" (drilling guide for the lock's own cam), "lock_cover",
-// "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true)
+// "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true).
+// Optional printed lock (printed_lock.scad, PRINTED_LOCK.md): "plock_body", "plock_plug", "plock_wafer"
+// (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_nut", "plock_crank".
 PART = "assembly";
 SHOW_PHONE = true;
 SHOW_BAR = true;
@@ -831,7 +833,8 @@ module crank_placed(turn=1) {
 }
 
 module lock_mechanism(turn=1) {
-  color([0.75,0.75,0.78]) crank_placed(turn);
+  if (lock_type == "printed") plk_placed(turn);
+  else color([0.75,0.75,0.78]) crank_placed(turn);
   color([0.55,0.58,0.62]) lock_yoke(turn);
   lock_bolt(turn);
 }
@@ -975,6 +978,8 @@ module assembly() {
   if (SHOW_BAR) % rotate([0,90,0]) cylinder(d=bar_d, h=700, center=true);
 }
 
+include <printed_lock.scad>
+
 // ------------------------- PART SELECTOR -----------------------------
 if (PART == "assembly") assembly();
 else if (PART == "case_shell") case_shell();
@@ -994,4 +999,5 @@ else if (PART == "crank_template") crank_template();
 else if (PART == "lock_cover") lock_cover();
 else if (PART == "strike_keeper") strike_keeper();
 else if (PART == "strike_keeper_2d") translate([-strike_x0, -strike_y0]) strike_keeper_2d();   // laser template, corner at the origin
+else if (plk_is_part(PART)) plk_part(PART);
 else if (PART != "none") echo("Unknown PART.");
