@@ -1,0 +1,9 @@
+# Built website (made by site/build.sh, deployed by GitHub Actions)
+_site/
+
+# OpenSCAD and Python scratch files
+*.csg
+__pycache__/
+
+# Rendered video frames
+meteor_phone_dock_v0.5/video/frames/
