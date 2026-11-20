@@ -1,11 +1,11 @@
 # CLAUDE.md
-# Meteor 350 Minimal-Bezel Circular Display Enclosure
+# Minimal-Bezel Circular Display Enclosure (general purpose, any motorcycle)
 
 ## 1. Project Overview
 
 Design a compact, 3D-printable circular enclosure for an **Electrobot ESP32-C3 1.28-inch round IPS display (240 × 240)**.
 
-The enclosure is intended to be mounted at the centre of a Royal Enfield Meteor 350 handlebar.
+The enclosure is intended to be mounted at the centre of a motorcycle handlebar. It is general purpose: keep all bike-specific dimensions as parameters, and do not name it after one bike.
 
 The design should look like a professionally manufactured motorcycle instrument pod, not a generic electronics project box.
 
@@ -208,7 +208,7 @@ Organise the project into separate modules and files where practical.
 Suggested structure:
 
 ```text
-meteor-display-pod/
+display-pod/
 │
 ├── CLAUDE.md
 ├── README.md

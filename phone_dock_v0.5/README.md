@@ -1,7 +1,7 @@
 # Modular handlebar navigation dock
 
 **Project:** Old phone converted into a permanent motorcycle navigation screen (landscape)
-**First bike:** Royal Enfield Meteor 350 (2025). The design is adjustable for most bikes with a round handlebar.
+**Bikes:** general purpose: any motorcycle with a round handlebar (22.2, 25.4 or 28.6 mm). Every bike-specific dimension is a setting.
 **Revision:** 0.5 concept prototype: slim case and compact dock (0.2–0.4 are in `archive/`)
 **CAD:** OpenSCAD 2021.01, millimetres
 
@@ -9,7 +9,7 @@
 >
 > Video: `video/mechanism_demo.mp4`.
 >
-> **Website:** https://praneth2580.github.io/3D-Models/meteor_phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
+> **Website:** https://praneth2580.github.io/3D-Models/phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
 
 > **Prototype status:** this is a dimensioned concept model. It has not been tested on the road, for water ingress, for heat or for vibration. Anything marked **MEASURE** or **SELECT** in the `.scad` file is a placeholder.
 
@@ -199,7 +199,7 @@ Measure two things on the bike and enter them:
 - `riser_h`: how far the top of the highest clamp bolt head sits above the **top** of the handlebar;
 - `riser_d`: the fore-aft distance from the **centre** of the bar to the far edge of that bolt head.
 
-The current values (10 mm and 22 mm) are **placeholders, not Meteor measurements**.
+The current values (10 mm and 22 mm) are **placeholders, not measurements from a real bike**.
 
 | `riser_h` | `riser_d` | `arm_up` | Top of case above bar (40°) |
 |---|---|---|---|
@@ -221,7 +221,7 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 ## Measure before printing
 
 - **Phone:** length, width, thickness, corner radius, camera island, which end the charging port is on, the port type (USB-C or micro-USB) and whether it is centred. These go in `phone_*`, `camera_*`, `usb_side`, `phone_port` and `usb_port_y`. The current values are a dummy 75 × 160 × 9 mm phone. Because the border is now thin, **measure the phone's own front border** and set `screen_mask` so the lip does not cover the screen.
-- **Handlebar:** diameter at the clamp positions, the straight length either side of the centre, the bike's handlebar-clamp bolt heads (`riser_h`, `riser_d`; this sets the height) and the clearance to the cluster. For the Meteor 350, check with calipers; aftermarket bars listed for it are 22 mm (7/8"), but the stock bar is not confirmed.
+- **Handlebar:** diameter at the clamp positions, the straight length either side of the centre, the bike's handlebar-clamp bolt heads (`riser_h`, `riser_d`; this sets the height) and the clearance to the cluster. Check it with calipers: most bikes use 22.2 mm (7/8"), some 25.4 mm (1") or 28.6 mm (1-1/8").
 - **Clearance:** full steering lock both ways, with nothing touching the tank, the mirrors or the cables. The lock pod now sits forward, behind the case's top-right corner, so also check it against the instrument cluster and the right-hand switch cables.
 
 ## Damping, smart base, materials

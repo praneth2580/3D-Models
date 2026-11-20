@@ -1,6 +1,6 @@
 # License
 
-The Meteor Phone Dock (the OpenSCAD source, STL and DXF files, drawings, images, video and documentation in this folder) by praneth2580 is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International** license (CC BY-NC-SA 4.0).
+The Handlebar Phone Dock (the OpenSCAD source, STL and DXF files, drawings, images, video and documentation in this folder) by praneth2580 is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International** license (CC BY-NC-SA 4.0).
 
 **You may:**
 - download, print and use it;

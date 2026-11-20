@@ -7,7 +7,7 @@ Update 2: stack lowered. `arm_up` is now worked out from the bike's handlebar cl
 - a Ø29.6 mm bar (largest the clamp takes) vs base plate, dock and case;
 - clamps vs dock and case.
 `clamp_body`, `clamp_cap`, `base_plate`, `pad_spacer` re-exported: watertight, one body each. New asserts: plate clear of the bike clamp, plate clear of the bar, plate-bolt inserts clear of clamp-bolt inserts, at least 6 mm of clamp over the bore.
-Not checked: the real Meteor clamp shape (only its two measurements are modelled, as a cylinder round the bar).
+Not checked: the real shape of the bike's handlebar clamp (only its two measurements are modelled, as a cylinder round the bar).
 
 Update 3 (2026-11-20): **lock moved to the top, flat bolt + steel keeper.**
 - **What changed:**

@@ -1,5 +1,5 @@
 // =============================================================================
-// Meteor 350 display pod — central parameters (v4)
+// Round display pod — central parameters (v4)
 // Units: millimetres. All parts include this file.
 //
 // Source tags used on every input value:
@@ -173,7 +173,7 @@ plunger_stroke_min   = detent_preload + detent_dimple_depth + lock_gap; // requi
 // Handlebar mount (Part D)
 // Mount frame: X = handlebar axis, Y = forward, Z = up, origin on bar axis.
 // ----------------------------------------------------------------------------
-bar_d                = 22.2;   // [PROVISIONAL] Meteor 350 centre section NOT measured
+bar_d                = 22.2;   // [PROVISIONAL] measure your bar at the mount point
 bar_shim_t           = 1.0;    // [DESIGN] rubber shim (EPDM / inner-tube strip)
 bar_bore_d           = bar_d + 2 * bar_shim_t * 0.75;   // 25 % shim compression
 clamp_split_gap      = 1.5;    // [DESIGN] gap between halves so the clamp can grip

@@ -55,4 +55,4 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 
 Every section is HTML using the classes in `style.css`. Images go in as `media/<file name>` and downloads as `files/<file name>`.
 
-**Examples:** `meteor_phone_dock_v0.5/website/` and `meteor_display_pod_v4/website/`.
+**Examples:** `phone_dock_v0.5/website/` and `display_pod_v4/website/`.

@@ -1,5 +1,5 @@
 // =============================================================================
-// Meteor 350 display pod v4 — part selector, assembly and clearance checks
+// Round display pod v4 — part selector, assembly and clearance checks
 //
 //   openscad -D 'part="housing"' -o ../exports/housing.stl main.scad
 //

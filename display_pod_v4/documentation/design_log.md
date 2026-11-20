@@ -47,7 +47,7 @@ Fixes made while validating:
 - **Receiver mounting screws.** Moved to z = 3.0, with no spot faces. The hull target was moved inside the cup, and the screw-hole facets were twisted half a step to stop the CGAL non-manifold edges.
 
 ### Still open (next session)
-1. **Handlebar.** Measure the Meteor 350 bar diameter at the mount point, the free length there, and the tilt and cup position. These are needed before printing the clamp.
+1. **Handlebar.** Measure your bike's bar diameter at the mount point, the free length there, and the tilt and cup position. These are needed before printing the clamp.
 2. **USB cable.** Measure the plug head (assumed 12.5 × 7).
 3. **Board.** Measure the total thickness and the glass diameter, and confirm the touch or non-touch variant.
 4. **Battery and plunger.** Confirm the battery model and size, and check the plunger's stroke is at least 0.8 mm.

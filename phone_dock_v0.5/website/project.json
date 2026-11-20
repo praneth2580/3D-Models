@@ -1,7 +1,7 @@
 {
-  "title": "Meteor Phone Dock",
+  "title": "Handlebar Phone Dock",
   "tagline": "Turn an old phone into a permanent motorcycle navigation screen.",
-  "summary": "A slim sealed phone case that slides onto a handlebar dock, locks with a key and charges through spring contacts. No cable to plug in. Designed for the Royal Enfield Meteor 350, and adjustable for most bikes with a round handlebar.",
+  "summary": "A slim sealed phone case that slides onto a handlebar dock, locks with a key and charges through spring contacts. No cable to plug in. It fits any motorcycle with a round handlebar (22.2, 25.4 or 28.6 mm) and any phone: set your measurements and export your own parts.",
   "status": "a dimensioned concept model, version 0.5. It has not yet been tested on the road, for water, heat or vibration. Check the fit on your own bike and phone before relying on it, and use a safety tether at first.",
   "order": 1,
   "cover": "images/v05_rider_view.png",

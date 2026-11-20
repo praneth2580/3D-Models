@@ -13,8 +13,8 @@ Open-source, parametric, 3D-printable designs. Every project has its own page on
 <!-- projects:start -->
 | Project | What it is | Website | Folder |
 |---|---|---|---|
-| **Meteor Phone Dock** | Turn an old phone into a permanent motorcycle navigation screen. | [page](https://praneth2580.github.io/3D-Models/meteor_phone_dock_v0.5/) | [`meteor_phone_dock_v0.5/`](meteor_phone_dock_v0.5/) |
-| **Meteor Display Pod** | A round, minimal-bezel instrument pod for a 1.28" ESP32 display. | [page](https://praneth2580.github.io/3D-Models/meteor_display_pod_v4/) | [`meteor_display_pod_v4/`](meteor_display_pod_v4/) |
+| **Handlebar Phone Dock** | Turn an old phone into a permanent motorcycle navigation screen. | [page](https://praneth2580.github.io/3D-Models/phone_dock_v0.5/) | [`phone_dock_v0.5/`](phone_dock_v0.5/) |
+| **Round Display Pod** | A round, minimal-bezel instrument pod for a 1.28" ESP32 display. | [page](https://praneth2580.github.io/3D-Models/display_pod_v4/) | [`display_pod_v4/`](display_pod_v4/) |
 <!-- projects:end -->
 
 License: [CC BY-NC-SA 4.0](LICENSE.md) unless a project says otherwise. Free to download, print and remix with credit, but not for selling.

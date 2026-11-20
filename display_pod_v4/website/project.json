@@ -1,7 +1,7 @@
 {
-  "title": "Meteor Display Pod",
+  "title": "Round Display Pod",
   "tagline": "A round, minimal-bezel instrument pod for a 1.28\" ESP32 display.",
-  "summary": "A compact round enclosure for the ESP32-2424S012 (\"Electrobot ESP32-C3 1.28in\") display with its own battery. It has a bonded polycarbonate lens, a sealed rear cover and a three-lug quick-release bayonet: push in, twist 30°, click. It clamps to the centre of a Royal Enfield Meteor 350 handlebar, and every dimension is adjustable.",
+  "summary": "A compact round enclosure for the ESP32-2424S012 (\"Electrobot ESP32-C3 1.28in\") display with its own battery. It has a bonded polycarbonate lens, a sealed rear cover and a three-lug quick-release bayonet: push in, twist 30°, click. It clamps to any round motorcycle handlebar, and every dimension is adjustable for your board, battery and bike.",
   "status": "version 4 prototype. It has not been fit-tested, vibration-tested or water-tested, and several dimensions are still estimates. Print the bayonet fit test first, and don't use it on the road until it passes the checks in the assembly guide.",
   "order": 2,
   "cover": "images/assembly.png",

@@ -1,8 +1,8 @@
-# Meteor 350 display pod — v4
+# Round display pod — v4
 
-A round, minimal-bezel enclosure for the **ESP32-2424S012** 1.28" round display (sold as "Electrobot ESP32-C3 1.28in"), with a battery and a three-lug quick-release bayonet for the Royal Enfield Meteor 350 handlebar.
+A round, minimal-bezel enclosure for the **ESP32-2424S012** 1.28" round display (sold as "Electrobot ESP32-C3 1.28in"), with a battery and a three-lug quick-release bayonet for a motorcycle handlebar. It is general purpose: the clamp, tilt and position are settings, so it fits any bike with a round bar.
 
-> **Website:** https://praneth2580.github.io/3D-Models/meteor_display_pod_v4/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see the [repository license](../LICENSE.md).
+> **Website:** https://praneth2580.github.io/3D-Models/display_pod_v4/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see the [repository license](../LICENSE.md).
 
 > **Prototype.** It has not been fit-tested, vibration-tested or water-tested. Several dimensions are still estimates; see [documentation/measurements.md](documentation/measurements.md). Don't use it on the road until it passes the checks in [documentation/assembly.md](documentation/assembly.md).
 

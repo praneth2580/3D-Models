@@ -13,7 +13,7 @@
 //    in one way. A drain slot sits at the cup's lowest point.
 //
 // PROVISIONAL: the bar diameter, free bar length, tilt and cup position must be
-// checked on the actual Meteor 350 before printing.
+// checked on your own bike before printing.
 // Print: clamp_upper with the split face down. clamp_lower with the split face down.
 // =============================================================================
 include <parameters.scad>

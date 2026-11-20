@@ -47,7 +47,7 @@ Angles are given as seen from the front: 0° = right, 90° = top. The vendor rea
 | Cover screws | 3 × M2 × 8 socket cap + 3 × M2 × 3 heat-set inserts (Ø3.2 hole) | 🟡 Check the hole size for your insert brand |
 | Receiver screws | 3 × M3 × 6–8 thread-forming (for plastic), pan head | — |
 
-## Motorcycle (Royal Enfield Meteor 350)
+## Motorcycle (your bike)
 
 | Parameter | Value | Status |
 |---|---:|---|
