@@ -1,0 +1,9 @@
+{
+  "title": "3D Models",
+  "author": "praneth2580",
+  "headline": "Motorcycle gear you can print yourself, free to download",
+  "intro": "Open-source, parametric 3D-printable designs: a phone navigation dock and a round display pod for the Royal Enfield Meteor 350, adjustable for other bikes and hardware. Download the STLs, or change the measurements and make your own.",
+  "license": {"name": "CC BY-NC-SA 4.0", "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"},
+  "disclaimer": "Prototypes, not road-tested products. Not affiliated with Royal Enfield. Mount anything on a vehicle so it never blocks the steering, controls or your view, and follow your local rules.",
+  "branch": "main"
+}

@@ -1,0 +1,83 @@
+<!-- ============================================================ adjust -->
+<section id="adjust">
+  <div class="wrap">
+    <h2>Adjust it to your hardware</h2>
+    <p class="sub">Every dimension lives in one file, <code>phone_dock_v0.5.scad</code>. Values marked <span class="tag measure">MEASURE</span> must be measured on your phone or bike, and values marked <span class="tag select">SELECT</span> depend on the part you buy. <strong>The defaults are placeholders</strong>, so don't print the case before you set them.</p>
+
+    <div class="howto">
+      <ol>
+        <li>Install <a href="https://openscad.org/downloads.html">OpenSCAD</a> (2021.01 or newer). It is free.</li>
+        <li>Open <code>phone_dock_v0.5.scad</code>, change the values below near the top of the file, and press <kbd>F5</kbd> to preview the whole assembly. The file stops with a clear message if a value makes parts collide.</li>
+        <li>Export each part. Set <code>PART</code> to the part's name, press <kbd>F6</kbd>, then <em>File &rarr; Export &rarr; STL</em>. Or from a terminal:
+<pre><code>openscad -D 'PART="case_shell"' -o case_shell.stl phone_dock_v0.5.scad
+openscad -D 'PART="case_back"'  -D 'phone_w=71.5' -D 'phone_l=146.7' -o case_back.stl phone_dock_v0.5.scad</code></pre></li>
+      </ol>
+    </div>
+
+    <div class="adjust-grid">
+      <details class="adj" open>
+        <summary><span class="adj-title">Your phone</span><span class="adj-why">Sets the case</span></summary>
+        <table class="params">
+          <tr><td><code>phone_w</code>, <code>phone_l</code>, <code>phone_t</code></td><td>Width (short side), length and thickness in mm. Measure with calipers, without a cover. <span class="tag measure">MEASURE</span></td></tr>
+          <tr><td><code>phone_corner_r</code></td><td>The corner radius seen from the front. <span class="tag measure">MEASURE</span></td></tr>
+          <tr><td><code>screen_mask</code></td><td>How far the front lip overlaps the phone's edge. Set it to the phone's own black border so the lip doesn't cover the screen.</td></tr>
+          <tr><td><code>camera_x</code>, <code>camera_y</code>, <code>camera_w</code>, <code>camera_h</code>, <code>camera_protrusion</code></td><td>Position and size of the camera bump, measured in portrait from the phone's centre. Set <code>camera_relief_enable = false</code> for a flat back.</td></tr>
+          <tr><td><code>phone_port</code></td><td><code>"usbc"</code> or <code>"microusb"</code>. Micro-USB makes the plug bay 9 mm instead of 8.</td></tr>
+          <tr><td><code>usb_side</code></td><td>In landscape: <code>1</code> if the charging port is on the right, <code>-1</code> if on the left.</td></tr>
+          <tr><td><code>usb_port_y</code></td><td>Move it if the port isn't centred on the phone's end (most are: 0).</td></tr>
+          <tr><td><code>usb_bay_h</code></td><td>Room for the 90&deg; plug. The plug head must be no more than 7 mm (USB-C) or 8 mm (micro-USB) from the phone's edge; raise this if yours is bigger.</td></tr>
+        </table>
+      </details>
+
+      <details class="adj" open>
+        <summary><span class="adj-title">Your handlebar and bike</span><span class="adj-why">Sets the clamps and height</span></summary>
+        <table class="params">
+          <tr><td><code>bar_d</code></td><td>Handlebar diameter at the clamps: 22.2 (7/8"), 25.4 (1") or 28.6 mm (1-1/8"). Export <code>bar_shim</code> to match, or wrap strips of old inner tube. <span class="tag measure">MEASURE</span></td></tr>
+          <tr><td><code>clamp_spacing</code></td><td>Distance between the two clamps: 110&ndash;154 mm with the standard base plate. It needs straight, round bar on both sides of the centre. <span class="tag measure">MEASURE</span></td></tr>
+          <tr><td><code>riser_h</code>, <code>riser_d</code></td><td>Your bike's own handlebar clamp: how high its highest bolt head sits above the top of the bar, and how far its far edge is from the bar's centre. The file then sets the lowest safe mounting height by itself. <span class="tag measure">MEASURE</span></td></tr>
+          <tr><td><code>tilt</code></td><td>Screen angle, for the preview only. On the bike you set it by rotating both clamps to the same angle.</td></tr>
+          <tr><td><code>arm_back</code></td><td>Moves the mount fore or aft.</td></tr>
+          <tr><td><code>spacer_h</code></td><td>Raises the mount with <code>pad_spacer</code> blocks if the instrument cluster needs more room.</td></tr>
+          <tr><td><code>slot_out</code>, <code>hide_plate</code></td><td>For clamps wider than 154 mm apart: raise <code>slot_out</code> and set <code>hide_plate = false</code>. The plate will then show past the case.</td></tr>
+        </table>
+        <p class="adj-note">Check full steering lock both ways: nothing may touch the tank, the mirrors or the cables.</p>
+      </details>
+
+      <details class="adj">
+        <summary><span class="adj-title">The key lock</span><span class="adj-why">Match the lock you buy</span></summary>
+        <table class="params">
+          <tr><td><code>lock_bore_d</code>, <code>lock_bore_flat</code></td><td>Lock thread diameter (16 mm by default) and its width across the flats. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>lock_body_len</code></td><td>From the inside face of the panel to the cam seat. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>lock_nut_clear_d</code></td><td>The lock nut across its corners, plus clearance. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>crank_t</code></td><td>Thickness of the lock's own steel cam, which becomes the crank. Drill it using the printed <code>crank_template</code>. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>bolt_w</code>, <code>bolt_t</code></td><td>The steel bolt: 14 &times; 9 mm parallel-key steel by default. Change these if you use a different size. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>steel_keeper</code></td><td>Set it to <code>true</code> for a laser-cut 6 mm steel strike (<code>strike_keeper_2d.dxf</code>) instead of the printed one with a steel block. It is stronger, but needs a fabricator.</td></tr>
+        </table>
+        <p class="adj-note">Use a 16 mm tubular cam lock that turns a <strong>quarter turn</strong>, with a key that comes out only when locked.</p>
+      </details>
+
+      <details class="adj">
+        <summary><span class="adj-title">Contacts and electronics</span><span class="adj-why">Match your pins, cable and sensor</span></summary>
+        <table class="params">
+          <tr><td><code>pin_block_depth</code>, <code>pin_free</code></td><td>Pogo pin length (P75 pins are 15.85 mm) and how far the tips stick out. Change them for other pins. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>cable_d</code></td><td>Hole for the bike's USB lead (4.2 mm suits most leads, which are 3.5&ndash;4 mm thick).</td></tr>
+          <tr><td><code>therm_l</code>, <code>therm_w</code>, <code>therm_t</code></td><td>Size of your thermostat (KSD9700, 45 &deg;C, normally closed). Sizes vary by seller, so measure yours. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>thermal_cutoff</code></td><td>Set it to <code>false</code> to leave out the over-heat cut-off. Then link DET to GND on the pad strip.</td></tr>
+          <tr><td><code>led_d</code></td><td>Light-pipe hole for the status LEDs (3 mm LEDs need 3.2 mm).</td></tr>
+        </table>
+        <p class="adj-note">The dock board can be <strong>hand-wired on perfboard</strong> or made as a <strong>small ordered PCB</strong>. It is the same circuit, the same parts and the same pocket either way.</p>
+      </details>
+
+      <details class="adj">
+        <summary><span class="adj-title">Fasteners and fit</span><span class="adj-why">Match your inserts and printer</span></summary>
+        <table class="params">
+          <tr><td><code>corner_insert_d</code>, <code>shoe_insert_d</code></td><td>Holes for M3 heat-set inserts (4.2 mm). Check your inserts' recommended hole size. <span class="tag select">SELECT</span></td></tr>
+          <tr><td><code>m5_insert_d</code></td><td>Holes for the M5 inserts (clamps, plate, AMPS pattern).</td></tr>
+          <tr><td><code>flex_t</code></td><td>Stiffness of the printed snap that holds the case. If the case creeps up the rails with the lock open, add 0.2 mm.</td></tr>
+          <tr><td><code>window_t</code></td><td>Window thickness: use 2 mm polycarbonate, not acrylic (it cracks).</td></tr>
+          <tr><td><code>drain_d</code></td><td>Size of the drain holes at the bottom of the rail channels.</td></tr>
+        </table>
+      </details>
+    </div>
+  </div>
+</section>

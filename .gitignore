@@ -1,9 +1,13 @@
-# Built website (made by site/build.sh, deployed by GitHub Actions)
+# Built website (made by site/build.py, deployed by GitHub Actions)
 _site/
+
+# Other people's files (vendor datasheets, drawings, store screenshots): keep them local, never publish
+*/reference/
 
 # OpenSCAD and Python scratch files
 *.csg
 __pycache__/
 
-# Rendered video frames
-meteor_phone_dock_v0.5/video/frames/
+# Rendered video frames, export logs
+*/video/frames/
+*/exports/.*.log

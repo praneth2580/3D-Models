@@ -1,0 +1,43 @@
+{
+  "title": "Meteor Display Pod",
+  "tagline": "A round, minimal-bezel instrument pod for a 1.28\" ESP32 display.",
+  "summary": "A compact round enclosure for the ESP32-2424S012 (\"Electrobot ESP32-C3 1.28in\") display with its own battery. It has a bonded polycarbonate lens, a sealed rear cover and a three-lug quick-release bayonet: push in, twist 30°, click. It clamps to the centre of a Royal Enfield Meteor 350 handlebar, and every dimension is adjustable.",
+  "status": "version 4 prototype. It has not been fit-tested, vibration-tested or water-tested, and several dimensions are still estimates. Print the bayonet fit test first, and don't use it on the road until it passes the checks in the assembly guide.",
+  "order": 2,
+  "cover": "images/assembly.png",
+  "see_title": "The design",
+  "see_sub": "Renders from the OpenSCAD model. The pod is 45 mm across the front and 20 mm deep, with a 4 mm ring around the lens.",
+  "gallery": [
+    {"src": "images/assembly_rear.png", "caption": "On its handlebar clamp, tilted toward the rider"},
+    {"src": "images/pod.png", "caption": "The rear cover's male bayonet: three lugs, one wider so it fits only one way"},
+    {"src": "images/section.png", "caption": "Cut through: lens, display, board, retainer and battery bay"}
+  ],
+  "viewer_default": "housing",
+  "parts": {
+    "housing": {"name": "Housing", "what": "Part A: front shell and side wall. The lens bonds into its front; no front screws", "qty": "1", "material": "PETG for the prototype, ASA final. Rear face on the bed, no supports"},
+    "rear_cover": {"name": "Rear cover", "what": "Part B: battery bay, gasket seat and the male bayonet", "qty": "1", "material": "ASA or PETG. Gasket face on the bed"},
+    "board_retainer": {"name": "Board retainer", "what": "Holds the display board forward on a foam pad, and separates it from the battery", "qty": "1", "material": "ASA or PETG"},
+    "receiver": {"name": "Bayonet receiver", "what": "Part C: the twist-lock socket with L-shaped tracks and the ball-plunger detent", "qty": "1", "material": "ASA or PETG, 0.12 mm layers"},
+    "clamp_upper": {"name": "Clamp, upper", "what": "Part D: handlebar clamp with the tilted receiver cup", "qty": "1", "material": "ASA or PETG. Supports from the build plate only"},
+    "clamp_lower": {"name": "Clamp, lower", "what": "Part D: handlebar clamp, lower half", "qty": "1", "material": "ASA or PETG"},
+    "usb_plug": {"name": "USB plug", "what": "Seals the USB-C opening", "qty": "1", "material": "TPU 95A, slow"},
+    "cover_gasket": {"name": "Cover gasket", "what": "Seals the rear cover (or cut it from 1 mm silicone sheet with the DXF)", "qty": "1", "material": "TPU 85A-95A"},
+    "bayonet_test_male": {"name": "Bayonet fit test", "what": "Print this and the receiver first, to tune the bayonet's fit", "qty": "1", "material": "Same as the cover", "optional": true}
+  },
+  "dxf": {
+    "lens": "The 36.2 mm x 1 mm polycarbonate lens",
+    "display_gasket": "0.5 mm foam ring behind the lens ledge",
+    "cover_gasket": "Cover gasket, for cutting from 1 mm silicone or EPDM sheet",
+    "retainer_foam": "1.5 mm foam pad for the board retainer"
+  },
+  "download_note": "The STLs in <code>exports/</code> are already in print orientation, made from the default (partly estimated) measurements. Check <a href=\"#adjust\">the settings below</a> against your board, battery and bike, then run <code>tools/check.sh</code> and <code>tools/export.sh</code>. Print settings and the hardware list are in the docs.",
+  "sections": ["build.html"],
+  "nav": [["Build", "#build"]],
+  "docs": [
+    {"label": "README: overview and layout", "file": "README.md"},
+    {"label": "Measurements: every dimension, its source and whether to check it", "file": "documentation/measurements.md"},
+    {"label": "Assembly: hardware list and steps", "file": "documentation/assembly.md"},
+    {"label": "Print settings and bayonet fit tuning", "file": "documentation/print_settings.md"},
+    {"label": "Design log", "file": "documentation/design_log.md"}
+  ]
+}

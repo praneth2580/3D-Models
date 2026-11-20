@@ -1,19 +1,40 @@
 # 3D Models
 
-## Meteor Phone Dock
-
 **Website: https://praneth2580.github.io/3D-Models/**
 
-An open-source, 3D-printable motorcycle navigation dock that turns an old phone into a permanent handlebar screen.
+Open-source, parametric, 3D-printable designs. Every project has its own page on the website with:
+- pictures (and a video where there is one);
+- a 3D viewer for every part;
+- free downloads: one .zip, or single STL and DXF files;
+- what to adjust for your own hardware.
 
-- **What's in it:** a slim sealed case, a slide-on dock with spring contacts, a key lock, and an over-heat charging cut-off.
-- **Website:** shows it working, with a 3D viewer for every part and free downloads.
-- **Adapting it:** the website explains what to adjust for your own phone, handlebar and parts.
+## Projects
 
-[Project folder and full guide](meteor_phone_dock_v0.5/README.md) · License: [CC BY-NC-SA 4.0](meteor_phone_dock_v0.5/LICENSE.md)
+<!-- projects:start -->
+| Project | What it is | Website | Folder |
+|---|---|---|---|
+| **Meteor Phone Dock** | Turn an old phone into a permanent motorcycle navigation screen. | [page](https://praneth2580.github.io/3D-Models/meteor_phone_dock_v0.5/) | [`meteor_phone_dock_v0.5/`](meteor_phone_dock_v0.5/) |
+| **Meteor Display Pod** | A round, minimal-bezel instrument pod for a 1.28" ESP32 display. | [page](https://praneth2580.github.io/3D-Models/meteor_display_pod_v4/) | [`meteor_display_pod_v4/`](meteor_display_pod_v4/) |
+<!-- projects:end -->
 
-The website is built from `site/` by `.github/workflows/pages.yml`. To preview it locally:
+License: [CC BY-NC-SA 4.0](LICENSE.md) unless a project says otherwise. Free to download, print and remix with credit, but not for selling.
+
+## Adding a new project
+
+1. Put it in a **new top-level folder** that contains its `.stl` and/or `.scad` files, plus a `README.md`. Its title and summary come from the README's `#` heading and first paragraph.
+2. Optionally, add an `images/` folder (the first image becomes the card picture) and a `video/` folder with an `.mp4`.
+3. Mark the values people need to change with `MEASURE`, `SELECT` or `PROVISIONAL` in a comment, for example `bar_d = 22.2; // MEASURE: handlebar diameter`. They appear automatically in the page's "Adjust it to your hardware" section.
+4. Push to `main`. The website rebuilds itself, and the new project appears with no other setup.
+5. Refresh the project list above: `python3 site/build.py --readme`.
+
+For a richer page (part descriptions, a curated gallery, custom sections), add a `website/` folder to the project. See [`site/README.md`](site/README.md).
+
+**Never published:** `archive/` and `reference/` folders (old versions and other people's files, such as vendor datasheets), `website/`, `CLAUDE.md`, and caches. They are left out of the site and the zips; `reference/` is also kept out of git.
+
+## Preview the website locally
 
 ```sh
-bash site/build.sh && python3 -m http.server -d _site
+python3 site/build.py && python3 -m http.server -d _site
 ```
+
+Then open http://localhost:8000. GitHub Actions (`.github/workflows/pages.yml`) builds and deploys the same thing on every push to `main`.

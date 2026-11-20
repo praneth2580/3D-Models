@@ -1,0 +1,176 @@
+{
+  "title": "Meteor Phone Dock",
+  "tagline": "Turn an old phone into a permanent motorcycle navigation screen.",
+  "summary": "A slim sealed phone case that slides onto a handlebar dock, locks with a key and charges through spring contacts. No cable to plug in. Designed for the Royal Enfield Meteor 350, and adjustable for most bikes with a round handlebar.",
+  "status": "a dimensioned concept model, version 0.5. It has not yet been tested on the road, for water, heat or vibration. Check the fit on your own bike and phone before relying on it, and use a safety tether at first.",
+  "order": 1,
+  "cover": "images/v05_rider_view.png",
+  "video": "video/mechanism_demo.mp4",
+  "poster": "images/v05_exploded.png",
+  "see_sub": "The video is rendered straight from the CAD: assembly, docking, the contacts, the wiring, the key lock and the over-heat cut-off.",
+  "gallery": [
+    {
+      "src": "images/v05_exploded.png",
+      "caption": "The module stack: clamps, base plate, dock, case"
+    },
+    {
+      "src": "images/v05_dock.png",
+      "caption": "The dock: rails, pin pocket, snap arms and lock pod"
+    },
+    {
+      "src": "images/v05_rear_view.png",
+      "caption": "From behind: the lock pod sits behind the top corner"
+    }
+  ],
+  "viewer_default": "receiver",
+  "exclude": [
+    "cam_template.stl"
+  ],
+  "parts": {
+    "case_shell": {
+      "name": "Case shell",
+      "what": "Front of the slim case: the window lip, side walls and plug bay",
+      "qty": "1",
+      "material": "ASA or PETG",
+      "note": "Re-export for your phone"
+    },
+    "case_back": {
+      "name": "Case back",
+      "what": "Back cover: O-ring tongue, cable channel, thermostat pocket",
+      "qty": "1",
+      "material": "ASA or PETG",
+      "note": "Re-export for your phone"
+    },
+    "window_template": {
+      "name": "Window template",
+      "what": "Guide for cutting the 2 mm polycarbonate window",
+      "qty": "1",
+      "material": "Any (PLA is fine)",
+      "note": "Re-export for your phone",
+      "optional": true
+    },
+    "shoe": {
+      "name": "Shoe",
+      "what": "Plate on the case's back: dovetail rails, contact nose, lock strike",
+      "qty": "1",
+      "material": "ASA or PETG"
+    },
+    "receiver": {
+      "name": "Dock",
+      "what": "Rail channels, pogo-pin pocket, dock-board pocket, printed snap, lock pod",
+      "qty": "1",
+      "material": "ASA or PETG, printed back face down"
+    },
+    "dock_lid": {
+      "name": "Dock lid",
+      "what": "Closes the dock-board pocket",
+      "qty": "1",
+      "material": "ASA or PETG"
+    },
+    "base_plate": {
+      "name": "Base plate",
+      "what": "Joins the clamps to the dock through rubber grommets",
+      "qty": "1",
+      "material": "ASA or PETG (or cut from base_plate.dxf)"
+    },
+    "clamp_body": {
+      "name": "Clamp body",
+      "what": "Handlebar clamp, lower half",
+      "qty": "2",
+      "material": "PETG, ASA or PA12, 100 % infill round the ring",
+      "note": "Depends on your bar size"
+    },
+    "clamp_cap": {
+      "name": "Clamp cap",
+      "what": "Handlebar clamp, upper half",
+      "qty": "2",
+      "material": "PETG, ASA or PA12, 100 % infill round the ring",
+      "note": "Depends on your bar size"
+    },
+    "bar_shim": {
+      "name": "Bar shim",
+      "what": "Adapts the clamps to a smaller bar (or use strips of old inner tube)",
+      "qty": "2",
+      "material": "TPU 95A",
+      "note": "Depends on your bar size",
+      "optional": true
+    },
+    "pad_spacer": {
+      "name": "Pad spacer",
+      "what": "Raises the mount if the instrument cluster needs room",
+      "qty": "as needed",
+      "material": "ASA or PETG",
+      "optional": true
+    },
+    "lock_yoke": {
+      "name": "Lock yoke",
+      "what": "Carries the steel bolt; driven by the lock's cam",
+      "qty": "1",
+      "material": "PA12 best, or PETG"
+    },
+    "lock_cover": {
+      "name": "Lock cover",
+      "what": "Closes the lock pod, with a drain slot",
+      "qty": "1",
+      "material": "ASA or PETG"
+    },
+    "crank_template": {
+      "name": "Crank template",
+      "what": "Drilling guide for the crank-pin hole in the lock's cam",
+      "qty": "1",
+      "material": "Any"
+    },
+    "strike_keeper": {
+      "name": "Steel keeper",
+      "what": "Optional steel strike; cut it from strike_keeper_2d.dxf (set steel_keeper = true)",
+      "qty": "1",
+      "material": "6 mm steel plate",
+      "optional": true
+    }
+  },
+  "dxf": {
+    "base_plate": "The base plate as a flat outline, for cutting from sheet instead of printing",
+    "strike_keeper_2d": "Optional 6 mm steel strike, for laser cutting (set steel_keeper = true)"
+  },
+  "download_note": "The STLs are made for the default (placeholder) phone, 75 &times; 160 &times; 9 mm, and a 22.2 mm handlebar. For your own phone and bike, change the measurements in the source and export your own parts: see <a href=\"#adjust\">Adjust it to your hardware</a>. The parts that depend on the phone are <code>case_shell</code>, <code>case_back</code> and <code>window_template</code>; the clamps and shims depend on the bar.",
+  "sections": [
+    "electronics.html",
+    "build.html"
+  ],
+  "nav": [
+    [
+      "Electronics",
+      "#electronics"
+    ],
+    [
+      "Build",
+      "#build"
+    ]
+  ],
+  "docs": [
+    {
+      "label": "README: design, lock, fitting, build order",
+      "file": "README.md"
+    },
+    {
+      "label": "Wiring: circuit, parts, perfboard or PCB, bring-up",
+      "file": "WIRING.md"
+    },
+    {
+      "label": "Shopping list with links and prices (India)",
+      "file": "SHOPPING_LIST_INDIA.md"
+    },
+    {
+      "label": "CAD checks and change log",
+      "file": "CAD_QA.md"
+    },
+    {
+      "label": "Video: scenes and how to re-render it",
+      "file": "video/README.md"
+    },
+    {
+      "label": "License (CC BY-NC-SA 4.0)",
+      "file": "LICENSE.md"
+    }
+  ]
+}

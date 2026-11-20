@@ -9,7 +9,7 @@
 >
 > Video: `video/mechanism_demo.mp4`.
 >
-> **Website:** https://praneth2580.github.io/3D-Models/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
+> **Website:** https://praneth2580.github.io/3D-Models/meteor_phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
 
 > **Prototype status:** this is a dimensioned concept model. It has not been tested on the road, for water ingress, for heat or for vibration. Anything marked **MEASURE** or **SELECT** in the `.scad` file is a placeholder.
 

@@ -1,0 +1,58 @@
+<section id="adjust">
+  <div class="wrap">
+    <h2>Adjust it to your hardware</h2>
+    <p class="sub">All dimensions live in <code>scad/parameters.scad</code>, each tagged with its source. Values tagged <span class="tag provisional">PROVISIONAL</span> are estimates: check them against your own parts before the final print. <code>documentation/measurements.md</code> lists every value and its status.</p>
+
+    <div class="howto">
+      <ol>
+        <li>Install <a href="https://openscad.org/downloads.html">OpenSCAD</a> (2021.01 or newer). It is free.</li>
+        <li>Edit <code>scad/parameters.scad</code>, then open <code>scad/main.scad</code> to preview the assembly (<kbd>F5</kbd>).</li>
+        <li>Run the checks, then export every part:
+<pre><code>tools/check.sh     # every clearance and bayonet check must PASS
+tools/export.sh    # writes exports/*.stl and *.dxf</code></pre></li>
+      </ol>
+    </div>
+
+    <div class="adjust-grid">
+      <details class="adj" open>
+        <summary><span class="adj-title">Your display board</span><span class="adj-why">Sets the housing</span></summary>
+        <table class="params">
+          <tr><td><code>board_d</code>, <code>board_total_h</code>, <code>board_tab_w</code></td><td>Board outline, height including the USB tab, and tab width. The defaults come from the ESP32-2424S012 drawing: 37.0, 38.5 and 14.23 mm. Change them for a different round board.</td></tr>
+          <tr><td><code>display_active_d</code></td><td>The visible screen area (32.4 mm). The window opening follows it.</td></tr>
+          <tr><td><code>pcb_t</code>, <code>display_glass_d</code>, <code>rear_component_h</code></td><td>Board thickness, glass diameter and the tallest part on the back, including the battery plug. Measure with calipers. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>usb_offset_x</code>, <code>usb_plug_w</code>, <code>usb_plug_h</code></td><td>USB-C position, and the size of your cable's moulded plug, so it fits the recess. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>switch_angle</code>, <code>rst_angle</code>, <code>boot_angle</code></td><td>Where the power switch and buttons sit on your board (angles seen from the front).</td></tr>
+        </table>
+      </details>
+
+      <details class="adj" open>
+        <summary><span class="adj-title">Battery</span><span class="adj-why">Sets the rear cover</span></summary>
+        <table class="params">
+          <tr><td><code>battery_t</code>, <code>battery_w</code>, <code>battery_l</code></td><td>Your LiPo's size (default 402030: 4 &times; 20 &times; 30 mm, about 200&ndash;250 mAh, including its protection board). Use a cell with protection, and check the plug's polarity. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>battery_swell_clear</code></td><td>Room left for the cell to swell (1 mm). Don't reduce it.</td></tr>
+        </table>
+      </details>
+
+      <details class="adj" open>
+        <summary><span class="adj-title">Your bike</span><span class="adj-why">Sets the clamp and cup</span></summary>
+        <table class="params">
+          <tr><td><code>bar_d</code></td><td>Handlebar diameter where the clamp goes (22.2 mm default, not yet measured on the Meteor). <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>clamp_w</code></td><td>Clamp width along the bar: fit it to the free straight length between the riser clamps and cables. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>display_tilt</code></td><td>Angle of the display toward you (40° default): set it from your riding position. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>cup_offset_y</code>, <code>cup_floor_z</code></td><td>Where the pod sits relative to the bar: behind or ahead of it, and how high. Check clearance to the instrument cluster, cables and full steering lock. <span class="tag provisional">PROVISIONAL</span></td></tr>
+        </table>
+      </details>
+
+      <details class="adj">
+        <summary><span class="adj-title">Hardware and fit</span><span class="adj-why">Match what you buy and your printer</span></summary>
+        <table class="params">
+          <tr><td><code>detent_ball_d</code></td><td>Ball size of your M4 spring-ball plunger (2.5 mm). Its stroke must be at least 0.8 mm. <span class="tag provisional">PROVISIONAL</span></td></tr>
+          <tr><td><code>insert_hole_d</code></td><td>Hole for the M2 heat-set inserts (3.2 mm): check your insert brand.</td></tr>
+          <tr><td><code>receiver_pilot_d</code></td><td>Pilot hole for the M3 thread-forming screws.</td></tr>
+          <tr><td><code>entry_clear</code>, <code>track_clear</code></td><td>Bayonet clearances. If the printed fit test is too tight, raise them by 0.05&ndash;0.1 mm.</td></tr>
+          <tr><td><code>lens_t</code>, <code>gasket_t</code></td><td>Lens thickness (1 mm polycarbonate) and gasket thickness (1 mm silicone, EPDM or TPU).</td></tr>
+        </table>
+      </details>
+    </div>
+  </div>
+</section>
