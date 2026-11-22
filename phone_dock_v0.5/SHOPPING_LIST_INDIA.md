@@ -52,6 +52,20 @@ The case, the dock, the printed parts and the components are identical. Only the
 | *Optional:* thermal pad 0.5 mm (better heat sensing) | [Amazon.in](https://www.amazon.in/dp/B0DGXFS866) | ₹0–199 |
 | **Total, Option A** | | **≈ ₹3,400–5,000** |
 
+## One-piece dock base (`mount = "merged"`): changes
+
+Only if you print `dock_base` instead of `base_plate` + `receiver` (see the README). Net change about **+₹100–350**.
+
+| Item | Where | Price |
+|---|---|---|
+| Leave out: the 4 rubber grommets with sleeves | | −₹60–120 |
+| Extra printing: about 16 cm³ more part, plus supports under the plate | The same print service | +₹100–250 (est.) |
+| 4 × M5 round spacers, 8 mm OD, 10 mm long (aluminium or steel), plus 4 × M5 plain washers to make 11 mm | Lamington Road or Nagdevi Street | +₹40–80 (est.) |
+| 4 × M5 rubber washers, about 2 mm thick, and 4 × M5 × 15 large (DIN 9021) steel washers | Nagdevi Street, or a rubber/seal shop | +₹30–60 (est.) |
+| 2 mm neoprene or EPDM sheet offcut, for the 2 pads (24 × 50 mm each). Or print `iso_pad` in TPU 95A | Rubber/seal shop | +₹30–80 (est.) |
+
+This can push the top of Option A's range a little over ₹5,000.
+
 ## Option B: PCB extras
 
 | Item | Where | Price |

@@ -74,6 +74,28 @@ How the bulk was removed:
 
 ![Exploded](images/v05_exploded.png)
 
+### Option: one-piece dock base (`mount = "merged"`)
+
+The base plate and the dock can be printed as **one part**, `dock_base.stl`, instead of `base_plate` + `receiver`. Everything else is the same: the case, the shoe, the contacts, the snap, the lock and the clamps.
+
+- **What it is:** the same base plate, at the same height under the dock, with the 2 mm grommet gap filled solid. The dock, the lock pod and the pins are exactly where they were, so the case docks and locks the same way.
+- **Damping moves to the clamp bolts.** Without the grommet layer, the part sits on rubber instead:
+  - a **2 mm rubber pad** (`iso_pad`) on each clamp pad, under the plate. Cut it from 2 mm neoprene or EPDM sheet using the STL as a template, or print it in TPU 95A;
+  - a **2 mm rubber washer** under a large steel washer (M5 × 15) on top of the plate, at each bolt;
+  - an **M5 spacer, 8 mm across and 11 mm long** (a 10 mm spacer plus a 1 mm washer), in each slot. It stops the bolt crushing the rubber: the bolt clamps steel washer, spacer and clamp pad metal to metal, and the plate is held only between the two pieces of rubber. The slots are 9.5 mm wide, so the plate never touches the spacer.
+  - Use 4 × M5 × 20 socket screws into the clamp pads' inserts.
+- **What you give up:**
+  - **Clamp spacing is 132–154 mm** (the modular plate does 110–154). The bolt heads stand on top of the plate, so the upper bolts have to stay clear of the strike block that slides down past them. Check your bar has room before choosing this.
+  - **No smart base later.** There is no AMPS interface between the plate and the dock.
+  - The whole mount sits **2 mm higher** (the rubber pads): the top of the case is about 92 mm above the bar at 40° tilt, instead of 91 mm.
+- **What you gain:** two fewer parts, no grommets, no AMPS inserts, and one fewer joint that could work loose.
+- **Fitting the dock board lid:** a window through the plate under the board pocket lets you glue `dock_lid` on from behind after potting, as before. The drains also run through the plate.
+- **Printing:** the lock pod hangs 8.5 mm below the plate's underside, so print `dock_base` on the pod's bottom face with supports under the plate (tree supports are fine). The snap arms still bend within the print layers. It uses about 16 cm³ more plastic than the two separate parts.
+
+![One-piece dock base on the clamps](images/merged_exploded.png)
+
+![dock_base from above](images/merged_dock_base.png)
+
 ## The case
 
 - **Front shell (`case_shell`):**
@@ -179,7 +201,8 @@ Eight short wires go through a tunnel to the pin strip. Pot the board in water-c
 | What to adjust | How | Parameter |
 |---|---|---|
 | Bar diameter | **TPU shims:** 22.2 / 25.4 mm. **Rubber tape only:** 28.6 mm | `bar_d`, export `bar_shim` |
-| Clamp spacing | Slots in the base plate allow 110–154 mm (default 150) | `clamp_spacing`, `slot_in`, `slot_out` |
+| Clamp spacing | Slots in the base plate allow 110–154 mm (default 150); 132–154 mm with the one-piece dock base | `clamp_spacing`, `slot_in`, `slot_out` |
+| Separate plate + dock, or one piece | `"modular"` (grommets, smart base possible) or `"merged"` (`dock_base` on rubber pads) | `mount` |
 | Screen tilt | Rotate both clamps on the bar to the same angle | `tilt` (preview only) |
 | Height above the bar | **Automatic**: set from your bike's own handlebar clamp (see below). Extra `pad_spacer` blocks if the cluster needs more room | `riser_h`, `riser_d`, `spacer_h` |
 | Fore-aft position | Clamp pad offset | `arm_back` |
@@ -258,6 +281,7 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 ```sh
 openscad -D 'PART="case_shell"' -o case_shell.stl phone_dock_v0.5.scad
 openscad -D 'PART="bar_shim"' -D 'bar_d=25.4' -o bar_shim_25.stl phone_dock_v0.5.scad
+openscad -D 'PART="dock_base"' -o dock_base.stl phone_dock_v0.5.scad    # one-piece option
 ```
 
 `video/mechanism_demo.mp4` shows how every v0.5 mechanism works. To re-render it after a design change, see `video/README.md`.

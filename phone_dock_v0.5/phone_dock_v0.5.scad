@@ -34,6 +34,8 @@
 // "base_plate", "base_plate_2d" (DXF), "clamp_body", "clamp_cap", "bar_shim", "pad_spacer",
 // "lock_yoke", "crank_template" (drilling guide for the lock's own cam), "lock_cover",
 // "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true).
+// Merged mount (mount = "merged"): "dock_base" (dock + base plate in one part, replaces receiver + base_plate),
+// "iso_pad" (rubber pad, x2).
 // Optional printed lock (printed_lock.scad, PRINTED_LOCK.md): "plock_body", "plock_plug", "plock_wafer"
 // (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_nut", "plock_crank".
 PART = "assembly";
@@ -246,6 +248,22 @@ lock_cover_t = 2;
 amps_offset_y = -10;        // AMPS centre sits this far above the shoe centre (negative = below: the plate sits
                             // low on the case so the lock pod fits above it)
 
+// Mount option: "modular" = separate base plate + dock joined through 4 rubber grommets (AMPS, Interface B;
+// a smart base can replace the plate later). "merged" = the dock and base plate printed as ONE part (dock_base),
+// which bolts to the clamps through rubber: a 2 mm rubber pad on each clamp pad (iso_pad) under the plate and
+// a rubber washer under each bolt's washer. A steel or aluminium M5 spacer in each slot (compression limiter)
+// sets how far the rubber is squeezed, so the plate only ever touches rubber. Same dock, lock, contacts and
+// clamps; the whole mount sits iso_pad_t higher. No AMPS interface, so no smart base in between.
+mount = "modular";
+iso_pad_t = 2.0;            // rubber pad between each clamp pad and the merged plate (2 mm neoprene/EPDM, or TPU 95A)
+iso_washer_t = 2.0;         // SELECT: M5 rubber washer under the steel washer, on the plate's top face
+iso_washer_d = 15;          // SELECT: steel washer on top (M5 x 15 x 1.2, DIN 9021); the rubber washer is the same size or smaller
+iso_washer_steel_t = 1.2;
+iso_head_h = 5.0;           // M5 socket head (button head 2.8)
+iso_spacer_d = 8.0;         // SELECT: M5 round spacer, 8 mm OD (aluminium or steel)
+iso_squeeze = 1.0;          // total rubber squeeze when the bolt is tight (25 % of 2 + 2 mm)
+iso_slot_w = iso_spacer_d + 1.5;   // slot clears the spacer, so the plate never touches metal
+
 // ------------------------- BASE PLATE (Interface A + B) -------------
 base_t = 8;
 base_depth = 64;
@@ -336,7 +354,9 @@ yoke_top_locked = pin_lock_z + crank_pin_d/2 + 1.7;
 pod_high_x0 = yoke_x0 - 1.5;                         // tall part of the pod starts just before the yoke
 strike_x1 = pod_high_x0 - 0.8;
 plate_top_dock_z = rx_back_z - grommet_float;        // base plate top face, in the dock frame
-dock_z = arm_up + spacer_h + base_t + grommet_float - rx_back_z;   // dock frame origin above the bar axis (plate frame)
+merged = mount == "merged";
+iso_h = merged ? iso_pad_t : 0;                      // rubber pad lifts the merged plate off the clamp pads
+dock_z = arm_up + spacer_h + iso_h + base_t + grommet_float - rx_back_z;   // dock frame origin above the bar axis (plate frame)
 bar_dock_y = amps_offset_y + arm_back;               // bar axis, dock frame (at z = -dock_z)
 
 // Lock y-layout (upper right). The pod starts just above the base plate and the clamp pads,
@@ -364,6 +384,12 @@ yoke_bottom_locked = arm_top_locked - arm_h;
 bolt_len = bolt_top_locked - yoke_bottom_locked;
 
 base_len = 2*(slot_out + 9);
+// Merged mount: the bolt heads stand on the plate's top face (no counterbore, the plate is all web), so the
+// upper bolts must stay clear of the strike block that slides down past them. That sets the inner end of the slots.
+iso_spacer_l = iso_pad_t + base_t + iso_washer_t - iso_squeeze;     // e.g. 11 mm = a 10 mm spacer + a 1 mm washer
+iso_head_top = plate_top_dock_z + iso_washer_t + iso_washer_steel_t + iso_head_h;   // dock frame (rubber uncompressed)
+iso_slot_in = max(slot_in, ceil(strike_x1 + 0.5 + iso_washer_d/2));
+eff_slot_in = merged ? iso_slot_in : slot_in;
 rib_len = 2*(slot_in - clamp_w/2 - 2);
 ring_ro = clamp_bore_d/2 + clamp_wall;
 clamp_ear_y = clamp_bore_d/2 + 6.5;
@@ -417,7 +443,13 @@ assert(pod_y0 >= amps_offset_y + base_depth/2 + 1.5, "Lock pod would hit the bas
 assert(pod_y0 >= amps_offset_y + pad_l/2 + 1.5, "Lock pod would hit the clamp pads.");
 assert(pod_y1 <= body_h/2 + 7, "Lock pod sticks up more than 7 mm above the case.");
 assert(-shoe_h/2 > -body_h/2, "Shoe nose must sit inside the case outline.");
-assert(clamp_spacing/2 >= slot_in && clamp_spacing/2 <= slot_out, "clamp_spacing outside the slot range.");
+assert(mount == "modular" || mount == "merged", "mount must be \"modular\" or \"merged\".");
+assert(clamp_spacing/2 >= eff_slot_in && clamp_spacing/2 <= slot_out,
+       merged ? "clamp_spacing outside the merged mount's slot range (the upper bolts must clear the strike block)." : "clamp_spacing outside the slot range.");
+assert(!merged || iso_slot_in + 2 <= slot_out, "Merged mount: no slot length left: raise slot_out.");
+assert(!merged || slot_out + iso_washer_d/2 <= base_len/2 - 0.5, "Merged mount: bolt washer hangs over the plate's end.");
+assert(!merged || iso_head_top <= -1.0, "Merged mount: bolt heads reach the case back: use button heads or thinner washers.");
+assert(!merged || iso_slot_w < clamp_w - 6, "Merged mount: slot too wide for the clamp pad.");
 assert(!hide_plate || base_len <= body_w - 4, "Base plate sticks out past the case: reduce slot_out or set hide_plate=false.");
 assert(!hide_plate || amps_offset_y - base_depth/2 >= -body_h/2, "Base plate sticks out below the case: raise amps_offset_y or set hide_plate=false.");
 function ranges_clear(a0, a1, b0, b1, gap) = a1 + gap <= b0 || b1 + gap <= a0;
@@ -456,9 +488,10 @@ for (sx=[-1,1], sy=[-1,1]) let(ix = sx*amps_x, iy = amps_offset_y + sy*amps_y)
          || ranges_clear(ix - m5_insert_d/2, ix + m5_insert_d/2, pcb_x0 - 1, pcb_x1 + 1, 1), "AMPS insert runs into the dock board pocket.");
 assert(!hide_plate || clamp_spacing/2 + clamp_w/2 <= body_w/2, "Clamps stick out past the case: reduce clamp_spacing or set hide_plate=false.");
 assert(bar_d <= clamp_bore_d - 0.9, "Bar is too big for the clamp bore.");
-plate_under_z = arm_up + spacer_h - (plate_ribs ? rib_h : 0);   // lowest point of the plate, above the bar axis
+plate_under_z = arm_up + spacer_h + iso_h - (plate_ribs ? rib_h : 0);   // lowest point of the plate, above the bar axis
 assert(plate_under_z >= riser_reach + riser_clear, "Base plate would hit the bike's handlebar clamp: raise arm_up or spacer_h.");
 echo(arm_up=arm_up, riser_reach=riser_reach, dock_z=dock_z, amps_offset_y=amps_offset_y);
+if (merged) echo(mount=mount, slot_range=[iso_slot_in, slot_out], clamp_spacing_range=[2*iso_slot_in, 2*slot_out], spacer_l=iso_spacer_l, bolt_head_top=iso_head_top);
 echo(lock_focus=[lock_face_x, lock_y, lock_z], bolt_focus=[(bolt_x + yoke_x1)/2, bolt_y, (strike_bottom_z + yoke_bottom_locked)/2]);
 echo(bolt_section=[bolt_x, strike_load_face_y]);
 assert(plate_under_z >= clamp_bore_d/2 + 4, "Base plate too close to the bar.");
@@ -648,7 +681,7 @@ module dock_shoe() {
 }
 
 // ------------------------- RECEIVER / DOCK (dock frame) ---------------
-module dock_receiver() {
+module dock_receiver(amps=true) {
   difference() {
     union() {
       translate([0, (receiver_bottom_y + rx_top_y)/2, rx_back_z])
@@ -693,8 +726,8 @@ module dock_receiver() {
     }
     // Drains: from the low end of the nose channel and of each rail channel, out through the back.
     for (p = drain_points()) translate([p[0], p[1], rx_back_z - 0.05]) cylinder(d=drain_d, h=channel_floor_z - rx_back_z + 0.1, $fn=24);
-    // Interface B: AMPS M5 inserts.
-    for (sx=[-1,1], sy=[-1,1])
+    // Interface B: AMPS M5 inserts (not on the merged dock_base).
+    if (amps) for (sx=[-1,1], sy=[-1,1])
       translate([sx*amps_x, amps_offset_y + sy*amps_y, rx_back_z - 0.05]) cylinder(d=m5_insert_d, h=5.05);
   }
   // Flexure bumps on the arms' channel faces: shallow ramp on top (the nose rides over it when docking),
@@ -877,6 +910,59 @@ module base_plate_2d() {
   }
 }
 
+// ------------------------- MERGED DOCK + BASE PLATE (dock frame) -----
+// mount = "merged": the base plate and the dock as one part. The plate keeps its size, height and clamp slots;
+// the 2 mm grommet gap under the dock is filled solid, so the dock, lock and contacts are exactly where they
+// were. The slots are wider (for the spacers) and have no counterbore: the rubber washers sit on the top face.
+module merged_plate_2d() {
+  difference() {
+    offset(r=8) square([base_len-16, base_depth-16], center=true);
+    for (sx=[-1,1], sy=[-1,1])
+      hull() for (x=[iso_slot_in, slot_out]) translate([sx*x, sy*plate_bolt_y]) circle(d=iso_slot_w);
+  }
+}
+
+module dock_base() {
+  plate_z0 = plate_top_dock_z - base_t;
+  difference() {
+    union() {
+      dock_receiver(amps=false);
+      translate([0, amps_offset_y, plate_z0]) linear_extrude(base_t) merged_plate_2d();
+      // Fill the old grommet gap, under the dock's outline only (the strike slides past just outside it).
+      intersection() {
+        translate([0, (receiver_bottom_y + rx_top_y)/2, plate_top_dock_z - 0.01])
+          rounded_prism(receiver_w, rx_top_y - receiver_bottom_y, rx_back_z - plate_top_dock_z + 0.02, receiver_edge_r);
+        translate([0, amps_offset_y, plate_top_dock_z - 0.01]) rounded_prism(base_len, base_depth, grommet_float + 0.02, 8);
+      }
+    }
+    // Window under the dock-board pocket, so the lid still goes on from behind after potting.
+    translate([pcb_x0 - 1, pcb_y0 - 0.8, plate_z0 - 0.05]) cube([pcb_x1 - pcb_x0 + 2, pcb_y1 - pcb_y0 + 1.6, rx_back_z - plate_z0 + 0.1]);
+    // Drains carried on through the plate.
+    for (p = drain_points()) translate([p[0], p[1], plate_z0 - 0.05]) cylinder(d=drain_d, h=rx_back_z - plate_z0 + 0.1, $fn=24);
+  }
+}
+
+// Rubber pad between a clamp pad and the merged plate (cut from 2 mm neoprene/EPDM sheet using this as a
+// template, or print it in TPU 95A). The spacer passes through its holes.
+module iso_pad() {
+  difference() {
+    translate([-clamp_w/2, -pad_l/2, 0]) cube([clamp_w, pad_l, iso_pad_t]);
+    for (sy=[-1,1]) translate([0, sy*plate_bolt_y, -0.05]) cylinder(d=iso_spacer_d + 0.5, h=iso_pad_t + 0.1);
+  }
+}
+
+// Bolt stack for previews and checks (clamp frame, on the clamp pad): spacer, rubber washer, steel washer, head.
+module iso_hardware() {
+  for (sy=[-1,1]) translate([0, -arm_back + sy*plate_bolt_y, arm_up + spacer_h]) {
+    color([0.75,0.75,0.78]) cylinder(d=iso_spacer_d, h=iso_spacer_l);
+    // Drawn with the pad uncompressed, so the rubber washer shows the whole squeeze.
+    color([0.1,0.1,0.1]) translate([0,0,iso_pad_t + base_t]) difference() {
+      cylinder(d=iso_washer_d, h=iso_spacer_l - iso_pad_t - base_t); translate([0,0,-1]) cylinder(d=iso_spacer_d, h=5); }
+    color([0.75,0.75,0.78]) translate([0,0,iso_spacer_l]) { cylinder(d=iso_washer_d, h=iso_washer_steel_t);
+      translate([0,0,iso_washer_steel_t]) cylinder(d=8.5, h=iso_head_h); }
+  }
+}
+
 // ------------------------- HANDLEBAR CLAMPS (clamp frame) -------------
 module clamp_body() {
   difference() {
@@ -955,14 +1041,14 @@ module dock_stack() {
     color([0.35,0.75,0.95,0.35]) translate([0,0,window_z0 + EXPLODE*0.9]) window_template();
   }
   translate([0,0,EXPLODE*0.4]) { color([0.25,0.28,0.32]) dock_shoe(); color([0.62,0.62,0.66]) keeper_part(); }
-  color([0.38,0.42,0.46]) dock_receiver();
+  if (merged) color([0.20,0.45,0.70]) dock_base(); else color([0.38,0.42,0.46]) dock_receiver();
   color([0.30,0.30,0.30]) translate([0,0,-EXPLODE*0.5]) dock_lid();
   lock_mechanism(1);
   color([0.30,0.30,0.30]) translate([0,0,-EXPLODE*0.5]) lock_cover();
 }
 
 module on_plate() {
-  rotate([tilt,0,0]) translate([0, -arm_back, arm_up + spacer_h + base_t + EXPLODE*0.5]) children();
+  rotate([tilt,0,0]) translate([0, -arm_back, arm_up + spacer_h + iso_h + base_t + EXPLODE*0.5]) children();
 }
 
 module assembly() {
@@ -970,10 +1056,14 @@ module assembly() {
     color([0.30,0.33,0.36]) clamp_body();
     color([0.30,0.33,0.36]) translate([0,0,-EXPLODE*0.3]) clamp_cap();
     if (spacer_h > 0) color([0.4,0.4,0.4]) translate([0,-arm_back,arm_up]) pad_spacer();
+    if (merged) {
+      color([0.1,0.1,0.1]) translate([0,-arm_back,arm_up + spacer_h + EXPLODE*0.25]) iso_pad();
+      translate([0,0,EXPLODE*0.5]) iso_hardware();
+    }
   }
   on_plate() {
-    color([0.20,0.45,0.70]) base_plate();
-    translate([0, -amps_offset_y, grommet_float - rx_back_z + EXPLODE]) dock_stack();
+    if (!merged) color([0.20,0.45,0.70]) base_plate();
+    translate([0, -amps_offset_y, grommet_float - rx_back_z + (merged ? 0 : EXPLODE)]) dock_stack();
   }
   if (SHOW_BAR) % rotate([0,90,0]) cylinder(d=bar_d, h=700, center=true);
 }
@@ -988,6 +1078,8 @@ else if (PART == "window_template") window_template();
 else if (PART == "shoe") dock_shoe();
 else if (PART == "receiver") dock_receiver();
 else if (PART == "dock_lid") dock_lid();
+else if (PART == "dock_base") dock_base();
+else if (PART == "iso_pad") iso_pad();
 else if (PART == "base_plate") base_plate();
 else if (PART == "base_plate_2d") base_plate_2d();
 else if (PART == "clamp_body") clamp_body();

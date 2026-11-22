@@ -81,6 +81,7 @@ An old phone becomes a permanent handlebar navigation screen.
   - `lock_code` sets the key; `lock_type = "printed"` shows it in the assembly.
   - Built-in checks: `PART="plock_check_*"`.
 - **Mount:** modular: 2 rotating bar clamps (set the tilt) → base plate on 4 grommets → dock → case. A smart base can replace the plate later.
+  - **Option `mount = "merged"`:** `dock_base` = dock + plate in one part. The damping moves to the clamp bolts (`iso_pad` rubber pads, rubber washers, M5 spacers as compression limiters). The mount sits 2 mm higher, clamp spacing is 132–154 mm (the bolt heads must clear the strike), and there is no smart base. `"modular"` stays the default.
 - **Cost:** about ₹3,400–5,000 with perfboard; a PCB adds about ₹700–2,300 (`SHOPPING_LIST_INDIA.md`).
 
 **Docs:**

@@ -22,6 +22,10 @@
       "caption": "From behind: the lock pod sits behind the top corner"
     },
     {
+      "src": "images/merged_exploded.png",
+      "caption": "Option: dock and base plate printed as one part, on rubber pads at the clamp bolts"
+    },
+    {
       "src": "images/plock_exploded.png",
       "caption": "Optional printed lock: key, body, plug, 4 wafers with springs, clip, crank"
     },
@@ -80,6 +84,20 @@
       "what": "Joins the clamps to the dock through rubber grommets",
       "qty": "1",
       "material": "ASA or PETG (or cut from base_plate.dxf)"
+    },
+    "dock_base": {
+      "name": "Dock base (one-piece option)",
+      "what": "The dock and base plate as one part, instead of receiver + base_plate (set mount = \"merged\"). Clamp spacing 132–154 mm",
+      "qty": "1",
+      "material": "ASA or PETG, on the lock pod's bottom face with supports under the plate",
+      "optional": true
+    },
+    "iso_pad": {
+      "name": "Rubber pad (one-piece option)",
+      "what": "Sits between each clamp pad and the dock base; cut from 2 mm neoprene using it as a template, or print it",
+      "qty": "2",
+      "material": "TPU 95A, or 2 mm neoprene/EPDM sheet",
+      "optional": true
     },
     "clamp_body": {
       "name": "Clamp body",

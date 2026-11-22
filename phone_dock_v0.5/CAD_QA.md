@@ -262,6 +262,34 @@ Update 12 (2026-11-20): **optional printed lock and key** (`printed_lock.scad`, 
   - The wafer body was narrowed, so only its 4 mm tab enters a channel; the wide body's corners gave only a weak, corner-only block.
 - **Spotted, not changed:** the store lock's own cam screw or nut, on the axis behind the crank, has only 0.5 mm to the yoke (`crank_x0 - yoke_x1`). Check your lock's cam fixing; the yoke may need a relief pocket. The printed crank has nothing on the axis behind it.
 
+Update 13 (2026-11-22): **optional one-piece dock base** (`mount = "merged"`; `"modular"` stays the default and is unchanged).
+- **Design:**
+  - `dock_base` = the receiver (without its AMPS inserts) + the base plate at the same height + the 2 mm grommet gap filled solid under the receiver's outline only. The dock frame is unchanged, so the dock, pod, pins and snap sit exactly where they were relative to the plate.
+  - A window through the plate under the board pocket keeps the lid fitted from behind; the 3 drains run on through the plate.
+  - Damping at the clamp bolts: `iso_pad` (2 mm rubber, on each clamp pad), a 2 mm rubber washer + M5 × 15 steel washer on top, and an 8 mm × 11 mm M5 spacer in each 9.5 mm slot as a compression limiter (1 mm total squeeze). The whole mount sits `iso_pad_t` = 2 mm higher (`dock_z` 55.48 → 57.48).
+  - The slots have no counterbore, so the bolt heads stand on the plate (top 5.8 mm behind the case back). The inner slot end is set by the strike block sliding past the upper bolts: `iso_slot_in` = 66, so clamp spacing is 132–154 mm.
+- **New asserts:** `mount` value; clamp spacing within the merged slot range; slot length left; washer on the plate; bolt heads clear of the case back; slot narrower than the clamp pad. Both `mount` values pass with no warnings.
+- **Exported:** `dock_base.stl` (148.6 cm³; receiver + plate were 132.5 cm³) and `iso_pad.stl` (2.2 cm³). Both are watertight with consistent winding and one body. Modular parts are unchanged, so nothing else was re-exported.
+- **Checks** (intersection renders, merged mode):
+
+| Check | Result |
+|---|---|
+| Case (shell, back, shoe, bearing block) sliding in at 0, 10, 30 and 60 mm vs `dock_base` (snap off) | touch only |
+| Docked, snap on | 1.15 mm³ (the usual 0.1 mm snap preload) |
+| Locked bolt vs case pulled up 0.5 mm | 30.38 mm³: the bolt still blocks removal on the steel block |
+| Dock lid vs `dock_base` | no overlap |
+| Crank, yoke, bolt (turn 0, 0.5, 1) + lock cover vs `dock_base` | no overlap |
+| Spacers, washers, bolt heads vs `dock_base`, clamp spacing 132, 150, 154 | touch only |
+| Rubber pads vs `dock_base` | touch only |
+| Bolt hardware + pads vs the sliding case at 0, 15 and 40 mm, clamp spacing 132, 150, 154 | no overlap |
+| **Must collide:** clamp spacing 110 with the slots forced to 55 mm, docked | washer hits the strike block (85.5 mm³), so the 132 mm limit is real |
+| Clamps + pads + bolts vs `dock_base`, case and lock, tilt 0, 40, 70° | touch only |
+| Bar / bike-clamp envelope (+3 mm) vs `dock_base`, case and lock, tilt 0, 40, 70° | no overlap |
+
+- **Position at 40° tilt** (case, dock base and lock): top 92.4 mm above the bar (modular 90.8), rearmost edge 74.1 mm behind it (72.8), lowest point 6.6 mm above bar level (5.1).
+- **Images:** `images/merged_exploded.png`, `merged_dock_base.png`, `merged_underside.png`. The video stays on the modular mount.
+- **Not checked:** how well 2 mm rubber pads damp compared with the grommets; rubber creep loosening the bolts (the spacers should prevent it); print supports under the plate.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders
