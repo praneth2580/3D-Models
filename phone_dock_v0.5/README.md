@@ -1,11 +1,11 @@
-# Modular handlebar navigation dock
+# Handlebar navigation dock
 
 **Project:** Old phone converted into a permanent motorcycle navigation screen (landscape)
 **Bikes:** general purpose: any motorcycle with a round handlebar (22.2, 25.4 or 28.6 mm). Every bike-specific dimension is a setting.
-**Revision:** 0.5 concept prototype: slim case and compact dock (0.2–0.4 are in `archive/`)
+**Revision:** 0.5 concept prototype: slim case and a one-piece dock base (0.2–0.4 are in `archive/`)
 **CAD:** OpenSCAD 2021.01, millimetres
 
-> **One design, about ₹3,400–5,000 in Mumbai** ([`SHOPPING_LIST_INDIA.md`](SHOPPING_LIST_INDIA.md)). The only choice is how you build the dock's electronics: **hand-wired on perfboard**, or on a **small ordered PCB** (same circuit and parts, about ₹700–2,300 more). Everything printed is the same either way; see [`WIRING.md`](WIRING.md).
+> **One design, about ₹3,650–5,600 in Mumbai** ([`SHOPPING_LIST_INDIA.md`](SHOPPING_LIST_INDIA.md)). The only choice is how you build the dock's electronics: **hand-wired on perfboard**, or on a **small ordered PCB** (same circuit and parts, about ₹700–2,300 more). Everything printed is the same either way; see [`WIRING.md`](WIRING.md).
 >
 > Video: `video/mechanism_demo.mp4`.
 >
@@ -61,51 +61,63 @@ How the bulk was removed:
   - **No custom steel parts.** The bolt and the bearing block are two pieces cut from one bought bar, and the crank is the lock's own cam with one hole drilled in it.
   - The first version of this update used a laser-cut 6 mm steel keeper plate. It is still available with `steel_keeper = true` (`strike_keeper_2d.dxf`).
 
-## The module stack
+## The mount (v0.5 main build: one-piece dock base)
 
-| # | Module | Files | Interface to the layer above |
+Since 2026-11-22 the main build is the **one-piece dock base** (`mount = "merged"`, the default): the dock and the base plate are printed as **one part**, `dock_base.stl`. The separate base plate + dock on grommets is still there as the **modular option** (see below).
+
+| # | Part | Files | Interface to the layer above |
 |---|---|---|---|
 | 1 | **Handlebar clamps** (×2) | `clamp_body.stl`, `clamp_cap.stl`, `bar_shim.stl`, `pad_spacer.stl` | **A:** each clamp pad has 2 × M5 inserts, 36 mm apart fore-aft |
-| 2 | **Base plate** (swap later for a smart base) | `base_plate.stl` or `base_plate.dxf` (metal) | **B:** AMPS pattern (4 × M5, 30 × 38 mm) through rubber grommets, plus a Ø14 mm cable hole |
-| 3 | **Dock / receiver** | `receiver.stl` (includes the lock pod), `dock_lid.stl`, `lock_cartridge.stl` (holds the lock in the pod), `lock_cover.stl`, `lock_yoke.stl`, `crank_template.stl` (drilling guide for the lock's cam) | **C:** dovetail rails, a central nose with the contact pads, and a printed strike block (with a key-steel bearing block) for the lock bolt |
-| 4 | **Phone case** | `case_shell.stl`, `case_back.stl`, `window_template.stl`, `shoe.stl` (the strike is printed with it; `strike_keeper*` only if `steel_keeper = true`) | |
+| 2 | **Dock base** (dock + base plate in one) | `dock_base.stl`, 2 × `iso_pad.stl` (rubber pads), `dock_lid.stl`, `lock_cartridge.stl` (holds the lock in the pod), `lock_cover.stl`, `lock_yoke.stl`, `crank_template.stl` (drilling guide for the lock's cam) | **C:** dovetail rails, a central nose with the contact pads, and a printed strike block (with a key-steel bearing block) for the lock bolt |
+| 3 | **Phone case** | `case_shell.stl`, `case_back.stl`, `window_template.stl`, `shoe.stl` (the strike is printed with it; `strike_keeper*` only if `steel_keeper = true`) | |
 
 `cam_template.stl` is left over from the earlier cam latch and is no longer used.
 
-![Exploded](images/v05_exploded.png)
+![From the side: the case and base read as one slab](images/merged_side.png)
 
-### Option: one-piece dock base (`mount = "merged"`)
-
-The base plate and the dock can be printed as **one part**, `one_piece/dock_base.stl`, instead of `base_plate` + `receiver`. It is shaped to look like part of the case: the aim is a mount that looks minimal on the bike. The clamps, the rails, the contacts, the snap and the lock mechanism work exactly as before.
+It is shaped to look like part of the case: the aim is a mount that looks minimal on the bike.
 
 - **The look:**
   - The base takes **the case's own outline** (176 × 84 mm, inside the case's 178 × 85), so from the rider's seat it is hidden behind the case. Only the small LED strip shows below the case's lower edge.
   - **Side walls** rise to 0.5 mm under the case, so from the side the case and the base read as **one slab**, with no gap and no steps. The lock cartridge's face plate sits flush in a notch in the right wall, so the keyhole sits flush in it too.
   - **End walls** close the bottom end either side of the LED strip, and the top end left of the dock. Only the docking slot, where the shoe and the strike slide in, stays open. Drain holes at the low corners let rain out.
-  - The **lock pod is 7 mm lower**, so it no longer shows above the case's top-right corner. Nothing sticks out above the case now.
+  - The **lock pod** sits low enough to hide behind the case's top-right corner. Nothing sticks out above the case.
   - The underside has a **rounded edge** all round.
-- **The case parts change with it:** lowering the lock moves the strike block on the shoe 7 mm down, and with it the 2 strike screw inserts in the back cover. Print **`one_piece/shoe_one_piece.stl` and `one_piece/case_back_one_piece.stl`** for this base. A case made for the modular dock will slide on, but it **won't lock**. Everything else in the case is the same.
-- **Inside:** the floor is the old base plate (same height, thickness and clamp slots), grown to the case outline. The dock sits on it with the 2 mm grommet gap filled solid.
-- **Damping moves to the clamp bolts.** Without the grommet layer, the part sits on rubber instead:
+- **Inside:** the floor is a base plate (3 mm web, clamp slots) grown to the case outline, with the dock on top of it.
+- **Damping is at the clamp bolts.** The part sits on rubber:
   - a **2 mm rubber pad** (`iso_pad`) on each clamp pad, under the plate. Cut it from 2 mm neoprene or EPDM sheet using the STL as a template, or print it in TPU 95A;
   - a **2 mm rubber washer** under a large steel washer (M5 × 15) on top of the plate, at each bolt;
   - an **M5 spacer, 8 mm across and 11 mm long** (a 10 mm spacer plus a 1 mm washer), in each slot. It stops the bolt crushing the rubber: the bolt clamps steel washer, spacer and clamp pad metal to metal, and the plate is held only between the two pieces of rubber. The slots are 9.5 mm wide, so the plate never touches the spacer.
   - Use 4 × M5 × 20 socket screws into the clamp pads' inserts.
-- **What you give up:**
-  - **Clamp spacing is 132–154 mm** (the modular plate does 110–154). The bolt heads stand on top of the plate, so the upper bolts have to stay clear of the strike block that slides down past them. Check your bar has room before choosing this.
-  - **No smart base later.** There is no AMPS interface between the plate and the dock.
-  - The whole mount sits **2 mm higher** (the rubber pads): the top of the case is about 92 mm above the bar at 40° tilt, instead of 91 mm.
-  - **More plastic:** `dock_base` is 187 cm³, against 132 cm³ for `receiver` + `base_plate`.
-  - A case made for one base doesn't lock on the other (see above).
-- **What you gain:** a much cleaner look, two fewer parts, no grommets, no AMPS inserts, and one fewer joint that could work loose.
-- **Fitting the dock board lid:** a window through the floor under the board pocket lets you glue `dock_lid` on from behind after potting, as before. The dock's drains also run through the floor.
-- **Printing:** the lock pod hangs 8.5 mm below the floor, so print `dock_base` on the pod's bottom face with supports under the floor (tree supports are fine). The snap arms still bend within the print layers.
-
-![From the side: the case and base read as one slab](images/merged_side.png)
+- **Clamp spacing is 132–154 mm** (default 150). The bolt heads stand on top of the plate, so the upper bolts have to stay clear of the strike block that slides down past them. Check your bar has room.
+- **Fitting the dock board lid:** a window through the floor under the board pocket lets you glue `dock_lid` on from behind after potting. The dock's drains also run through the floor.
+- **Printing:** the lock pod hangs 8.5 mm below the floor, so print `dock_base` on the pod's bottom face with supports under the floor (tree supports are fine). The snap arms still bend within the print layers. It is 180 cm³, the biggest print.
 
 ![One-piece dock base on the clamps](images/merged_exploded.png)
 
 ![dock_base from above](images/merged_dock_base.png)
+
+### Option: modular mount (`mount = "modular"`)
+
+The earlier layout, kept as an option: a separate **base plate** and **dock** (`receiver`), joined through 4 rubber grommets at an AMPS pattern. Its files are in [`modular/`](modular/).
+
+| # | Module | Files | Interface to the layer above |
+|---|---|---|---|
+| 1 | **Handlebar clamps** (×2) | as above | **A:** as above |
+| 2 | **Base plate** (swap later for a smart base) | `modular/base_plate.stl` or `modular/base_plate.dxf` (metal) | **B:** AMPS pattern (4 × M5, 30 × 38 mm) through rubber grommets, plus a Ø14 mm cable hole |
+| 3 | **Dock / receiver** | `modular/receiver.stl`, plus `dock_lid`, `lock_cartridge`, `lock_cover`, `lock_yoke` as above | **C:** as above |
+| 4 | **Phone case** | `case_shell`, `case_back` and `shoe` **from `modular/`** (`case_back_modular.stl`, `shoe_modular.stl`) | |
+
+- **Choose it if you want:**
+  - **a smart base later** (Arduino, speakers): it replaces the base plate at the AMPS interface;
+  - **clamp spacing down to 110 mm** (110–154);
+  - less plastic: `receiver` + `base_plate` are 125 cm³, against 180 cm³ for `dock_base`;
+  - grommet damping between the plate and the dock instead of rubber at the clamp bolts.
+- **What it costs:** the base plate shows as a separate layer behind the case, and the lock pod shows about 6 mm above the case's top-right corner (its pod sits 7 mm higher).
+- **The case parts differ:** the pod's height sets where the strike block is on the shoe, and with it the 2 strike screw inserts in the back cover. Use `modular/shoe_modular.stl` and `modular/case_back_modular.stl` with this mount. A case made for one mount slides onto the other, but it **won't lock**. Everything else in the case is the same.
+- The mount sits 2 mm lower than the one-piece base (no rubber pads under the plate).
+
+![The modular stack](images/modular_exploded.png)
 
 ## The case
 
@@ -140,14 +152,14 @@ To make the window removable instead of bonded, you would need a screwed front f
      - **The arms:** each is 15 mm long, 1.6 mm thick and attached only at its top end. The nose rides over the bumps' shallow 30° ramps, and their steep 60° faces then hold it.
      - **Holding force:** the pins push the case back up the rails with roughly 5–8 N, and pulling it off takes a firm tug of roughly 14 N (both estimates). So the snap, not the lock, keeps the contacts closed, even with the lock open.
      - **Durability:** the arms bend only 0.6 % (PETG and ASA take this repeatedly), and once docked they sit almost relaxed, with a 0.1 mm preload and no rattle.
-     - **Printing:** print the receiver **back face down**, so the arms bend within the print layers. Keep the slots behind and under the arms free of supports.
+     - **Printing:** the arms must bend within the print layers: print `dock_base` on the pod's bottom face (the modular `receiver` back face down). Keep the slots behind and under the arms free of supports.
      - If the case creeps up with the lock open, print the arms 0.2 mm thicker (`flex_t`).
    - **Drains:** rain that runs down the channels leaves through Ø3 mm drains at their lowest points instead of pooling at the pins.
 3. Turn the key a quarter turn. A steel crank on the back of the lock lifts a yoke, and the yoke pushes a **flat 14 × 9 mm steel bolt 7 mm straight up** into the window in the shoe's strike block, against its steel bearing block.
    - The pin springs push the case up against the bolt, which takes out the slack. That presses the steel bearing block flat onto the bolt's wide face.
 4. **The keyhole is on the right-hand side**, behind the case's upper-right corner, and the key goes in **horizontally from the side**. Tilting the clamps only rotates the mount around the bar, which runs side to side, so the key direction never changes with tilt or mounting height.
 
-![Dock](images/v05_dock.png)
+![The modular option's dock (receiver)](images/modular_dock.png)
 
 **Why the latch is sturdy:**
 - **Pulling on the case loads the steel bolt sideways, in shear, over a flat patch.**
@@ -220,8 +232,8 @@ Eight short wires go through a tunnel to the pin strip. Pot the board in water-c
 | What to adjust | How | Parameter |
 |---|---|---|
 | Bar diameter | **TPU shims:** 22.2 / 25.4 mm. **Rubber tape only:** 28.6 mm | `bar_d`, export `bar_shim` |
-| Clamp spacing | Slots in the base plate allow 110–154 mm (default 150); 132–154 mm with the one-piece dock base | `clamp_spacing`, `slot_in`, `slot_out` |
-| Separate plate + dock, or one piece | `"modular"` (grommets, smart base possible) or `"merged"` (`dock_base` on rubber pads) | `mount` |
+| Clamp spacing | 132–154 mm with the one-piece dock base (default 150); 110–154 mm with the modular plate | `clamp_spacing`, `slot_in`, `slot_out` |
+| One piece, or separate plate + dock | `"merged"` (default: `dock_base` on rubber pads) or `"modular"` (grommets, smart base possible) | `mount` |
 | Screen tilt | Rotate both clamps on the bar to the same angle | `tilt` (preview only) |
 | Height above the bar | **Automatic**: set from your bike's own handlebar clamp (see below). Extra `pad_spacer` blocks if the cluster needs more room | `riser_h`, `riser_d`, `spacer_h` |
 | Fore-aft position | Clamp pad offset | `arm_back` |
@@ -255,11 +267,13 @@ These heights include the 13 mm from moving the lock to the top (see *Update 202
 
 The 8 mm stiffening ribs under the plate were removed in this update, because they were the lowest point and sat right where the bike's clamp bolts are. The plate is now flat underneath.
 
-**Size at the default settings** (150 mm clamp spacing, placeholder clamp measurements, `arm_up` 33.5 mm, 40° tilt):
-- 178 mm wide (set by the case; the plate and clamps sit behind it);
-- the top of the case is about 91 mm above the bar axis;
-- the case's lower edge is about 73 mm behind the bar, and the lowest point of the case and dock (the dock's lower corner) is about 9 mm **above** bar level;
-- the lock pod is behind the top-right corner; its lowest point is about 40 mm above the bar and 10 mm forward of it.
+**Size at the default settings** (one-piece dock base, 150 mm clamp spacing, placeholder clamp measurements, `arm_up` 33.5 mm, 40° tilt):
+- 178 mm wide (set by the case; the base and clamps sit behind it);
+- the top of the case is about 92 mm above the bar axis (the modular option: 91 mm; the table above is for the modular option);
+- the rearmost edge is about 74 mm behind the bar, and the lowest point of the mount is about level with the bar (0.4 mm above it);
+- the lock pod is hidden behind the top-right corner.
+
+With the modular option, the lowest point is about 9 mm above bar level and the lock pod's lowest point about 40 mm above the bar and 10 mm forward of it.
 
 ## Measure before printing
 
@@ -269,17 +283,17 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 
 ## Damping, smart base, materials
 
-- **Damping:** four rubber grommets with steel sleeves (M5, for a 9.5 mm hole in a 3 mm panel) in the base plate at interface B. Use large washers so the dock stays captive if a grommet tears.
-- **Smart base later:** keep the clamp slots underneath (M5 on y = ±18 mm, 55–77 mm from the centre), stay within 172 mm wide to remain hidden, and AMPS 30 × 38 on top, and fit anything inside. Note that the dock's AMPS centre is 10 mm **below** the shoe centre, and the lock pod sits just above the base plate's top edge, so a smart base must stay within the same 64 mm depth.
+- **Damping:** one-piece base: the rubber pads, rubber washers and spacers at the clamp bolts (see *The mount*). Modular option: four rubber grommets with steel sleeves (M5, for a 9.5 mm hole in a 3 mm panel) in the base plate at interface B; use large washers so the dock stays captive if a grommet tears.
+- **Smart base later (modular option only):** keep the clamp slots underneath (M5 on y = ±18 mm, 55–77 mm from the centre), stay within 172 mm wide to remain hidden, and AMPS 30 × 38 on top, and fit anything inside. Note that the dock's AMPS centre is 10 mm **below** the shoe centre, and the lock pod sits just above the base plate's top edge, so a smart base must stay within the same 64 mm depth.
 - **Materials:**
-  - case, shoe and receiver in ASA or PA12;
+  - case, shoe and dock base in ASA or PA12;
   - clamps in PA12, PETG or ASA at 100% infill around the ring;
   - bar shims: strips of old bicycle inner tube (or print `bar_shim` in TPU 95A);
   - window in 2 mm polycarbonate;
   - a 1.5 mm silicone O-ring cord.
 - **Fasteners:**
   - M3 (case corners, shoe) into heat-set inserts;
-  - M5 (clamps, plate, AMPS);
+  - M5 (clamps and plate; AMPS on the modular option);
   - re-check the clamp bolts after the first ride.
 
 ## Things to watch with a full-time phone
@@ -290,9 +304,9 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 ## Build order
 
 1. Make a cardboard mock-up on the bike (178 × 85 mm). Measure the bar and choose the clamp spacing.
-2. Print and fit the clamps and base plate. Check the clearance and steering lock.
+2. Print and fit the clamps and the dock base (or, for the modular option, the base plate). Check the clearance and steering lock.
 3. Measure the phone. Print the shell and back cover. Check the phone fit, the O-ring fit and the camera relief before bonding the window.
-4. Buy the 16 mm lock (or print the [printed lock](PRINTED_LOCK.md)), the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list) and the grommets. `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, receiver and yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
+4. Buy the 16 mm lock (or print the [printed lock](PRINTED_LOCK.md)), the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list), and the rubber, washers and spacers for the clamp bolts (grommets for the modular option). `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, the lock cartridge and the yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
 5. Do a spray test with dry tissue inside, then a ride test without the phone, then a heat test with the phone.
 
 ## Exporting
@@ -300,8 +314,9 @@ The 8 mm stiffening ribs under the plate were removed in this update, because th
 ```sh
 openscad -D 'PART="case_shell"' -o case_shell.stl phone_dock_v0.5.scad
 openscad -D 'PART="bar_shim"' -D 'bar_d=25.4' -o bar_shim_25.stl phone_dock_v0.5.scad
-openscad -D 'mount="merged"' -D 'PART="dock_base"' -o dock_base.stl phone_dock_v0.5.scad    # one-piece option
-openscad -D 'mount="merged"' -D 'PART="shoe"' -o shoe_one_piece.stl phone_dock_v0.5.scad    # its shoe (and case_back)
+openscad -D 'PART="dock_base"' -o dock_base.stl phone_dock_v0.5.scad                       # the main build
+openscad -D 'mount="modular"' -D 'PART="receiver"' -o modular/receiver.stl phone_dock_v0.5.scad    # modular option
+openscad -D 'mount="modular"' -D 'PART="shoe"' -o modular/shoe_modular.stl phone_dock_v0.5.scad    # its shoe (and case_back)
 ```
 
 `video/mechanism_demo.mp4` shows how every v0.5 mechanism works. To re-render it after a design change, see `video/README.md`.

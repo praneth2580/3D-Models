@@ -1,6 +1,6 @@
 # Shopping list and cost: India (Mumbai)
 
-This covers one complete set (dock + case), assuming:
+This covers one complete set (the one-piece dock base + case, the main build), assuming:
 - no 3D printer (the parts are printed by a service);
 - you do the soldering and assembly yourself;
 - you already have a soldering iron, solder and a multimeter.
@@ -14,18 +14,20 @@ This covers one complete set (dock + case), assuming:
 
 | | Cost |
 |---|---|
-| **Option A: dock board hand-wired on perfboard** | **≈ ₹3,400–5,000** |
-| **Option B: dock board on an ordered PCB** | **≈ ₹4,100–7,300** (Option A + ₹700–2,300) |
+| **Option A: dock board hand-wired on perfboard** | **≈ ₹3,650–5,600** |
+| **Option B: dock board on an ordered PCB** | **≈ ₹4,350–7,900** (Option A + ₹700–2,300) |
+
+The top of Option A's range is over the ₹5,000 target. Ask the print service to quote `dock_base` at 3 walls and 20–25 % infill, and get 2–3 quotes. The modular mount option is about ₹250–650 cheaper (see the end).
 
 The case, the dock, the printed parts and the components are identical. Only the dock board (and, if you like, the pin and pad strips) differs. See [`WIRING.md`](WIRING.md).
 
-3D printing is the biggest variable. At ₹5/g it is about ₹1,500, but at ₹8/g it would be about ₹2,500, which pushes Option A just over ₹5,000. Get 2–3 quotes first.
+3D printing is the biggest variable. At ₹5/g it is about ₹1,750, but at ₹8/g it would be about ₹2,800. Get 2–3 quotes first.
 
 ## Parts
 
 | Part | Where | Price |
 |---|---|---|
-| **3D printing**, about 350 cm³ of parts (including the 7 cm³ lock cartridge), roughly 290–330 g as printed. PETG or ASA; clamps 100 % infill, the rest 4 walls and 30–40 % infill. Skip `bar_shim` (see below) | A Mumbai FDM service at about ₹5–6/g: [Robu (EasyMech)](https://robu.in/?p=901845), [Zbotic](https://zbotic.in/3d-printing-service/), [iamRapid](https://iamrapid.com/3d-printing-services/), [Makenica (Mumbai)](https://makenica.com/3d-printing-services-in-mumbai). Upload the STLs for an exact price | ₹1,500–2,000 |
+| **3D printing**, about 405 cm³ of parts (the 180 cm³ `dock_base` is the biggest; including the 7 cm³ lock cartridge), roughly 340–390 g as printed, plus supports under the dock base's floor. PETG or ASA; clamps 100 % infill, the rest 4 walls and 30–40 % infill. Skip `bar_shim` (see below) | A Mumbai FDM service at about ₹5–6/g: [Robu (EasyMech)](https://robu.in/?p=901845), [Zbotic](https://zbotic.in/3d-printing-service/), [iamRapid](https://iamrapid.com/3d-printing-services/), [Makenica (Mumbai)](https://makenica.com/3d-printing-services-in-mumbai). Upload the STLs for an exact price | ₹1,750–2,500 |
 | AO3401A P-MOSFET × 2 (1 spare) | [Robu](https://robu.in/?s=AO3401&post_type=product), ₹4.47 each | ₹9 |
 | 2N7002 MOSFET × 2 | [Robu](https://robu.in/?s=2N7000&post_type=product), ₹2.80 each | ₹6 |
 | USBLC6-2SC6 USB ESD (ST) × 1 | [Robu](https://robu.in/?s=USBLC6&post_type=product), ₹20 | ₹20 |
@@ -41,7 +43,9 @@ The case, the dock, the printed parts and the components are identical. Only the
 | 3.2 mm drill bit + M3 bolt, nut and a 4 mm OD spacer (crank pin) | Hardware shop | ₹40–60 (est.) |
 | M3 heat-set inserts (about 14) | Lamington Road or Nagdevi Street (or [Amazon, 50 pcs ₹289](https://www.amazon.in/dp/B0DZFR748C)) | ₹60–100 (est.) |
 | M3 / M5 screws, nuts, washers | Nagdevi Street | ₹150–200 (est.) |
-| 4 rubber grommets with sleeves (bike side-panel type) | Bike spares shop | ₹60–120 (est.) |
+| 4 × M5 round spacers, 8 mm OD, 10 mm long (aluminium or steel), plus 4 × M5 plain washers to make 11 mm | Lamington Road or Nagdevi Street | ₹40–80 (est.) |
+| 4 × M5 rubber washers, about 2 mm thick, and 4 × M5 × 15 large (DIN 9021) steel washers | Nagdevi Street, or a rubber/seal shop | ₹30–60 (est.) |
+| 2 mm neoprene or EPDM sheet offcut, for the 2 clamp pads (24 × 50 mm each). Or print `iso_pad` in TPU 95A | Rubber/seal shop | ₹30–80 (est.) |
 | 1.5 mm silicone O-ring cord | Rubber or seal shop | ₹50–100 (est.) |
 | 2 mm **polycarbonate** offcut for the window (not acrylic: it cracks) | Plastic-sheet dealer | ₹100–200 (est.) |
 | Araldite Klear 10 g × 3 (window bond, potting, bearing block) | [Amazon.in](https://www.amazon.in/dp/B0BXY85PXH), ₹68 each | ₹200 |
@@ -50,21 +54,17 @@ The case, the dock, the printed parts and the components are identical. Only the
 | Bike USB supply, only if the bike has no USB socket | [12 V handlebar USB charger](https://www.amazon.in/dp/B0HNTBGQBT); wire it after the ignition | ₹0–249 |
 | Bar shims: strips of old bicycle inner tube | | ₹0 |
 | *Optional:* thermal pad 0.5 mm (better heat sensing) | [Amazon.in](https://www.amazon.in/dp/B0DGXFS866) | ₹0–199 |
-| **Total, Option A** | | **≈ ₹3,400–5,000** |
+| **Total, Option A** | | **≈ ₹3,650–5,600** |
 
-## One-piece dock base (`mount = "merged"`): changes
+## Modular mount option (`mount = "modular"`): changes
 
-Only if you print `dock_base` instead of `base_plate` + `receiver` (see the README). Net change about **+₹250–650**.
+Only if you print `modular/base_plate` + `modular/receiver` instead of `dock_base` (see the README). Net change about **−₹250–650**, which brings Option A back to about ₹3,400–5,000.
 
 | Item | Where | Price |
 |---|---|---|
-| Leave out: the 4 rubber grommets with sleeves | | −₹60–120 |
-| Extra printing: about 55 cm³ more part (the walls and the full-size floor), plus supports under the floor. Its own shoe and back cover replace the standard ones, at the same size | The same print service | +₹250–500 (est.) |
-| 4 × M5 round spacers, 8 mm OD, 10 mm long (aluminium or steel), plus 4 × M5 plain washers to make 11 mm | Lamington Road or Nagdevi Street | +₹40–80 (est.) |
-| 4 × M5 rubber washers, about 2 mm thick, and 4 × M5 × 15 large (DIN 9021) steel washers | Nagdevi Street, or a rubber/seal shop | +₹30–60 (est.) |
-| 2 mm neoprene or EPDM sheet offcut, for the 2 pads (24 × 50 mm each). Or print `iso_pad` in TPU 95A | Rubber/seal shop | +₹30–80 (est.) |
-
-This can push the top of Option A's range over ₹5,000 (to about ₹5,600). Ask the print service to quote `dock_base` at 3 walls and 20–25 % infill to keep it down.
+| Leave out: the spacers, the rubber and steel washers and the neoprene pads above | | −₹100–220 |
+| Less printing: about 55 cm³ less, and no supports under a floor. Its own shoe and back cover (`modular/`) replace the standard ones, at the same size | The same print service | −₹250–500 (est.) |
+| 4 rubber grommets with sleeves (bike side-panel type) | Bike spares shop | +₹60–120 (est.) |
 
 ## Option B: PCB extras
 

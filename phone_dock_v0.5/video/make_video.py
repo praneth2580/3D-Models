@@ -67,15 +67,15 @@ CART_SCENES = [
 ]
 BASE_SCENES_0 = [
     (0.0,  3.0,  ""),
-    (3.0,  10.0, "Modular stack:  handlebar clamps  >  base plate  >  dock  >  slim phone case"),
+    (3.0,  10.0, "The stack:  handlebar clamps  >  one-piece dock base  >  slim phone case"),
     (10.0, 17.5, "Slim rear-loading case: phone drops in from behind, O-ring back cover, 4 hidden corner screws"),
     (17.5, 23.5, "Two clamps on the bar. Rotate both to set the screen tilt (shims fit 22.2 / 25.4 / 28.6 mm bars)"),
     (23.5, 30.5, "Docking: the case slides down the rails; its nose runs in the centre channel"),
     (30.5, 36.0, "Cutaway: flat pads on the nose press onto 10 pogo pins (2 rows). Power + USB data"),
     (36.0, 41.5, "Key goes in from the side, behind the top corner, well clear of the tank. Quarter turn"),
     (41.5, 46.5, "Cutaway: a flat 14 x 9 mm steel bolt rises against a steel block in the case: full-face contact"),
-    (46.5, 51.5, "Rubber grommets isolate the dock and phone from vibration (motion exaggerated)"),
-    (51.5, 60.5, "Upgrade later: swap the base plate for a smart base (Arduino, speakers). Same bolt patterns"),
+    (46.5, 51.5, "Rubber pads and washers at the clamp bolts isolate the dock and phone from vibration (exaggerated)"),
+    (51.5, 60.5, "Modular option: a separate base plate on grommets, which a smart base (Arduino, speakers) can replace"),
     (60.5, 64.5, ""),
 ]
 BASE_SCENES = sorted([(s + CART_LEN if s >= CART_T0 else s, e + CART_LEN if e > CART_T0 else e, c) for s, e, c in BASE_SCENES_0]
@@ -208,6 +208,8 @@ def state(t):
         p, cam = base_state(t - INSERT_LEN if t >= INSERT_T0 + INSERT_LEN else t)
     return p, cam, cap
 
+CART_FOCUS = (LOCK_DOCK[0] - 6, LOCK_DOCK[1] + 10, LOCK_DOCK[2] - 22)   # below the lock pod (follows the CAD)
+CART_VIEW = [118, 0, 48, 330]
 def cart_state(u):
     """Lock-cartridge scene, u = seconds into it. Seen from below the pod, the dock level (tilt 0) and the mount
     hidden: the cover drops, the store lock's cartridge drops out with its lock, then the printed lock's
@@ -221,7 +223,7 @@ def cart_state(u):
         p["lock_type"] = '"printed"'; p["A_show_key"] = 1
         p["A_cart_drop"] = ramp(u, 3.9, 5.6, 140, 0)
         p["A_cover_drop"] = ramp(u, 5.8, 6.8, 34, 0)
-    cam = dock_to_bike((82, 46, -36), tilt=0) + [118, 0, 48, 330]
+    cam = dock_to_bike(CART_FOCUS, tilt=0) + CART_VIEW
     return p, cam
 
 def base_state(t):
@@ -276,7 +278,7 @@ def base_state(t):
         p["A_section"] = '"x"'; p["A_cut"] = BOLT_SECTION[0]; p["A_show_bar"] = 0; p["A_show_mount"] = 0
         p["A_highlight"] = '"lock"'
         cam = dock_to_bike((BOLT_SECTION[0], BOLT_SECTION[1] + 2, -10)) + [90, 0, 90, 120]
-    elif t < 51.5:                                      # vibration on grommets
+    elif t < 51.5:                                      # vibration on the rubber (clamp bolts; grommets on the modular option)
         u = t - 47.0
         if u > 0:
             env = math.exp(-u*0.9)
@@ -284,7 +286,8 @@ def base_state(t):
             p["A_wobble_z"] = 1.5*env*math.sin(2*math.pi*3.1*u + 1)
         p["A_highlight"] = '"grommets"'
         cam = [0, -35, 35, 72, 0, 300, 480]
-    elif t < 60.5:                                      # base plate -> smart base
+    elif t < 60.5:                                      # modular option: base plate -> smart base
+        p["mount"] = '"modular"'
         if t < 54.5:
             p["A_dock_lift"] = ramp(t, 52.0, 53.5, 0, 70)
             p["A_plate_x"] = ramp(t, 53.5, 54.5, 0, -320)
@@ -294,8 +297,7 @@ def base_state(t):
             p["A_plate_x"] = 400
             p["A_smart_x"] = ramp(t, 54.5, 56.5, 320, 0)
         cam = [0, -60, 80, 72, 0, 45, 880]
-    else:                                               # end orbit with the smart base
-        p["A_plate_x"] = 400; p["A_smart_x"] = 0
+    else:                                               # end orbit, the one-piece base
         cam = [0, -35, 40, 62, 0, 330 + 40*ease((t-60.5)/4), 700]
     return p, cam
 
@@ -376,8 +378,8 @@ def annotate(png, cap, t, out):
         a = int(255*min(1, (min(t, DURATION - t))/0.6 + 0.2))
         d.rectangle([0, 0, W, 150], fill=(20, 24, 30, min(215, a)))
         f1, f2 = font("DejaVuSans-Bold.ttf", 44), font("DejaVuSans.ttf", 24)
-        title = "Modular handlebar navigation dock" if t < 3 else "Concept v0.5: every dimension is parametric"
-        sub = ("v0.5 slim case + compact dock: how it works" if t < 3
+        title = "Handlebar navigation dock" if t < 3 else "Concept v0.5: every dimension is parametric"
+        sub = ("v0.5 slim case + one-piece dock base: how it works" if t < 3
                else "CAD: phone_dock_v0.5.scad  |  not yet road-tested")
         d.text(((W - d.textlength(title, font=f1))/2, 30), title, font=f1, fill=(255, 255, 255, a))
         d.text(((W - d.textlength(sub, font=f2))/2, 92), sub, font=f2, fill=(200, 210, 220, a))

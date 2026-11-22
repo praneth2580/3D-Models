@@ -5,7 +5,7 @@
 | Time | Scene |
 |---|---|
 | 0–3 s | Title |
-| 3–10 s | Exploded view of the module stack: clamps, base plate, dock, case |
+| 3–10 s | Exploded view of the stack: clamps (with the rubber pads and clamp bolts), the one-piece dock base, the case |
 | 10–17.5 s | Slim rear-loading case: the phone drops into the shell, the O-ring back cover closes, then the front view shows the thin border |
 | 17.5–23.5 s | Tilt adjustment by rotating the two clamps on the bar |
 | 23.5–30.5 s | Docking: the case slides down the rails, with its nose in the centre channel |
@@ -17,8 +17,8 @@
 | 60–65.5 s | The key goes in horizontally from the right-hand side, behind the case's top corner (well clear of the tank), and turns a quarter turn |
 | 65.5–70.5 s | Side cutaway through the bolt: the crank and yoke lift the flat 14 × 9 mm steel bolt (yellow) up into the case's strike, where it lies flat against the key-steel bearing block (orange-red). The clamps and plate are hidden for this shot |
 | 70.5–78.5 s | **Lock cartridge** (from below the pod, the dock level). The cover drops, and the store lock's cartridge drops out of the bay with the lock, crank, yoke and bolt in it. The printed lock's cartridge, with its chunky key, goes up into the same bay, and the cover goes back on |
-| 78.5–83.5 s | Vibration damping on the rubber grommets (exaggerated) |
-| 83.5–92.5 s | Swapping the base plate for a "smart base" (Arduino and speakers concept) |
+| 78.5–83.5 s | Vibration damping on the rubber pads and washers at the clamp bolts (exaggerated) |
+| 83.5–92.5 s | **Modular option:** the separate base plate on grommets, swapped for a "smart base" (Arduino and speakers concept). Rendered with `mount="modular"` |
 | 92.5–96.5 s | Closing shot |
 
 `mechanism_anim.scad` adds some **visual-only** stand-ins on top of the real parts. These are illustrations, not designed parts:

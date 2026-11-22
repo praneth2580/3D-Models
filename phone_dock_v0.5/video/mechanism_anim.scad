@@ -4,6 +4,8 @@
   Extras drawn here are VISUAL ONLY: spring pins, pads, O-ring, screws, grommets, key,
   lock body, phone screen, smart base, and the wiring (leads, plugs, dock board, wires, potting).
   The crank, yoke, flat bolt and steel keeper are the real lock parts.
+  mount ("merged" = the one-piece dock base, the default; "modular" = base plate + dock on grommets) can be set
+  per frame too; the smart-base scene uses "modular".
 */
 include <../phone_dock_v0.5.scad>
 PART = "none";
@@ -326,7 +328,7 @@ module cut_x() {
 }
 
 // ---------- scene ----------
-module plate_tf() { rotate([A_tilt,0,0]) translate([0, -arm_back, arm_up + spacer_h + base_t + A_explode*0.6]) children(); }
+module plate_tf() { rotate([A_tilt,0,0]) translate([0, -arm_back, arm_up + spacer_h + iso_h + base_t + A_explode*0.6]) children(); }
 module dock_tf() {
   translate([0, -amps_offset_y, grommet_float - rx_back_z + A_dock_lift + A_explode*1.2 + A_wobble_z])
     rotate([A_wobble, 0, 0]) children();
@@ -337,7 +339,7 @@ module dock_in_plate_frame() {
     if (A_wiring) wiring_visual();      // drawn first, so the see-through parts blend over it
     cut_y() {
       status_leds();
-      color(xr([0.38,0.42,0.46])) dock_receiver();
+      if (merged) color(xr([0.20,0.45,0.70])) dock_base(); else color(xr([0.38,0.42,0.46])) dock_receiver();
       color(xr([0.30,0.30,0.30])) dock_lid();
       color(xr([0.30,0.30,0.30])) translate([0, 0, -A_cover_drop]) lock_cover();
       translate([0, 0, -A_cart_drop]) { color(xr([0.34,0.34,0.37])) lock_cartridge(); lock_body_visual(); }
@@ -360,11 +362,17 @@ module scene() {
       cylinder(d=clamp_bore_d-0.2, h=clamp_w, center=true);
       cylinder(d=bar_d, h=clamp_w+1, center=true);
     }
+    // One-piece base: the rubber pad on each clamp pad, and the bolts with their spacers and rubber washers.
+    if (merged) {
+      color(hl("grommets", RUBBER)) translate([0, -arm_back, arm_up + spacer_h + A_explode*0.3]) iso_pad();
+      translate([0, 0, A_explode*0.6]) iso_hardware();
+    }
   }
   plate_tf() {
-    if (A_show_mount && A_plate_x < 390) translate([A_plate_x,0,0]) color([0.20,0.45,0.70]) base_plate();
-    if (A_smart_x < 390) translate([A_smart_x,0,0]) smart_base_visual();
-    if (A_show_mount && (A_plate_x == 0 || A_smart_x == 0)) grommets_visual();
+    // Modular option only: the separate base plate (or a smart base) on 4 grommets.
+    if (!merged && A_show_mount && A_plate_x < 390) translate([A_plate_x,0,0]) color([0.20,0.45,0.70]) base_plate();
+    if (!merged && A_smart_x < 390) translate([A_smart_x,0,0]) smart_base_visual();
+    if (!merged && A_show_mount && (A_plate_x == 0 || A_smart_x == 0)) grommets_visual();
     dock_in_plate_frame();
   }
   if (A_show_bar) color([0.75,0.75,0.75]) rotate([0,90,0]) cylinder(d=bar_d, h=640, center=true);

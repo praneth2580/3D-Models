@@ -30,14 +30,14 @@
 */
 
 // ------------------------- OUTPUT SELECTION -------------------------
-// "assembly", "case_shell", "case_back", "window_template", "shoe", "receiver", "dock_lid",
-// "base_plate", "base_plate_2d" (DXF), "clamp_body", "clamp_cap", "bar_shim", "pad_spacer",
-// "lock_yoke", "crank_template" (drilling guide for the lock's own cam), "lock_cover",
-// "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true).
-// Merged mount (mount = "merged"): "dock_base" (dock + base plate in one part, replaces receiver + base_plate),
-// "iso_pad" (rubber pad, x2).
-// Optional printed lock (printed_lock.scad, PRINTED_LOCK.md): "plock_body", "plock_plug", "plock_wafer"
-// (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_nut", "plock_crank".
+// "assembly", "case_shell", "case_back", "window_template", "shoe", "dock_lid", "clamp_body", "clamp_cap",
+// "bar_shim", "pad_spacer", "lock_cartridge" (for lock_type), "lock_yoke", "crank_template" (drilling guide for
+// the lock's own cam), "lock_cover", "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true),
+// "lock_bay_exploded" (picture).
+// One-piece mount (mount = "merged", the default): "dock_base" (dock + base plate in one part), "iso_pad" (rubber pad, x2).
+// Modular mount (mount = "modular"): "receiver" (the dock), "base_plate", "base_plate_2d" (DXF).
+// Optional printed lock (printed_lock.scad, PRINTED_LOCK.md, lock_type = "printed"): "plock_shuttle", "plock_wafer"
+// (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_lifter", and "lock_cartridge".
 PART = "assembly";
 SHOW_PHONE = true;
 SHOW_BAR = true;
@@ -252,13 +252,14 @@ notch_hw = 9.5;             // half-width of the side-wall notch (the face plate
 amps_offset_y = -10;        // AMPS centre sits this far above the shoe centre (negative = below: the plate sits
                             // low on the case so the lock pod fits above it)
 
-// Mount option: "modular" = separate base plate + dock joined through 4 rubber grommets (AMPS, Interface B;
-// a smart base can replace the plate later). "merged" = the dock and base plate printed as ONE part (dock_base),
+// Mount: "merged" (the default, v0.5's main build) = the dock and base plate printed as ONE part (dock_base),
 // which bolts to the clamps through rubber: a 2 mm rubber pad on each clamp pad (iso_pad) under the plate and
 // a rubber washer under each bolt's washer. A steel or aluminium M5 spacer in each slot (compression limiter)
 // sets how far the rubber is squeezed, so the plate only ever touches rubber. Same dock, lock, contacts and
 // clamps; the whole mount sits iso_pad_t higher. No AMPS interface, so no smart base in between.
-mount = "modular";
+// Option "modular" = separate base plate + dock (receiver) joined through 4 rubber grommets (AMPS, Interface B;
+// a smart base can replace the plate later). Its shoe and case back differ (the lock sits 7 mm higher).
+mount = "merged";
 iso_pad_t = 2.0;            // rubber pad between each clamp pad and the merged plate (2 mm neoprene/EPDM, or TPU 95A)
 iso_washer_t = 2.0;         // SELECT: M5 rubber washer under the steel washer, on the plate's top face
 iso_washer_d = 15;          // SELECT: steel washer on top (M5 x 15 x 1.2, DIN 9021); the rubber washer is the same size or smaller
@@ -306,7 +307,7 @@ clamp_wall = 5.5;
 clamp_split_gap = 1.0;
 clamp_ear_w = 11;
 clamp_ear_h = 12;
-clamp_spacing = 150;        // MEASURE: 110-154 with the default plate
+clamp_spacing = 150;        // MEASURE: 132-154 with the one-piece dock_base (default), 110-154 with the modular plate
 // The bike's own handlebar clamp (riser caps + bolt heads) sits under the plate. When the clamps are
 // rotated for tilt, the plate swings round the bar, so the rear bolt heads set the limit.
 riser_h = 10;               // MEASURE: top of the highest clamp bolt head, above the TOP of the bar (placeholder)

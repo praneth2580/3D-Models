@@ -270,7 +270,7 @@ The easiest way to build the case-side cable correctly:
 
 ## Future smart base (Arduino, speakers, ...)
 
-The base plate is a separate module, so it can later become an electronics box. The cleanest way to connect it:
+This needs the **modular mount option** (`mount = "modular"`): its base plate is a separate module, so it can later become an electronics box. The one-piece dock base (the main build) has no room for one. The cleanest way to connect it:
 
 - **Power:** the bike feeds the smart base, and the dock's lead is wired to the smart base instead of the bike, routed through the Ø14 mm hole in the base.
 - **Audio:** the phone can reach the base's speakers over Bluetooth to an audio board, with no extra contacts.

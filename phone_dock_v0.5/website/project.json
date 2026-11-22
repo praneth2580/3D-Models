@@ -6,28 +6,28 @@
   "order": 1,
   "cover": "images/v05_rider_view.png",
   "video": "video/mechanism_demo.mp4",
-  "poster": "images/v05_exploded.png",
+  "poster": "images/merged_exploded.png",
   "see_sub": "The video is rendered straight from the CAD: assembly, docking, the contacts, the wiring, the key lock and the over-heat cut-off.",
   "gallery": [
     {
-      "src": "images/v05_exploded.png",
-      "caption": "The module stack: clamps, base plate, dock, case"
-    },
-    {
-      "src": "images/v05_dock.png",
-      "caption": "The dock: rails, pin pocket, snap arms and lock pod"
-    },
-    {
-      "src": "images/v05_rear_view.png",
-      "caption": "From behind: the lock pod sits behind the top corner"
+      "src": "images/merged_exploded.png",
+      "caption": "The stack: clamps, one-piece dock base, case"
     },
     {
       "src": "images/merged_side.png",
-      "caption": "One-piece option: the dock base takes the case outline, so from the side case and base read as one slab"
+      "caption": "The dock base takes the case outline, so from the side case and base read as one slab; the lock sits flush in the side wall"
     },
     {
       "src": "images/merged_rear.png",
-      "caption": "One-piece option from behind: the lock pod is hidden behind the case"
+      "caption": "From behind: the lock pod is hidden behind the case's top corner"
+    },
+    {
+      "src": "images/merged_dock_base.png",
+      "caption": "The dock base: rails, pin pocket, snap arms, clamp slots and the lock pod"
+    },
+    {
+      "src": "images/modular_exploded.png",
+      "caption": "Modular option: clamps, base plate on grommets, dock, case (smart base possible later)"
     },
     {
       "src": "images/plock_exploded.png",
@@ -46,7 +46,7 @@
       "caption": "The printed lock's cartridge fits the same bay"
     }
   ],
-  "viewer_default": "receiver",
+  "viewer_default": "dock_base",
   "exclude": [
     "cam_template.stl"
   ],
@@ -79,11 +79,17 @@
       "qty": "1",
       "material": "ASA or PETG"
     },
-    "receiver": {
-      "name": "Dock",
-      "what": "Rail channels, pogo-pin pocket, dock-board pocket, printed snap, lock pod",
+    "dock_base": {
+      "name": "Dock base",
+      "what": "The dock and base plate in one part, shaped to the case outline with side walls: rail channels, pogo-pin pocket, dock-board pocket, printed snap, clamp slots, lock pod (hidden behind the case). Clamp spacing 132–154 mm",
       "qty": "1",
-      "material": "ASA or PETG, printed back face down"
+      "material": "ASA or PETG, on the lock pod's bottom face with supports under the floor"
+    },
+    "iso_pad": {
+      "name": "Rubber pad",
+      "what": "Sits between each clamp pad and the dock base; cut from 2 mm neoprene using it as a template, or print it",
+      "qty": "2",
+      "material": "TPU 95A, or 2 mm neoprene/EPDM sheet"
     },
     "dock_lid": {
       "name": "Dock lid",
@@ -91,39 +97,40 @@
       "qty": "1",
       "material": "ASA or PETG"
     },
+    "receiver": {
+      "name": "Dock (modular option)",
+      "what": "Modular option (mount = \"modular\"): the dock on its own, on 4 grommets on the base plate. Use with the modular shoe and back cover",
+      "qty": "1",
+      "material": "ASA or PETG, printed back face down",
+      "optional": true
+    },
     "base_plate": {
-      "name": "Base plate",
-      "what": "Joins the clamps to the dock through rubber grommets",
+      "name": "Base plate (modular option)",
+      "what": "Modular option: joins the clamps to the dock through rubber grommets; a smart base can replace it later. Clamp spacing 110–154 mm",
       "qty": "1",
-      "material": "ASA or PETG (or cut from base_plate.dxf)"
-    },
-    "dock_base": {
-      "name": "Dock base (one-piece option)",
-      "what": "One-piece option (mount = \"merged\"): dock and base plate in one part, shaped to the case outline with side walls; the lock pod hides behind the case. Clamp spacing 132–154 mm. Use with the one-piece shoe and back cover",
-      "qty": "1",
-      "material": "ASA or PETG, on the lock pod's bottom face with supports under the floor",
+      "material": "ASA or PETG (or cut from base_plate.dxf)",
       "optional": true
     },
-    "iso_pad": {
-      "name": "Rubber pad (one-piece option)",
-      "what": "Sits between each clamp pad and the dock base; cut from 2 mm neoprene using it as a template, or print it",
-      "qty": "2",
-      "material": "TPU 95A, or 2 mm neoprene/EPDM sheet",
-      "optional": true
-    },
-    "shoe_one_piece": {
-      "name": "Shoe (one-piece option)",
-      "what": "The shoe for the one-piece dock base: its strike block is 7 mm lower, to match the lowered lock",
+    "shoe_modular": {
+      "name": "Shoe (modular option)",
+      "what": "The shoe for the modular dock: its strike block is 7 mm higher, to match that dock's lock pod",
       "qty": "1",
       "material": "ASA or PETG",
       "optional": true
     },
-    "case_back_one_piece": {
-      "name": "Case back (one-piece option)",
-      "what": "Back cover for the one-piece dock base: the strike screw inserts are 7 mm lower",
+    "case_back_modular": {
+      "name": "Case back (modular option)",
+      "what": "Back cover for the modular dock: the strike screw inserts are 7 mm higher",
       "qty": "1",
       "material": "ASA or PETG",
       "note": "Re-export for your phone",
+      "optional": true
+    },
+    "strike_keeper_modular": {
+      "name": "Steel keeper (modular option)",
+      "what": "Optional steel strike for the modular shoe (steel_keeper = true)",
+      "qty": "1",
+      "material": "6 mm steel plate",
       "optional": true
     },
     "clamp_body": {
@@ -251,7 +258,8 @@
     }
   },
   "dxf": {
-    "base_plate": "The base plate as a flat outline, for cutting from sheet instead of printing",
+    "base_plate": "Modular option: the base plate as a flat outline, for cutting from sheet instead of printing",
+    "strike_keeper_2d_modular": "Optional 6 mm steel strike for the modular shoe, for laser cutting",
     "strike_keeper_2d": "Optional 6 mm steel strike, for laser cutting (set steel_keeper = true)"
   },
   "download_note": "The STLs are made for the default (placeholder) phone, 75 &times; 160 &times; 9 mm, and a 22.2 mm handlebar. For your own phone and bike, change the measurements in the source and export your own parts: see <a href=\"#adjust\">Adjust it to your hardware</a>. The parts that depend on the phone are <code>case_shell</code>, <code>case_back</code> and <code>window_template</code>; the clamps and shims depend on the bar.",

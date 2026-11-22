@@ -72,7 +72,7 @@ STLs are in [`printed_lock/`](printed_lock/), already in print orientation. **Pr
 
 | Part | File | Qty | How to print |
 |---|---|---|---|
-| Cartridge | `plock_cartridge.stl` | 1 | Standing on its bottom face, as it sits in the dock, 100 % infill. No supports. It replaces `lock_cartridge`; the dock is the standard `receiver` or `one_piece/dock_base` |
+| Cartridge | `plock_cartridge.stl` | 1 | Standing on its bottom face, as it sits in the dock, 100 % infill. No supports. It replaces `lock_cartridge`; the dock is the standard `dock_base` (or `modular/receiver`) |
 | Shuttle | `plock_shuttle.stl` | 1 | Standing on its bottom face, 100 % infill. No supports |
 | Wafers 1–4 | `plock_wafer_1.stl` … `plock_wafer_4.stl` (or `plock_wafers.stl`, all 4) | 1 each | Flat. **They differ:** keep them in order, front (keyhole end) to back |
 | Key | `plock_key.stl` | 1+ | Flat, 100 % infill. PETG, or PC / PA if you have it. Print spares |
