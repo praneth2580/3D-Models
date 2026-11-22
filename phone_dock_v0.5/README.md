@@ -170,7 +170,7 @@ To make the window removable instead of bonded, you would need a screwed front f
   - The cartridge can't be pulled out through the notch: inside the wall it is wider than the notch, and the lock cover is screwed into it.
 
   ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
-- **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a flat card key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
+- **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a chunky 6 × 10 mm printed key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**

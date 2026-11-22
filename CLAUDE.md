@@ -77,7 +77,7 @@ An old phone becomes a permanent handlebar navigation screen.
   - **Mechanism:** a scotch-yoke lifts a flat **14 × 9 DIN 6885 key-steel bolt** against a key-steel bearing block in the printed strike. No custom steel fabrication.
 - **Lock bay and cartridges (2026-11-22, Update 16):** the pod's tall part is one plain bay, open underneath, with a notch in the side wall. Each lock comes in a printed cartridge (`lock_cartridge()`; `lock_type` picks the cuts) that goes up into the bay from below, its face plate flush in the notch. Inside the wall it is wider than the notch, and the lock cover is screwed into it. **The dock and the lock cover are the same for both locks**; only the cartridge differs (`lock_cartridge.stl` / `printed_lock/plock_cartridge.stl`). The store lock's nut cavity opens on the cartridge's upper side.
 - **Printed lock (optional):** `printed_lock.scad`, `PRINTED_LOCK.md`, STLs in `printed_lock/`.
-  - Redesigned 2026-11-22 for printing (owner: "no need for it to be a regular lock"): a **push key**. A 3.5 mm card key slides straight into a slot in the pod's side wall and pushes a printed shuttle 7 mm; a pin on the printed lifter (carries the steel bolt, replaces the yoke) runs in a slanted track on the shuttle, so shuttle in = bolt down. Flat dwell when locked: no back-drive.
+  - Redesigned 2026-11-22 for printing (owner: "no need for it to be a regular lock"): a **push key**. A chunky 6 × 10 mm key (owner: a thin printed key breaks; 3 mm fillets at the bow) slides straight into a slot in the cartridge's face plate and pushes a printed shuttle 7 mm; a pin on the printed lifter (carries the steel bolt, replaces the yoke) runs in a slanted track on the shuttle, so shuttle in = bolt down. Flat dwell when locked: no back-drive.
   - Code: 4 flat wafers in the shuttle, each pushed down by a 3 mm spring onto the key's top edge; each wafer's side tab must line up with a groove in the cartridge. Pockets only at the locked position, so the key comes out only when locked. 1 mm code steps, 81 codes.
   - It fits the standard dock through its own cartridge (`printed_lock/plock_cartridge.stl`). Fits both mounts.
   - `lock_code` sets the key. Built-in checks: `PART="plock_check_*"` (pod, cover, parts, pin = empty/touch; nokey, wrongkey, keyout, backdrive = must collide).
@@ -94,7 +94,7 @@ An old phone becomes a permanent handlebar navigation screen.
 - `CAD_QA.md`: numbered "Update N" log of every change and its checks. **Add an entry for each design change.**
 
 **Video and images:**
-- **Video:** `video/make_video.py` renders `mechanism_anim.scad` into `video/mechanism_demo.mp4` (88.5 s); `--test t1,t2` makes a contact sheet.
+- **Video:** `video/make_video.py` renders `mechanism_anim.scad` into `video/mechanism_demo.mp4` (96.5 s); `--test t1,t2` makes a contact sheet. On Windows set `OPENSCAD` to `openscad.com` and use a venv with Pillow and imageio-ffmpeg; a full render takes about 15 minutes with `--jobs 8`.
   - Labels use OpenSCAD's gimbal camera projection: `rot(rot(rot(v,2,-rz),1,-ry),0,90-rx)`, fov 22.5.
 - **Wiring stills:** `make_video.py --stills` writes `images/wiring_dock.png` and `wiring_case.png`.
 - **Wiring diagrams:** `images/make_wiring_diagram.py out.svg [full|dock|case]` draws the hand-placed SVGs. Convert them to PNG with `google-chrome --headless=new --force-device-scale-factor=1.5 --window-size=W,H --screenshot=...`.

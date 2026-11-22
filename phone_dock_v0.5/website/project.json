@@ -31,7 +31,7 @@
     },
     {
       "src": "images/plock_exploded.png",
-      "caption": "Optional printed lock: a push-in card key, the shuttle, 4 wafers and their springs"
+      "caption": "Optional printed lock: a chunky 6 x 10 mm push-in key, the shuttle, 4 wafers and their springs"
     },
     {
       "src": "images/plock_cutaway.png",
@@ -244,7 +244,7 @@
     },
     "plock_key": {
       "name": "Printed lock: key",
-      "what": "Flat card key, pushed straight in (cut to lock_code: the example code here, make your own)",
+      "what": "Chunky 6 x 10 mm key with rounded fillets at the bow, pushed straight in (cut to lock_code: the example code here, make your own)",
       "qty": "1+",
       "material": "PETG (or PC / PA), 100 % infill, flat",
       "optional": true

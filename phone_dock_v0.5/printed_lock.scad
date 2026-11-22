@@ -3,7 +3,7 @@
   Included by phone_dock_v0.5.scad (uses its lock pod, bolt and cover variables). See PRINTED_LOCK.md.
 
   It is not a copy of a store lock. Everything that matters prints flat or upright, in sizes an FDM printer
-  holds well: a 3.5 mm card key, 2.4 mm wafers, 1 mm code steps, 0.25 mm clearances. Bought parts: 4 small
+  holds well: a chunky 6 x 10 mm key, 2.4 mm wafers, 1 mm code steps, 0.25 mm clearances. Bought parts: 4 small
   springs. The steel bolt and the strike are unchanged (they carry the load).
 
   How it works:
@@ -41,10 +41,11 @@ plk_dwell = 1.2;                                    // flat at each end of the t
 plk_L = lock_panel_inner_x - (pod_high_x0 + 1.2) - plk_S;   // shuttle length: fills the channel less the travel
 
 // Key and wafers (S frame).
-plk_key_t = 3.5;                    // card key thickness (prints flat)
-plk_kt = 3.5;                       // uncut top edge (cuts go down from here)
-plk_kb = -3.5;                      // bottom edge
+plk_key_t = 6.0;                    // key thickness (prints flat). A chunky 6 x 10 mm bar: about 4 x stiffer than a
+plk_kt = 5.0;                       //   3.5 mm card. The cartridge's width limits it. Uncut top edge (cuts go down from here)
+plk_kb = -5.0;                      // bottom edge
 plk_shoulder = 2.0;                 // the key's shoulder (below the blade) pushes the shuttle's front face
+plk_key_fillet = 3.0;               // fillet radius where the blade meets the bow
 plk_tip_low = -0.2;                 // key tip height: under the dropped wafers' windows
 plk_wt = 2.4;                       // wafer thickness (prints flat)
 plk_wslot = plk_wt + 0.3;           // its slot in the shuttle
@@ -57,16 +58,15 @@ plk_win_hw = plk_key_t/2 + 0.25;    // key window half-width
 plk_win_bot = plk_kb - plk_lift - 0.3;
 plk_wz0 = plk_win_bot - 1.5;        // wafer bottom (flush)
 plk_wz1 = plk_kt + 1.5;             // wafer top (flush)
-plk_wy_tab = -4.8;                  // wafer edge on the tab side (S frame: -y = dock +y, away from the lifter)
-plk_wy_pin = 3.5;                   // wafer edge on the lifter side
+plk_wy_tab = -(plk_win_hw + 2.0);  // wafer edge on the tab side (S frame: -y = dock +y, away from the lifter)
+plk_wy_pin = plk_win_hw + 1.5;      // wafer edge on the lifter side
 plk_tab_h = 2.0;                    // tab height; the pod groove is this + 2 x plk_gclear
 plk_tab_p = 1.4;                    // how far the tab sticks out of the shuttle
 plk_gclear = 0.25;                  // tab in the pod groove, per side
 plk_spring_len = 5.5;               // spring length with the wafer level (3 mm OD springs, see PRINTED_LOCK.md)
 plk_spring_od = 3.0;
 plk_pocket_d = 3.3;
-plk_sy_tab = -5.0;                  // shuttle's tab-side face
-plk_sy_pin = 7.65;                  // shuttle's lifter-side face (its track is cut into this 4.15 mm wall)
+plk_sy_tab = plk_wy_tab - 0.2;     // shuttle's tab-side face
 plk_sz0 = plk_wz0 - plk_drop - 1.5; // shuttle bottom (sits on the lock cover)
 plk_slot_z0 = plk_wz0 - plk_drop;   // wafer slot floor = the drop stop
 plk_slot_z1 = plk_wz1 + plk_lift + 0.2;
@@ -76,6 +76,7 @@ plk_sz1 = plk_pocket_top + 0.8;     // shuttle top
 plk_pin_d = 3.5;
 plk_track_r = plk_pin_d/2 + 0.2;
 plk_track_depth = 2.2;
+plk_sy_pin = plk_wy_pin + 0.15 + 1.5 + plk_track_depth;   // shuttle's lifter-side face (its track is cut into this wall)
 plk_pin_z = -14;                    // dock frame, locked
 plk_a = plk_L - 3.2;                // pin's place along the shuttle when locked (S x)
 plk_lifter_y = [pod_y0 + 2.0, pod_y0 + 6.0];       // lifter plate (dock y), beside the shuttle
@@ -161,18 +162,23 @@ module plk_shuttle() {
   }
 }
 
-// Key: card, cut on its top edge (x, z profile; y = thickness).
+// Key: a thick bar, cut on its top edge (x, z profile; y = thickness).
 module plk_key_2d() {
   e = [for (i = [0:plk_n - 1]) plk_kt - plk_cut(i)];
   half = plk_wt/2 + 0.15;
   x_last = plk_wx(plk_n - 1) + half;
   x_tip = min(plk_L - 0.2, x_last + (e[plk_n - 1] - plk_tip_low)/tan(60));
-  bow_x = -(lock_panel_t + plk_S + 1);
+  bow_x = -(lock_panel_t + plk_S + 1 + plk_key_fillet);   // pushed fully in, the bow (and its fillets) stays 1 mm off the face
   top = concat([[bow_x, plk_kt], [plk_wx(0) - half - 0.6, plk_kt]],
                [for (i = [0:plk_n - 1]) each [[plk_wx(i) - half, e[i]], [plk_wx(i) + half, e[i]]]],
                [[x_tip, plk_tip_low]]);
   union() {
     polygon(concat(top, [[x_tip, plk_kb + 0.8], [x_tip - 0.8, plk_kb], [0, plk_kb], [0, plk_kb - plk_shoulder], [bow_x, plk_kb - plk_shoulder]]));
+    // Fillets where the blade meets the bow (a sharp inside corner is where a printed key snaps).
+    for (z = [[plk_kt, 1], [plk_kb - plk_shoulder, -1]]) difference() {
+      translate([bow_x - 0.01, z[1] > 0 ? z[0] - 0.01 : z[0] - plk_key_fillet + 0.01]) square([plk_key_fillet, plk_key_fillet]);
+      translate([bow_x + plk_key_fillet, z[0] + z[1]*plk_key_fillet]) circle(r=plk_key_fillet, $fn=32);
+    }
     // Bow, outside the side wall.
     difference() {
       translate([bow_x - 20, plk_kb - plk_shoulder - 8]) offset(r=4, $fn=32) offset(delta=-4) square([20.01, plk_kt - plk_kb + plk_shoulder + 14]);

@@ -35,6 +35,9 @@ A_det        = 0;    // 1 = glow on the DET line (case docked, DET pad grounding
 A_bike_power = 1;    // amber PWR LED lit
 A_head       = 1;    // draw the bright head on the power highlight (off while it waits at the switch)
 A_hot        = 0;    // 1 = phone too hot: the case's thermostat is open, charging is off, red OFF LED lit
+A_cart_drop  = 0;    // lock-cartridge scene: the cartridge, with its lock and the bolt, lowered out of the bay, mm
+A_cover_drop = 0;    // lock-cartridge scene: the lock cover lowered, mm
+// lock_type ("store" / "printed") is set per frame too: it picks the cartridge and the lock drawn in it.
 
 GOLD = [0.95,0.75,0.25];
 STEEL = [0.62,0.62,0.66];
@@ -129,14 +132,17 @@ module spring_pins(case_dy, xmax=99) {
   }
 }
 
-// Real lock parts (crank, yoke, steel bolt), highlighted together.
+// Real lock parts (crank and yoke, or the printed lock's shuttle, wafers, key and lifter; steel bolt), highlighted together.
 module mech_visual(turn) {
-  color(xr(hl("lock", [0.80,0.80,0.84]))) crank_placed(turn);
-  color(xr(hl("lock", [0.55,0.58,0.62]))) lock_yoke(turn);
+  if (lock_type == "printed") plk_placed(turn, key=A_show_key == 1);
+  else {
+    color(xr(hl("lock", [0.80,0.80,0.84]))) crank_placed(turn);
+    color(xr(hl("lock", [0.55,0.58,0.62]))) lock_yoke(turn);
+  }
   color(xr(hl("lock", [0.85,0.85,0.90]))) translate([bolt_x - bolt_w/2, bolt_y - bolt_t/2, yoke_bottom_locked + yoke_dz(turn)]) cube([bolt_w, bolt_t, bolt_len]);
 }
 
-module lock_body_visual() {
+module lock_body_visual() if (lock_type != "printed") {
   color(xr([0.6,0.6,0.62])) translate([crank_x1 + 0.2, lock_y, lock_z]) rotate([0,90,0]) cylinder(d=lock_bore_d-0.4, h=lock_panel_inner_x - crank_x1);
   color(xr([0.72,0.72,0.74])) translate([lock_face_x, lock_y, lock_z]) rotate([0,90,0]) difference() {
     cylinder(d=22, h=1.2);
@@ -333,16 +339,15 @@ module dock_in_plate_frame() {
       status_leds();
       color(xr([0.38,0.42,0.46])) dock_receiver();
       color(xr([0.30,0.30,0.30])) dock_lid();
-      color(xr([0.30,0.30,0.30])) lock_cover();
-      color(xr([0.34,0.34,0.37])) lock_cartridge();
-      lock_body_visual();
+      color(xr([0.30,0.30,0.30])) translate([0, 0, -A_cover_drop]) lock_cover();
+      translate([0, 0, -A_cart_drop]) { color(xr([0.34,0.34,0.37])) lock_cartridge(); lock_body_visual(); }
       if (A_section != "x") spring_pins(A_case_dy);
       translate([0, A_case_dy, A_explode*1.4]) case_assembly_visual();
     }
     // The keeper is cut on its own so its cut face keeps the keeper colour.
     if (A_section == "y") translate([0, A_case_dy, A_explode*1.4]) intersection() { keeper_part(); color(keeper_col()) translate([-1000, A_cut - 0.1, -1000]) cube(2000); }   // 0.1 mm proud of the main cut so the two faces do not z-fight
-    mech_visual(A_lock);
-    if (A_show_key) key_visual(A_key_in, A_lock);
+    translate([0, 0, -A_cart_drop]) mech_visual(A_lock);
+    if (A_show_key && lock_type != "printed") key_visual(A_key_in, A_lock);   // the printed lock draws its own key
   }
 }
 

@@ -1,14 +1,14 @@
 # Printed lock and key (optional)
 
-A lock designed for 3D printing, as an alternative to the store-bought 16 mm cam lock. It is **not** a copy of a store lock: it is a **push-key lock**. A flat card key slides straight into a slot in the side of the dock, with no turning. It drives the same steel bolt and strike as the store lock, so the parts that take the load are unchanged.
+A lock designed for 3D printing, as an alternative to the store-bought 16 mm cam lock. It is **not** a copy of a store lock: it is a **push-key lock**. A chunky printed key, a solid 6 × 10 mm bar, slides straight into a slot in the side of the dock, with no turning. It drives the same steel bolt and strike as the store lock, so the parts that take the load are unchanged.
 
 | | Store-bought cam lock (default) | Printed lock |
 |---|---|---|
 | Security | Better: metal wafers, hardened body | **Casual-theft deterrent only.** It can be forced or drilled |
-| Key | Comes with 2 keys; you turn it | Your own code; a 3.5 mm card key you push in. Print spares any time |
+| Key | Comes with 2 metal keys; you turn it | Your own code; a chunky 6 × 10 mm printed key you push in. Print spares any time |
 | Work | Drill the lock's cam for the crank pin | No drilling: print, add 4 small springs, assemble |
 | Cartridge (the dock is the same) | `lock_cartridge` | `printed_lock/plock_cartridge` |
-| Parts cost | About ₹270 for the lock | About ₹150–400 (4 springs; the printing is small) |
+| Parts cost | About ₹270 for the lock | About ₹160–430 (4 springs; the printing is small) |
 
 Use it if you can't find a suitable quarter-turn lock, want your own key code, or want a lock you can rebuild. For the best theft protection, use a good store-bought lock.
 
@@ -31,7 +31,7 @@ Four moving parts inside the cartridge, plus the steel bolt:
 - **Shuttle (orange):** a printed block that slides 7 mm along a channel in the cartridge, behind the keyhole slot. The key pushes it in, and pulls it back out. Fully in, it stops against the back wall of the dock's bay.
 - **Wafers (yellow):** 4 flat plates in slots in the shuttle. A small spring pushes each one down, so its window rests on the key's top edge, and the depth of the key's cut sets the wafer's height. Each wafer has a **tab** on its side that runs in a **groove** in the cartridge's wall.
 - **Lifter (grey):** carries the steel bolt; it replaces the store lock's yoke. A pin on it runs in a **slanted track** on the shuttle's side. Shuttle in: the pin is pulled down the slope, and the bolt drops. Shuttle out: the bolt rises.
-- **Key (blue):** a flat card with 4 cuts on its top edge. Its shoulder pushes the shuttle in; its cuts, held by the wafers, pull it back out.
+- **Key (blue):** a solid 6 × 10 mm bar with 4 cuts on its top edge. Its shoulder pushes the shuttle in; its cuts, held by the wafers, pull it back out.
 
 ![Cut through wafer 2, key in, locked](images/plock_cutaway.png)
 
@@ -52,9 +52,15 @@ Four moving parts inside the cartridge, plus the steel bolt:
 ## Design choices, and what they're based on
 
 - **Push, not turn:**
-  - A turning key twists a thin printed blade, which is where printed keys break. A push key is loaded only along its length, so it can be a solid 3.5 mm card.
+  - A turning key twists a thin printed blade, which is where printed keys break. A push key is loaded only along its length.
+- **A chunky key, because it is plastic, not metal:**
+  - The blade is a solid **6 × 10 mm bar** (a metal key is about 2 mm thick). Against bending, that makes it about 4 times stronger sideways, and 3.5 times stronger up and down, than the 3.5 × 7 mm card of the first version.
+  - Where the blade meets the bow there are **3 mm rounded fillets**. A sharp inside corner is where a printed key snaps, so the key has none there.
+  - Printed flat, the layers run along the whole key, so a sideways or an up-and-down push bends it along its layers, not across them.
+  - Only the part between the bow and the side wall is ever unsupported: 11 mm when locked, 4 mm when pushed in. Inside the lock, the shuttle's keyway holds the blade along its whole length.
+  - The width is the most the cartridge allows (the shuttle, the wafer tabs and the groove all have to fit in the pod).
   - No round plug in a round body, so there are no tight rotating fits to print.
-- **Bigger, more forgiving sizes:** 3.5 mm key, 2.4 mm wafers, **1 mm code steps** and 0.25 mm clearances. The old printed lock had 1.3 mm wafers, 0.5 mm steps and 2 mm springs. A printer that is a tenth of a millimetre out still works, and a one-step wrong cut still blocks.
+- **Bigger, more forgiving sizes:** 6 × 10 mm key, 2.4 mm wafers, **1 mm code steps** and 0.25 mm clearances. The old printed lock had 1.3 mm wafers, 0.5 mm steps and 2 mm springs. A printer that is a tenth of a millimetre out still works, and a one-step wrong cut still blocks.
 - **Print orientation:** everything that sets the code is printed flat (the key and the wafers), where FDM is most accurate. The shuttle and lifter print standing on their flat bottoms, with no supports.
 - **Metal springs:** a university project that tried to print a complete lock found printed springs gave almost no force ([UW–Madison, Functional Lock and Key](https://additive-mfg.me.wisc.edu/?p=2515)). So the 4 wafer springs are bought; everything else is printed.
 - **General ideas only:** the wafer-and-groove principle is the same as in store wafer and sidebar locks. No third-party lock designs or files are used.

@@ -386,6 +386,18 @@ Update 16 (2026-11-22): **one dock for either lock: the lock goes in a printed c
 - **Trade-off:** the pod's side walls are 1.0–1.2 mm and its roof 1.5 mm over the whole bay, where before they were that thin only along the crank sweep. The cartridge fills the bay and backs them.
 - **Not checked:** how the cartridge fits a real print of the bay; how well the self-tapping screw holds in PETG; whether the store lock's nut can be turned by hand or with a spanner through the side opening.
 
+Update 17 (2026-11-22): **printed lock: a chunky key** (owner: a printed key "could easily break, it's not a metal key"; chose "chunky printed key" over a combination-dial or magnetic-key lock). Also **the video now shows the lock cartridge**.
+- **Key:** 6 × 10 mm (`plk_key_t` 6, `plk_kt` 5, `plk_kb` −5), up from 3.5 × 7. Section modulus about 4.2× sideways and 3.5× up and down. 3 mm fillets where the blade meets the bow (`plk_key_fillet`); the bow moved 3 mm out (`bow_x`), so pushed fully in, the fillets stay 1 mm off the face plate. 4.88 cm³, printed flat.
+- **What grew with it:** the wafer window (half-width 3.25), the wafers and shuttle (now derived from the window: `plk_wy_tab = −(win_hw + 2.0)`, `plk_wy_pin = win_hw + 1.5`, `plk_sy_pin` from the track wall), the shuttle height (24.4 mm), the keyhole (6.5 × 12.5 mm). The width is the most the cartridge allows: the groove assert ends exactly at its 1.5 mm wall (46.0 mm), and the shuttle channel's top is 0.1 mm inside its limit. The tab-side wafer wall went from 2.8 to 2.0 mm to make room.
+- **Asserts:** all 4 combinations pass with no warnings.
+- **Exported** (watertight, one body each; `plock_wafers` 4 on purpose): `plock_key` 4.88 cm³, `plock_shuttle` 3.34, `plock_lifter` 1.44, `plock_wafer_1`…`4` 0.18–0.21, `plock_cartridge` 5.30, `lock_cover` 2.00 (its front drain follows the shuttle).
+- **Checks** (modular and one-piece, the same results): `plock_check_pod` no overlap (the key, its fillets and the bow at every point of the travel); `_cover`, `_parts` touch only; `_pin` no overlap; must collide: no key 1.26 mm³, wrong key 0.90, key out while unlocked 5.67, bolt pushed down 0.63. Cartridge vs dock, on its way in (3, 15, 32 mm), vs cover, cover vs dock: no overlap / touch.
+- **Images:** `plock_exploded.png`, `plock_cutaway.png` and `lock_bay_printed.png` re-rendered.
+- **Video:** a new 8 s scene at 70.5 s. Seen from below the pod with the dock level, the cover drops, the store lock's cartridge drops out with its lock, crank, yoke and bolt, the printed lock's cartridge (with its key) goes up into the same bay, and the cover goes back on. Total 96.5 s.
+  - `mechanism_anim.scad`: `A_cart_drop`, `A_cover_drop`; `lock_type` set per frame picks the cartridge and the lock drawn (`plk_placed` for the printed lock; the store key and body only for the store lock).
+  - `make_video.py`: `cart_state()`, with `CART_T0`/`CART_LEN` shifting the later base scenes. It now runs on Windows: `OPENSCAD` env var for the binary, ECHO read from stdout as well as stderr (Windows' `openscad.com` prints it there), Arial when DejaVu is missing.
+- **Not checked:** how strong the printed key really is (no load test), and whether the wider wafers still slide freely in a real print.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

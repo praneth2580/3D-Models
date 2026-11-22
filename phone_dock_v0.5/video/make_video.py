@@ -3,6 +3,7 @@
 Renders the mechanism demo video from mechanism_anim.scad.
 
 Needs: openscad (2021.01+), Pillow, imageio-ffmpeg (pip install pillow imageio-ffmpeg).
+Set OPENSCAD to the binary if it isn't "openscad" on the PATH (on Windows: "C:/Program Files/OpenSCAD/openscad.com").
 
   python3 make_video.py                       # full video -> mechanism_demo.mp4
   python3 make_video.py --test 5,18,30        # render a few times (s) into a contact sheet
@@ -14,6 +15,16 @@ from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCAD = os.path.join(HERE, "mechanism_anim.scad")
 W, H, FPS = 1280, 720, 24
+OPENSCAD = os.environ.get("OPENSCAD", "openscad")
+
+def load_font(names, size):        # DejaVu on Linux, Arial on Windows, else Pillow's built-in font
+    from PIL import ImageFont
+    for n in names:
+        for f in ("/usr/share/fonts/truetype/dejavu/" + n[0], n[1]):
+            try: return ImageFont.truetype(f, size)
+            except OSError: pass
+    return ImageFont.load_default()
+REGULAR, BOLD = [("DejaVuSans.ttf", "arial.ttf")], [("DejaVuSans-Bold.ttf", "arialbd.ttf")]
 
 # ---------------------------------------------------------------- helpers
 def ease(u):                       # smoothstep 0..1
@@ -27,11 +38,12 @@ TILT = 40.0
 def _scad_dims():                  # read the live dock position from the CAD (it depends on arm_up)
     import re, tempfile
     with tempfile.TemporaryDirectory() as d:
-        r = subprocess.run(["openscad", "-o", os.path.join(d, "x.csg"), "-D", 'PART="none"',
+        r = subprocess.run([OPENSCAD, "-o", os.path.join(d, "x.csg"), "-D", 'PART="none"',
                             os.path.join(HERE, "..", "phone_dock_v0.5.scad")], capture_output=True, text=True)
-    m = re.search(r"dock_z = ([-\d.]+), amps_offset_y = ([-\d.]+)", r.stderr)
-    k = re.search(r"lock_focus = \[([-\d., ]+)\], bolt_focus = \[([-\d., ]+)\]", r.stderr)
-    b = re.search(r"bolt_section = \[([-\d., ]+)\]", r.stderr)
+    out = r.stderr + r.stdout          # Windows' openscad.com prints ECHO to stdout
+    m = re.search(r"dock_z = ([-\d.]+), amps_offset_y = ([-\d.]+)", out)
+    k = re.search(r"lock_focus = \[([-\d., ]+)\], bolt_focus = \[([-\d., ]+)\]", out)
+    b = re.search(r"bolt_section = \[([-\d., ]+)\]", out)
     if not (m and k and b): sys.exit("could not read dimensions from phone_dock_v0.5.scad:\n" + r.stderr)
     vec = lambda g: tuple(float(v) for v in g.split(","))
     return float(m.group(2)), float(m.group(1)), vec(k.group(1)), vec(k.group(2)), vec(b.group(1))
@@ -47,7 +59,13 @@ LOCK = dock_to_bike(LOCK_DOCK)
 CAMSEC = dock_to_bike(BOLT_DOCK)
 
 # ---------------------------------------------------------------- timeline
-BASE_SCENES = [
+# Lock-cartridge scene, inserted into the base timeline after the bolt cutaway; later base scenes move back by CART_LEN.
+CART_T0, CART_LEN = 46.5, 8.0
+CART_SCENES = [
+    (46.5, 50.7, "One dock, either lock: the lock comes in a printed cartridge that slides up into the pod"),
+    (50.7, 54.5, "Or the printed push-key lock (chunky 6 x 10 mm key) in its own cartridge: same dock, cover, bolt"),
+]
+BASE_SCENES_0 = [
     (0.0,  3.0,  ""),
     (3.0,  10.0, "Modular stack:  handlebar clamps  >  base plate  >  dock  >  slim phone case"),
     (10.0, 17.5, "Slim rear-loading case: phone drops in from behind, O-ring back cover, 4 hidden corner screws"),
@@ -60,6 +78,8 @@ BASE_SCENES = [
     (51.5, 60.5, "Upgrade later: swap the base plate for a smart base (Arduino, speakers). Same bolt patterns"),
     (60.5, 64.5, ""),
 ]
+BASE_SCENES = sorted([(s + CART_LEN if s >= CART_T0 else s, e + CART_LEN if e > CART_T0 else e, c) for s, e, c in BASE_SCENES_0]
+                     + CART_SCENES)
 # Inserted after the pin cutaway: the wiring scene (9 s) and the dock-electronics scene (9 s).
 # Every later scene moves back by INSERT_LEN.
 WIRE_T0, WIRE_LEN = 36.0, 9.0
@@ -103,8 +123,8 @@ def wiring_state(u):
 def _label_points():               # anchors echoed by mechanism_anim.scad, so they follow the CAD
     import re, tempfile, ast
     with tempfile.TemporaryDirectory() as d:
-        r = subprocess.run(["openscad", "-o", os.path.join(d, "x.csg"), SCAD], capture_output=True, text=True)
-    m = re.search(r"label_points = (\[.*\])", r.stderr)
+        r = subprocess.run([OPENSCAD, "-o", os.path.join(d, "x.csg"), SCAD], capture_output=True, text=True)
+    m = re.search(r"label_points = (\[.*\])", r.stderr + r.stdout)
     if not m: sys.exit("could not read label points from mechanism_anim.scad:\n" + r.stderr)
     pts = ast.literal_eval(m.group(1))
     keys = ["socket", "led_pwr", "led_dock", "u1", "u2", "res", "pins", "pad", "potting", "channel", "plug", "therm", "led_off", "esd"]
@@ -188,8 +208,28 @@ def state(t):
         p, cam = base_state(t - INSERT_LEN if t >= INSERT_T0 + INSERT_LEN else t)
     return p, cam, cap
 
+def cart_state(u):
+    """Lock-cartridge scene, u = seconds into it. Seen from below the pod, the dock level (tilt 0) and the mount
+    hidden: the cover drops, the store lock's cartridge drops out with its lock, then the printed lock's
+    cartridge rises into the same bay and the cover goes back on."""
+    p = defaults()
+    p.update(A_tilt=0, A_show_mount=0, A_show_bar=0, A_highlight='"lock"')
+    if u < 3.9:
+        p["A_cover_drop"] = ramp(u, 0.8, 1.8, 0, 34)
+        p["A_cart_drop"] = ramp(u, 1.8, 3.2, 0, 22) if u < 3.4 else ramp(u, 3.4, 3.9, 22, 140)
+    else:
+        p["lock_type"] = '"printed"'; p["A_show_key"] = 1
+        p["A_cart_drop"] = ramp(u, 3.9, 5.6, 140, 0)
+        p["A_cover_drop"] = ramp(u, 5.8, 6.8, 34, 0)
+    cam = dock_to_bike((82, 46, -36), tilt=0) + [118, 0, 48, 330]
+    return p, cam
+
 def base_state(t):
     """(scad_params, camera) on the original timeline (no wiring scene)."""
+    if CART_T0 <= t < CART_T0 + CART_LEN:
+        return cart_state(t - CART_T0)
+    if t >= CART_T0 + CART_LEN:
+        t -= CART_LEN
     p = defaults()
 
     if t < 3.0:                                         # title: slow orbit, assembled, locked
@@ -263,7 +303,7 @@ def base_state(t):
 def render_frame(i, t, outdir):
     p, cam, cap = state(t)
     png = os.path.join(outdir, f"raw_{i:05d}.png")
-    cmd = ["openscad", "-o", png, f"--imgsize={W},{H}", "--colorscheme=Tomorrow",
+    cmd = [OPENSCAD, "-o", png, f"--imgsize={W},{H}", "--colorscheme=Tomorrow",
            "--camera=" + ",".join(f"{v:.3f}" for v in cam)]
     for k, v in p.items():
         cmd += ["-D", f"{k}={v}"]
@@ -307,12 +347,11 @@ def stills(outdir, size=(1600, 900)):
     sw, sh = size
     for name, p, cam, labels, title in shots:
         png = os.path.join(outdir, name)
-        cmd = ["openscad", "-o", png, f"--imgsize={sw},{sh}", "--colorscheme=Tomorrow", "--camera=" + ",".join(f"{v:.3f}" for v in cam)]
+        cmd = [OPENSCAD, "-o", png, f"--imgsize={sw},{sh}", "--colorscheme=Tomorrow", "--camera=" + ",".join(f"{v:.3f}" for v in cam)]
         for k, v in p.items(): cmd += ["-D", f"{k}={v}"]
         subprocess.run(cmd + [SCAD], capture_output=True, check=True)
         im = Image.open(png).convert("RGB"); d = ImageDraw.Draw(im, "RGBA")
-        try: fl, ft = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 20), ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
-        except OSError: fl = ft = ImageFont.load_default()
+        fl, ft = load_font(REGULAR, 20), load_font(BOLD, 24)
         draw_labels(d, [(t, dock_to_bike(pt), off) for t, pt, off in labels], cam, 255, fl, size)
         d.rectangle([0, 0, sw, 50], fill=(20, 24, 30, 215)); d.text((20, 12), title, font=ft, fill=(255, 255, 255, 255))
         im.save(png); print("wrote", png)
@@ -321,10 +360,7 @@ def annotate(png, cap, t, out):
     from PIL import Image, ImageDraw, ImageFont
     im = Image.open(png).convert("RGB")
     d = ImageDraw.Draw(im, "RGBA")
-    fdir = "/usr/share/fonts/truetype/dejavu/"
-    def font(name, size):
-        try: return ImageFont.truetype(fdir + name, size)
-        except OSError: return ImageFont.load_default()
+    def font(name, size): return load_font(BOLD if "Bold" in name else REGULAR, size)
     # Part labels: a dot on the part, a leader line, and a dark tag at the given pixel offset.
     labels = labels_for(t)
     if labels:

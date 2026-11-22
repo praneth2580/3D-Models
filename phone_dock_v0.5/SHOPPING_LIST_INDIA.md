@@ -83,7 +83,7 @@ If you print the lock ([`PRINTED_LOCK.md`](PRINTED_LOCK.md)), leave out the ₹2
 
 | Item | Where | Price |
 |---|---|---|
-| Printing the lock parts: shuttle, 4 wafers, key, lifter (about 7 cm³, 9 g). The lifter replaces `lock_yoke`, and `plock_cartridge` replaces `lock_cartridge` at the same size. The dock and the lock cover are the standard ones | Add them to the main print order | ₹50–100 (est.) |
+| Printing the lock parts: shuttle, 4 wafers, the chunky key, lifter (about 10 cm³, 13 g). The lifter replaces `lock_yoke`, and `plock_cartridge` replaces `lock_cartridge` at the same size. The dock and the lock cover are the standard ones | Add them to the main print order | ₹60–130 (est.) |
 | 4 small compression springs: 3 mm OD, 0.3 mm wire, about 8 mm long, **9 coils or fewer** (stainless) | A spring assortment kit (Amazon.in, "mini compression spring assortment"), or Lamington Road | ₹100–300 (est.) |
 
 The total is a little under the store lock. Choose it for your own key code, no drilling and a key you can reprint, not to save money.

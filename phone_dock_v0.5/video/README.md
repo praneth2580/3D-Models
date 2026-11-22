@@ -1,6 +1,6 @@
 # Mechanism demo video (v0.5)
 
-`mechanism_demo.mp4` (1280 × 720, 24 fps, about 89 s) is rendered from the real CAD in `../phone_dock_v0.5.scad`. Change the design, re-run the script, and the video updates with it.
+`mechanism_demo.mp4` (1280 × 720, 24 fps, about 97 s) is rendered from the real CAD in `../phone_dock_v0.5.scad`. Change the design, re-run the script, and the video updates with it.
 
 | Time | Scene |
 |---|---|
@@ -16,15 +16,16 @@
 | 54–60 s | **Over-heat cut-off** (x-ray of the whole case). The thermostat behind the phone opens (it glows red), charging stops at the switch, the green LED goes out and the red OFF LED lights. When it cools, charging resumes |
 | 60–65.5 s | The key goes in horizontally from the right-hand side, behind the case's top corner (well clear of the tank), and turns a quarter turn |
 | 65.5–70.5 s | Side cutaway through the bolt: the crank and yoke lift the flat 14 × 9 mm steel bolt (yellow) up into the case's strike, where it lies flat against the key-steel bearing block (orange-red). The clamps and plate are hidden for this shot |
-| 70.5–75.5 s | Vibration damping on the rubber grommets (exaggerated) |
-| 75.5–84.5 s | Swapping the base plate for a "smart base" (Arduino and speakers concept) |
-| 84.5–88.5 s | Closing shot |
+| 70.5–78.5 s | **Lock cartridge** (from below the pod, the dock level). The cover drops, and the store lock's cartridge drops out of the bay with the lock, crank, yoke and bolt in it. The printed lock's cartridge, with its chunky key, goes up into the same bay, and the cover goes back on |
+| 78.5–83.5 s | Vibration damping on the rubber grommets (exaggerated) |
+| 83.5–92.5 s | Swapping the base plate for a "smart base" (Arduino and speakers concept) |
+| 92.5–96.5 s | Closing shot |
 
 `mechanism_anim.scad` adds some **visual-only** stand-ins on top of the real parts. These are illustrations, not designed parts:
 - the pins and pads;
 - the O-ring and screws;
 - the grommets;
-- the key and the lock body (the crank, yoke, flat bolt and bearing block are the real parts);
+- the store lock's key and body (the crank, yoke, flat bolt, bearing block, cartridges and the printed lock are the real parts);
 - the phone screen;
 - the smart base;
 - the status LEDs (yellow whenever the bike is powered, green while the case is docked and charging, red while it is docked but too hot, in every scene);
@@ -40,6 +41,8 @@ python3 make_video.py --test 18,44        # quick contact sheet of chosen times
 python3 make_video.py --stills            # labelled wiring renders -> ../images/wiring_dock.png, wiring_case.png
 ```
 
+On Windows, point the script at the console build of OpenSCAD, which prints its messages: `OPENSCAD="C:/Program Files/OpenSCAD/openscad.com"`. The captions use Arial when DejaVu isn't installed.
+
 Part labels in the dock-electronics scene are drawn by `make_video.py`. It projects anchor points that `mechanism_anim.scad` prints, using OpenSCAD's camera (checked to within about 6 px), so the labels follow the CAD.
 
-The full render takes about 5–6 minutes on 4 cores with OpenSCAD 2021.01. The v0.4 video is not kept; re-render it from `archive/v0.4` if needed.
+The full render takes about 5–6 minutes on 4 cores with OpenSCAD 2021.01 on Linux, and about 15 minutes with 8 jobs on Windows. The v0.4 video is not kept; re-render it from `archive/v0.4` if needed.
