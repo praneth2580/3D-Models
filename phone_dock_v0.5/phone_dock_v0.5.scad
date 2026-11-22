@@ -845,6 +845,7 @@ module lock_cartridge() {
         cube([lock_face_x - lock_panel_inner_x + 0.01, 2*(notch_hw - cart_clear), notch_top_z - cart_clear - cart_z0]);
     }
     if (lock_type == "printed") plk_pod_cuts();   // shuttle channel, lifter pocket, tab groove, keyhole
+    else if (lock_type == "keypad") kp_cuts();    // servo, horn, lifter, encoder and board (demo)
     else store_lock_cuts();
     lock_arm_pocket();
     translate([cart_screw[0], cart_screw[1], cart_z0 - 0.05]) cylinder(d=2.5, h=cart_screw_l + 0.05);
@@ -871,6 +872,8 @@ module lock_cover() {
     // that gets in at the keyhole).
     translate([bolt_x - 1.5, bolt_y - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
     translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
+    // The keypad lock's 5 V cable comes out here; under the other locks it is one more drain.
+    translate([kp_cable[0], kp_cable[1], pod_bottom_z - 0.05]) cylinder(d=3.0, h=lock_cover_t + 0.1, $fn=16);
   }
 }
 
@@ -942,6 +945,7 @@ module crank_placed(turn=1) {
 
 module lock_mechanism(turn=1) {
   if (lock_type == "printed") plk_placed(turn);   // shuttle, wafers, key and lifter
+  else if (lock_type == "keypad") kp_placed(turn);   // servo, horn, lifter, encoder, knob (demo)
   else { color([0.75,0.75,0.78]) crank_placed(turn); color([0.55,0.58,0.62]) lock_yoke(turn); }
   lock_bolt(turn);
 }
@@ -1197,6 +1201,8 @@ module assembly() {
 }
 
 include <printed_lock.scad>
+include <keypad_lock.scad>
+assert(lock_type == "store" || lock_type == "printed" || lock_type == "keypad", "lock_type must be \"store\", \"printed\" or \"keypad\".");
 
 // ------------------------- PART SELECTOR -----------------------------
 if (PART == "assembly") assembly();
@@ -1222,7 +1228,7 @@ else if (PART == "lock_bay_exploded") {          // picture: the dock's lock bay
   translate([0, 0, -55]) {
     color([0.34, 0.34, 0.37]) lock_cartridge();
     lock_mechanism(1);
-    if (lock_type != "printed") store_cam_lock();
+    if (lock_type == "store") store_cam_lock();
   }
   color([0.30, 0.30, 0.30]) translate([0, 0, -95]) lock_cover();
 }
@@ -1230,4 +1236,5 @@ else if (PART == "lock_cartridge") translate([0, 0, -cart_z0]) lock_cartridge();
 else if (PART == "strike_keeper") strike_keeper();
 else if (PART == "strike_keeper_2d") translate([-strike_x0, -strike_y0]) strike_keeper_2d();   // laser template, corner at the origin
 else if (plk_is_part(PART)) plk_part(PART);
+else if (kp_is_part(PART)) kp_part(PART);
 else if (PART != "none") echo("Unknown PART.");

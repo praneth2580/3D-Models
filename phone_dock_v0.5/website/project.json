@@ -44,6 +44,14 @@
     {
       "src": "images/lock_bay_printed.png",
       "caption": "The printed lock's cartridge fits the same bay"
+    },
+    {
+      "src": "images/kp_exploded.png",
+      "caption": "Demo: a dial-code lock cartridge. A rotary knob, an ATtiny85 and a micro servo move the same bolt"
+    },
+    {
+      "src": "images/kp_side.png",
+      "caption": "Demo: turn the knob like a safe dial to unlock, press it to lock"
     }
   ],
   "viewer_default": "dock_base",
@@ -249,6 +257,34 @@
       "material": "PETG, flat",
       "optional": true
     },
+    "kp_cartridge": {
+      "name": "Dial-code lock (demo): cartridge",
+      "what": "Demo: holds the servo, the rotary encoder and the board; use it instead of lock_cartridge",
+      "qty": "1",
+      "material": "PETG or ASA, standing on its bottom",
+      "optional": true
+    },
+    "kp_lifter": {
+      "name": "Dial-code lock (demo): lifter",
+      "what": "Carries the steel bolt (replaces lock_yoke); the servo horn's pin runs in its slot",
+      "qty": "1",
+      "material": "PETG or PA12, 100 % infill",
+      "optional": true
+    },
+    "kp_horn": {
+      "name": "Dial-code lock (demo): horn",
+      "what": "Servo horn with the crank pin hole at 7 mm",
+      "qty": "1",
+      "material": "PETG, 100 % infill, flat",
+      "optional": true
+    },
+    "kp_knob": {
+      "name": "Dial-code lock (demo): knob",
+      "what": "Knob for the EC11 encoder's 6 mm D shaft",
+      "qty": "1",
+      "material": "PETG or ASA, top face down",
+      "optional": true
+    },
     "plock_key": {
       "name": "Printed lock: key",
       "what": "Chunky 6 x 10 mm key with rounded fillets at the bow, pushed straight in (cut to lock_code: the example code here, make your own)",
@@ -289,6 +325,10 @@
     {
       "label": "Printed push-key lock (optional alternative to the store lock)",
       "file": "PRINTED_LOCK.md"
+    },
+    {
+      "label": "Dial-code lock (demo)",
+      "file": "KEYPAD_LOCK.md"
     },
     {
       "label": "Shopping list with links and prices (India)",

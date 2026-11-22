@@ -183,6 +183,7 @@ To make the window removable instead of bonded, you would need a screwed front f
 
   ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
 - **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a chunky 6 × 10 mm printed key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
+- **Or try the dial-code demo:** [`KEYPAD_LOCK.md`](KEYPAD_LOCK.md) has a demo electronic lock in a third cartridge (`lock_type = "keypad"`): turn the knob like a safe dial to unlock, press it to lock. An ATtiny85 and a micro servo move the same steel bolt. It needs the bike's 5 V to open and isn't weatherproofed: a concept to try, not for everyday use.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**
