@@ -79,15 +79,14 @@ You get 5 of each board, so spares or a second set cost nothing more.
 
 ## Optional: printed lock instead of the cam lock
 
-If you print the lock ([`PRINTED_LOCK.md`](PRINTED_LOCK.md)), leave out the ₹270 cam lock and the 3.2 mm drill bit, and add:
+If you print the lock ([`PRINTED_LOCK.md`](PRINTED_LOCK.md)), leave out the ₹270 cam lock, the 3.2 mm drill bit and the crank-pin screw and spacer, and add:
 
 | Item | Where | Price |
 |---|---|---|
-| Printing the lock parts (about 5 cm³, 7 g) | Add them to the main print order | ₹50–100 (est.) |
-| Mini compression springs, 2 mm OD, 0.2–0.3 mm wire (8 needed) | A spring assortment kit (e.g. [this 2 × 0.3 mm kit](https://www.cart2india.com/compression/unifizz-30-pcs-compression-springs-assortment-kitstainless-steel-springs-wire-diameter-0012od-008free-length-039-small-spring-assortment-for-home-repairs-machinery-construction-industrial/00000000004390075286)), or Lamington Road | ₹150–350 (est.) |
-| M3 × 4 grub screw + 1 short M3 heat-set insert | Nagdevi Street (the insert can come from the 50-pack) | ₹10–20 (est.) |
+| Printing the lock parts: shuttle, 4 wafers, key, lifter, cover (about 9 cm³, 12 g). They replace `lock_yoke` and `lock_cover`, and you print the printed-lock version of the dock (`receiver_plock` or `dock_base_plock`) instead of the standard one, at the same size | Add them to the main print order | ₹60–120 (est.) |
+| 4 small compression springs: 3 mm OD, 0.3 mm wire, about 8 mm long, **9 coils or fewer** (stainless) | A spring assortment kit (Amazon.in, "mini compression spring assortment"), or Lamington Road | ₹100–300 (est.) |
 
-The total is about the same as the store lock. Choose it for your own key code and no drilling, not to save money.
+The total is a little under the store lock. Choose it for your own key code, no drilling and a key you can reprint, not to save money.
 
 ## Buy locally to save money
 

@@ -321,6 +321,43 @@ Update 14 (2026-11-22): **one-piece dock base reshaped for looks** (merged mount
 - **Images:** `merged_side`, `merged_rear`, `merged_front`, `merged_exploded`, `merged_dock_base`, `merged_underside`.
 - **Not checked:** print supports under the floor; how the walls look in a real print; clearance of the walls and the now lower lock to the real cluster and switch cables.
 
+Update 15 (2026-11-22): **printed lock redesigned as a push-key lock, for 3D printing** (owner: "no need for it to be a regular lock"). The store lock stays the default; its parts are unchanged, checked: `receiver` and `one_piece/dock_base` render with the same volume and bounding box as the files on disk.
+- **Design (`printed_lock.scad`, rewritten):**
+  - A 3.5 mm card key slides straight into a slot in the pod's side wall and pushes a printed shuttle (18.2 mm long) 7 mm along a channel.
+  - A pin on the printed lifter runs in a slanted track (57°) on the shuttle's side. The lifter carries the steel bolt and replaces the yoke. There is a 1.2 mm flat at each end of the track: when locked, nothing can back-drive it.
+  - 4 flat 2.4 mm wafers ride in the shuttle, each pushed down by a 3 mm spring onto the key's top edge. Each wafer's side tab must line up with a groove in the pod wall (±0.25 mm), and there are pockets only at the locked position.
+  - Code steps are 1 mm, giving 81 codes. A dropped wafer blocks by 1.05 mm, a one-step wrong cut by 0.75 mm.
+  - The shuttle sits on the lock cover. Assembly is from underneath: the tab pockets run down to the pod's underside, and the track's entry slot drops over the pin from above. The lifter can rise only 0.5 mm (its arm meets the roof), so the pin can't leave the track.
+  - Removed: body, plug, clip, crank, grub screw and insert, and the 8 × 2 mm springs.
+- **Main file:**
+  - `lock_pod_cuts()` now calls `store_lock_cuts()` or `plk_pod_cuts()` by `lock_type`; the arm pocket, bolt guide and cover recess are shared.
+  - `lock_cover_screws()` moves its second screw for the printed lock, and the printed lock's cover has a second drain.
+  - `yoke_dz()` follows the shuttle's track for the printed lock.
+  - `lock_mechanism()` draws the lifter instead of the crank and yoke.
+- **Asserts (new set):** code digits; wafers fit the shuttle; spring pockets apart; key tip under dropped wafers; window clearance; wrong cut and dropped wafer block by ≥ 0.6 mm; springs ≥ 3.2 mm at full lift; track inside the shuttle; innermost wafer clear of its pocket when unlocked; channel, groove and lifter pocket inside the pod; lifter joins the arm; full push reaches the channel's end stop; keyhole above the cover. All 4 combinations (store or printed lock × modular or one-piece mount) pass with no warnings.
+- **Exported** to `printed_lock/` (all watertight and consistent; one body each, `plock_wafers` 4 on purpose): `plock_shuttle` 2.96 cm³, `plock_key` 2.19, `plock_lifter` 1.44, `plock_cover` 1.92, `plock_wafer_1`…`4` and `plock_wafers`, `receiver_plock` 59.1, `dock_base_plock` 187.4.
+- **Checks:**
+
+| Check | Modular | One-piece |
+|---|---|---|
+| Shuttle, wafers, key and lifter vs the dock, at 0, 25, 50, 75 and 100 % of the travel | no overlap | no overlap |
+| Same parts vs the lock cover | touch only | touch only |
+| Wafers in the shuttle (dropped, level, lifted); key in the shuttle; key in the wafers | touch only | — |
+| Lifter pin in the track, 6 points of the travel | no overlap | — |
+| **Must collide:** no key, pushed 0.5 mm | 1.26 mm³ | 1.26 mm³ |
+| **Must collide:** each wafer one step off, pushed 0.5 mm | 0.90 mm³ | 0.90 mm³ |
+| **Must collide:** key pulled out while unlocked | 5.67 mm³ | 5.67 mm³ |
+| **Must collide:** bolt pushed down 0.5 mm while locked | 0.63 mm³ | — |
+| Case sliding on at 0, 30 and 60 mm (snap off) | — | touch only |
+| Locked bolt vs case pulled up 0.5 mm | — | 30.38 mm³: still blocks removal |
+| Clamps at 40°; bar / bike-clamp envelope at 40° | — | touch only; no overlap |
+
+- **First attempts:**
+  - One assert required the travel not to be near a multiple of the wafer pitch. That was the wrong condition: only the innermost wafer has to clear its own pocket. Fixed.
+  - The shuttle sat 0.1 mm above the cover, because the cover is printed 0.1 mm thin. It is now seated on it.
+- **Images:** `plock_exploded.png` and `plock_cutaway.png` (coloured slices through wafer 2) re-rendered.
+- **Not checked:** spring force and how the wafers feel; friction of the 57° track; how the tabs fit a real print of the dock's groove; wear of the key's cuts.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

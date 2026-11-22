@@ -76,10 +76,10 @@ An old phone becomes a permanent handlebar navigation screen.
   - **Store option:** a 16 mm quarter-turn cam lock. Its own cam is drilled to become the crank, using `crank_template`.
   - **Mechanism:** a scotch-yoke lifts a flat **14 × 9 DIN 6885 key-steel bolt** against a key-steel bearing block in the printed strike. No custom steel fabrication.
 - **Printed lock (optional):** `printed_lock.scad`, `PRINTED_LOCK.md`, STLs in `printed_lock/`.
-  - A 4-wafer lock in the store lock's exact envelope, so the dock is unchanged. It has a D-shaped body held by a C-clip in a groove.
-  - The wafers and key print flat. Each wafer has 2 metal springs (2 mm OD); printed springs are too weak.
-  - `lock_code` sets the key; `lock_type = "printed"` shows it in the assembly.
-  - Built-in checks: `PART="plock_check_*"`.
+  - Redesigned 2026-11-22 for printing (owner: "no need for it to be a regular lock"): a **push key**. A 3.5 mm card key slides straight into a slot in the pod's side wall and pushes a printed shuttle 7 mm; a pin on the printed lifter (carries the steel bolt, replaces the yoke) runs in a slanted track on the shuttle, so shuttle in = bolt down. Flat dwell when locked: no back-drive.
+  - Code: 4 flat wafers in the shuttle, each pushed down by a 3 mm spring onto the key's top edge; each wafer's side tab must line up with a groove in the pod wall. Pockets only at the locked position, so the key comes out only when locked. 1 mm code steps, 81 codes.
+  - The pod's inside differs (`lock_type` switches `lock_pod_cuts`), so it has its own docks: `printed_lock/receiver_plock.stl`, `dock_base_plock.stl`. Store-lock parts are unchanged. Fits both mounts.
+  - `lock_code` sets the key. Built-in checks: `PART="plock_check_*"` (pod, cover, parts, pin = empty/touch; nokey, wrongkey, keyout, backdrive = must collide).
 - **Mount:** modular: 2 rotating bar clamps (set the tilt) → base plate on 4 grommets → dock → case. A smart base can replace the plate later.
   - **Option `mount = "merged"`:** `dock_base` = dock + plate in one part. The damping moves to the clamp bolts (`iso_pad` rubber pads, rubber washers, M5 spacers as compression limiters). The mount sits 2 mm higher, clamp spacing is 132–154 mm (the bolt heads must clear the strike), and there is no smart base. `"modular"` stays the default.
   - **Its look (owner's goal: aesthetic and minimal):** the base takes the case outline with side and end walls, so case + base read as one slab. The lock pod is 7 mm lower so it hides behind the case, which moves the shoe's strike: merged builds use `one_piece/shoe_one_piece.stl` and `case_back_one_piece.stl`. Fixed: the clamp bolt pattern and the docking interface.

@@ -31,11 +31,11 @@
     },
     {
       "src": "images/plock_exploded.png",
-      "caption": "Optional printed lock: key, body, plug, 4 wafers with springs, clip, crank"
+      "caption": "Optional printed lock: a push-in card key, the shuttle, 4 wafers and their springs"
     },
     {
       "src": "images/plock_cutaway.png",
-      "caption": "Printed lock cut through a wafer: the right key holds it flush with the plug"
+      "caption": "Printed lock cut through a wafer: the key sets its height, and its tab must line up with the groove in the pod wall"
     }
   ],
   "viewer_default": "receiver",
@@ -172,23 +172,44 @@
       "material": "6 mm steel plate",
       "optional": true
     },
-    "plock_body": {
-      "name": "Printed lock: body",
-      "what": "Optional printed lock (instead of the store cam lock): D-shaped body with the wafer channels",
+    "receiver_plock": {
+      "name": "Printed lock: dock",
+      "what": "The dock with the printed lock's channel, groove and keyhole slot. Use it instead of receiver if you print the lock",
       "qty": "1",
-      "material": "PETG or ASA, 100 % infill, 0.15 mm layers, flange down",
+      "material": "ASA or PETG, as the receiver",
       "optional": true
     },
-    "plock_plug": {
-      "name": "Printed lock: plug",
-      "what": "Turns with the key and drives the crank; holds the 4 wafers and 8 springs",
+    "dock_base_plock": {
+      "name": "Printed lock: one-piece base",
+      "what": "The one-piece dock base with the printed lock's pod. Use it instead of one_piece/dock_base if you print the lock",
       "qty": "1",
-      "material": "PETG, 0.15 mm layers, lying on its flat",
+      "material": "ASA or PETG, as dock_base",
+      "optional": true
+    },
+    "plock_shuttle": {
+      "name": "Printed lock: shuttle",
+      "what": "Slides 7 mm when the key is pushed; carries the 4 wafers and the track that lowers the bolt",
+      "qty": "1",
+      "material": "PETG or ASA, 100 % infill, standing on its bottom",
+      "optional": true
+    },
+    "plock_lifter": {
+      "name": "Printed lock: lifter",
+      "what": "Carries the steel bolt (replaces lock_yoke); its pin runs in the shuttle's track",
+      "qty": "1",
+      "material": "PA12 or PETG, 100 % infill, standing on its bottom",
+      "optional": true
+    },
+    "plock_cover": {
+      "name": "Printed lock: cover",
+      "what": "Closes the lock pod and holds the shuttle in (replaces lock_cover)",
+      "qty": "1",
+      "material": "ASA or PETG, flat",
       "optional": true
     },
     "plock_wafer_1": {
       "name": "Printed lock: wafer 1",
-      "what": "Front wafer. The 4 wafers differ (they set the key code): print your own from lock_code",
+      "what": "Front wafer. The 4 wafers differ (their windows set the key code): print your own from lock_code",
       "qty": "1",
       "material": "PETG, flat, 0.15 mm layers",
       "optional": true
@@ -223,23 +244,9 @@
     },
     "plock_key": {
       "name": "Printed lock: key",
-      "what": "Flat key cut to lock_code (the example code here: make your own)",
+      "what": "Flat card key, pushed straight in (cut to lock_code: the example code here, make your own)",
       "qty": "1+",
       "material": "PETG (or PC / PA), 100 % infill, flat",
-      "optional": true
-    },
-    "plock_clip": {
-      "name": "Printed lock: clip",
-      "what": "C-clip that holds the body in the pod (snaps into its groove)",
-      "qty": "1",
-      "material": "PETG, flat",
-      "optional": true
-    },
-    "plock_crank": {
-      "name": "Printed lock: crank",
-      "what": "Replaces the drilled steel cam: M3 insert for the crank pin, grub screw onto the plug",
-      "qty": "1",
-      "material": "PETG, 100 % infill, flat",
       "optional": true
     }
   },
@@ -272,7 +279,7 @@
       "file": "WIRING.md"
     },
     {
-      "label": "Printed lock and key (optional alternative to the store lock)",
+      "label": "Printed push-key lock (optional alternative to the store lock)",
       "file": "PRINTED_LOCK.md"
     },
     {

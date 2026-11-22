@@ -1,81 +1,79 @@
 # Printed lock and key (optional)
 
-A 3D-printable alternative to the store-bought 16 mm cam lock. It fits the **same dock**, so nothing else needs reprinting.
+A lock designed for 3D printing, as an alternative to the store-bought 16 mm cam lock. It is **not** a copy of a store lock: it is a **push-key lock**. A flat card key slides straight into a slot in the side of the dock, with no turning. It drives the same steel bolt and strike as the store lock, so the parts that take the load are unchanged.
 
 | | Store-bought cam lock (default) | Printed lock |
 |---|---|---|
 | Security | Better: metal wafers, hardened body | **Casual-theft deterrent only.** It can be forced or drilled |
-| Key | Comes with 2 keys | Your own code; print spare keys any time |
-| Work | Drill the lock's cam for the crank pin | No drilling; print, add 8 small springs, assemble |
-| Parts cost | About ₹270 for the lock | About ₹250–450 (springs kit, a grub screw; the printing is tiny) |
+| Key | Comes with 2 keys; you turn it | Your own code; a 3.5 mm card key you push in. Print spares any time |
+| Work | Drill the lock's cam for the crank pin | No drilling: print, add 4 small springs, assemble |
+| Dock | `receiver` or `dock_base` | `printed_lock/receiver_plock` or `dock_base_plock` (same outside, different inside the lock pod) |
+| Parts cost | About ₹270 for the lock | About ₹160–420 (4 springs; the printing is small) |
 
 Use it if you can't find a suitable quarter-turn lock, want your own key code, or want a lock you can rebuild. For the best theft protection, use a good store-bought lock.
 
-![Exploded](images/plock_exploded.png)
+![Key, shuttle, wafers and springs](images/plock_exploded.png)
+
+## Using it
+
+- **To unlock:** push the key fully into the slot in the side wall, then push it in a further 7 mm, until the key's head is almost against the wall. The bolt drops, and you can slide the case off. The key stays in while unlocked; it can't be pulled out yet.
+- **To lock:** with the case docked, pull the key back out to its first stop. The bolt rises into the case's strike. Now the key comes out.
+- **The key comes out only when locked,** like the store lock's "key removable only when locked". So you can't walk away and leave it unlocked by mistake.
 
 ## How it works
 
-It is a **wafer lock**, the same mechanism as most store-bought cam locks.
+Four parts inside the lock pod, plus the steel bolt:
 
-![Cut through a wafer, key in](images/plock_cutaway.png)
+- **Shuttle (orange):** a printed block that slides 7 mm along a channel behind the keyhole slot. The key pushes it in, and pulls it back out.
+- **Wafers (yellow):** 4 flat plates in slots in the shuttle. A small spring pushes each one down, so its window rests on the key's top edge, and the depth of the key's cut sets the wafer's height. Each wafer has a **tab** on its side that runs in a **groove** in the pod's wall.
+- **Lifter (grey):** carries the steel bolt; it replaces the store lock's yoke. A pin on it runs in a **slanted track** on the shuttle's side. Shuttle in: the pin is pulled down the slope, and the bolt drops. Shuttle out: the bolt rises.
+- **Key (blue):** a flat card with 4 cuts on its top edge. Its shoulder pushes the shuttle in; its cuts, held by the wafers, pull it back out.
 
-*Cut through the second wafer, with the key in:*
-- **body:** dark grey, D-shaped, with a channel at each side;
-- **plug:** orange;
-- **wafer:** yellow;
-- **key:** blue, sitting in the wafer's window;
-- **springs:** grey, pushing on the wafer's shoulders.
+![Cut through wafer 2, key in, locked](images/plock_cutaway.png)
 
-**Without the key:**
-- Two small springs push each of the 4 flat wafers 0.9 mm out of the plug into a channel in the body. The plug can't turn.
+*Cut through wafer 2, seen from the keyhole side, with the key in and the lock locked:*
+- *the dock: grey-blue;*
+- *the shuttle: orange, with the lifter's track cut into its left side;*
+- *the wafer: yellow, sitting on the key (blue). Its tab, on the right, is in its pocket;*
+- *the spring: grey, above the wafer.*
 
-**With the right key:**
-- Each wafer's window rests on its cut of the key, which holds the wafer exactly flush with the plug.
-- The plug and key then turn a quarter turn. The plug's printed crank drives the same yoke and steel bolt as before.
-
-**With a wrong key:** any cut one step (0.5 mm) off leaves that wafer poking 0.5 mm out on one side or the other, so the plug stays locked.
-
-**The key comes out only when locked:** the body has channels only at the locked position, so at any other position the wafers can't move to let the key out. This matches the store lock's "key removable only when locked".
-
-**Limits:** a quarter-turn stop on the plug's head limits the turn to exactly 90°, from unlocked (crank pin toward the rider) to locked (pin straight up, over top dead centre).
+**What stops the shuttle moving:**
+- **The groove only lets a tab through at exactly the right height.** With the right key, all 4 wafers sit at that height, and the shuttle slides.
+- **With no key,** the springs drop the wafers 1.3 mm. Their tabs hit the groove's lower edge, so the shuttle can't move.
+- **With a wrong key,** any cut one step (1 mm) off leaves that tab 0.75 mm or more across the groove's edge, so it still blocks.
+- **The key comes out only when locked:** at the locked position each tab sits in a **pocket** where it can move up and down as the key's cuts slide past. Anywhere else the groove holds the wafers still, so the key can't be pulled out.
+- **The bolt can't be pushed down to open it:** when locked, the lifter's pin sits on a flat part of the track. A push on the bolt presses straight down on that flat, with no sideways push on the shuttle.
 
 ## Design choices, and what they're based on
 
-- **Wafers, not pin tumblers:**
-  - Every part that sets the code (the wafers and the key) is **flat**, so it prints flat in the XY plane, where FDM is most accurate.
-  - Pin tumblers need tiny printed cylinders, which print poorly.
-  - Disc-detainer locks are spring-free but need precise angular cuts and a complex key.
-- **Metal springs:** a university project that set out to print a complete lock found its printed springs gave almost no force, and fell back to metal ones ([UW–Madison, Functional Lock and Key](https://additive-mfg.me.wisc.edu/?p=2515)). So the wafers use 8 small metal springs, and everything else is printed.
-- **Printing rules:**
-  - Print every lock part at a fixed **0.15 mm** layer height, including the first layer, with elephant's-foot compensation on.
-  - This follows an open-source collection of printed locks ([twanvl/locks](https://github.com/twanvl/locks)). That collection has no license, so none of its files or geometry are used here, only the general advice.
-- **Tolerances:**
-  - **Clearance values:** 0.2 mm radial clearance for turning parts (`plk_clear`), and 0.15 mm around each wafer in its slot (`plk_wclear`).
-  - **Depth step:** cuts are 0.5 mm apart (`plk_step`). That is far bigger than the clearances, so an error of a tenth of a millimetre still opens with the right key, while a one-step error still locks.
-  - **Test first:** printer fits vary, so print the fit test below before the final parts.
-- **Same envelope as the store lock:** the body is the 16 mm D-shape (15.8 mm, 14.4 mm across the flats). The crank has the steel crank's outline and 7 mm pin radius. The checks below confirm it fits the existing dock.
-- **Clip instead of a nut:** the body is held by a printed C-clip that snaps into a groove right behind the panel, like many store cam locks' retaining clips.
-  - It goes into the pod's nut cavity from underneath.
-  - A nut would have to slide over the body's rear end, which is too wide for a printable thread.
+- **Push, not turn:**
+  - A turning key twists a thin printed blade, which is where printed keys break. A push key is loaded only along its length, so it can be a solid 3.5 mm card.
+  - No round plug in a round body, so there are no tight rotating fits to print.
+- **Bigger, more forgiving sizes:** 3.5 mm key, 2.4 mm wafers, **1 mm code steps** and 0.25 mm clearances. The old printed lock had 1.3 mm wafers, 0.5 mm steps and 2 mm springs. A printer that is a tenth of a millimetre out still works, and a one-step wrong cut still blocks.
+- **Print orientation:** everything that sets the code is printed flat (the key and the wafers), where FDM is most accurate. The shuttle and lifter print standing on their flat bottoms, with no supports.
+- **Metal springs:** a university project that tried to print a complete lock found printed springs gave almost no force ([UW–Madison, Functional Lock and Key](https://additive-mfg.me.wisc.edu/?p=2515)). So the 4 wafer springs are bought; everything else is printed.
+- **General ideas only:** the wafer-and-groove principle is the same as in store wafer and sidebar locks. No third-party lock designs or files are used.
+- **Same bolt and strike:** the lock only lifts and lowers the steel bolt. The case's pull goes into the bolt and the steel bearing block exactly as with the store lock.
 
 ## Parts
 
-STLs are in [`printed_lock/`](printed_lock/), already in print orientation. **Print them with your own code (see below).** The ones here use the example code `[2, 0, 1, 2]`, which everyone who downloads them shares.
+STLs are in [`printed_lock/`](printed_lock/), already in print orientation. **Print the wafers and key with your own code (see below).** The ones here use the example code `[2, 0, 1, 2]`, which everyone who downloads them shares.
 
 | Part | File | Qty | How to print |
 |---|---|---|---|
-| Body | `plock_body.stl` | 1 | Flange down. 100 % infill (it's small), PETG or ASA |
-| Plug | `plock_plug.stl` | 1 | Lying on its flat side, so the wafer slots print as accurate vertical walls. No supports |
-| Wafers 1–4 | `plock_wafer_1.stl` … `plock_wafer_4.stl` (or `plock_wafers.stl`, all 4 in order) | 1 each | Flat. **They differ:** keep them in order, front (keyhole end) to back |
-| Key | `plock_key.stl` | 1+ | Flat. 100 % infill. PETG, or PC / PA if you have it. Print spares |
-| Clip | `plock_clip.stl` | 1 | Flat. PETG (it needs to flex a little to snap on) |
-| Crank | `plock_crank.stl` | 1 | Flat, 100 % infill |
+| Dock, printed-lock version | `receiver_plock.stl` (modular mount) or `dock_base_plock.stl` (one-piece base) | 1 | As the standard dock. It replaces `receiver` / `one_piece/dock_base` |
+| Shuttle | `plock_shuttle.stl` | 1 | Standing on its bottom face, 100 % infill. No supports |
+| Wafers 1–4 | `plock_wafer_1.stl` … `plock_wafer_4.stl` (or `plock_wafers.stl`, all 4) | 1 each | Flat. **They differ:** keep them in order, front (keyhole end) to back |
+| Key | `plock_key.stl` | 1+ | Flat, 100 % infill. PETG, or PC / PA if you have it. Print spares |
+| Lifter | `plock_lifter.stl` | 1 | Standing on its bottom face, 100 % infill, PA12 or PETG. It replaces `lock_yoke` |
+| Lock cover | `plock_cover.stl` | 1 | Flat. It replaces `lock_cover` (different screw position, an extra drain) |
+
+Print all of them at 0.2 mm layers or finer, with elephant's-foot compensation on.
 
 **Hardware:**
-- 8 compression springs: 2 mm outside diameter, 0.2–0.3 mm wire, about 5 mm long. They are sold as mini compression-spring assortments ([example kit with 2 mm × 0.3 mm springs](https://www.cart2india.com/compression/unifizz-30-pcs-compression-springs-assortment-kitstainless-steel-springs-wire-diameter-0012od-008free-length-039-small-spring-assortment-for-home-repairs-machinery-construction-industrial/00000000004390075286)). At full compression each spring is 2.0 mm long, so with 0.3 mm wire it must have 6 coils or fewer. If a spring binds, snip a coil off.
-- 1 M3 grub screw (set screw), 4–5 mm long. It holds the crank on the plug.
-- 1 M3 heat-set insert, 3 mm long (in the crank, for the crank pin).
-- The crank pin, as for the store lock: an M3 shoulder screw with a 4 mm shoulder, or an M3 screw with a 4 mm-OD spacer.
+- 4 compression springs: **3 mm outside diameter, 0.3 mm wire, about 8 mm long, 9 coils or fewer**, stainless steel. They are squeezed to 3.5 mm at most, and a 9-coil spring of 0.3 mm wire is 2.7 mm when fully closed. If a spring binds, snip a coil off.
+- The steel bolt, the bearing block and the 2 lock-cover screws, as for the store lock.
+- **Not needed:** the cam lock, the crank pin, the drill.
 
 ## Choose your key code
 
@@ -87,70 +85,65 @@ In `printed_lock.scad`, set `lock_code`: one digit per wafer, 0, 1 or 2, front t
 Then export the parts:
 
 ```sh
-openscad -D 'PART="plock_wafers"' -o plock_wafers.stl phone_dock_v0.5.scad
-openscad -D 'PART="plock_key"'    -o plock_key.stl    phone_dock_v0.5.scad
-# also: plock_body, plock_plug, plock_clip, plock_crank (these don't depend on the code)
+openscad -D 'lock_type="printed"' -D 'PART="plock_wafers"' -o plock_wafers.stl phone_dock_v0.5.scad
+openscad -D 'lock_type="printed"' -D 'PART="plock_key"'    -o plock_key.stl    phone_dock_v0.5.scad
+# also: plock_shuttle, plock_lifter, plock_cover (these don't depend on the code), and the dock:
+openscad -D 'lock_type="printed"' -D 'PART="receiver"' -o receiver_plock.stl phone_dock_v0.5.scad
+openscad -D 'lock_type="printed"' -D 'mount="merged"' -D 'PART="dock_base"' -o dock_base_plock.stl phone_dock_v0.5.scad
 ```
 
 To see the printed lock in the full assembly, set `lock_type = "printed"`.
 
 ## Fit test (do this first)
 
-1. Print the body, plug, wafers and key.
-2. **Plug in the body (no wafers):** push the plug into the body; it should turn freely. If it's tight, raise `plk_clear` by 0.05.
-3. **Wafers in the plug:** each wafer should slide freely in its slot with a light push. If they stick, raise `plk_wclear` by 0.05, or lightly sand the wafers' edges.
-4. **The key:**
-   - With the wafers fitted (no springs yet), push the key in.
-   - Every wafer should sit flush with the plug's surface: run a fingernail over them.
-   - If they all stand proud the same way, the key is printing slightly over-size (or under-size). Adjust your printer's flow, or the key's dimensions.
+Print the shuttle, the wafers and the key; the dock can come later.
+1. **Wafers in the shuttle:** each wafer should slide up and down freely in its slot. If they stick, lightly sand their faces.
+2. **The key:**
+   - With the wafers in (no springs yet), push the key fully in.
+   - Each wafer's tab should sit at the same height, level with the others: lay a straight edge along the tabs.
+   - If they are all a little high or low together, the key is printing slightly over- or under-size. Adjust your printer's flow.
+3. **In the dock:** with the key in, the shuttle should slide its full 7 mm with light pressure. If it rubs at the groove, raise `plk_gclear` by 0.05 and reprint the dock, or ease the groove with a fine file.
 
 ## Assembly
 
-1. **Wafers and springs:**
-   - Put the plug on the bench. Drop 2 springs into each wafer's pockets.
-   - Fit the wafers in order, front (keyhole end) to back, shoulders onto the springs.
-   - Push the key fully in: it holds all the wafers flush.
-2. **Plug into the body:** with the key in, slide the plug into the body from the front. Turn it to the locked position, with the plug head's lug at the end of its slot.
-3. **Body into the dock:**
-   - Push the body into the lock pod's D-shaped hole from outside.
-   - From underneath (lock cover off), push the C-clip up into the groove right behind the panel, open side first, until it snaps on. Its tab points down.
-   - To remove the lock later, pull the clip down by its tab.
-4. **Crank:**
-   - Press the M3 heat-set insert into the crank.
-   - Slide the crank onto the plug's square drive, with its pin boss pointing up (locked).
-   - Tighten the grub screw into the dimple on the drive.
-   - Fit the crank pin through the yoke slot into the insert, as for the store lock.
+The lock goes in from underneath the pod, with the lock cover off.
+1. **Lifter and bolt:** press the bolt into the lifter with retaining compound, as with the store lock's yoke. Push it up into its pocket from below, with the bolt through the guide in the roof, and hold it up (locked).
+2. **Wafers and springs:**
+   - Drop a spring into each pocket above the wafer slots in the shuttle.
+   - Slide the wafers into their slots from the open side, in order, front to back, tabs outward.
+   - Push the key fully in: it holds all the wafers level.
+3. **Shuttle into the dock:** with the key in, push the shuttle up into its channel from below, at the locked position (its front face against the side wall). Its tabs go up the slots below the pockets, and the open slot in the top of its track drops over the lifter's pin.
+4. Screw on the lock cover. It holds the shuttle in.
 5. **Test:**
-   - Turn to unlocked (the bolt drops) and back to locked (the bolt rises).
-   - Pull the key out: it should come out **only** when locked.
-   - With the key out, the plug must not turn.
-6. Refit the lock cover.
+   - Push the key in: the bolt drops. Pull it back: the bolt rises, and the key comes out.
+   - With the key in and pushed in, try to pull it out: it must not come out until the shuttle is back.
+   - With the key out, push on the shuttle through the slot with a small screwdriver: it must not move.
 
 ## Checked in CAD
 
-These checks are built in as `PART="plock_check_*"` and were run on the default settings:
+These checks are built in as `PART="plock_check_*"` (run with `lock_type="printed"`). They were run on both the modular dock and the one-piece base.
 
 | Check | Result |
 |---|---|
-| Body and clip vs the dock (`plock_check_pod`) | No overlap: fits the unchanged dock |
-| Crank and pin vs the dock and yoke, locked, half-way and unlocked (`plock_check_crank`) | No overlap |
-| Right key, plug turned 0°, 45° and 90° (`plock_check_turn`) | No overlap: it turns |
-| Wafers sliding in the plug: sprung out, flush, lifted (`plock_check_wafers`) | No overlap |
-| Key vs plug (`plock_check_key`) | Touching only |
-| **No key**, plug turned 8° (`plock_check_nokey`) | **Blocked** (1.7 mm³ overlap) |
-| **Wrong key**, every wafer one step off, turned 8° (`plock_check_wrongkey`) | **Blocked** (0.6 mm³ overlap) |
-| Wafers at the unlocked position, trying to move to let the key out | **Blocked**: the key comes out only when locked |
-| Lock, key and flange vs the case and shoe, docked and while sliding on and off | No overlap |
+| Shuttle, wafers, key and lifter vs the dock, at 0, 25, 50, 75 and 100 % of the travel (`plock_check_pod`) | No overlap |
+| The same parts vs the lock cover (`plock_check_cover`) | Touching only: the shuttle sits on the cover |
+| Wafers in the shuttle (dropped, level, lifted); key in the shuttle; key in the wafers (`plock_check_parts`) | Touching only |
+| Lifter pin in the shuttle's track at 6 points of the travel (`plock_check_pin`) | No overlap |
+| **No key**, shuttle pushed 0.5 mm (`plock_check_nokey`) | **Blocked** (1.26 mm³) |
+| **Wrong key**, every wafer one step off, pushed 0.5 mm (`plock_check_wrongkey`) | **Blocked** (0.90 mm³) |
+| **Key pulled out while unlocked** (`plock_check_keyout`) | **Blocked** (5.67 mm³): the key comes out only when locked |
+| **Bolt pushed down while locked** (`plock_check_backdrive`) | **Blocked** (0.63 mm³): the pin sits on the flat |
+| Case sliding on at 0, 30 and 60 mm; locked bolt vs the case pulled up 0.5 mm; clamps and bar at 40° | Touching only; the bolt still blocks removal (30.4 mm³); no overlap |
 | All parts | Watertight single bodies |
 
-**CAD checks are not a physical test.** Print it, try it, and leave the store-bought lock as the option if the printed one doesn't work reliably on your printer.
+**CAD checks are not a physical test.** Print it, try it, and keep the store-bought lock as the option if the printed one doesn't work reliably on your printer.
 
 ## Limits and care
 
 - **Security:** it stops someone walking off with the phone, not someone with a screwdriver or a drill. Keep the case on a tether until you trust it.
 - **Weather:**
-  - The keyhole lets water into the plug, so the springs should be stainless.
-  - The pod's cover has a drain slot.
-  - A rubber keyhole cover helps.
+  - Rain can get in at the keyhole, so use stainless springs.
+  - The lock cover has a drain under the shuttle and another under the bolt.
+  - A rubber plug or flap over the slot helps.
 - **Heat:** PETG and ASA are fine in the sun. Avoid PLA.
-- **Wear:** the key and wafers rub on each other. Print a spare key now, and re-print the wafers if the lock gets sloppy. A worn key is easy to replace; that is the advantage of a printed lock.
+- **Wear:** the key's cuts and the wafers rub on each other. Print a spare key now, and reprint the wafers if the lock gets sloppy.

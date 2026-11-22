@@ -774,7 +774,21 @@ module lock_pod_solid() {
 }
 
 module lock_pod_cuts() {
-  // Lock body bore, D-shaped panel bore, nut cavity (reached from below, under the cover).
+  if (lock_type == "printed") plk_pod_cuts();   // the printed lock's shuttle channel, lifter pocket and keyhole
+  else store_lock_cuts();
+  // Arm pocket under the roof, open underneath.
+  translate([bolt_x - arm_wx/2 - 0.3, bolt_y - arm_wy/2 - 0.3, pod_bottom_z - 1])
+    cube([yoke_x0 + 1 - bolt_x + arm_wx/2 + 0.3, arm_wy + 0.6, roof_bottom_z - pod_bottom_z + 1]);
+  // Bolt guide through the roof (rectangular, for the flat bolt).
+  translate([bolt_x - keeper_win_w/2, bolt_y - keeper_win_t/2, roof_bottom_z - 0.05]) cube([keeper_win_w, keeper_win_t, roof_t + 0.1]);
+  // Cover recess + 2 x M3 inserts.
+  translate([pod_low_x0 + 1, pod_y0 + 1.5, pod_bottom_z - 0.05])
+    cube([lock_panel_inner_x - (pod_low_x0 + 1), pod_y1 - pod_y0 - 3, lock_cover_t + 0.05]);
+  for (p = lock_cover_screws()) translate([p[0], p[1], pod_bottom_z + lock_cover_t - 0.05]) cylinder(d=4.2, h=5.05);
+}
+
+// Store cam lock: body bore, D-shaped panel bore, nut cavity (reached from below, under the cover), crank, yoke.
+module store_lock_cuts() {
   translate([crank_x1 - 0.05, lock_y, lock_z]) rotate([0,90,0]) cylinder(d=lock_bore_d + 0.6, h=lock_panel_inner_x - crank_x1 + 0.1);
   translate([lock_panel_inner_x - 0.05, lock_y, lock_z]) rotate([0,90,0])
     intersection() {
@@ -788,19 +802,12 @@ module lock_pod_cuts() {
   // Yoke pocket (full travel), open underneath for assembly.
   translate([yoke_x0 - 0.3, yoke_y0 - 0.3, pod_bottom_z - 1])
     cube([yoke_x1 - yoke_x0 + 0.6, yoke_y1 - yoke_y0 + 0.6, yoke_top_locked + 0.5 - pod_bottom_z + 1]);
-  // Arm pocket under the roof, open underneath.
-  translate([bolt_x - arm_wx/2 - 0.3, bolt_y - arm_wy/2 - 0.3, pod_bottom_z - 1])
-    cube([yoke_x0 + 1 - bolt_x + arm_wx/2 + 0.3, arm_wy + 0.6, roof_bottom_z - pod_bottom_z + 1]);
-  // Bolt guide through the roof (rectangular, for the flat bolt).
-  translate([bolt_x - keeper_win_w/2, bolt_y - keeper_win_t/2, roof_bottom_z - 0.05]) cube([keeper_win_w, keeper_win_t, roof_t + 0.1]);
-  // Cover recess + 2 x M3 inserts.
-  translate([pod_low_x0 + 1, pod_y0 + 1.5, pod_bottom_z - 0.05])
-    cube([lock_panel_inner_x - (pod_low_x0 + 1), pod_y1 - pod_y0 - 3, lock_cover_t + 0.05]);
-  for (p = lock_cover_screws()) translate([p[0], p[1], pod_bottom_z + lock_cover_t - 0.05]) cylinder(d=4.2, h=5.05);
 }
 
-// On the pod's upper side, clear of the arm pocket, the lock bore and the nut.
-function lock_cover_screws() = [[bolt_x - 2, pod_y1 - 4], [lock_panel_inner_x - lock_nut_len - 5, pod_y1 - 4]];
+// On the pod's upper side, clear of the arm pocket, the lock bore and the nut (printed lock: clear of its
+// shuttle channel and wafer pockets).
+function lock_cover_screws() = [[bolt_x - 2, pod_y1 - 4],
+                                lock_type == "printed" ? [pod_high_x0 + 2, pod_y1 - 4] : [lock_panel_inner_x - lock_nut_len - 5, pod_y1 - 4]];
 
 module lock_cover() {
   difference() {
@@ -812,11 +819,13 @@ module lock_cover() {
     }
     // Drain slot under the bolt (water that gets past the strike runs out).
     translate([bolt_x - 1.5, bolt_y - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
+    // Printed lock: a second drain under its shuttle, for rain that gets in at the keyhole.
+    if (lock_type == "printed") translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
   }
 }
 
 // Yoke + arm, printed in PA12 (or machined aluminium). turn: 0 = unlocked, 1 = locked.
-function yoke_dz(turn) = crank_r*(sin(90*turn) - 1);
+function yoke_dz(turn) = lock_type == "printed" ? plk_dz(turn) : crank_r*(sin(90*turn) - 1);   // bolt drop from locked
 module lock_yoke(turn=1) {
   translate([0, 0, yoke_dz(turn)]) difference() {
     union() {
@@ -882,9 +891,8 @@ module crank_placed(turn=1) {
 }
 
 module lock_mechanism(turn=1) {
-  if (lock_type == "printed") plk_placed(turn);
-  else color([0.75,0.75,0.78]) crank_placed(turn);
-  color([0.55,0.58,0.62]) lock_yoke(turn);
+  if (lock_type == "printed") plk_placed(turn);   // shuttle, wafers, key and lifter
+  else { color([0.75,0.75,0.78]) crank_placed(turn); color([0.55,0.58,0.62]) lock_yoke(turn); }
   lock_bolt(turn);
 }
 

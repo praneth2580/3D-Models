@@ -1,314 +1,280 @@
 /*
-  PRINTED LOCK (optional): a fully 3D-printable alternative to the store-bought 16 mm cam lock.
-  Included by phone_dock_v0.5.scad (uses its lock_* variables). See PRINTED_LOCK.md.
+  PRINTED LOCK (optional): a push-key lock designed for 3D printing, instead of the store-bought cam lock.
+  Included by phone_dock_v0.5.scad (uses its lock pod, bolt and cover variables). See PRINTED_LOCK.md.
 
-  Type: WAFER lock, the same mechanism most store-bought cam locks use, chosen because every part that
-  sets the key code is FLAT (the wafers and the key are printed flat, where FDM is most accurate):
-    - a printed body (the D-shaped 16 mm envelope of a store cam lock, so the dock is unchanged),
-      held in the lock pod's panel by a printed C-clip that snaps into a groove behind the panel
-      (pushed up into the pod's nut cavity from underneath, like a store cam lock's retaining clip);
-    - a printed plug (the part the key turns) carrying 4 flat wafers;
-    - 4 flat wafers, each pushed by 2 small metal springs (2 mm OD; printed springs are too weak);
-    - a flat printed key with one bitted edge: lock_code sets its cuts and each wafer's window;
-    - a printed crank on the plug's square boss, same outline and 7 mm pin radius as the steel crank,
-      with an M3 heat-set insert for the crank pin, held on by an M3 grub screw.
+  It is not a copy of a store lock. Everything that matters prints flat or upright, in sizes an FDM printer
+  holds well: a 3.5 mm card key, 2.4 mm wafers, 1 mm code steps, 0.25 mm clearances. Bought parts: 4 small
+  springs. The steel bolt and the strike are unchanged (they carry the load).
 
-  How it locks: with no key, the springs push every wafer 0.9 mm out of the plug into a channel in the
-  body, so the plug can't turn. The right key holds each wafer exactly flush, and the plug turns.
-  A wrong cut leaves that wafer 0.5 mm or more proud on one side or the other, which still blocks it.
-  The channels exist only at the LOCKED position, so the key comes out only when locked.
+  How it works:
+    - SHUTTLE: a printed block in a channel in the lock pod, behind a slot (the keyhole) in the side wall.
+      Pushing the key in pushes the shuttle 7 mm into the pod; pulling the key back brings it out again.
+    - WAFERS: 4 flat wafers ride in the shuttle, each pushed down by a spring onto the key's top edge, so the
+      key's cut sets each wafer's height. Each wafer has a tab on its side that runs in a groove in the pod
+      wall. The groove only lets a tab through at exactly the right height. With the right key all 4 tabs
+      line up and the shuttle moves; with no key (the springs drop the wafers) or a wrong key, a tab hits
+      the groove's shoulder and the shuttle can't move.
+    - LIFTER: the part that carries the steel bolt (it replaces the yoke). A pin on it runs in a slanted
+      track on the shuttle's side: shuttle in = bolt down (unlocked), shuttle out = bolt up (locked).
+      Locked, the pin sits on a flat part of the track, so pushing the bolt can't push the shuttle.
+    - The key comes out only when locked: at the locked position each tab has a pocket to move into as the
+      key's cuts slide past; anywhere else the groove holds the wafers, so the key is held in.
 
-  Frames: L = lock frame, z along the lock axis INTO the dock (z = 0 at the panel's outer face).
-  P = plug frame = L turned by plk_theta(turn) about z: the wafers slide along P x (spring pushes -x,
-  the tab end is +x), the crank pin points along P +y. Locked (turn = 1): P = L.
-  L to dock frame: xL -> -y, yL -> +z, zL -> -x, origin at the keyhole (lock_face_x, lock_y, lock_z).
+  Frames: S = shuttle frame: x into the pod from the shuttle's front face, z up (dock z), y toward the
+  lifter (dock -y). S to dock: a 180-degree turn about z: x -> lock_panel_inner_x - shift - x,
+  y -> plk_yc - y, z -> plk_zc + z. Locked: shift = 0 (front face on the panel). Unlocked: shift = plk_S.
 */
 
 // ------------------------- SETTINGS ---------------------------------
-lock_type = "store";        // "store" = bought 16 mm cam lock + drilled cam; "printed" = this lock (assembly view)
-lock_code = [2, 0, 1, 2];   // CHANGE THIS before printing: your key code, one digit 0-2 per wafer, front to back.
-                            // Digit = cut depth in steps of plk_step. Avoid all-equal codes like [1,1,1,1].
-plk_step = 0.5;             // depth step between digits (0, 0.5, 1.0 mm). Bigger = more forgiving, fewer codes
-plk_layer = 0.15;           // print every lock part at this layer height, with elephant's-foot compensation on
+lock_type = "store";        // "store" = bought 16 mm cam lock (default); "printed" = this lock. The lock pod's
+                            // inside differs, so the receiver / dock_base must be exported for the lock you use.
+lock_code = [2, 0, 1, 2];   // CHANGE THIS before printing: one digit 0-2 per wafer, front (keyhole end) to back.
+                            // Digit = cut depth in plk_step steps. Avoid all-equal codes like [1,1,1,1].
+plk_step = 1.0;             // depth step between digits. 1 mm: forgiving to print, a wrong cut still blocks by 0.75 mm
 
-// Envelope: the store lock's, so the printed lock fits the same lock pod.
-plk_d = lock_bore_d - 0.2;          // body outside diameter (D-shaped), 15.8
-plk_flat = lock_bore_flat - 0.2;    // across the body's flats, 14.4
-plk_flange_d = 20;                  // outside the pod, around the keyhole
-plk_flange_t = 2.5;
-plk_rear_z = lock_panel_t + lock_body_len - 0.2;   // body's rear face (the crank sits 0.2 behind it)
+// Travel: the shuttle moves plk_S; the bolt drops by the same 7 mm as with the store lock.
+plk_S = 7.0;
+plk_rise = crank_r;                                 // bolt travel (7)
+plk_dwell = 1.2;                                    // flat at each end of the track (locked one: no back-drive)
+plk_L = lock_panel_inner_x - (pod_high_x0 + 1.2) - plk_S;   // shuttle length: fills the channel less the travel
 
-// Plug, wafers, key.
-plk_plug_d = 11.2;
-plk_clear = 0.2;                    // radial clearance, plug in body (and head, lug)
-plk_head_d = 13;                    // plug head, in a counterbore in the flange
-plk_head_t = 2.0;
-plk_lug_w = 3.0;                    // rotation-stop lug on the head (quarter turn)
-plk_lug_r = 8.3;
-plk_wafer_t = 1.3;                  // about 9 layers at 0.15 mm
-plk_slot_w = 1.6;                   // slot in the plug for each wafer
-plk_pitch = 2.7;
-plk_first_z = 8.0;                  // first wafer's centre (behind the clip groove)
+// Key and wafers (S frame).
+plk_key_t = 3.5;                    // card key thickness (prints flat)
+plk_kt = 3.5;                       // uncut top edge (cuts go down from here)
+plk_kb = -3.5;                      // bottom edge
+plk_shoulder = 2.0;                 // the key's shoulder (below the blade) pushes the shuttle's front face
+plk_tip_low = -0.2;                 // key tip height: under the dropped wafers' windows
+plk_wt = 2.4;                       // wafer thickness (prints flat)
+plk_wslot = plk_wt + 0.3;           // its slot in the shuttle
+plk_pitch = 4.0;
+plk_front = 1.5;                    // shuttle front wall
 plk_n = len(lock_code);
-plk_tab_hw = 2.0;                   // wafer tab half-width (the end that pokes out when lifted)
-plk_wafer_hw = 4.6;                 // wafer body half-width (its shoulders carry the springs)
-plk_win_hw = 1.15;                  // key window half-width (key 2.0 thick)
-plk_win_bot = -3.6;                 // key window's bottom edge (wafer flush)
-plk_key_t = 2.0;
-plk_key_top = 2.2;                  // uncut key: x from -2.2 to +2.2 in the plug
-plk_drop = 0.9;                     // how far the springs push a wafer out with no key
-plk_wbody_r = plk_plug_d/2 - plk_drop - 0.2;   // the wide body never leaves the plug; only the tab (both ends) pokes out
-plk_lift = 2*plk_step;              // most a wafer is lifted while the key slides in or out
-plk_wclear = 0.15;                  // wafer in its slot
-plk_ch_r = plk_plug_d/2 + plk_lift + 0.15;   // body channel radius
-plk_keyway_end = 18.5;
-// Springs: 2 per wafer, 2.0 mm OD, 0.2-0.3 mm wire, about 5 mm free length (mini compression-spring kit).
-// Working length 2.0-3.9 mm: with 0.3 mm wire, a spring of 6 coils or fewer (snip one off if it binds).
-plk_spring_od = 2.0;
-plk_pocket_d = 2.2;
-plk_spring_y = 3.0;
-plk_pocket_top = 3.0;               // spring seat in the plug (P x)
-// Retaining C-clip in a groove right behind the panel (in the pod's nut cavity).
-plk_groove_z = [lock_panel_t, lock_panel_t + 3.5];
-plk_groove_r = 7.0;
-plk_clip_t = 3.4;
-plk_clip_od = 20;
-plk_clip_mouth = 2*plk_groove_r - 0.8;   // narrower than the groove: the clip snaps on
-// Crank (replaces the drilled steel cam): same outline and pin radius as crank_template.
-plk_boss = 7.0;                     // square drive on the plug's rear
-plk_insert_d = 4.0;                 // M3 heat-set insert (3 mm long) for the crank pin
-plk_grub_d = 2.5;                   // M3 grub screw, tapped into the printed hub
+plk_drop = 1.3;                     // how far a spring drops a wafer with no key
+plk_lift = 2*plk_step;              // most the key lifts a wafer above its level (uncut key over a 2-cut wafer)
+plk_win_hw = plk_key_t/2 + 0.25;    // key window half-width
+plk_win_bot = plk_kb - plk_lift - 0.3;
+plk_wz0 = plk_win_bot - 1.5;        // wafer bottom (flush)
+plk_wz1 = plk_kt + 1.5;             // wafer top (flush)
+plk_wy_tab = -4.8;                  // wafer edge on the tab side (S frame: -y = dock +y, away from the lifter)
+plk_wy_pin = 3.5;                   // wafer edge on the lifter side
+plk_tab_h = 2.0;                    // tab height; the pod groove is this + 2 x plk_gclear
+plk_tab_p = 1.4;                    // how far the tab sticks out of the shuttle
+plk_gclear = 0.25;                  // tab in the pod groove, per side
+plk_spring_len = 5.5;               // spring length with the wafer level (3 mm OD springs, see PRINTED_LOCK.md)
+plk_spring_od = 3.0;
+plk_pocket_d = 3.3;
+plk_sy_tab = -5.0;                  // shuttle's tab-side face
+plk_sy_pin = 7.65;                  // shuttle's lifter-side face (its track is cut into this 4.15 mm wall)
+plk_sz0 = plk_wz0 - plk_drop - 1.5; // shuttle bottom (sits on the lock cover)
+plk_slot_z0 = plk_wz0 - plk_drop;   // wafer slot floor = the drop stop
+plk_slot_z1 = plk_wz1 + plk_lift + 0.2;
+plk_pocket_top = plk_wz1 + plk_spring_len;
+plk_sz1 = plk_pocket_top + 0.8;     // shuttle top
+// Lifter pin and its track.
+plk_pin_d = 3.5;
+plk_track_r = plk_pin_d/2 + 0.2;
+plk_track_depth = 2.2;
+plk_pin_z = -14;                    // dock frame, locked
+plk_a = plk_L - 3.2;                // pin's place along the shuttle when locked (S x)
+plk_lifter_y = [pod_y0 + 2.0, pod_y0 + 6.0];       // lifter plate (dock y), beside the shuttle
 
-function plk_slot_z(i) = plk_first_z + i*plk_pitch;
+// Placement (dock frame).
+plk_zc = pod_bottom_z + lock_cover_t - 0.1 - plk_sz0;   // shuttle sits on the lock cover (printed 0.1 thinner than its recess)
+plk_yc = plk_lifter_y[1] + 0.5 + plk_sy_pin;        // 0.5 mm between lifter plate and shuttle
+plk_pin_x = lock_panel_inner_x - plk_a;
+plk_zr = plk_pin_z - plk_zc;                        // pin height in the S frame when locked
+plk_plate_x0 = pod_high_x0 + 1.5;
+plk_plate_top = plk_pin_z + plk_pin_d/2 + 2;
+plk_drain_x = lock_panel_inner_x - 4;               // the lock cover's drain under the shuttle
+
+function plk_wx(i) = plk_front + plk_wslot/2 + i*plk_pitch;   // wafer i centre (S x)
 function plk_cut(i) = lock_code[i]*plk_step;
-function plk_theta(turn) = 90*(turn - 1);          // locked = 0, unlocked = -90
+function plk_shift(turn) = plk_S*(1 - turn);                  // turn: 1 = locked, 0 = unlocked
+function plk_dz_s(s) = s <= plk_dwell ? 0 : s >= plk_S - plk_dwell ? -plk_rise
+                     : -plk_rise*(s - plk_dwell)/(plk_S - 2*plk_dwell);
+function plk_dz(turn) = plk_dz_s(plk_shift(turn));
 
 // ------------------------- CHECKS -----------------------------------
 assert(min(lock_code) >= 0 && max(lock_code) <= 2, "lock_code digits must be 0, 1 or 2.");
-assert(plk_first_z - plk_slot_w/2 >= plk_groove_z[1] + 0.1, "First wafer runs into the clip groove.");
-assert(plk_groove_r - (plk_plug_d/2 + plk_clear) >= 1.0, "Body wall under the clip groove is under 1 mm.");
-assert(plk_slot_z(plk_n - 1) + plk_slot_w/2 + 0.8 <= plk_keyway_end, "Last wafer is too close to the keyway's end.");
-assert(plk_keyway_end <= plk_rear_z, "Keyway runs into the crank boss.");
-assert(plk_d/2 - plk_ch_r >= 1.0, "Body wall behind the wafer channels is under 1 mm.");
-assert(plk_flat/2 - (plk_plug_d/2 + plk_clear) >= 1.2, "Body wall at the flats is under 1.2 mm.");
-assert(plk_win_hw - plk_key_t/2 >= 0.1, "Key window too tight for the key.");
-assert(plk_win_bot + plk_lift <= -plk_key_top - 0.25, "Key window bottom hits the key when a wafer is lifted.");
-assert(plk_key_top - 2*plk_step - plk_drop >= 0.2, "Key tip can't get under a dropped wafer.");
-assert(plk_pitch - plk_pocket_d >= 0.45, "Spring pockets of neighbouring wafers break into each other.");
-assert(norm([plk_pocket_top, plk_spring_y + plk_pocket_d/2]) <= plk_plug_d/2 - 0.5, "Spring pocket wall under 0.5 mm.");
-assert(plk_wbody_r >= plk_spring_y + plk_spring_od/2 + 0.1, "Wafer shoulders too narrow for the springs.");
-assert(plk_pocket_top - plk_lift >= 1.9, "Springs would be squashed solid (under 1.9 mm) at full lift.");
-assert(plk_clip_od/2 <= lock_nut_clear_d/2 - 0.4 && plk_clip_t <= lock_nut_len - 0.6, "Clip doesn't fit the pod's nut cavity.");
-echo(printed_lock_code = lock_code, spring_length_range = [plk_pocket_top - plk_lift, plk_pocket_top + plk_drop]);
+assert(plk_wx(plk_n - 1) + plk_wslot/2 + 1.5 <= plk_L, "Wafers don't fit the shuttle: fewer wafers or a smaller pitch.");
+assert(plk_pitch - plk_pocket_d >= 0.6, "Spring pockets of neighbouring wafers break into each other.");
+assert(plk_kt - 2*plk_step - plk_drop - plk_tip_low >= 0.3, "Key tip can't get under a dropped wafer.");
+assert(plk_win_hw - plk_key_t/2 >= 0.2, "Key window too tight.");
+assert(plk_step - plk_gclear >= 0.6, "A one-step wrong cut would not block: raise plk_step or tighten plk_gclear.");
+assert(plk_drop - plk_gclear >= 0.6, "A dropped wafer (no key) would not block.");
+assert(plk_pocket_top - (plk_wz1 + plk_lift) >= 3.2, "Springs squashed under 3.2 mm at full lift (9-coil 0.3 mm wire springs are 2.7 mm solid).");
+assert(plk_sy_pin - plk_track_depth - (plk_wy_pin + 0.15) >= 1.5, "Track breaks into the wafer slots.");
+assert(plk_a + 0.3 + plk_track_r <= plk_L - 0.4 && plk_a - plk_S - 0.3 - plk_track_r >= 0.4, "Track runs off the shuttle.");
+assert(plk_zr + plk_track_r <= plk_sz1 - 0.5 && plk_zr - plk_rise - plk_track_r >= plk_sz0 + 0.5, "Track runs off the shuttle's height.");
+assert(plk_S >= plk_wt + 2*plk_gclear + 0.5, "Unlocked, the innermost wafer would still be in its pocket: the key could come out.");   // no pocket lies further in
+assert(plk_zc + plk_sz1 + 0.2 <= pod_top_z - 1.2, "Shuttle channel breaks the top of the pod.");
+assert(plk_yc - plk_sy_tab + plk_tab_p + 0.3 + plk_gclear <= pod_y1 - 1.2, "Tab groove breaks the pod's side wall.");
+assert(plk_lifter_y[0] - 0.3 >= pod_y0 + 1.2, "Lifter pocket breaks the pod's side wall.");
+assert(plk_lifter_y[0] >= bolt_y - arm_wy/2 && plk_lifter_y[1] <= bolt_y + arm_wy/2, "Lifter plate must join the bolt arm.");
+assert(plk_plate_top + 0.5 <= pod_top_z - 1.2, "Lifter pocket breaks the top of the pod.");
+assert(yoke_bottom_locked - plk_rise >= pod_bottom_z + lock_cover_t + 0.3, "Unlocked lifter hits the lock cover.");
+assert(abs(lock_panel_inner_x - plk_S - plk_L - (pod_high_x0 + 1.2)) < 0.01, "Fully pushed, the shuttle should just reach the channel's end (its stop).");
+assert(plk_zc + plk_kb - plk_shoulder - 0.25 >= pod_bottom_z + lock_cover_t + 0.5, "Keyhole runs into the lock cover.");
+echo(printed_lock_code = lock_code, shuttle_len = plk_L, spring_length_range = [plk_pocket_top - plk_wz1 - plk_lift, plk_pocket_top - plk_wz1 + plk_drop]);
 
-// ------------------------- 2D PROFILES (P frame) --------------------
-module plk_d_2d(d=plk_d, flat=plk_flat) intersection() { circle(d=d); square([d + 1, flat], center=true); }
-
-// One wafer (flush position). cut = this wafer's key cut depth.
-module plk_wafer_2d(cut) {
-  r = plk_plug_d/2 - 0.05;
-  difference() {
-    union() {
-      intersection() { circle(r=r); translate([-r - 1, -plk_tab_hw]) square([2*r + 2, 2*plk_tab_hw]); }            // tab, end to end
-      intersection() { circle(r=plk_wbody_r); translate([-r - 1, -plk_wafer_hw]) square([r + 1, 2*plk_wafer_hw]); }  // body, shoulders at x = 0
-    }
-    translate([plk_win_bot, -plk_win_hw]) square([plk_key_top - cut - plk_win_bot, 2*plk_win_hw]);
-  }
-}
-// Where a wafer can move in the plug (+ clearance).
-module plk_slot_2d() {
-  r = plk_plug_d/2 + 1;
-  translate([-r, -plk_tab_hw - plk_wclear]) square([2*r, 2*(plk_tab_hw + plk_wclear)]);
-  translate([-r, -plk_wafer_hw - plk_wclear]) square([r + plk_lift + plk_wclear, 2*(plk_wafer_hw + plk_wclear)]);
-}
-// Channels in the body that a wafer pokes into (L frame, at the locked position only).
-module plk_channel_2d() intersection() {
-  circle(r=plk_ch_r);
-  square([2*plk_ch_r + 2, 2*(plk_tab_hw + 0.3)], center=true);
-}
-// Key blade side view: x (bitting up) against z (into the lock).
-module plk_key_blade_2d() {
-  e = [for (i = [0:plk_n - 1]) plk_key_top - plk_cut(i)];
-  zc = [for (i = [0:plk_n - 1]) plk_slot_z(i)];
-  half = plk_wafer_t/2 + 0.1;
-  tip_low = -0.3;
-  z_tip = zc[plk_n - 1] + half + (e[plk_n - 1] - tip_low)/tan(60);
-  top = concat([[-plk_flange_t, plk_key_top], [zc[0] - half - plk_cut(0), plk_key_top]],
-               [for (i = [0:plk_n - 1]) each [[zc[i] - half, e[i]], [zc[i] + half, e[i]]]],
-               [[z_tip, tip_low]]);
-  pts = concat(top, [[z_tip, -1.4], [z_tip - 0.8, -plk_key_top], [-plk_flange_t, -plk_key_top]]);
-  polygon([for (p = pts) [p[1], p[0]]]);       // (x, z)
-}
-
-// ------------------------- PARTS (L / P frames) ---------------------
-// Body (L frame): flange outside, D-shaped through the panel and behind it, with the clip groove.
-module plk_body() {
-  difference() {
-    union() {
-      translate([0, 0, -plk_flange_t]) cylinder(d=plk_flange_d, h=plk_flange_t, $fn=96);
-      linear_extrude(plk_groove_z[0]) plk_d_2d();
-      translate([0, 0, plk_groove_z[0]]) linear_extrude(plk_groove_z[1] - plk_groove_z[0]) intersection() { plk_d_2d(); circle(r=plk_groove_r, $fn=96); }
-      translate([0, 0, plk_groove_z[1]]) linear_extrude(plk_rear_z - plk_groove_z[1]) plk_d_2d();
-    }
-    translate([0, 0, -plk_flange_t - 0.1]) cylinder(d=plk_plug_d + 2*plk_clear, h=plk_rear_z + plk_flange_t + 0.2, $fn=96);
-    // Head counterbore + the quarter-turn sector for the stop lug (lug sits at 180 + theta, theta -90..0).
-    translate([0, 0, -plk_flange_t - 0.1]) cylinder(d=plk_head_d + 2*plk_clear, h=plk_head_t + plk_clear + 0.1, $fn=96);
-    half_ang = asin((plk_lug_w/2 + plk_clear)/(plk_head_d/2 + plk_clear)) + 1.0;
-    translate([0, 0, -plk_flange_t - 0.1]) rotate([0, 0, 90 - half_ang])
-      rotate_extrude(angle=90 + 2*half_ang, $fn=96) square([plk_lug_r + plk_clear, plk_head_t + plk_clear + 0.1]);
-    // Wafer channels (locked position only).
-    for (i = [0:plk_n - 1]) translate([0, 0, plk_slot_z(i) - plk_slot_w/2 - 0.05]) linear_extrude(plk_slot_w + 0.1) plk_channel_2d();
-  }
-}
-
-// C-clip (L frame, in the groove): opens toward +y (up in the dock), so it pushes up onto the groove from below.
-module plk_clip_2d() difference() {
+// ------------------------- PARTS (S frame) --------------------------
+// One wafer (flush), as a 2D profile in (y, z).
+module plk_wafer_2d(cut) difference() {
   union() {
-    circle(d=plk_clip_od, $fn=96);
-    translate([-3, -plk_clip_od/2 - 2.5]) square([6, 3]);                  // pull tab (down), to remove it
+    translate([plk_wy_tab, plk_wz0]) square([plk_wy_pin - plk_wy_tab, plk_wz1 - plk_wz0]);
+    translate([plk_wy_tab - plk_tab_p - (-plk_sy_tab + plk_wy_tab), -plk_tab_h/2]) square([plk_tab_p - plk_sy_tab + plk_wy_tab + 0.01, plk_tab_h]);
   }
-  circle(r=plk_groove_r + 0.1, $fn=96);
-  translate([-plk_clip_mouth/2, 0]) square([plk_clip_mouth, plk_clip_od]);   // mouth
+  translate([-plk_win_hw, plk_win_bot]) square([2*plk_win_hw, plk_kt - cut - plk_win_bot]);
+  // Chamfer the top corners so the wafer slides in under its spring.
+  for (sy = [0, 1]) translate([sy == 0 ? plk_wy_tab : plk_wy_pin, plk_wz1]) rotate(45) square(1.0, center=true);
 }
-module plk_clip() translate([0, 0, plk_groove_z[0] + 0.05]) linear_extrude(plk_clip_t) plk_clip_2d();
+// Wafer i at height s (0 = level, -plk_drop = dropped, + = lifted).
+module plk_wafer(i, s=0) translate([plk_wx(i) - plk_wt/2, 0, s]) rotate([90, 0, 90]) linear_extrude(plk_wt) plk_wafer_2d(plk_cut(i));
 
-// Plug (P frame). Printed lying on the flat at y = -(plug_d/2 - 0.4).
-plk_print_flat_y = -(plk_plug_d/2 - 0.4);
-module plk_plug() {
+// The pin's path along the shuttle's side (x, z in the S frame) as the shuttle moves 0 -> plk_S.
+function plk_track_pts() = [[plk_a + 0.3, plk_zr], [plk_a - plk_dwell, plk_zr],
+                            [plk_a - plk_S + plk_dwell, plk_zr - plk_rise], [plk_a - plk_S - 0.3, plk_zr - plk_rise]];
+
+module plk_shuttle() {
   difference() {
-    union() {
-      translate([0, 0, -plk_flange_t]) cylinder(d=plk_head_d, h=plk_head_t, $fn=96);
-      translate([-plk_lug_r, -plk_lug_w/2, -plk_flange_t]) cube([plk_lug_r, plk_lug_w, plk_head_t]);   // lug at P 180 deg
-      translate([0, 0, -plk_flange_t + plk_head_t - 0.01]) cylinder(d=plk_plug_d, h=plk_rear_z + 0.2 + plk_flange_t - plk_head_t + 0.01, $fn=96);
-      translate([-plk_boss/2, -plk_boss/2, plk_rear_z + 0.2 - 0.01]) cube([plk_boss, plk_boss, crank_t - 0.2 + 0.01]);
-    }
-    // Keyway.
-    translate([-plk_key_top - 0.15, -plk_key_t/2 - 0.15, -plk_flange_t - 0.1]) cube([2*plk_key_top + 0.3, plk_key_t + 0.3, plk_keyway_end + plk_flange_t + 0.1]);
-    // Wafer slots and spring pockets.
+    translate([0, plk_sy_tab, plk_sz0]) cube([plk_L, plk_sy_pin - plk_sy_tab, plk_sz1 - plk_sz0]);
+    // Keyway, through.
+    translate([-0.1, -plk_key_t/2 - 0.2, plk_kb - 0.2]) cube([plk_L + 0.2, plk_key_t + 0.4, plk_kt - plk_kb + 0.4]);
     for (i = [0:plk_n - 1]) {
-      translate([0, 0, plk_slot_z(i) - plk_slot_w/2]) linear_extrude(plk_slot_w) plk_slot_2d();
-      for (sy = [-1, 1]) translate([-plk_drop - 0.4, sy*plk_spring_y, plk_slot_z(i)]) rotate([0, 90, 0])
-        cylinder(d=plk_pocket_d, h=plk_pocket_top + plk_drop + 0.4, $fn=24);
+      // Wafer slot: open on the tab side, so the wafer slides in from the side.
+      translate([plk_wx(i) - plk_wslot/2, plk_sy_tab - 1, plk_slot_z0]) cube([plk_wslot, plk_wy_pin + 0.15 - plk_sy_tab + 1, plk_slot_z1 - plk_slot_z0]);
+      // Spring pocket above the wafer.
+      translate([plk_wx(i), 0, plk_slot_z1 - 0.05]) cylinder(d=plk_pocket_d, h=plk_pocket_top - plk_slot_z1 + 0.05, $fn=24);
     }
-    // Dimple for the crank's grub screw, and the printing flat.
-    translate([0, -plk_boss/2 - 0.05, plk_rear_z + 0.2 + (crank_t - 0.2)/2]) rotate([-90, 0, 0]) cylinder(d=2.0, h=0.85, $fn=16);
-    translate([-10, plk_print_flat_y - 10, -5]) cube([20, 10, 40]);
-  }
-}
-
-// Wafer i (3D, P frame), at shift s along x (0 = flush, -plk_drop = sprung out, + = lifted).
-module plk_wafer(i, s=0) translate([s, 0, plk_slot_z(i) - plk_wafer_t/2]) linear_extrude(plk_wafer_t) plk_wafer_2d(plk_cut(i));
-
-// Key (P frame): blade 2 mm thick, bow 3 mm (sharing the blade's bottom face, so it prints flat).
-module plk_key() {
-  rotate([90, 0, 0]) translate([0, 0, -plk_key_t/2]) linear_extrude(plk_key_t) plk_key_blade_2d();   // blade: y from -1 to +1
-  difference() {
-    translate([0, plk_key_t/2, 0]) rotate([90, 0, 0]) linear_extrude(3.0)
-      offset(r=2, $fn=24) offset(delta=-2) translate([-9, -plk_flange_t - 15]) square([18, 15]);
-    translate([0, 0, -plk_flange_t - 11]) rotate([90, 0, 0]) cylinder(d=4.5, h=10, center=true, $fn=24);   // key-ring hole
-  }
-}
-
-// Crank (P frame, on the boss): crank_template's outline, M3 insert for the pin, grub screw from -y.
-module plk_crank() {
-  translate([0, 0, plk_rear_z + 0.2]) difference() {
-    hull() {
-      cylinder(d=crank_hub_d, h=crank_t, $fn=64);
-      translate([0, crank_r, 0]) cylinder(d=crank_pin_d + 3.5, h=crank_t, $fn=48);
+    // Slanted track for the lifter's pin, and its entry from the top (the lifter's arm stops it climbing out).
+    p = plk_track_pts();
+    translate([0, plk_sy_pin + 0.01, 0]) rotate([90, 0, 0]) linear_extrude(plk_track_depth + 0.01) {
+      for (k = [0:len(p) - 2]) hull() { translate(p[k]) circle(r=plk_track_r, $fn=32); translate(p[k + 1]) circle(r=plk_track_r, $fn=32); }
+      translate([plk_a - plk_track_r, plk_zr]) square([2*plk_track_r, plk_sz1 - plk_zr + 1]);
     }
-    translate([0, 0, -0.05]) linear_extrude(crank_t + 0.1) square(plk_boss + 0.15, center=true);
-    translate([0, crank_r, -0.05]) cylinder(d=plk_insert_d, h=crank_t + 0.1, $fn=24);
-    translate([0, -crank_hub_d/2 - 0.1, crank_t/2]) rotate([-90, 0, 0]) cylinder(d=plk_grub_d, h=crank_hub_d/2 - plk_boss/2 + 0.2, $fn=16);
   }
 }
 
-// Picture helper: keep the part in front of wafer 2's middle.
-module plk_half() intersection() { children(); translate([-20, -20, -20]) cube([40, 40, 20 + plk_slot_z(1) - 0.2]); }
-// Picture helper: one part's outline where a cut across wafer 2 meets it, coloured, at height h.
-module plk_slice(c, h) color(c) translate([0, 0, h]) linear_extrude(0.05) projection(cut=true) translate([0, 0, -plk_slot_z(1)]) children();
-// Picture-only coil spring (along +z, length len).
-module plk_spring(len) for (k = [0:5]) translate([0, 0, k*len/6 + len/12]) rotate_extrude($fn=16) translate([plk_spring_od/2 - 0.12, 0]) circle(d=0.24, $fn=8);
+// Key: card, cut on its top edge (x, z profile; y = thickness).
+module plk_key_2d() {
+  e = [for (i = [0:plk_n - 1]) plk_kt - plk_cut(i)];
+  half = plk_wt/2 + 0.15;
+  x_last = plk_wx(plk_n - 1) + half;
+  x_tip = min(plk_L - 0.2, x_last + (e[plk_n - 1] - plk_tip_low)/tan(60));
+  bow_x = -(lock_panel_t + plk_S + 1);
+  top = concat([[bow_x, plk_kt], [plk_wx(0) - half - 0.6, plk_kt]],
+               [for (i = [0:plk_n - 1]) each [[plk_wx(i) - half, e[i]], [plk_wx(i) + half, e[i]]]],
+               [[x_tip, plk_tip_low]]);
+  union() {
+    polygon(concat(top, [[x_tip, plk_kb + 0.8], [x_tip - 0.8, plk_kb], [0, plk_kb], [0, plk_kb - plk_shoulder], [bow_x, plk_kb - plk_shoulder]]));
+    // Bow, outside the side wall.
+    difference() {
+      translate([bow_x - 20, plk_kb - plk_shoulder - 8]) offset(r=4, $fn=32) offset(delta=-4) square([20.01, plk_kt - plk_kb + plk_shoulder + 14]);
+      translate([bow_x - 13, (plk_kt + plk_kb - plk_shoulder)/2]) circle(d=5, $fn=32);   // key-ring hole
+    }
+  }
+}
+module plk_key() rotate([90, 0, 0]) translate([0, 0, -plk_key_t/2]) linear_extrude(plk_key_t) plk_key_2d();
 
-// ------------------------- PLACEMENT --------------------------------
-module plk_to_dock() multmatrix([[0, 0, -1, lock_face_x], [-1, 0, 0, lock_y], [0, 1, 0, lock_z], [0, 0, 0, 1]]) children();
+// ------------------------- PARTS (dock frame) -----------------------
+// Lifter: carries the steel bolt (replaces the yoke). turn: 1 = locked, 0 = unlocked.
+module plk_lifter(turn=1) {
+  translate([0, 0, plk_dz(turn)]) difference() {
+    union() {
+      translate([bolt_x - arm_wx/2, bolt_y - arm_wy/2, yoke_bottom_locked]) cube([pod_high_x0 + 0.9 - bolt_x + arm_wx/2, arm_wy, arm_h]);   // arm
+      translate([pod_high_x0 - 1.6, plk_lifter_y[0], yoke_bottom_locked]) cube([plk_plate_x0 + 1 - pod_high_x0 + 1.6, plk_lifter_y[1] - plk_lifter_y[0], arm_h]);   // link, under the roof
+      translate([plk_plate_x0, plk_lifter_y[0], yoke_bottom_locked]) cube([plk_pin_x + 3.5 - plk_plate_x0, plk_lifter_y[1] - plk_lifter_y[0], plk_plate_top - yoke_bottom_locked]);  // plate
+      translate([plk_pin_x, plk_lifter_y[1] - 0.01, plk_pin_z]) rotate([-90, 0, 0]) cylinder(d=plk_pin_d, h=0.5 + plk_track_depth - 0.2 + 0.01, $fn=32);   // pin
+    }
+    // Bolt press-fit pocket (rectangular, for the key-steel bolt).
+    translate([bolt_x - (bolt_w - 0.1)/2, bolt_y - (bolt_t - 0.1)/2, yoke_bottom_locked - 0.05]) cube([bolt_w - 0.1, bolt_t - 0.1, arm_h + 0.1]);
+  }
+}
 
-// Whole printed lock in the dock frame. key: show the key. drop: wafer shift (0 with the right key in).
+module plk_to_dock(s=0) translate([lock_panel_inner_x - s, plk_yc, plk_zc]) rotate([0, 0, 180]) children();
+
+// Cuts in the lock pod for this lock (called from lock_pod_cuts in the main file).
+module plk_pod_cuts() {
+  x_ch0 = pod_high_x0 + 1.2;
+  // Shuttle channel, open underneath (closed by the lock cover).
+  translate([x_ch0, plk_yc - plk_sy_pin - 0.2, pod_bottom_z - 1]) cube([lock_panel_inner_x + 0.05 - x_ch0, plk_sy_pin - plk_sy_tab + 0.4, plk_zc + plk_sz1 + 0.2 - pod_bottom_z + 1]);
+  // Lifter plate pocket (full travel), open underneath.
+  translate([x_ch0, plk_lifter_y[0] - 0.3, pod_bottom_z - 1]) cube([plk_pin_x + 3.8 - x_ch0, plk_lifter_y[1] - plk_lifter_y[0] + 0.6, plk_plate_top + 0.5 - pod_bottom_z + 1]);
+  // Tab groove in the channel's side wall: the tabs can only pass at the right height...
+  y_g0 = plk_yc - plk_sy_tab + 0.1;
+  y_g1 = plk_yc - plk_sy_tab + plk_tab_p + 0.3;
+  gx0 = lock_panel_inner_x - plk_wx(plk_n - 1) - plk_wt/2 - plk_gclear - plk_S - 0.3;
+  translate([gx0, y_g0, plk_zc - plk_tab_h/2 - plk_gclear]) cube([lock_panel_inner_x - plk_wx(0) + plk_wt/2 + plk_gclear - gx0, y_g1 - y_g0, plk_tab_h + 2*plk_gclear]);
+  // ...except in a pocket at each wafer's locked position (the key goes in and out there). Each pocket runs
+  // down to the pod's underside, so the shuttle goes in from below with the tabs in place.
+  for (i = [0:plk_n - 1]) translate([lock_panel_inner_x - plk_wx(i) - plk_wt/2 - plk_gclear, y_g0, pod_bottom_z - 1])
+    cube([plk_wt + 2*plk_gclear, y_g1 - y_g0, plk_zc + plk_tab_h/2 + plk_lift + 0.3 - pod_bottom_z + 1]);
+  // Keyhole: a slot through the side wall.
+  translate([lock_panel_inner_x - 0.05, plk_yc - plk_key_t/2 - 0.25, plk_zc + plk_kb - plk_shoulder - 0.25])
+    cube([lock_face_x - lock_panel_inner_x + 0.2, plk_key_t + 0.5, plk_kt - plk_kb + plk_shoulder + 0.5]);
+}
+
+// Whole printed lock in the dock frame (turn 1 = locked, 0 = unlocked; the key is in).
 module plk_placed(turn=1, key=true) {
-  th = plk_theta(turn);
-  plk_to_dock() {
-    color([0.25, 0.27, 0.3]) plk_body();
-    color([0.35, 0.37, 0.4]) plk_clip();
-    rotate([0, 0, th]) {
-      color([0.85, 0.55, 0.15]) plk_plug();
-      color([0.95, 0.8, 0.3]) for (i = [0:plk_n - 1]) plk_wafer(i, key ? 0 : -plk_drop);
-      if (key) color([0.2, 0.45, 0.85]) plk_key();
-      color([0.75, 0.75, 0.78]) plk_crank();
-      color([0.75, 0.75, 0.78]) translate([0, crank_r, plk_rear_z + 0.2]) cylinder(d=crank_pin_d, h=crank_t + 0.5 + yoke_t, $fn=24);   // M3 pin + 4 mm spacer
-    }
+  s = plk_shift(turn);
+  plk_to_dock(s) {
+    color([0.85, 0.55, 0.15]) plk_shuttle();
+    color([0.95, 0.8, 0.3]) for (i = [0:plk_n - 1]) plk_wafer(i, key ? 0 : -plk_drop);
+    if (key) color([0.2, 0.45, 0.85]) plk_key();
   }
+  color([0.55, 0.58, 0.62]) plk_lifter(turn);
 }
 
-// ------------------------- EXPORTS (print orientation) --------------
-PLK_PARTS = ["plock_body", "plock_plug", "plock_wafer", "plock_wafers", "plock_key", "plock_clip", "plock_crank",
-             "plock_check_pod", "plock_check_crank", "plock_check_turn", "plock_check_nokey", "plock_check_wrongkey",
-             "plock_check_wafers", "plock_check_key", "plock_section", "plock_exploded", "plock_cutaway", "plock_in_pod"];
-function plk_is_part(p) = len([for (n = PLK_PARTS) if (n == p) 1]) > 0;
-plock_index = 0;                // for PART = "plock_wafer": which wafer (0 = front)
-CHECK_TURN = 0.5;               // plock_check_turn: key turn to test (0 = unlocked, 1 = locked)
-
-module plk_part(p) {
-  if (p == "plock_body") translate([0, 0, plk_flange_t]) plk_body();                         // flange down
-  else if (p == "plock_plug") translate([0, 0, -plk_print_flat_y]) rotate([90, 0, 0]) plk_plug();   // on its flat
-  else if (p == "plock_wafer") translate([0, 0, -plk_slot_z(plock_index) + plk_wafer_t/2]) plk_wafer(plock_index);
-  else if (p == "plock_wafers") for (i = [0:plk_n - 1]) translate([i*13, 0, -plk_slot_z(i) + plk_wafer_t/2]) plk_wafer(i);
-  else if (p == "plock_key") translate([0, 0, plk_key_t/2]) rotate([-90, 0, 0]) plk_key();    // flat, bow's flush face down
-  else if (p == "plock_clip") linear_extrude(plk_clip_t) plk_clip_2d();
-  else if (p == "plock_crank") translate([0, 0, -plk_rear_z - 0.2]) plk_crank();
-  // Pictures: exploded along the axis, and a cut through the wafers (key in, springs shown as coils).
-  else if (p == "plock_exploded") rotate([0, 90, 0]) {
-    color([0.2, 0.45, 0.85]) translate([0, 0, -22]) plk_key();
-    color([0.25, 0.27, 0.3]) plk_body();
-    color([0.85, 0.55, 0.15]) translate([0, 0, 30]) plk_plug();
-    color([0.95, 0.8, 0.3]) for (i = [0:plk_n - 1]) translate([16, 0, 30 + 4*i]) plk_wafer(i, 0);
-    color([0.6, 0.6, 0.62]) for (i = [0:plk_n - 1], sy = [-1, 1]) translate([16 + 1.2, sy*plk_spring_y, 30 + 4*i + plk_slot_z(i)]) rotate([0, 90, 0]) plk_spring(2.6);
-    color([0.35, 0.37, 0.4]) translate([0, 0, 62]) plk_clip();
-    color([0.75, 0.75, 0.78]) translate([0, 0, 70]) plk_crank();
-  }
-  else if (p == "plock_cutaway") {                  // slice across wafer 2, key in: each part's outline at the cut
-    plk_slice([0.25, 0.27, 0.3], 0) plk_body();
-    plk_slice([0.85, 0.55, 0.15], 0.1) plk_plug();
-    plk_slice([1.0, 0.82, 0.15], 0.2) plk_wafer(1, 0);
-    plk_slice([0.2, 0.45, 0.85], 0.3) plk_key();
-    for (sy = [-1, 1]) color([0.55, 0.55, 0.6]) translate([0, sy*plk_spring_y, 0.4]) linear_extrude(0.05)
-      for (k = [0:5]) translate([k*plk_pocket_top/6, 0]) rotate(15) square([0.25, plk_spring_od], center=true);
-  }
-  else if (p == "plock_in_pod") {                   // the lock pod, see-through, with the printed lock, yoke and bolt
-    color([0.35, 0.55, 0.85, 0.22]) dock_receiver();
-    color([0.55, 0.58, 0.62]) lock_yoke(1);
-    lock_bolt(1);
-    plk_placed(1);
-  }
-  // Section through the wafers, for checking the fit.
-  else if (p == "plock_section") difference() { plk_placed(1, true); translate([0, lock_y, -50]) cube([200, 50, 100]); }
-  // Interference checks: "must be empty" ones print nothing if OK.
-  // (They test whichever dock the mount option uses: receiver, or the one-piece dock_base.)
-  else if (p == "plock_check_pod")      intersection() { plk_dock(); plk_to_dock() { plk_body(); plk_clip(); } }
-  else if (p == "plock_check_crank")    for (t = [0, 0.5, 1]) intersection() {
-      union() { plk_dock(); lock_yoke(t); }
-      plk_to_dock() rotate([0, 0, plk_theta(t)]) { plk_crank(); translate([0, crank_r, plk_rear_z + 0.2]) cylinder(d=crank_pin_d, h=crank_t, $fn=24); }
-    }
-  else if (p == "plock_check_turn")     intersection() {          // right key, any turn: plug + wafers clear the body
-      plk_body();
-      rotate([0, 0, plk_theta(CHECK_TURN)]) { plk_plug(); for (i = [0:plk_n - 1]) plk_wafer(i, 0); }
-    }
-  else if (p == "plock_check_nokey")    intersection() {          // MUST collide: no key, try to turn 8 deg
-      plk_body(); rotate([0, 0, -8]) for (i = [0:plk_n - 1]) plk_wafer(i, -plk_drop);
-    }
-  else if (p == "plock_check_wrongkey") intersection() {          // MUST collide: each wafer one step off, turned 8 deg
-      plk_body(); rotate([0, 0, -8]) for (i = [0:plk_n - 1]) plk_wafer(i, (i % 2 == 0 ? 1 : -1)*plk_step);
-    }
-  else if (p == "plock_check_wafers")   for (s = [-plk_drop, 0, plk_lift]) intersection() { plk_plug(); for (i = [0:plk_n - 1]) plk_wafer(i, s); }
-  else if (p == "plock_check_key")      intersection() { plk_plug(); plk_key(); }
-}
+// Picture helper: one part's outline where the plane x = xc cuts it, drawn flat as (dock y, dock z) at height h.
+module plk_xslice(c, h, xc) color(c) translate([0, 0, h]) linear_extrude(0.05)
+  multmatrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]) projection(cut=true) rotate([0, 90, 0]) translate([-xc, 0, 0]) children();
 
 module plk_dock() { if (mount == "merged") dock_base(); else dock_receiver(); }
+
+// ------------------------- EXPORTS (print orientation) --------------
+PLK_PARTS = ["plock_shuttle", "plock_wafer", "plock_wafers", "plock_key", "plock_lifter", "plock_cover", "plock_dock",
+             "plock_check_pod", "plock_check_cover", "plock_check_parts", "plock_check_pin", "plock_check_nokey",
+             "plock_check_wrongkey", "plock_check_keyout", "plock_check_backdrive", "plock_exploded", "plock_cutaway"];
+function plk_is_part(p) = len([for (n = PLK_PARTS) if (n == p) 1]) > 0;
+plock_index = 0;                // for PART = "plock_wafer": which wafer (0 = front)
+
+module plk_moving(turn) { plk_placed(turn); }
+
+module plk_part(p) {
+  if (p == "plock_shuttle") translate([0, 0, -plk_sz0]) plk_shuttle();                           // bottom down
+  else if (p == "plock_wafer") rotate([0, -90, 0]) translate([-plk_wx(plock_index) + plk_wt/2, 0, 0]) plk_wafer(plock_index);   // flat
+  else if (p == "plock_wafers") for (i = [0:plk_n - 1]) translate([0, i*16, 0]) rotate([0, -90, 0]) translate([-plk_wx(i) + plk_wt/2, 0, 0]) plk_wafer(i);
+  else if (p == "plock_key") translate([0, 0, plk_key_t/2]) rotate([-90, 0, 0]) plk_key();       // flat
+  else if (p == "plock_lifter") translate([0, 0, -yoke_bottom_locked]) plk_lifter(1);           // bottom down
+  else if (p == "plock_cover") translate([0, 0, -pod_bottom_z]) lock_cover();
+  else if (p == "plock_dock") plk_dock();                                                       // the dock with this lock's pod
+  // Interference checks. "Must be empty" ones print nothing if OK; "must collide" ones must give a solid.
+  else if (p == "plock_check_pod")      for (t = [0, 0.25, 0.5, 0.75, 1]) intersection() { plk_dock(); plk_moving(t); }   // empty / touch
+  else if (p == "plock_check_cover")    for (t = [0, 1]) intersection() { lock_cover(); plk_moving(t); }                    // touch (it sits on the cover)
+  else if (p == "plock_check_parts")    {                                                                                  // empty / touch
+      for (s = [-plk_drop, 0, plk_lift]) intersection() { plk_shuttle(); for (i = [0:plk_n - 1]) plk_wafer(i, s); }
+      intersection() { plk_shuttle(); plk_key(); }
+      intersection() { plk_key(); for (i = [0:plk_n - 1]) plk_wafer(i, 0); }
+    }
+  else if (p == "plock_check_pin")      for (t = [0, 0.2, 0.4, 0.6, 0.8, 1]) intersection() { plk_to_dock(plk_shift(t)) plk_shuttle(); plk_lifter(t); }   // empty
+  else if (p == "plock_check_nokey")    intersection() { plk_dock(); plk_to_dock(0.5) for (i = [0:plk_n - 1]) plk_wafer(i, -plk_drop); }        // MUST collide
+  else if (p == "plock_check_wrongkey") intersection() { plk_dock(); plk_to_dock(0.5) for (i = [0:plk_n - 1]) plk_wafer(i, (i % 2 == 0 ? 1 : -1)*plk_step); }   // MUST collide
+  else if (p == "plock_check_keyout")   intersection() { plk_dock(); plk_to_dock(plk_S) for (i = [0:plk_n - 1]) plk_wafer(i, plk_step); }       // MUST collide
+  else if (p == "plock_check_backdrive") intersection() { plk_to_dock(0) plk_shuttle(); translate([0, 0, -0.5]) plk_lifter(1); }           // MUST collide
+  // Pictures.
+  else if (p == "plock_exploded") {
+    color([0.2, 0.45, 0.85]) translate([0, 0, 0]) plk_key();
+    color([0.85, 0.55, 0.15]) translate([45, 0, 0]) plk_shuttle();
+    color([0.95, 0.8, 0.3]) for (i = [0:plk_n - 1]) translate([45, -14, 0]) plk_wafer(i, 0);
+    color([0.6, 0.6, 0.62]) for (i = [0:plk_n - 1]) translate([45 + plk_wx(i), 0, plk_pocket_top + 8])
+      for (k = [0:7]) translate([0, 0, k*0.7]) rotate_extrude($fn=16) translate([plk_spring_od/2 - 0.15, 0]) circle(d=0.3, $fn=8);
+  }
+  else if (p == "plock_cutaway") {                  // slices through wafer 2 (key in, locked), seen from the keyhole side
+    xc = lock_panel_inner_x - plk_wx(1);
+    plk_xslice([0.62, 0.7, 0.82], 0, xc) plk_dock();
+    plk_xslice([0.85, 0.55, 0.15], 0.1, xc) plk_to_dock(0) plk_shuttle();
+    plk_xslice([1.0, 0.82, 0.15], 0.2, xc) plk_to_dock(0) plk_wafer(1, 0);
+    plk_xslice([0.2, 0.45, 0.85], 0.3, xc) plk_to_dock(0) plk_key();
+    color([0.6, 0.6, 0.62]) translate([plk_yc, plk_zc + plk_wz1 + plk_spring_len/2, 0.5]) square([plk_spring_od, plk_spring_len], center=true);
+  }
+}
