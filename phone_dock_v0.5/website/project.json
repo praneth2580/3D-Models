@@ -7,6 +7,13 @@
   "cover": "images/v05_rider_view.png",
   "video": "video/mechanism_demo.mp4",
   "poster": "images/merged_exploded.png",
+  "videos": [
+    {
+      "src": "video/lock_demo.mp4",
+      "poster": "images/lock_bay_store.png",
+      "title": "How the locks work: store cam lock, printed push-key lock, dial-code demo"
+    }
+  ],
   "see_sub": "The video is rendered straight from the CAD: assembly, docking, the contacts, the wiring, the key lock and the over-heat cut-off.",
   "gallery": [
     {

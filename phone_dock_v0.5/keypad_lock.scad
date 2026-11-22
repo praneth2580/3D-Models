@@ -35,6 +35,9 @@ kp_enc_shaft_d = 6.0;
 kp_knob_d = 14;             // printed knob
 kp_knob_h = 9;
 kp_knob_gap = 2.5;          // face of the side wall to the knob (the encoder's nut sits here)
+kp_knob_a = 0;              // pictures/animation only: knob turned (degrees) and pressed in (mm)
+kp_knob_press = 0;
+kp_vis_alpha = 1;           // pictures/animation only: see-through servo, encoder and board
 kp_board = [8.5, 16, 13.8]; // ATtiny85 board with its socket and parts (x depth, y, z); sits on the servo
 
 // ------------------------- DERIVED (dock frame) ---------------------
@@ -132,16 +135,16 @@ module kp_knob() difference() {
 
 // Visual only: servo, encoder, knob, board.
 module kp_visuals() {
-  color([0.15, 0.3, 0.75]) translate([kp_srv_x0, kp_srv_y0, kp_zs - kp_srv_w/2]) cube([kp_srv_h, kp_srv_l, kp_srv_w]);
+  color([0.15, 0.3, 0.75, kp_vis_alpha]) translate([kp_srv_x0, kp_srv_y0, kp_zs - kp_srv_w/2]) cube([kp_srv_h, kp_srv_l, kp_srv_w]);
   color([0.9, 0.9, 0.9]) translate([kp_srv_x0 - kp_srv_spline, kp_ys, kp_zs]) rotate([0, 90, 0]) cylinder(d=4.5, h=kp_srv_spline, $fn=24);
-  color([0.25, 0.25, 0.27]) translate([lock_panel_inner_x - kp_enc_body, kp_enc_y - kp_enc_wy/2, kp_enc_z - kp_enc_hz/2]) cube([kp_enc_body, kp_enc_wy, kp_enc_hz]);
+  color([0.25, 0.25, 0.27, kp_vis_alpha]) translate([lock_panel_inner_x - kp_enc_body, kp_enc_y - kp_enc_wy/2, kp_enc_z - kp_enc_hz/2]) cube([kp_enc_body, kp_enc_wy, kp_enc_hz]);
   color([0.75, 0.75, 0.78]) translate([lock_panel_inner_x, kp_enc_y, kp_enc_z]) rotate([0, 90, 0]) {
     cylinder(d=kp_enc_bush_d, h=lock_panel_t + kp_knob_gap, $fn=24);
     cylinder(d=kp_enc_shaft_d, h=lock_panel_t + kp_knob_gap + 7, $fn=24);
   }
-  color([0.18, 0.18, 0.2]) translate([lock_face_x + kp_knob_gap, kp_enc_y, kp_enc_z]) rotate([0, 90, 0]) kp_knob();
-  color([0.2, 0.5, 0.25]) translate([kp_board_x0 + 0.3, kp_enc_y - kp_board[1]/2, kp_zs + kp_srv_w/2 + 0.1]) cube([1.6, kp_board[1], kp_board[2]]);
-  color([0.12, 0.12, 0.12]) translate([kp_board_x0 + 1.9, kp_enc_y - 4, kp_zs + kp_srv_w/2 + 2]) cube([4.5, 8, 9.5]);   // ATtiny85 in its socket
+  color([0.18, 0.18, 0.2]) translate([lock_face_x + kp_knob_gap - kp_knob_press, kp_enc_y, kp_enc_z]) rotate([kp_knob_a, 0, 0]) rotate([0, 90, 0]) kp_knob();
+  color([0.2, 0.5, 0.25, kp_vis_alpha]) translate([kp_board_x0 + 0.3, kp_enc_y - kp_board[1]/2, kp_zs + kp_srv_w/2 + 0.1]) cube([1.6, kp_board[1], kp_board[2]]);
+  color([0.12, 0.12, 0.12, kp_vis_alpha]) translate([kp_board_x0 + 1.9, kp_enc_y - 4, kp_zs + kp_srv_w/2 + 2]) cube([4.5, 8, 9.5]);   // ATtiny85 in its socket
 }
 
 module kp_placed(turn=1) {

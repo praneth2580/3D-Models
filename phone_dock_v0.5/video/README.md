@@ -21,6 +21,27 @@
 | 83.5–92.5 s | **Modular option:** the separate base plate on grommets, swapped for a "smart base" (Arduino and speakers concept). Rendered with `mount="modular"` |
 | 92.5–96.5 s | Closing shot |
 
+## Lock video
+
+`lock_demo.mp4` (1280 × 720, 24 fps, 43 s) shows just the lock pod, see-through, with the moving lock parts solid, for each of the three lock cartridges:
+
+| Time | Scene |
+|---|---|
+| 0–3 s | Title |
+| 3–14.5 s | **Store cam lock:** the key goes in and turns a quarter turn; the crank pin pulls the yoke and the steel bolt down; the case slides off and back on; turn back and the bolt rises into the strike against its steel block |
+| 14.5–27.5 s | **Printed push-key lock:** no key, the wafers drop; the chunky key lifts them level; pushed 7 mm, the shuttle's slanted track lowers the lifter and the bolt; the case slides off and on; pulled back, the bolt rises and the key comes out |
+| 27.5–40 s | **Dial-code demo:** the knob turns right 7, left 12, right 4 clicks; the servo's horn turns a quarter turn and pulls the bolt down; the case slides off and on; a press of the knob turns it back |
+| 40–43 s | Closing title |
+
+It is rendered from `lock_anim.scad` by `make_lock_video.py`, which sets `lock_type` per frame:
+
+```sh
+python3 make_lock_video.py                 # -> lock_demo.mp4 (about 3 minutes with 8 jobs)
+python3 make_lock_video.py --test 6,20,33  # contact sheet
+```
+
+## The mechanism video's stand-ins
+
 `mechanism_anim.scad` adds some **visual-only** stand-ins on top of the real parts. These are illustrations, not designed parts:
 - the pins and pads;
 - the O-ring and screws;

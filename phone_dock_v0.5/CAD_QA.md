@@ -416,6 +416,12 @@ Update 19 (2026-11-22): **dial-code lock, a demo** (owner: "a version which has 
 - **Images:** `kp_exploded.png` (the cartridge lowered out of the bay), `kp_side.png` (the knob on the pod).
 - **Not checked:** real servo sizes and torque, the firmware on hardware, rain.
 
+Update 20 (2026-11-22): **lock video** (owner: "show me a video of how specifically these locks work").
+- `video/lock_anim.scad` (new) draws the lock pod see-through (the dock and shoe cropped to the pod, plus the cartridge and cover) with the moving lock parts and the bolt solid. `lock_type` is set per frame, so one video shows all three cartridges. The printed lock's shuttle has its near half cut away so the wafers show. The keypad lock's servo is drawn see-through so its horn shows.
+- `video/make_lock_video.py` (new): 43 s. Title; store lock (key in, quarter turn, crank and yoke drop the bolt, case off and on, turn back); printed lock (wafers dropped, the key lifts them, pushed 7 mm, the track drops the bolt, case off and on, pulled back); dial-code demo (right 7, left 12, right 4 on the knob, the servo turns, case off and on, press to lock); closing title. Rendered on Windows in about 2.5 minutes with 8 jobs, to `video/lock_demo.mp4`.
+- `keypad_lock.scad`: `kp_knob_a`, `kp_knob_press` and `kp_vis_alpha` (pictures and animation only).
+- **Website:** `site/build.py` takes an optional `videos` list in `project.json` (more videos, each with a title, after the main one; documented in `site/README.md`). The phone dock page now shows the lock video under the main one.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

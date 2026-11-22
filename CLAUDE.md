@@ -98,6 +98,7 @@ An old phone becomes a permanent handlebar navigation screen.
 **Video and images:**
 - **Video:** `video/make_video.py` renders `mechanism_anim.scad` into `video/mechanism_demo.mp4` (96.5 s); `--test t1,t2` makes a contact sheet. On Windows set `OPENSCAD` to `openscad.com` and use a venv with Pillow and imageio-ffmpeg; a full render takes about 15 minutes with `--jobs 8`.
   - Labels use OpenSCAD's gimbal camera projection: `rot(rot(rot(v,2,-rz),1,-ry),0,90-rx)`, fov 22.5.
+- **Lock video:** `video/make_lock_video.py` renders `lock_anim.scad` into `video/lock_demo.mp4` (43 s: all three locks, see-through pod, `lock_type` per frame). It is shown on the site through `project.json` `videos`.
 - **Wiring stills:** `make_video.py --stills` writes `images/wiring_dock.png` and `wiring_case.png`.
 - **Wiring diagrams:** `images/make_wiring_diagram.py out.svg [full|dock|case]` draws the hand-placed SVGs. Convert them to PNG with `google-chrome --headless=new --force-device-scale-factor=1.5 --window-size=W,H --screenshot=...`.
 - **Video Python:** it needs Pillow and imageio-ffmpeg. pip is blocked system-wide (PEP 668), so use a venv.

@@ -38,6 +38,7 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 | `order` | Position on the index (lower comes first; default 100) |
 | `cover` | Card and hero image, as a path in the project |
 | `video`, `poster` | An `.mp4` and its poster image |
+| `videos` | More videos after the main one: `[{"src": "video/x.mp4", "poster": "images/x.png", "title": "..."}]` |
 | `see_title`, `see_sub` | Heading and text of the pictures section |
 | `gallery` | `[{"src": "images/x.png", "caption": "..."}]` |
 | `viewer_default` | The STL shown first, without `.stl` |

@@ -347,7 +347,11 @@ class Project:
                 poster = f' poster="{self.media_url(c["poster"])}"' if c.get("poster") else ""
                 vid = (f'<div class="video"><video controls preload="metadata"{poster}><source src="{self.media_url(c["video"])}" '
                        f'type="video/mp4">Your browser can\'t play this video.</video></div>')
-            figs = "".join(f'<figure><img src="{self.media_url(g["src"])}" alt="{esc(g.get("caption", ""))}" loading="lazy">'
+            for v in c.get("videos", []):          # more videos, each with a title
+                poster = f' poster="{self.media_url(v["poster"])}"' if v.get("poster") else ""
+                vid += (f'<h3>{esc(v.get("title", ""))}</h3><div class="video"><video controls preload="metadata"{poster}>'
+                        f'<source src="{self.media_url(v["src"])}" type="video/mp4">Your browser can\'t play this video.</video></div>')
+            figs ="".join(f'<figure><img src="{self.media_url(g["src"])}" alt="{esc(g.get("caption", ""))}" loading="lazy">'
                            f'<figcaption>{esc(g.get("caption", ""))}</figcaption></figure>' for g in gal)
             see = f"""
 <section id="see" class="band">

@@ -7,7 +7,7 @@
 
 > **One design, about ₹3,650–5,600 in Mumbai** ([`SHOPPING_LIST_INDIA.md`](SHOPPING_LIST_INDIA.md)). The only choice is how you build the dock's electronics: **hand-wired on perfboard**, or on a **small ordered PCB** (same circuit and parts, about ₹700–2,300 more). Everything printed is the same either way; see [`WIRING.md`](WIRING.md).
 >
-> Video: `video/mechanism_demo.mp4`.
+> Videos: `video/mechanism_demo.mp4` (the whole dock) and `video/lock_demo.mp4` (how each of the three locks works).
 >
 > **Website:** https://praneth2580.github.io/3D-Models/phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
 
