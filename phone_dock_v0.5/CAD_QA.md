@@ -290,6 +290,37 @@ Update 13 (2026-11-22): **optional one-piece dock base** (`mount = "merged"`; `"
 - **Images:** `images/merged_exploded.png`, `merged_dock_base.png`, `merged_underside.png`. The video stays on the modular mount.
 - **Not checked:** how well 2 mm rubber pads damp compared with the grommets; rubber creep loosening the bolts (the spacers should prevent it); print supports under the plate.
 
+Update 14 (2026-11-22): **one-piece dock base reshaped for looks** (merged mount only; the modular parts are unchanged, checked: the modular lock stays at y = 36.2).
+- **Goal (owner):** an aesthetic, minimal one-piece base. Kept fixed: the clamp bolt pattern and slots, and the docking interface (rails, nose, pins, snap, lock mechanism).
+- **What changed:**
+  - **Outline:** the floor (old plate: same height, 8 mm thickness, slots) is grown to the case outline: x ±88 (flush with the keyhole face `lock_face_x`), y ±42.15 (0.5 mm inside the case), r 3.5, plus the LED chin with 4 mm fillets. Rounded underside edge, r 3 (6 steps). The slots are cut straight, after the rounding, so they don't break through the side faces.
+  - **Walls:** 3 mm side walls up to z −0.5 (the right one is the lock's face panel, with the D-bore and keyhole cut through it). End walls at the bottom either side of the chin, and at the top left of the dock (0.5 mm clear of the shoe). Four Ø3 drains at the low corners of the two tray pockets.
+  - **Lock pod 7 mm lower:** with no separate plate to clear, `pod_y0` is now set by the clamp pads alone (`amps_offset_y + pad_l/2 + 1.5` = 16.5, was 23.5). The pod's top is now y 41.7, under the case's 42.65 mm edge. The strike on the shoe and its 2 inserts in the back cover follow automatically: `one_piece/shoe_one_piece.stl`, `one_piece/case_back_one_piece.stl`.
+  - `lock_pod_cuts()` is re-applied after the floor and walls, so they never fill the lock's bores, pockets or keyhole.
+  - The printed lock's `plock_check_pod` and `plock_check_crank` now test whichever dock the `mount` option uses.
+  - The one-piece STLs moved into `one_piece/`.
+- **New asserts:** pod under the outline; washers clear of the side walls; edge radius fits the floor; tray drains clear of the lid window, bolt washers and clamp pads. Both `mount` values pass with no warnings.
+- **Exported** (all watertight, consistent winding, one body): `dock_base` 186.8 cm³, `shoe_one_piece` 29.5 cm³, `case_back_one_piece` 55.8 cm³, `iso_pad` 2.2 cm³.
+- **Checks** (merged mode):
+
+| Check | Result |
+|---|---|
+| Case sliding in at 0, 10, 30, 45, 60 and 80 mm (snap off) | touch only. First run: 0.08 mm³ at 30 and 60 mm, where the top-left end wall started exactly at the shoe's edge; fixed with 0.5 mm clearance |
+| Docked, snap on | 1.15 mm³ (the usual preload) |
+| Locked bolt vs case pulled up 0.5 mm | 30.38 mm³: still blocks removal on the steel block |
+| Store lock envelope (D-shaped thread, 1.2 mm flange) vs `dock_base` | touch only (a round envelope overlaps the D-flats by 14.1 mm³, the same as on the modular receiver) |
+| Crank, yoke, bolt at turn 0, 0.5, 1 + lock cover vs `dock_base` | no overlap |
+| Printed lock: body + clip, and crank at 3 turns | touch only / no overlap |
+| Dock lid | no overlap |
+| Bolt hardware and rubber pads vs `dock_base`, clamp spacing 132 and 154 | touch only |
+| Hardware + pads vs the sliding case, at 0 and 30 mm | no overlap |
+| Clamps + pads + bolts vs everything, tilt 0, 40, 70° | touch only |
+| Bar / bike-clamp envelope (+3 mm), tilt 0, 40, 70° | no overlap |
+
+- **Position at 40° tilt:** top 92.4 mm above the bar, rearmost edge 74.1 mm behind it (both unchanged from Update 13). The lowest point is now 0.4 mm above bar level (was 6.6), because the full-size floor reaches further down. The bar and bike-clamp checks still pass.
+- **Images:** `merged_side`, `merged_rear`, `merged_front`, `merged_exploded`, `merged_dock_base`, `merged_underside`.
+- **Not checked:** print supports under the floor; how the walls look in a real print; clearance of the walls and the now lower lock to the real cluster and switch cables.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

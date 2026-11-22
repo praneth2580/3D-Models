@@ -263,6 +263,15 @@ iso_head_h = 5.0;           // M5 socket head (button head 2.8)
 iso_spacer_d = 8.0;         // SELECT: M5 round spacer, 8 mm OD (aluminium or steel)
 iso_squeeze = 1.0;          // total rubber squeeze when the bolt is tight (25 % of 2 + 2 mm)
 iso_slot_w = iso_spacer_d + 1.5;   // slot clears the spacer, so the plate never touches metal
+// Look of the merged dock_base: it takes the case's own outline, so from the front it hides behind the case
+// (only the LED chin shows below it). Side walls rise to just under the case, so from the side the case and base
+// read as one slab; the top and bottom ends stay open (the case slides in from the top, rain runs out the bottom).
+ob_y_inset = 0.5;           // outline inset from the case's top and bottom edges
+ob_r = 3.5;                 // outline corner radius (inside the case's 4 mm corners)
+ob_wall_t = 3.0;            // side walls
+ob_wall_top_z = -0.5;       // wall tops, 0.5 mm under the case back (dock frame)
+ob_edge_r = 3.0;            // rounded underside edge
+ob_chin_fillet = 4.0;       // where the LED chin meets the outline
 
 // ------------------------- BASE PLATE (Interface A + B) -------------
 base_t = 8;
@@ -367,7 +376,7 @@ arm_wx = bolt_w + 6;                                 // yoke arm that carries th
 arm_wy = bolt_t + 6;
 lock_dy_down = max(lock_nut_clear_d/2, crank_r + crank_pin_d/2 + 1.8 + 0.3, crank_sweep_r) + 1.2;  // lock axis to the pod's lower wall
 lock_dy_up = max(lock_nut_clear_d/2, crank_sweep_r) + 1.0;                                         // lock axis to the pod's upper wall
-pod_y0 = amps_offset_y + max(base_depth, pad_l)/2 + 1.5;
+pod_y0 = amps_offset_y + (merged ? pad_l : max(base_depth, pad_l))/2 + 1.5;   // merged: no plate edge to clear, so the pod hides behind the case
 lock_y = pod_y0 + lock_dy_down;                      // lock axis
 pod_y1 = lock_y + lock_dy_up;
 yoke_y0 = lock_y - crank_r - crank_pin_d/2 - 1.8;    // unlocked, the crank pin points down the rails (-y)
@@ -390,6 +399,8 @@ iso_spacer_l = iso_pad_t + base_t + iso_washer_t - iso_squeeze;     // e.g. 11 m
 iso_head_top = plate_top_dock_z + iso_washer_t + iso_washer_steel_t + iso_head_h;   // dock frame (rubber uncompressed)
 iso_slot_in = max(slot_in, ceil(strike_x1 + 0.5 + iso_washer_d/2));
 eff_slot_in = merged ? iso_slot_in : slot_in;
+ob_x = lock_face_x;                                  // the side walls are flush with the keyhole face
+ob_y = body_h/2 - ob_y_inset;
 rib_len = 2*(slot_in - clamp_w/2 - 2);
 ring_ro = clamp_bore_d/2 + clamp_wall;
 clamp_ear_y = clamp_bore_d/2 + 6.5;
@@ -439,7 +450,7 @@ assert(yoke_y0 >= pod_y0 + 1.0 && yoke_y1 <= pod_y1 - 1.0, "Yoke pocket breaks t
 assert(bolt_y - arm_wy/2 - 0.3 >= pod_y0 + 1.0 && bolt_y + arm_wy/2 + 0.3 <= pod_y1 - 1.0, "Bolt-arm pocket breaks the pod walls.");
 assert(yoke_x0 - 0.3 >= pod_high_x0 + 1.2, "Yoke pocket breaks into the low part of the pod.");
 assert(lock_face_x + 1.2 <= body_w/2 + 0.6, "Lock face sticks out past the case side.");
-assert(pod_y0 >= amps_offset_y + base_depth/2 + 1.5, "Lock pod would hit the base plate.");
+assert(merged || pod_y0 >= amps_offset_y + base_depth/2 + 1.5, "Lock pod would hit the base plate.");
 assert(pod_y0 >= amps_offset_y + pad_l/2 + 1.5, "Lock pod would hit the clamp pads.");
 assert(pod_y1 <= body_h/2 + 7, "Lock pod sticks up more than 7 mm above the case.");
 assert(-shoe_h/2 > -body_h/2, "Shoe nose must sit inside the case outline.");
@@ -447,7 +458,12 @@ assert(mount == "modular" || mount == "merged", "mount must be \"modular\" or \"
 assert(clamp_spacing/2 >= eff_slot_in && clamp_spacing/2 <= slot_out,
        merged ? "clamp_spacing outside the merged mount's slot range (the upper bolts must clear the strike block)." : "clamp_spacing outside the slot range.");
 assert(!merged || iso_slot_in + 2 <= slot_out, "Merged mount: no slot length left: raise slot_out.");
-assert(!merged || slot_out + iso_washer_d/2 <= base_len/2 - 0.5, "Merged mount: bolt washer hangs over the plate's end.");
+assert(!merged || slot_out + iso_washer_d/2 <= ob_x - ob_wall_t - 0.2, "Merged mount: bolt washer runs into the side wall.");
+assert(!merged || pod_y1 <= ob_y - 0.2, "Merged mount: lock pod shows above the base outline (and the case).");
+assert(!merged || ob_edge_r <= base_t - 1, "Merged mount: underside edge radius too big for the floor.");
+for (p = ob_drain_points()) assert(!merged || (ranges_clear(p[0] - drain_d/2, p[0] + drain_d/2, pcb_x0 - 1, pcb_x1 + 1, 1)
+       && norm([abs(p[0]) - slot_out, p[1] - (amps_offset_y - plate_bolt_y)]) >= iso_washer_d/2 + drain_d/2 + 1
+       && p[1] + drain_d/2 <= amps_offset_y - pad_l/2 - 0.3), "Merged mount: tray drain runs into the lid window, a bolt washer or a clamp pad.");
 assert(!merged || iso_head_top <= -1.0, "Merged mount: bolt heads reach the case back: use button heads or thinner washers.");
 assert(!merged || iso_slot_w < clamp_w - 6, "Merged mount: slot too wide for the clamp pad.");
 assert(!hide_plate || base_len <= body_w - 4, "Base plate sticks out past the case: reduce slot_out or set hide_plate=false.");
@@ -911,34 +927,70 @@ module base_plate_2d() {
 }
 
 // ------------------------- MERGED DOCK + BASE PLATE (dock frame) -----
-// mount = "merged": the base plate and the dock as one part. The plate keeps its size, height and clamp slots;
-// the 2 mm grommet gap under the dock is filled solid, so the dock, lock and contacts are exactly where they
-// were. The slots are wider (for the spacers) and have no counterbore: the rubber washers sit on the top face.
-module merged_plate_2d() {
-  difference() {
-    offset(r=8) square([base_len-16, base_depth-16], center=true);
-    for (sx=[-1,1], sy=[-1,1])
-      hull() for (x=[iso_slot_in, slot_out]) translate([sx*x, sy*plate_bolt_y]) circle(d=iso_slot_w);
+// mount = "merged": the base plate and the dock as one part, shaped to look like part of the case. Its floor is
+// the old plate (same height, thickness and clamp slots) grown to the case's outline; the dock sits on it with the
+// 2 mm grommet gap filled solid, and the lock pod is lowered so it hides behind the case (the strike on the shoe
+// follows it). The slots are wider (for the spacers) and have no counterbore: the rubber washers sit on the floor.
+module ob_fillet(r) offset(r=-r) offset(delta=r) children();   // rounds inside corners
+
+// Plan outline: the case's outline (flush with the keyhole face at the sides), plus the LED chin below it.
+module ob_outline_2d() {
+  ob_fillet(ob_chin_fillet) union() {
+    offset(r=ob_r) square([2*(ob_x - ob_r), 2*(ob_y - ob_r)], center=true);
+    translate([0, (receiver_bottom_y + rx_top_y)/2]) offset(r=receiver_edge_r)
+      square([receiver_w - 2*receiver_edge_r, rx_top_y - receiver_bottom_y - 2*receiver_edge_r], center=true);
   }
 }
+
+module ob_slots_2d() {
+  for (sx=[-1,1], sy=[-1,1])
+    hull() for (x=[iso_slot_in, slot_out]) translate([sx*x, amps_offset_y + sy*plate_bolt_y]) circle(d=iso_slot_w);
+}
+
+// Extrude with a rounded bottom edge (a quarter round, in 6 steps finer than a print layer's look).
+module ob_rounded_extrude(h, r, n=6) {
+  for (i=[0:n-1]) let(t1 = (i + 1)*r/n, inset = r - sqrt(r*r - (r - t1)*(r - t1)))
+    translate([0, 0, i*r/n]) linear_extrude(r/n + 0.01) offset(delta=-inset) children();
+  translate([0, 0, r]) linear_extrude(h - r) children();
+}
+
+function ob_drain_points() = [for (sx=[-1,1], x=[receiver_w/2 + 3, ob_x - ob_wall_t - 2.5]) [sx*x, -ob_y + ob_wall_t + 2]];
 
 module dock_base() {
   plate_z0 = plate_top_dock_z - base_t;
   difference() {
     union() {
       dock_receiver(amps=false);
-      translate([0, amps_offset_y, plate_z0]) linear_extrude(base_t) merged_plate_2d();
-      // Fill the old grommet gap, under the dock's outline only (the strike slides past just outside it).
-      intersection() {
-        translate([0, (receiver_bottom_y + rx_top_y)/2, plate_top_dock_z - 0.01])
-          rounded_prism(receiver_w, rx_top_y - receiver_bottom_y, rx_back_z - plate_top_dock_z + 0.02, receiver_edge_r);
-        translate([0, amps_offset_y, plate_top_dock_z - 0.01]) rounded_prism(base_len, base_depth, grommet_float + 0.02, 8);
-      }
+      // Floor.
+      translate([0, 0, plate_z0]) ob_rounded_extrude(base_t, ob_edge_r) ob_outline_2d();
+      // Fill the old grommet gap under the dock.
+      translate([0, (receiver_bottom_y + rx_top_y)/2, plate_top_dock_z - 0.01])
+        rounded_prism(receiver_w, rx_top_y - receiver_bottom_y, rx_back_z - plate_top_dock_z + 0.02, receiver_edge_r);
+      // Side walls, up to just under the case. The right one is the lock's face panel.
+      translate([0, 0, plate_top_dock_z - 0.01]) linear_extrude(ob_wall_top_z - plate_top_dock_z + 0.01)
+        intersection() { ob_outline_2d(); for (sx=[-1,1]) translate([sx*(ob_x - ob_wall_t/2), 0]) square([ob_wall_t + 0.01, 2*ob_y + 2], center=true); }
+      // End walls, so the tray reads as closed from the front of the bike too: the bottom end either side of the
+      // LED chin, the top end left of the dock. The top end stays open where the shoe and the strike slide in
+      // (the lock pod's own face closes its right-hand part).
+      translate([0, 0, plate_top_dock_z - 0.01]) linear_extrude(ob_wall_top_z - plate_top_dock_z + 0.01)
+        intersection() {
+          ob_outline_2d();
+          union() {
+            for (sx=[-1,1]) translate([sx > 0 ? receiver_w/2 - 0.01 : -ob_x - 1, -ob_y - 1]) square([ob_x - receiver_w/2 + 1.01, ob_wall_t + 1]);
+            translate([-ob_x - 1, ob_y - ob_wall_t]) square([ob_x - receiver_w/2 + 1 - 0.5, ob_wall_t + 1]);   // 0.5 mm clear of the shoe sliding past
+          }
+        }
     }
+    // Drains at the low (bottom) corners of the two tray pockets beside the dock.
+    for (p = ob_drain_points()) translate([p[0], p[1], plate_z0 - 0.05]) cylinder(d=drain_d, h=base_t + 0.1, $fn=24);
     // Window under the dock-board pocket, so the lid still goes on from behind after potting.
     translate([pcb_x0 - 1, pcb_y0 - 0.8, plate_z0 - 0.05]) cube([pcb_x1 - pcb_x0 + 2, pcb_y1 - pcb_y0 + 1.6, rx_back_z - plate_z0 + 0.1]);
-    // Drains carried on through the plate.
+    // Clamp slots (straight-sided: the rounded edge is on the outline only).
+    translate([0, 0, plate_z0 - 0.05]) linear_extrude(base_t + 0.1) ob_slots_2d();
+    // Drains carried on through the floor.
     for (p = drain_points()) translate([p[0], p[1], plate_z0 - 0.05]) cylinder(d=drain_d, h=rx_back_z - plate_z0 + 0.1, $fn=24);
+    // The floor and the right wall must not fill the lock's bores, pockets or keyhole.
+    lock_pod_cuts();
   }
 }
 

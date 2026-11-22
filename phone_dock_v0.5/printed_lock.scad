@@ -291,9 +291,10 @@ module plk_part(p) {
   // Section through the wafers, for checking the fit.
   else if (p == "plock_section") difference() { plk_placed(1, true); translate([0, lock_y, -50]) cube([200, 50, 100]); }
   // Interference checks: "must be empty" ones print nothing if OK.
-  else if (p == "plock_check_pod")      intersection() { dock_receiver(); plk_to_dock() { plk_body(); plk_clip(); } }
+  // (They test whichever dock the mount option uses: receiver, or the one-piece dock_base.)
+  else if (p == "plock_check_pod")      intersection() { plk_dock(); plk_to_dock() { plk_body(); plk_clip(); } }
   else if (p == "plock_check_crank")    for (t = [0, 0.5, 1]) intersection() {
-      union() { dock_receiver(); lock_yoke(t); }
+      union() { plk_dock(); lock_yoke(t); }
       plk_to_dock() rotate([0, 0, plk_theta(t)]) { plk_crank(); translate([0, crank_r, plk_rear_z + 0.2]) cylinder(d=crank_pin_d, h=crank_t, $fn=24); }
     }
   else if (p == "plock_check_turn")     intersection() {          // right key, any turn: plug + wafers clear the body
@@ -309,3 +310,5 @@ module plk_part(p) {
   else if (p == "plock_check_wafers")   for (s = [-plk_drop, 0, plk_lift]) intersection() { plk_plug(); for (i = [0:plk_n - 1]) plk_wafer(i, s); }
   else if (p == "plock_check_key")      intersection() { plk_plug(); plk_key(); }
 }
+
+module plk_dock() { if (mount == "merged") dock_base(); else dock_receiver(); }

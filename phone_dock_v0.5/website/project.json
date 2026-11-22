@@ -22,8 +22,12 @@
       "caption": "From behind: the lock pod sits behind the top corner"
     },
     {
-      "src": "images/merged_exploded.png",
-      "caption": "Option: dock and base plate printed as one part, on rubber pads at the clamp bolts"
+      "src": "images/merged_side.png",
+      "caption": "One-piece option: the dock base takes the case outline, so from the side case and base read as one slab"
+    },
+    {
+      "src": "images/merged_rear.png",
+      "caption": "One-piece option from behind: the lock pod is hidden behind the case"
     },
     {
       "src": "images/plock_exploded.png",
@@ -87,9 +91,9 @@
     },
     "dock_base": {
       "name": "Dock base (one-piece option)",
-      "what": "The dock and base plate as one part, instead of receiver + base_plate (set mount = \"merged\"). Clamp spacing 132–154 mm",
+      "what": "One-piece option (mount = \"merged\"): dock and base plate in one part, shaped to the case outline with side walls; the lock pod hides behind the case. Clamp spacing 132–154 mm. Use with the one-piece shoe and back cover",
       "qty": "1",
-      "material": "ASA or PETG, on the lock pod's bottom face with supports under the plate",
+      "material": "ASA or PETG, on the lock pod's bottom face with supports under the floor",
       "optional": true
     },
     "iso_pad": {
@@ -97,6 +101,21 @@
       "what": "Sits between each clamp pad and the dock base; cut from 2 mm neoprene using it as a template, or print it",
       "qty": "2",
       "material": "TPU 95A, or 2 mm neoprene/EPDM sheet",
+      "optional": true
+    },
+    "shoe_one_piece": {
+      "name": "Shoe (one-piece option)",
+      "what": "The shoe for the one-piece dock base: its strike block is 7 mm lower, to match the lowered lock",
+      "qty": "1",
+      "material": "ASA or PETG",
+      "optional": true
+    },
+    "case_back_one_piece": {
+      "name": "Case back (one-piece option)",
+      "what": "Back cover for the one-piece dock base: the strike screw inserts are 7 mm lower",
+      "qty": "1",
+      "material": "ASA or PETG",
+      "note": "Re-export for your phone",
       "optional": true
     },
     "clamp_body": {
