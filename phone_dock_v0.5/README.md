@@ -183,7 +183,7 @@ To make the window removable instead of bonded, you would need a screwed front f
 
   ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
 - **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a chunky 6 × 10 mm printed key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
-- **Or a dial combination lock (demo):** [`DIAL_LOCK.md`](DIAL_LOCK.md) has a fully mechanical safe-style lock in a third cartridge (`lock_type = "dial"`): one dial numbered 0–9 and a 4–6 digit code. Dial the code and the button pops out and the bolt drops. Press the button and spin the dial to lock. No key, no power; 3 small springs. A concept, checked in CAD only.
+- **Or a dial combination lock (demo):** [`DIAL_LOCK.md`](DIAL_LOCK.md) has a fully mechanical safe-style lock in a third cartridge (`lock_type = "dial"`): one dial numbered 0–9 and a 4–6 digit code. Dial the code and the button pops out and the bolt drops. **Press the button to lock**: the press also clears the code, so the whole code is needed to open it again. No key, no power; 3 small springs. A concept, checked in CAD only.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**

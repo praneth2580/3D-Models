@@ -452,6 +452,26 @@ Update 21 (2026-11-22): **the dial-code lock is now mechanical: a single-dial co
 - **Lock video:** the third part is the dial lock (see `video/README.md`); about 49 s in all.
 - **Not checked:** the springs' real forces, friction of the wheels on the tube, how sharply the latch lets go, the small flies in print, rain.
 
+Update 22 (2026-11-22): **dial lock: lock with one press of the button** (owner: "while locking I want a button, not the entire code again"; chose "the button also resets the code" over a plain button that leaves the dial at the code).
+- **The problem:** the old lock needed the button held and the dial spun a turn. With a plain button, the wheels stay at the code, and a thief would only need the last digit.
+- **Reset:**
+  - The front wheel's front half is now a heart cam (r 3.6 to 7.5, low point opposite its notch). A hammer (0.8 mm plate: a post under the heart, a crossbar over the button's bar, a foot with a square peg) rides in a groove in the button bar's new side rib.
+  - A 3.7 mm hump in the groove (60° slopes) lifts the hammer for a moment, at button positions 5.98 to 1.41 mm, on the way in and on the way out. It pushes the heart to its low point (stopwatch reset), so the front wheel's notch goes to the top: home.
+  - Re-setting the front wheel needs the dial to pick it up through every other wheel, which moves them all: the whole code is needed.
+  - The hump ends 1.41 mm before the button is fully in, so the dial is free when locked.
+- **Latch:** now a springy printed arm on the fence (0.8 mm, 10 mm long, under 2 % strain at 1.5 mm), with its tooth at the front, beside the button's bar. It used to be a rigid tooth on the fence, which would have stopped the fence going down while the tooth rode on the bar.
+  - Fence up: the tooth comes out. Button out and fence down: the arm bends and the tooth rides on the bar. Button in: it snaps into the notch.
+  - A separate spring-loaded latch was tried first. Its spring seat would have been in the hammer's path, so it was dropped.
+- **Other changes:** button stroke 12 → 11.2 mm and its spring tab 2 → 1.6 mm wide (the latch moved back under the front wheel's rim). Hammer crossbar height from the rib's offset on the 60° slopes (first attempt: the rib clipped the crossbar, 0.33 mm³). Hammer slot in the cartridge raised (the raised crossbar clipped it, 0.68 mm³).
+- **Asserts:** 4-6 digits still fit (6 with 0.6 mm to the lifter). New: the hump ends ≥ 0.3 mm before full stroke; hammer lift ≥ 3 mm; latch arm root clear of the pin and the fence spring; latch arm strain ≤ 2 %.
+- **Exported:** `dl_hammer` 0.02 cm³ (new); `dl_wheel_1` 0.24 (with the heart); `dl_fence` 0.07 (with the latch arm); `dl_plunger` 0.62 (with the rib and groove); `dl_cartridge` 6.93; the rest unchanged.
+- **Checks** (6 states: locked; code set; on the way out, halfway up the hump and at its top; out; on the way in), 4 and 6 digits, both mounts:
+  - vs cartridge, vs dock, vs cover: no overlap;
+  - parts vs each other: touch only (the tooth on the bar);
+  - **must collide:** wheels scrambled vs fence raised 0.5 mm 2.38 mm³; button pushed out 0.5 mm while latched 0.63 mm³; bolt pushed down while locked 2.64 mm³; raised hammer vs a front wheel not at home 6.38 mm³ (it turns it).
+- **Lock video:** the dial section now shows the fence lifting the latch, the button popping out with the hammer snapping the front wheel home on its way, the case off and on, and one press to lock. The front wheel's reset is driven by the hump's profile in `make_lock_video.py`.
+- **Not checked:** whether the button's spring has the force to reset the front wheel against the fence spring and friction; the printed latch arm's life.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

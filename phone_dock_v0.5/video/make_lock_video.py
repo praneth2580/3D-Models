@@ -30,7 +30,7 @@ def load_font(bold, size):
     return ImageFont.load_default()
 
 PLK_S, PLK_DROP = 7.0, 1.3        # printed lock: shuttle travel and wafer drop (printed_lock.scad)
-DL_STROKE = 12                    # dial lock: button travel (dial_lock.scad)
+
 
 # (start, end, caption)
 SCENES = [
@@ -57,10 +57,10 @@ def _scad_echo():                  # anchors, close-up focus and the dial's numb
     out = r.stderr + r.stdout                 # Windows' openscad.com prints ECHO to stdout
     get = lambda name: ast.literal_eval(re.search(name + r" = (\[.*\])", out).group(1))
     return get("dl_label_points"), get("dl_focus"), get("dl_anim")
-DL_POINTS, DL_FOCUS, (DL_N, DL_DELTA, DL_GATES, DL_CODE) = _scad_echo()
+DL_POINTS, DL_FOCUS, (DL_N, DL_DELTA, DL_GATES, DL_CODE, DL_HOME, DL_HUMP, DL_HLIFT, DL_STROKE) = _scad_echo()
 DL_LABELS = [("Wheels: one per digit", 0, (40, -100)), ("Notch (at the bottom: right digit)", 1, (60, 120)),
-             ("Fence: rises into the notches", 2, (-260, 90)), ("Latch tooth in the button's notch", 3, (40, 70)),
-             ("Drive cam (on the dial's spindle)", 4, (-300, -90)), ("Dial 0-9", 5, (40, -60))]
+             ("Fence: rises into the notches", 2, (-260, 90)), ("Latch: tooth in the button's notch", 3, (40, 70)),
+             ("Reset hammer", 4, (110, 40)), ("Heart cam (front wheel)", 5, (90, -40)), ("Dial 0-9", 6, (40, -60))]
 CLOSE = list(DL_FOCUS) + [76, 0, 24, 125]
 
 # ---- the dial's mechanism, simulated: element 0 = drive cam (turns with the dial), 1..N = wheels from the rear.
@@ -105,38 +105,48 @@ def dl_build():
     return keys, a, marks
 DL_KEYS, DL_OPEN, DL_MARKS = dl_build()
 T_OPEN = DL_MARKS["open"]
-T_POP = T_OPEN + 0.4                    # the fence has risen; the button pops out
-T_CASE = T_POP + 1.6
-T_PRESS = T_CASE + 2.3
-T_SPIN = T_PRESS + 1.8
-def dl_spin_keys():
-    a, keys, steps = list(DL_OPEN), [], 420
-    for n in range(1, steps + 1):
-        a = list(a); a[0] += 1.0; a = dl_settle(a)
-        keys.append((T_SPIN + 1.6*ease(n/steps), a))
-    return keys
-DL_SPIN = dl_spin_keys()
-T_END = T_SPIN + 3.4
+T_POP = T_OPEN + 0.4                    # the fence has risen; the button pops out (the hammer clears the code)
+T_POP_END = T_POP + 1.6
+T_CASE = T_POP_END + 0.5
+T_PRESS = T_CASE + 2.3                  # one press: the bolt goes up, the hammer clears the code, the latch snaps in
+T_PRESS_END = T_PRESS + 2.0
+T_END = T_PRESS_END + 2.6
+def dl_hammer_at(s):                    # as dl_hammer_at() in dial_lock.scad: the hump in the button's groove
+    s0, s1, s2, s3 = DL_HUMP
+    if s >= s0 or s <= s3: return 0.0
+    if s >= s1: return DL_HLIFT*(s0 - s)/(s0 - s1)
+    if s >= s2: return DL_HLIFT
+    return DL_HLIFT*(s - s3)/(s1 - s3 - (s1 - s2))
+def dl_button_at(t):
+    if t < T_PRESS: return ramp(t, T_POP, T_POP_END, 0, DL_STROKE)
+    return ramp(t, T_PRESS + 0.2, T_PRESS_END, DL_STROKE, 0)
 def dl_state_at(t):
-    keys = DL_KEYS if t < T_SPIN else DL_SPIN
-    if t <= keys[0][0]: return keys[0][1] if t < T_SPIN else DL_OPEN
-    for (t0, a0), (t1, a1) in zip(keys, keys[1:]):
-        if t0 <= t <= t1: return a1
-    return keys[-1][1]
+    """Parts' turns at time t: the dialling, then the front wheel turned home by the hammer (on the way out)."""
+    if t <= DL_KEYS[0][0]: return DL_KEYS[0][1]
+    a = DL_KEYS[-1][1]
+    for (t0, a0), (t1, a1) in zip(DL_KEYS, DL_KEYS[1:]):
+        if t0 <= t <= t1: a = a1; break
+    a = list(a)
+    if t >= T_POP:                      # the hammer pushes the heart: the front wheel (chain element N) turns home
+        s = dl_button_at(t)             # on the way out the hump goes up from DL_HUMP[3] to its top at DL_HUMP[2]
+        frac = 0.0 if s <= DL_HUMP[3] else min(1.0, dl_hammer_at(s)/DL_HLIFT) if s < DL_HUMP[2] else 1.0
+        if t >= T_PRESS: frac = 1.0
+        home = DL_HOME + 360*round((a[DL_N] - DL_HOME)/360)
+        a[DL_N] = a[DL_N] + (home - a[DL_N])*frac
+    return a
 def dl_fence_at(a):                     # the fence rises as far as the V notches let it
     return 1.5*max(0.0, min(1.0, 1 - (dl_misalign(a) - 2)/9))
 
 names = lambda: ", ".join(f"{'right' if DL_MARKS[f'stop{j}'][2] < 0 else 'left'} to {DL_CODE[j]}" for j in range(DL_N))
 SCENES += [
-    (27.5, 29.6, f"3. Dial lock: one dial numbered 0-9, a {DL_N}-digit code. Locked: the button is in, the wheels scrambled"),
+    (27.5, 29.6, f"3. Dial lock: one dial numbered 0-9, a {DL_N}-digit code. Locked: the button is in"),
     (29.6, DL_MARKS["stop0"][0] + 0.8, "Inside: one notched wheel per digit; pins pick each wheel up after nearly a turn"),
     (DL_MARKS["stop0"][0] + 0.8, T_OPEN, "Dial the code like a safe: " + names()),
-    (T_OPEN, T_POP + 0.9, "Every notch at the bottom: the fence rises into them, its tooth lets the button go"),
-    (T_POP + 0.9, T_CASE, "The button pops out and the lifter's spring drops the bolt"),
-    (T_CASE, T_PRESS, "Unlocked: the case slides off. The fence sits in the notches, so the wheels stay put"),
-    (T_PRESS, T_SPIN, "Press the button: its ramp lifts the bolt into the case"),
-    (T_SPIN, T_SPIN + 1.9, "Hold it and spin the dial a turn: a wheel moves, its notch pushes the fence down, the latch drops in"),
-    (T_SPIN + 1.9, T_END - 0.5, "Locked. The lifter's pin sits on the button's flat top: pushing the bolt can't push it out"),
+    (T_OPEN, T_POP + 0.5, "Every notch at the bottom: the fence rises into them and lifts the latch"),
+    (T_POP + 0.5, T_POP_END, "The button pops out; on its way, a hump lifts the hammer, which snaps the front wheel home: the code is cleared"),
+    (T_POP_END, T_CASE + 2.3, "Unlocked: the bolt is down, the case slides off"),
+    (T_PRESS, T_PRESS_END, "To lock, just press the button: its ramp lifts the bolt, the latch snaps into its notch"),
+    (T_PRESS_END, T_END - 0.5, "Locked with one press. To open it again, the whole code has to be dialled"),
     (T_END - 0.5, T_END + 3.0, ""),
 ]
 DURATION = SCENES[-1][1]
@@ -163,7 +173,7 @@ def case_off(t, t0):
 
 def state(t):
     p = dict(lock_type='"store"', L_turn=1, L_key_out=0, L_key_rot=0, L_shift=0, L_wafer=0, L_show_key=1, L_case_dy=0,
-             L_dl_s=0, L_dl_rot=0, L_dl_w="[0,0,0,0,0,0]", L_dl_f=0, L_dl_cut=0)
+             L_dl_s=0, L_dl_rot=0, L_dl_w="[0,0,0,0,0,0]", L_dl_f=0, L_dl_l=0, L_dl_h=0, L_dl_cut=0)
     if t < 14.5:                                   # store lock
         p["L_key_out"] = 35 if t < 3.3 else (ramp(t, 3.3, 5.0, 35, 0) if t < 13.0 else ramp(t, 13.4, 14.4, 0, 35))
         if t < 10.8:
@@ -183,21 +193,28 @@ def state(t):
     else:                                          # dial lock
         p["lock_type"] = '"dial"'; p["L_show_key"] = 0
         a = dl_state_at(t)
+        sb = dl_button_at(t) if t >= T_POP else 0.0
         p["L_dl_rot"] = f"{a[0]:.2f}"
         p["L_dl_w"] = "[" + ",".join(f"{x:.2f}" for x in dl_wheel_rots(a) + [0]*(6 - DL_N)) + "]"
-        p["L_dl_f"] = f"{dl_fence_at(a):.3f}"
-        p["L_dl_s"] = ramp(t, T_POP, T_POP + 0.9, 0, DL_STROKE) if t < T_PRESS else ramp(t, T_PRESS + 0.2, T_PRESS + 1.6, DL_STROKE, 0)
+        f = dl_fence_at(a)
+        p["L_dl_f"] = f"{f:.3f}"
+        # The latch's tooth: up with the fence; riding on the button's bar while it's out; in its notch when in.
+        l = 1.5 if (f > 0.75 or sb > 0.2) else f
+        if t >= T_PRESS and sb <= 0.2: l = 0.0
+        p["L_dl_l"] = f"{max(l, f):.3f}"
+        p["L_dl_h"] = f"{dl_hammer_at(sb):.3f}"
+        p["L_dl_s"] = f"{sb:.3f}"
         p["L_case_dy"] = case_off(t, T_CASE) if T_CASE <= t < T_PRESS else 0
         wide = cam(t, 27.5, DURATION, 44, 62)
         if t < 29.0: c = wide
         elif t < 29.6: c = lerp(wide, CLOSE, ease((t - 29.0)/0.6))
-        elif t < T_POP + 0.5: c = CLOSE           # close on the wheels (near halves cut away), the fence and the latch
-        elif t < T_POP + 1.3: c = lerp(CLOSE, wide, ease((t - T_POP - 0.5)/0.8))
-        elif t < T_SPIN - 0.6: c = wide
-        elif t < T_SPIN: c = lerp(wide, CLOSE, ease((t - T_SPIN + 0.6)/0.6))
-        elif t < T_SPIN + 2.0: c = CLOSE
-        else: c = lerp(CLOSE, wide, ease(min(1, (t - T_SPIN - 2.0)/0.8)))
-        p["L_dl_cut"] = int(29.0 <= t < T_POP + 1.3 or T_SPIN - 0.6 <= t < T_SPIN + 2.8)
+        elif t < T_POP_END: c = CLOSE           # close on the wheels (near halves cut away), the fence, latch and hammer
+        elif t < T_POP_END + 0.8: c = lerp(CLOSE, wide, ease((t - T_POP_END)/0.8))
+        elif t < T_PRESS - 0.6: c = wide
+        elif t < T_PRESS: c = lerp(wide, CLOSE, ease((t - T_PRESS + 0.6)/0.6))
+        elif t < T_PRESS_END + 0.6: c = CLOSE
+        else: c = lerp(CLOSE, wide, ease(min(1, (t - T_PRESS_END - 0.6)/0.8)))
+        p["L_dl_cut"] = int(29.0 <= t < T_POP_END + 0.8 or T_PRESS - 0.6 <= t < T_PRESS_END + 1.4)
     return p, c
 
 def render_frame(i, t, outdir):

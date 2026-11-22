@@ -20,6 +20,8 @@ L_dl_s     = 0;     // dial lock: button out, mm (0 = pushed in, locked; dl_stro
 L_dl_rot   = 0;     // dial lock: dial (and drive cam) turned, degrees
 L_dl_w     = [0, 0, 0, 0, 0, 0];   // dial lock: each wheel's turn, degrees (front first)
 L_dl_f     = 0;     // dial lock: fence raised, mm
+L_dl_l     = 0;     // dial lock: latch's tooth raised, mm (its arm bends when it's above the fence)
+L_dl_h     = 0;     // dial lock: hammer raised, mm
 L_dl_cut   = 0;     // dial lock close-up: 1 = the wheels' near halves cut away, the button see-through
 
 GHOST = [0.55, 0.62, 0.72, L_ghost];
@@ -68,7 +70,8 @@ module scene() {
     bolt_at(plk_dz_s(L_shift));
   } else {                                  // dial lock
     color([0.45, 0.75, 0.95]) dl_lifter(L_dl_s);
-    color([0.75, 0.75, 0.78]) dl_fence(L_dl_f);
+    color([0.75, 0.75, 0.78]) dl_fence(L_dl_f, L_dl_l);
+    color([0.9, 0.35, 0.35]) dl_hammer(L_dl_h);
     color([0.8, 0.8, 0.84]) dl_spindle(L_dl_rot);
     for (i = [0:dl_n - 1]) color([0.95, 0.8, 0.3])
       if (L_dl_cut > 0) intersection() { dl_wheel_placed(i, L_dl_w[i]); translate([0, dl_y, -100]) cube([200, 100, 200]); }   // keep the far half
@@ -82,7 +85,8 @@ module scene() {
 scene();
 
 // Label anchors for make_lock_video.py (dock frame): wheel, notch (at the bottom), fence, latch tooth, drive cam, dial.
-echo(dl_label_points = [[dl_wx(1) + dl_wt/2, dl_y + 0.5, dl_zd + dl_R - 0.5], [dl_wx(0) + dl_wt/2, dl_y + 0.5, dl_zd - dl_R + 1],
+echo(dl_label_points = [[dl_wx(1) + dl_wt/2, dl_y + 0.5, dl_zd + dl_R - 0.5], [dl_wx(1) + dl_wt/2, dl_y + 0.5, dl_zd - dl_R + 1],
                         [dl_wx(dl_n - 1), dl_y, dl_ftop - 1.2], [dl_tooth_x[0] + 0.5, dl_tooth_y[0], dl_stem_top - 0.5],
-                        [dl_cam_x[0] + 1, dl_y + 2, dl_zd + dl_cam[0] - 1], [lock_face_x + 0.6 + dl_knob[1], dl_y, dl_zd + dl_knob[0]/2 - 1]]);
+                        [dl_hx, dl_y + 1.5, dl_h_top - 0.5], [dl_wx(0) + dl_wt*0.75, dl_y + 3, dl_zd - 2],
+                        [lock_face_x + 0.6 + dl_knob[1], dl_y, dl_zd + dl_knob[0]/2 - 1]]);
 echo(dl_focus = [dl_cam_x[0] + 6, lock_y - 1, dl_zd - 4]);

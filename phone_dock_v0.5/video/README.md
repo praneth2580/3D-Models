@@ -30,7 +30,7 @@
 | 0–3 s | Title |
 | 3–14.5 s | **Store cam lock:** the key goes in and turns a quarter turn; the crank pin pulls the yoke and the steel bolt down; the case slides off and back on; turn back and the bolt rises into the strike against its steel block |
 | 14.5–27.5 s | **Printed push-key lock:** no key, the wafers drop; the chunky key lifts them level; pushed 7 mm, the shuttle's slanted track lowers the lifter and the bolt; the case slides off and on; pulled back, the bolt rises and the key comes out |
-| 27.5–46 s | **Dial lock:** a labelled close-up with the wheels' near halves cut away. The dial is turned right, left, right, left to the code (the wheels are picked up by their pins, simulated by the script), every notch comes to the bottom, the fence rises, its latch lets the button go, the button pops out and the bolt drops. The case slides off and on, then the button is pressed and the dial spun a turn to lock |
+| 27.5–46 s | **Dial lock:** a labelled close-up with the wheels' near halves cut away. The dial is turned right, left, right, left to the code (the wheels are picked up by their pins, simulated by the script), every notch comes to the bottom, the fence rises, its latch lets the button go, the button pops out and the bolt drops. On its way out a hump lifts the reset hammer, which snaps the front wheel home (the code is cleared). The case slides off and on, then one press of the button locks it |
 | 46–49 s | Closing title |
 
 It is rendered from `lock_anim.scad` by `make_lock_video.py`, which sets `lock_type` per frame:

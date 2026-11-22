@@ -54,7 +54,7 @@
     },
     {
       "src": "images/dl_side.png",
-      "caption": "Demo: a mechanical dial lock, numbered 0-9, with a 4-6 digit code. Dial it to unlock; press the button and spin to lock"
+      "caption": "Demo: a mechanical dial lock, numbered 0-9, with a 4-6 digit code. Dial it to unlock; press the button to lock (that also clears the code)"
     },
     {
       "src": "images/dl_exploded.png",
@@ -322,9 +322,16 @@
     },
     "dl_fence": {
       "name": "Dial lock (demo): fence",
-      "what": "Rises into the wheels' notches at the right code; its tooth latches the button",
+      "what": "Rises into the wheels' notches at the right code; its printed springy latch arm holds the button in",
       "qty": "1",
       "material": "PETG, 100 % infill",
+      "optional": true
+    },
+    "dl_hammer": {
+      "name": "Dial lock (demo): reset hammer",
+      "what": "Lifted by a hump in the button's groove; presses the front wheel's heart cam to clear the code",
+      "qty": "1",
+      "material": "PETG, 100 % infill, flat",
       "optional": true
     },
     "dl_plunger": {

@@ -1,6 +1,6 @@
 # Dial combination lock (demo)
 
-A **fully mechanical** combination lock for the dock, with **one dial**, like a safe: no key and no power. The dial is numbered 0–9, and your code is **4, 5 or 6 digits**. It comes in its own lock cartridge, so it fits the same lock bay as the store-bought cam lock and the printed lock (`lock_type = "dial"`). The dock, the lock cover, the steel bolt and the strike are unchanged.
+A **fully mechanical** combination lock for the dock, with **one dial**, like a safe: no key and no power. The dial is numbered 0–9, and your code is **4, 5 or 6 digits**. **Dial the code to open; press the button to lock.** That one press also clears the code. It comes in its own lock cartridge, so it fits the same lock bay as the store-bought cam lock and the printed lock (`lock_type = "dial"`). The dock, the lock cover, the steel bolt and the strike are unchanged.
 
 > **A demo / concept.** It is checked in CAD, but not printed or tested. A patient person can feel out the code of a printed dial lock, so treat it as a deterrent, and keep the store lock for the best security.
 
@@ -8,7 +8,7 @@ A **fully mechanical** combination lock for the dock, with **one dial**, like a 
 
 ![The cartridge lowered out of the lock bay](images/dl_exploded.png)
 
-Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in half, the fence, the latch and the button.
+Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in half, the fence, the latch, the reset hammer and the button.
 
 ## Using it
 
@@ -20,12 +20,9 @@ Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in h
 
   With the last digit, the **button pops out** and the bolt drops. Slide the case off.
 - **The rule for any length:** for an N-digit code, turn right for the 1st digit, passing it N−1 times and stopping on the Nth. Then go left for the 2nd, passing it N−2 times. Keep alternating; for the last digit, turn straight to it. The index mark is the small triangle at the dial's left side.
-- **To lock:**
-  1. Dock the case.
-  2. **Press the button in** and hold it. Its ramp lifts the bolt into the case.
-  3. While holding it, **spin the dial a full turn or more**.
-  4. Let go. The button stays in: locked.
-- **While it's open,** the wheels are held at the code, so the dial only turns freely for less than a turn.
+- **To lock:** dock the case and **press the button in**. That's all. The bolt goes up into the case, and the button stays in.
+  - The press also **clears the code**: a small hammer snaps the front wheel back to its "home" position, so the lock can only be opened again by dialling the whole code.
+  - The button also clears it on its way out when you unlock, so the dial never sits at your code.
 
 ## How it works
 
@@ -33,13 +30,18 @@ Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in h
 - **Wheels:** one per digit, turning freely on the tube.
   - Each wheel and the cam have small pins (**flies**) on their faces. Turning the dial, the cam picks up the first wheel after nearly a turn, that wheel picks up the next, and so on. That's why each digit needs one fewer turn than the one before, as on a safe.
   - Each wheel has one **notch** in its rim. Where the notch sits on the wheel sets that wheel's digit.
-- **Fence:** a bar under the wheels, pushed up by a small spring.
-  - When every notch is at the bottom (only with the right code), the fence rises 1.5 mm into them.
-  - Its front end carries the **latch tooth**, which sits in a notch in the button's bar and holds the button in. Rising, it lets go.
+- **Fence and latch:**
+  - The fence is a bar under the wheels, pushed up by a small spring. When every notch is at the bottom (only with the right code), it rises 1.5 mm into them.
+  - A **latch** is printed on the fence: a thin springy arm with a tooth at its end. The tooth sits in a notch in the button's bar and holds the button in.
+  - When the fence rises, it lifts the tooth out: the button's spring pushes the button out, and the lifter's spring pulls the bolt down.
 - **Button:**
-  - The button's spring pushes it out, and the lifter's spring pulls the bolt down.
-  - Pressed in, the button's 40° ramp lifts the lifter's pin 7 mm, and with it the bolt.
-  - Turning the dial then moves a wheel. The notch's sloped side pushes the fence down, and the tooth drops back into the button's notch.
+  - Pressed in, its 40° ramp lifts the lifter's pin 7 mm, and with it the bolt.
+  - While the button was out, the tooth rode on top of the bar with its arm bent. When the notch comes under it, the arm snaps the tooth in: locked.
+- **Reset (the code is cleared):**
+  - The front wheel (the one next to the dial) has a **heart-shaped cam** on its front half. Under it sits a small **hammer**, lifted for a moment by a hump in a groove in the button's bar, each time the button goes in or out.
+  - Pushed against the heart, the hammer turns the front wheel to "home", like a stopwatch's reset button. At home the wheel's notch is at the top, away from the fence.
+  - To bring the front wheel back to its digit, the dial has to pick it up through every other wheel. That moves them all, so the **whole code** has to be dialled again. That's why one press is enough to lock it securely.
+  - The hammer is back down before the button is fully in, so the dial is free to turn.
 - **The lifter** carries the same steel bolt, on the same arm as the store lock's yoke.
   - **Locked, its pin sits on the button bar's flat top.** Pushing the bolt down presses straight down on the bar, so it can't push the button out.
 
@@ -50,10 +52,11 @@ STLs are in [`dial_lock/`](dial_lock/), made with the example code `[3, 7, 1, 9]
 | Part | File | Qty | How to print |
 |---|---|---|---|
 | Cartridge | `dl_cartridge.stl` | 1 | Standing on its bottom face, as it sits in the dock. It includes the fixed tube the wheels turn on. It replaces `lock_cartridge` |
-| Wheels | `dl_wheel_1.stl` … `dl_wheel_4.stl` (or `dl_wheels.stl`) | 1 each | Flat, 100 % infill, 0.12–0.16 mm layers. **They differ** (each notch is in a different place): wheel 1 is the front one, next to the dial |
+| Wheels | `dl_wheel_1.stl` … `dl_wheel_4.stl` (or `dl_wheels.stl`) | 1 each | Flat, 100 % infill, 0.12–0.16 mm layers. **They differ** (each notch is in a different place). Wheel 1 is the front one, next to the dial, with the heart cam |
 | Spindle with drive cam | `dl_spindle.stl` | 1 | On its side, 100 % infill, PETG or PA12 |
 | Dial | `dl_dial.stl` | 1 | Face down, fine layers so the numbers come out |
-| Fence with latch | `dl_fence.stl` | 1 | On its bottom, 100 % infill |
+| Fence with latch | `dl_fence.stl` | 1 | On its bottom, 100 % infill, PETG (the latch arm flexes) |
+| Reset hammer | `dl_hammer.stl` | 1 | Flat, 100 % infill |
 | Button (bar) | `dl_plunger.stl` | 1 | On its bottom, 100 % infill |
 | Lifter | `dl_lifter.stl` | 1 | Standing on its pin and beam, 100 % infill. It replaces `lock_yoke` |
 
@@ -64,6 +67,8 @@ STLs are in [`dial_lock/`](dial_lock/), made with the example code `[3, 7, 1, 9]
 | Lifter spring | 5 mm OD, about 18 mm long (works at 9–16 mm) |
 | Button spring | 4 mm OD, about 17 mm long, solid at 3 mm or less |
 | Fence spring | 3 mm OD, 0.3 mm wire, about 8 mm long (works at 5–6.5 mm) |
+
+The latch has no spring of its own: its arm is printed springy (it bends 1.5 mm over 10 mm, under 2 % strain).
 
 It also uses the steel bolt, the bearing block, the standard `lock_cover` and its 3 screws, as the store lock does.
 
@@ -89,13 +94,16 @@ On the bench first, then into the dock:
    - Slide the wheels onto the cartridge's tube from behind: wheel 1 first (it goes nearest the face plate).
    - Push the spindle through the tube from behind, cam last.
    - Press the dial onto its front end, on the flat, with 0 at the index mark when the cam's pin is at the top.
-2. **Fence:** put its spring on the lock cover's position (under the fence's rear end), and fit the fence under the wheels, its tooth by the button's path.
-3. **Button:** put the button spring in its channel, and slide the bar in from below, its tab against the spring and its front out through the face plate.
+2. **Fence and hammer:**
+   - Put the fence's spring on the lock cover's position (under the fence's rear end), and fit the fence under the wheels, its latch beside the button's path.
+   - Fit the hammer under the front wheel's heart, its peg facing the button's bar.
+3. **Button:** put the button spring in its channel, and slide the bar in from below, with its tab against the spring, the hammer's peg in its groove and its front out through the face plate.
 4. **Lifter:** press the bolt into the lifter with retaining compound. Fit its spring and the lifter, with its pin over the button's bar.
 5. **Into the dock:** push the cartridge up into the bay from below, with the bolt going up through the guide in the pod's roof. Screw on the lock cover.
 6. **Test:**
-   - Press the button and hold it, then spin the dial a turn: let go, and the button stays in.
+   - Press the button: it stays in, and the bolt is up.
    - Dial the code: the button pops out and the bolt drops.
+   - Press it again, and try to open it by turning the dial back to the last digit: it must stay locked (the press cleared the code).
    - Try a wrong code: the button must stay in.
 
 ## Checked in CAD
@@ -104,12 +112,13 @@ These checks are built in as `PART="dl_check_*"`, run with `lock_type="dial"`. T
 
 | Check | Result |
 |---|---|
-| Button, lifter, fence, spindle and wheels vs the cartridge, in 4 states: locked; code set; half out; out (`dl_check_cart`) | No overlap |
+| Button, lifter, fence and latch, hammer, spindle and wheels vs the cartridge, in 6 states: locked; code set; on the way out, halfway up the hump and at its top; out; on the way in (`dl_check_cart`) | No overlap |
 | The same parts, the dial and the bolt vs the dock (`dl_check_dock`) | No overlap |
-| The parts vs each other (`dl_check_parts`) | Touching only: the latch tooth rests on the button's top while it's out |
+| The parts vs each other (`dl_check_parts`) | Touching only: the latch's tooth rests on the button's bar while it's out |
 | The parts vs the lock cover (`dl_check_cover`) | No overlap |
-| **Must collide:** the fence pushed 0.5 mm up with the wheels off the code (`dl_check_scrambled`) | **Blocked** by every wheel (2.76 mm³ with 4, 4.14 mm³ with 6) |
-| **Must collide:** the button pushed 0.5 mm out while latched (`dl_check_held`) | **Blocked** (0.54 mm³) |
+| **Must collide:** the fence pushed 0.5 mm up with the wheels off the code (`dl_check_scrambled`) | **Blocked** by every wheel (2.38 mm³ with 4) |
+| **Must collide:** the button pushed 0.5 mm out while latched (`dl_check_held`) | **Blocked** (0.63 mm³) |
+| **Must collide:** the raised hammer vs a front wheel that isn't at home (`dl_check_reset`) | **Pushes it** (6.38 mm³): the heart is turned home |
 | **Must collide:** the bolt pushed down 0.5 mm while locked (`dl_check_backdrive`) | **Blocked** (2.64 mm³): the pin sits on the flat |
 | Cartridge vs the dock, in place and on its way in; pulled out 0.5 mm | No overlap; **blocked** (63.7 mm³) |
 | The dialling, simulated (video script) | Dialling the code lines up every notch to within 0.5° |
@@ -117,6 +126,7 @@ These checks are built in as `PART="dl_check_*"`, run with `lock_type="dial"`. T
 
 **Not checked:**
 - the springs' real forces and the friction of the wheels on the tube;
-- how sharply the fence's tooth lets go;
+- how sharply the latch lets go, and how long its printed arm lasts;
+- the hammer's reset under the springs' real forces;
 - how well a printer holds the 1.5 mm fence rise and the small flies;
 - rain.
