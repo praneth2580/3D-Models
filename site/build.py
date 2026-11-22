@@ -174,6 +174,8 @@ ICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0
 def page(title, desc, body, root, nav_links, image=None, scripts=""):
     og = f'<meta property="og:image" content="{esc(image)}">' if image else ""
     links = "".join(f'<a href="{h}">{esc(t)}</a>' for t, h in nav_links)
+    menu = (f'<details class="menu"><summary aria-label="Sections">Menu</summary><div class="menu-pop">{links}</div></details>'
+            if len(nav_links) > 1 else "")
     site_title = SITE.get("title", "3D Models")
     return f"""<!doctype html>
 <html lang="en">
@@ -188,13 +190,15 @@ def page(title, desc, body, root, nav_links, image=None, scripts=""):
 <link rel="icon" href="{ICON}">
 {FONTS}
 <link rel="stylesheet" href="{root}style.css">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="{root}"><span class="logo"></span>{esc(site_title)}</a>
-    <nav>{links}</nav>
-    {f'<a class="btn small ghost" href="{GH}">GitHub</a>' if GH else ''}
+    <nav class="sections">{links}</nav>
+    {menu}
+    {f'<a class="btn small ghost gh" href="{GH}">GitHub</a>' if GH else ''}
   </div>
 </header>
 <main id="top">
@@ -214,6 +218,9 @@ def page(title, desc, body, root, nav_links, image=None, scripts=""):
 SITE_LIC = SITE.get("license", {})
 SITE_LICENSE_HTML = (f'Unless a project says otherwise, licensed <a href="{esc(SITE_LIC["url"])}">{esc(SITE_LIC["name"])}</a>.'
                      if SITE_LIC else "")
+
+def chip_note(ch):
+    return f'<small>{esc(ch["note"])}</small>' if ch.get("note") else ""
 
 # ------------------------------------------------------------------ one project
 class Project:
@@ -257,7 +264,7 @@ class Project:
             rel = self.stls[stems.index(stem)]
             rows.append(dict(stem=stem, file=os.path.basename(rel), rel=rel, name=m.get("name", pretty(stem)),
                              what=m.get("what", ""), qty=str(m.get("qty", "1")), material=m.get("material", ""),
-                             note=m.get("note", ""), optional=m.get("optional", False),
+                             note=m.get("note", ""), optional=m.get("optional", False), when=m.get("when", {}),
                              size=os.path.getsize(os.path.join(self.dir, rel))))
         return rows
 
@@ -342,16 +349,18 @@ class Project:
         see = ""
         gal = self.gallery()
         if c.get("video") or gal:
-            vid = ""
-            if c.get("video"):
-                poster = f' poster="{self.media_url(c["poster"])}"' if c.get("poster") else ""
-                vid = (f'<div class="video"><video controls preload="metadata"{poster}><source src="{self.media_url(c["video"])}" '
-                       f'type="video/mp4">Your browser can\'t play this video.</video></div>')
-            for v in c.get("videos", []):          # more videos, each with a title
-                poster = f' poster="{self.media_url(v["poster"])}"' if v.get("poster") else ""
-                vid += (f'<h3>{esc(v.get("title", ""))}</h3><div class="video"><video controls preload="metadata"{poster}>'
-                        f'<source src="{self.media_url(v["src"])}" type="video/mp4">Your browser can\'t play this video.</video></div>')
-            figs ="".join(f'<figure><img src="{self.media_url(g["src"])}" alt="{esc(g.get("caption", ""))}" loading="lazy">'
+            vids = ([dict(src=c["video"], poster=c.get("poster"), title=c.get("video_title", "Video"))] if c.get("video") else []) \
+                   + c.get("videos", [])                  # more videos: shown as tabs
+            panes = "".join(
+                f'<div class="video" data-pane="{i}"{"" if i == 0 else " hidden"}><video controls preload="metadata"'
+                f'{(" poster=" + chr(34) + self.media_url(v["poster"]) + chr(34)) if v.get("poster") else ""}>'
+                f'<source src="{self.media_url(v["src"])}" type="video/mp4">Your browser can\'t play this video.</video></div>'
+                for i, v in enumerate(vids))
+            tabs = ("".join(f'<button class="tab" role="tab" data-tab="{i}" aria-selected="{str(i == 0).lower()}">{esc(v.get("title", ""))}</button>'
+                            for i, v in enumerate(vids)))
+            vid = (f'<div class="tabs" role="tablist" aria-label="Videos">{tabs}</div>' if len(vids) > 1 else "") + \
+                  (f'<div class="videos">{panes}</div>' if vids else "")
+            figs ="".join(f'<figure><a class="zoom" href="{self.media_url(g["src"])}"><img src="{self.media_url(g["src"])}" alt="{esc(g.get("caption", ""))}" loading="lazy"></a>'
                            f'<figcaption>{esc(g.get("caption", ""))}</figcaption></figure>' for g in gal)
             see = f"""
 <section id="see" class="band">
@@ -370,7 +379,7 @@ class Project:
 <section id="viewer">
   <div class="wrap">
     <h2>Look at every part in 3D</h2>
-    <p class="sub">Pick a part, then drag to rotate, scroll or pinch to zoom, and right-drag to pan.</p>
+    <p class="sub">Pick a part, then drag to rotate, scroll or pinch to zoom, and right-drag to pan.<span class="build-note" hidden> Showing the parts for <b class="build-name"></b> (<a href="#choose">change</a>).</span></p>
     <div class="viewer">
       <div class="part-list" id="part-buttons" role="tablist" aria-label="Parts"></div>
       <div class="stage">
@@ -386,13 +395,13 @@ class Project:
         for p in parts:
             opt = " <span class='opt'>(optional)</span>" if p["optional"] else ""
             note = f"<br><span class='opt'>{esc(p['note'])}</span>" if p["note"] else ""
-            rows += (f"<tr><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
+            rows += (f"<tr data-when='{esc(json.dumps(p['when']))}' data-file='{esc(p['file'])}'><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
                      f"<td>{esc(p['qty'])}</td><td>{esc(p['material'])}</td>"
                      f"<td><a class='file' href='files/{esc(p['file'])}' download>{esc(p['file'])}</a> "
                      f"<span class='opt'>{fmt_size(p['size'])}</span></td></tr>")
-        dxf_meta = c.get("dxf", {})
+        dxf_meta, dxf_when = c.get("dxf", {}), c.get("dxf_when", {})
         dxf_rows = "".join(
-            f"<tr><td><a class='file' href='files/{esc(os.path.basename(d))}' download>{esc(os.path.basename(d))}</a></td>"
+            f"<tr data-when='{esc(json.dumps(dxf_when.get(os.path.splitext(os.path.basename(d))[0], {})))}' data-file='{esc(os.path.basename(d))}'><td><a class='file' href='files/{esc(os.path.basename(d))}' download>{esc(os.path.basename(d))}</a></td>"
             f"<td>{esc(dxf_meta.get(os.path.splitext(os.path.basename(d))[0], ''))}</td>"
             f"<td><span class='opt'>{fmt_size(os.path.getsize(os.path.join(self.dir, d)))}</span></td></tr>" for d in self.dxfs)
         if self.main_scad:
@@ -404,6 +413,27 @@ class Project:
         else:
             src_card = ""
         docs = self.docs()
+        opts = c.get("build_options", [])
+        builder = ""
+        if opts and parts:
+            groups_html = "".join(
+                f'<div class="b-opt"><span class="b-label">{esc(o["label"])}</span><div class="chips" role="radiogroup" aria-label="{esc(o["label"])}">'
+                + "".join(f'<button class="chip" role="radio" data-opt="{esc(o["id"])}" data-choice="{esc(ch["id"])}" aria-checked="{str(k == 0).lower()}">'
+                          f'<span>{esc(ch["label"])}</span>{chip_note(ch)}</button>'
+                          for k, ch in enumerate(o["choices"]))
+                + '</div></div>' for o in opts)
+            builder = f"""
+    <div class="builder" id="choose">
+      <h3>Choose your build</h3>
+      <p class="sub">Pick the options; the list below and the 3D viewer show only the parts you need.</p>
+      {groups_html}
+      <div class="b-sum">
+        <span class="b-count" id="b-count"></span>
+        <button class="btn" id="b-zip" type="button">Download this build (.zip)</button>
+        <label class="b-all"><input type="checkbox" id="b-all"> Show every part</label>
+      </div>
+      <p class="b-status" id="b-status" aria-live="polite"></p>
+    </div>"""
         download = f"""
 <section id="download" class="band">
   <div class="wrap">
@@ -414,6 +444,7 @@ class Project:
       {src_card}
       {f'<a class="dl-card" href="{gh_blob(self.folder + "/" + docs[0][1])}"><span class="dl-title">Guide</span><span class="dl-meta">{esc(docs[0][0])} (on GitHub)</span></a>' if docs else ''}
     </div>
+    {builder}
     {f'''<h3 class="table-title">Printable parts</h3>
     <div class="table-wrap"><table class="parts">
       <thead><tr><th>Part</th><th>What it is</th><th>Qty</th><th>Material / notes</th><th>File</th></tr></thead>
@@ -439,14 +470,15 @@ class Project:
   </div>
 </section>"""
 
-        data = dict(parts=[dict(file=p["file"], name=p["name"], qty=p["qty"]) for p in parts],
-                    default=c.get("viewer_default"))
+        data = dict(parts=[dict(file=p["file"], name=p["name"], qty=p["qty"], when=p["when"]) for p in parts],
+                    default=c.get("viewer_default"), options=c.get("build_options", []), slug=self.slug)
         scripts = ""
         if parts:
             scripts = ('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n'
                        '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>\n'
                        '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>\n'
-                       f'<script>window.PROJECT = {json.dumps(data)};</script>\n<script src="../app.js"></script>')
+                       + ('<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>\n' if c.get("build_options") else ""))
+        scripts += f'<script>window.PROJECT = {json.dumps(data)};</script>\n<script src="../app.js"></script>'   # viewer, build picker, tabs, gallery
         body = hero + see + viewer + download + adjust_html + extra + docs_html
         return page(f"{self.title}", self.summary[:200], body, "../", nav, cover, scripts)
 

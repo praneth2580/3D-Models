@@ -11,7 +11,7 @@
     {
       "src": "video/lock_demo.mp4",
       "poster": "images/lock_bay_store.png",
-      "title": "How the locks work: store cam lock, printed push-key lock, dial combination lock"
+      "title": "How the locks work"
     }
   ],
   "see_sub": "The video is rendered straight from the CAD: assembly, docking, the contacts, the wiring, the key lock and the over-heat cut-off.",
@@ -78,7 +78,10 @@
       "what": "Back cover: O-ring tongue, cable channel, thermostat pocket",
       "qty": "1",
       "material": "ASA or PETG",
-      "note": "Re-export for your phone"
+      "note": "Re-export for your phone",
+      "when": {
+        "mount": "merged"
+      }
     },
     "window_template": {
       "name": "Window template",
@@ -92,19 +95,28 @@
       "name": "Shoe",
       "what": "Plate on the case's back: dovetail rails, contact nose, lock strike",
       "qty": "1",
-      "material": "ASA or PETG"
+      "material": "ASA or PETG",
+      "when": {
+        "mount": "merged"
+      }
     },
     "dock_base": {
       "name": "Dock base",
       "what": "The dock and base plate in one part, shaped to the case outline with side walls: rail channels, pogo-pin pocket, dock-board pocket, printed snap, clamp slots, lock pod (hidden behind the case). Clamp spacing 132–154 mm",
       "qty": "1",
-      "material": "ASA or PETG, on the lock pod's bottom face with supports under the floor"
+      "material": "ASA or PETG, on the lock pod's bottom face with supports under the floor",
+      "when": {
+        "mount": "merged"
+      }
     },
     "iso_pad": {
       "name": "Rubber pad",
       "what": "Sits between each clamp pad and the dock base; cut from 2 mm neoprene using it as a template, or print it",
       "qty": "2",
-      "material": "TPU 95A, or 2 mm neoprene/EPDM sheet"
+      "material": "TPU 95A, or 2 mm neoprene/EPDM sheet",
+      "when": {
+        "mount": "merged"
+      }
     },
     "dock_lid": {
       "name": "Dock lid",
@@ -117,21 +129,30 @@
       "what": "Modular option (mount = \"modular\"): the dock on its own, on 4 grommets on the base plate. Use with the modular shoe and back cover",
       "qty": "1",
       "material": "ASA or PETG, printed back face down",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "modular"
+      }
     },
     "base_plate": {
       "name": "Base plate (modular option)",
       "what": "Modular option: joins the clamps to the dock through rubber grommets; a smart base can replace it later. Clamp spacing 110–154 mm",
       "qty": "1",
       "material": "ASA or PETG (or cut from base_plate.dxf)",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "modular"
+      }
     },
     "shoe_modular": {
       "name": "Shoe (modular option)",
       "what": "The shoe for the modular dock: its strike block is 7 mm higher, to match that dock's lock pod",
       "qty": "1",
       "material": "ASA or PETG",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "modular"
+      }
     },
     "case_back_modular": {
       "name": "Case back (modular option)",
@@ -139,14 +160,20 @@
       "qty": "1",
       "material": "ASA or PETG",
       "note": "Re-export for your phone",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "modular"
+      }
     },
     "strike_keeper_modular": {
       "name": "Steel keeper (modular option)",
       "what": "Optional steel strike for the modular shoe (steel_keeper = true)",
       "qty": "1",
       "material": "6 mm steel plate",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "modular"
+      }
     },
     "clamp_body": {
       "name": "Clamp body",
@@ -181,13 +208,19 @@
       "name": "Lock yoke",
       "what": "Carries the steel bolt; driven by the lock's cam",
       "qty": "1",
-      "material": "PA12 best, or PETG"
+      "material": "PA12 best, or PETG",
+      "when": {
+        "lock": "store"
+      }
     },
     "lock_cartridge": {
       "name": "Lock cartridge",
       "what": "Holds the 16 mm store lock: slides up into the dock's lock bay, its face plate flush in the side wall. The lock's nut clamps its face plate",
       "qty": "1",
-      "material": "ASA or PETG, 100 % infill, standing on its bottom"
+      "material": "ASA or PETG, 100 % infill, standing on its bottom",
+      "when": {
+        "lock": "store"
+      }
     },
     "lock_cover": {
       "name": "Lock cover",
@@ -199,161 +232,230 @@
       "name": "Crank template",
       "what": "Drilling guide for the crank-pin hole in the lock's cam",
       "qty": "1",
-      "material": "Any"
+      "material": "Any",
+      "when": {
+        "lock": "store"
+      }
     },
     "strike_keeper": {
       "name": "Steel keeper",
       "what": "Optional steel strike; cut it from strike_keeper_2d.dxf (set steel_keeper = true)",
       "qty": "1",
       "material": "6 mm steel plate",
-      "optional": true
+      "optional": true,
+      "when": {
+        "mount": "merged"
+      }
     },
     "plock_cartridge": {
       "name": "Printed lock: cartridge",
       "what": "Use it instead of lock_cartridge if you print the lock: the key slot, the shuttle's channel and the wafer groove. It fits the standard dock",
       "qty": "1",
       "material": "ASA or PETG, 100 % infill, standing on its bottom",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_shuttle": {
       "name": "Printed lock: shuttle",
       "what": "Slides 7 mm when the key is pushed; carries the 4 wafers and the track that lowers the bolt",
       "qty": "1",
       "material": "PETG or ASA, 100 % infill, standing on its bottom",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_lifter": {
       "name": "Printed lock: lifter",
       "what": "Carries the steel bolt (replaces lock_yoke); its pin runs in the shuttle's track",
       "qty": "1",
       "material": "PA12 or PETG, 100 % infill, standing on its bottom",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_wafer_1": {
       "name": "Printed lock: wafer 1",
       "what": "Front wafer. The 4 wafers differ (their windows set the key code): print your own from lock_code",
       "qty": "1",
       "material": "PETG, flat, 0.15 mm layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_wafer_2": {
       "name": "Printed lock: wafer 2",
       "what": "",
       "qty": "1",
       "material": "PETG, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_wafer_3": {
       "name": "Printed lock: wafer 3",
       "what": "",
       "qty": "1",
       "material": "PETG, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_wafer_4": {
       "name": "Printed lock: wafer 4",
       "what": "Rear wafer",
       "qty": "1",
       "material": "PETG, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "plock_wafers": {
       "name": "Printed lock: all 4 wafers",
       "what": "The 4 wafers on one plate, in order",
       "qty": "1 set",
       "material": "PETG, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     },
     "dl_cartridge": {
       "name": "Dial lock (demo): cartridge",
       "what": "Holds the wheels on its fixed tube, the fence, button and lifter; use it instead of lock_cartridge",
       "qty": "1",
       "material": "PETG or ASA, standing on its bottom",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_wheel_1": {
       "name": "Dial lock (demo): wheel 1",
       "what": "One wheel per digit; its notch sets the digit (example code here, print your own). Wheel 1 is next to the dial",
       "qty": "1",
       "material": "PETG, flat, 100 % infill, fine layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_wheel_2": {
       "name": "Dial lock (demo): wheel 2",
       "what": "",
       "qty": "1",
       "material": "PETG, flat, 100 % infill, fine layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_wheel_3": {
       "name": "Dial lock (demo): wheel 3",
       "what": "",
       "qty": "1",
       "material": "PETG, flat, 100 % infill, fine layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_wheel_4": {
       "name": "Dial lock (demo): wheel 4",
       "what": "",
       "qty": "1",
       "material": "PETG, flat, 100 % infill, fine layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_wheels": {
       "name": "Dial lock (demo): all wheels",
       "what": "The wheels on one plate",
       "qty": "1 set",
       "material": "PETG, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_spindle": {
       "name": "Dial lock (demo): spindle",
       "what": "Turns with the dial; its drive cam picks up the wheels",
       "qty": "1",
       "material": "PETG or PA12, 100 % infill, on its side",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_dial": {
       "name": "Dial lock (demo): dial",
       "what": "Numbered 0-9; pressed on the spindle",
       "qty": "1",
       "material": "PETG or ASA, face down, fine layers",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_fence": {
       "name": "Dial lock (demo): fence",
       "what": "Rises into the wheels' notches at the right code; its printed springy latch arm holds the button in",
       "qty": "1",
       "material": "PETG, 100 % infill",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_hammer": {
       "name": "Dial lock (demo): reset hammer",
       "what": "Lifted by a hump in the button's groove; presses the front wheel's heart cam to clear the code",
       "qty": "1",
       "material": "PETG, 100 % infill, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_plunger": {
       "name": "Dial lock (demo): button",
       "what": "Push button: its ramp lifts the bolt, its notch takes the latch",
       "qty": "1",
       "material": "PETG, 100 % infill",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "dl_lifter": {
       "name": "Dial lock (demo): lifter",
       "what": "Carries the steel bolt (replaces lock_yoke); its pin rides on the button's ramp",
       "qty": "1",
       "material": "PETG or PA12, 100 % infill",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "dial"
+      }
     },
     "plock_key": {
       "name": "Printed lock: key",
       "what": "Chunky 6 x 10 mm key with rounded fillets at the bow, pushed straight in (cut to lock_code: the example code here, make your own)",
       "qty": "1+",
       "material": "PETG (or PC / PA), 100 % infill, flat",
-      "optional": true
+      "optional": true,
+      "when": {
+        "lock": "printed"
+      }
     }
   },
   "dxf": {
@@ -409,5 +511,56 @@
       "label": "License (CC BY-NC-SA 4.0)",
       "file": "LICENSE.md"
     }
-  ]
+  ],
+  "build_options": [
+    {
+      "id": "mount",
+      "label": "Mount",
+      "choices": [
+        {
+          "id": "merged",
+          "label": "One-piece base",
+          "note": "the main build"
+        },
+        {
+          "id": "modular",
+          "label": "Modular",
+          "note": "base plate on grommets"
+        }
+      ]
+    },
+    {
+      "id": "lock",
+      "label": "Lock",
+      "choices": [
+        {
+          "id": "store",
+          "label": "Store cam lock",
+          "note": "bought, most secure"
+        },
+        {
+          "id": "printed",
+          "label": "Printed push-key",
+          "note": "your own key code"
+        },
+        {
+          "id": "dial",
+          "label": "Dial combination",
+          "note": "demo, no key"
+        }
+      ]
+    }
+  ],
+  "dxf_when": {
+    "base_plate": {
+      "mount": "modular"
+    },
+    "strike_keeper_2d": {
+      "mount": "merged"
+    },
+    "strike_keeper_2d_modular": {
+      "mount": "modular"
+    }
+  },
+  "video_title": "The whole dock"
 }

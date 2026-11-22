@@ -38,7 +38,10 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 | `order` | Position on the index (lower comes first; default 100) |
 | `cover` | Card and hero image, as a path in the project |
 | `video`, `poster` | An `.mp4` and its poster image |
-| `videos` | More videos after the main one: `[{"src": "video/x.mp4", "poster": "images/x.png", "title": "..."}]` |
+| `videos` | More videos after the main one, shown as tabs: `[{"src": "video/x.mp4", "poster": "images/x.png", "title": "..."}]`. `video_title` names the main video's tab |
+| `build_options` | A "Choose your build" picker in the download section: `[{"id": "lock", "label": "Lock", "choices": [{"id": "store", "label": "Store lock", "note": "..."}]}]`. The first choice is the default. The parts list, the 3D viewer and a "Download this build (.zip)" button (made in the browser) follow the choice |
+| `parts.<stem>.when` | Which builds need the part: `{"lock": "store"}` or `{"lock": ["store", "dial"]}`. Parts without it are in every build |
+| `dxf_when` | The same for DXF files: `{"<stem>": {"mount": "modular"}}` |
 | `see_title`, `see_sub` | Heading and text of the pictures section |
 | `gallery` | `[{"src": "images/x.png", "caption": "..."}]` |
 | `viewer_default` | The STL shown first, without `.stl` |
