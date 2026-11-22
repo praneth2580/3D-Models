@@ -422,6 +422,36 @@ Update 20 (2026-11-22): **lock video** (owner: "show me a video of how specifica
 - `keypad_lock.scad`: `kp_knob_a`, `kp_knob_press` and `kp_vis_alpha` (pictures and animation only).
 - **Website:** `site/build.py` takes an optional `videos` list in `project.json` (more videos, each with a title, after the main one; documented in `site/README.md`). The phone dock page now shows the lock video under the main one.
 
+Update 21 (2026-11-22): **the dial-code lock is now mechanical: a single-dial combination lock, like a safe** (owner: "I don't want it to be electronic, rather mechanical"; a 3-thumbwheel version was drafted first, then "I instead want a single dial lock... a dial that has all numbers, and it types all the digits, 4-6"). The electronic demo of Update 19 is removed (`keypad_lock.scad`, `keypad_lock/`, `KEYPAD_LOCK.md`, `kp_*` images), and so is the lock cover's cable hole (`lock_cover` is back to 2.00 cm³).
+- **Design (`dial_lock.scad`, new; `lock_type = "dial"`):**
+  - A dial numbered 0-9 (15 mm) on a 3 mm spindle, through a fixed tube (part of the cartridge) in the face plate. Behind the wheels sits a drive cam (r 6) on the spindle.
+  - One wheel per digit (r 7.5, 2 mm thick, 0.6 mm apart) on the tube. `dial_code` sets the length (4 to 6) and the digits.
+  - Flies: 1.4 mm pins at r 5 on the wheels' faces and the cam pick each wheel up after nearly a turn (lost motion 360° − 2 × 16.1°).
+  - A V notch in each rim. Its angle on the wheel comes from the pickup kinematics: `dl_gate_a(i) = 36·digit − dir·(chain place)·dl_delta`, with dl_delta = 2·asin(0.7/5) = 16.1°.
+  - A fence bar under the wheels, pushed up by a 3 mm spring, rises 1.5 mm into the notches when all are at the bottom. Its front tooth leaves the notch in the button bar's stem.
+  - The button bar (12 mm stroke, spring out) has a 40° ramp that lifts the lifter's 3 mm pin 7 mm. Locked, the pin sits on the flat (no back-drive).
+  - Lock: hold the button in and spin the dial a turn. A wheel moves, its V side pushes the fence down, and the tooth drops into the notch.
+  - Index mark: an engraved triangle at the dial's 9 o'clock.
+- **Main file:** `lock_cartridge()` picks `dl_cuts()` and adds `dl_fingers()` (here the fixed tube); `lock_mechanism()` draws `dl_placed()`; `yoke_dz()` follows the ramp; the `lock_type` assert takes "dial"; `PART` takes `dl_*`.
+- **Fixed on the way:**
+  - The rear button-spring tab was 0.1 mm into the fence spring (assert).
+  - The pin vs wheels assert was too strict for 4-5 wheels (now: the pin is behind the wheels, or clear below them).
+  - The tube touched the face plate only at a face: 2 bodies. It now runs 1 mm into the plate.
+  - CGAL manifold warning: the wheel cavity's top edge met the face plate's top edge exactly. The cavity now stops 0.3 mm short of the plate; found by switching each cut off in turn.
+  - That exposed the front wheel's front fly (0.52 mm³): the front wheel has nothing in front to pick up, so it has none. The spindle's bore now starts 0.6 mm inside the cavity.
+  - The dial's grip ribs were tangent (32 bad edges); they now overlap the rim.
+- **Asserts (new):** 4-6 digits; cam clear of the lifter (6 wheels fit with 0.6 mm); wheels inside the cartridge; index mark on the plate; the latch arm clears the stem; the rise frees the latch and fits the notches; the tab and the flat clear the tooth; the fence spring clears the lifter and the tab; the pin rests above the cover; notches don't cut the flies. All pass for 4, 5 and 6 digits, both mounts, and with the store and printed locks.
+- **Exported** to `dial_lock/` (watertight, one body each; `dl_wheels` 4 on purpose): `dl_cartridge` 6.96 cm³, `dl_wheel_1`…`4` 0.31 each, `dl_spindle` 0.42, `dl_dial` 1.03, `dl_fence` 0.06, `dl_plunger` 0.64, `dl_lifter` 1.49.
+- **Checks** (4 states: locked; code set; half out; out):
+  - parts vs cartridge: no overlap (4 and 6 digits, both mounts); parts, dial and bolt vs dock: no overlap;
+  - parts vs each other: touch only; vs cover: no overlap;
+  - **must collide:** fence pushed up 0.5 mm with the wheels scrambled 2.76 mm³ (4 wheels) / 4.14 mm³ (6); button pushed out 0.5 mm while latched 0.54 mm³; bolt pushed down 0.5 mm when locked 2.64 mm³;
+  - cartridge on its way in: no overlap; pulled out 0.5 mm: 63.72 mm³.
+- **Dialling, simulated:** `video/make_lock_video.py` models the chain (each part sits between +16.1° and +343.9° of the one driving it), dials the code right, left, right, left with the shortest turns that set each wheel, and asserts every notch ends within 0.5° of the bottom. For [3, 7, 1, 9] the wheels end at 187.6, 156.3, 291.8 and 52.1°, against notches at 172.4, 203.7, 68.2 and 307.9° (each pair sums to 360). A spin of the dial afterwards moves the rear wheel 164° off and the fence goes down.
+- **Images:** `dl_side.png` (the dial and the button on the pod), `dl_exploded.png`.
+- **Lock video:** the third part is the dial lock (see `video/README.md`); about 49 s in all.
+- **Not checked:** the springs' real forces, friction of the wheels on the tube, how sharply the latch lets go, the small flies in print, rain.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders

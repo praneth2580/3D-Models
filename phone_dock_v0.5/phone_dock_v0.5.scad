@@ -837,6 +837,7 @@ module store_lock_cuts() {
 // whichever lock lock_type picks: the store lock is bolted through its face plate, the printed lock runs in it.
 // It goes in from below with the lock already in it; the lock cover holds it up and is screwed into it.
 module lock_cartridge() {
+  if (lock_type == "dial") dl_fingers();         // the fixed tube the wheels turn on
   difference() {
     union() {
       translate([bay_x0 + cart_clear, bay_y0 + cart_clear, cart_z0])
@@ -845,7 +846,7 @@ module lock_cartridge() {
         cube([lock_face_x - lock_panel_inner_x + 0.01, 2*(notch_hw - cart_clear), notch_top_z - cart_clear - cart_z0]);
     }
     if (lock_type == "printed") plk_pod_cuts();   // shuttle channel, lifter pocket, tab groove, keyhole
-    else if (lock_type == "keypad") kp_cuts();    // servo, horn, lifter, encoder and board (demo)
+    else if (lock_type == "dial") dl_cuts();      // button, lifter, wheel pack, fence and springs
     else store_lock_cuts();
     lock_arm_pocket();
     translate([cart_screw[0], cart_screw[1], cart_z0 - 0.05]) cylinder(d=2.5, h=cart_screw_l + 0.05);
@@ -872,13 +873,12 @@ module lock_cover() {
     // that gets in at the keyhole).
     translate([bolt_x - 1.5, bolt_y - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
     translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
-    // The keypad lock's 5 V cable comes out here; under the other locks it is one more drain.
-    translate([kp_cable[0], kp_cable[1], pod_bottom_z - 0.05]) cylinder(d=3.0, h=lock_cover_t + 0.1, $fn=16);
   }
 }
 
 // Yoke + arm, printed in PA12 (or machined aluminium). turn: 0 = unlocked, 1 = locked.
-function yoke_dz(turn) = lock_type == "printed" ? plk_dz(turn) : crank_r*(sin(90*turn) - 1);   // bolt drop from locked
+function yoke_dz(turn) = lock_type == "printed" ? plk_dz(turn)                                   // bolt drop from locked
+                       : lock_type == "dial" ? dl_lift_at(dl_stroke*(1 - turn)) - dl_lift : crank_r*(sin(90*turn) - 1);
 module lock_yoke(turn=1) {
   translate([0, 0, yoke_dz(turn)]) difference() {
     union() {
@@ -945,7 +945,7 @@ module crank_placed(turn=1) {
 
 module lock_mechanism(turn=1) {
   if (lock_type == "printed") plk_placed(turn);   // shuttle, wafers, key and lifter
-  else if (lock_type == "keypad") kp_placed(turn);   // servo, horn, lifter, encoder, knob (demo)
+  else if (lock_type == "dial") dl_placed(turn);     // dial, wheels, fence, button and lifter
   else { color([0.75,0.75,0.78]) crank_placed(turn); color([0.55,0.58,0.62]) lock_yoke(turn); }
   lock_bolt(turn);
 }
@@ -1201,8 +1201,8 @@ module assembly() {
 }
 
 include <printed_lock.scad>
-include <keypad_lock.scad>
-assert(lock_type == "store" || lock_type == "printed" || lock_type == "keypad", "lock_type must be \"store\", \"printed\" or \"keypad\".");
+include <dial_lock.scad>
+assert(lock_type == "store" || lock_type == "printed" || lock_type == "dial", "lock_type must be \"store\", \"printed\" or \"dial\".");
 
 // ------------------------- PART SELECTOR -----------------------------
 if (PART == "assembly") assembly();
@@ -1236,5 +1236,5 @@ else if (PART == "lock_cartridge") translate([0, 0, -cart_z0]) lock_cartridge();
 else if (PART == "strike_keeper") strike_keeper();
 else if (PART == "strike_keeper_2d") translate([-strike_x0, -strike_y0]) strike_keeper_2d();   // laser template, corner at the origin
 else if (plk_is_part(PART)) plk_part(PART);
-else if (kp_is_part(PART)) kp_part(PART);
+else if (dl_is_part(PART)) dl_part(PART);
 else if (PART != "none") echo("Unknown PART.");

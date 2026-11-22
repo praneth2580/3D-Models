@@ -11,7 +11,7 @@
     {
       "src": "video/lock_demo.mp4",
       "poster": "images/lock_bay_store.png",
-      "title": "How the locks work: store cam lock, printed push-key lock, dial-code demo"
+      "title": "How the locks work: store cam lock, printed push-key lock, dial combination lock"
     }
   ],
   "see_sub": "The video is rendered straight from the CAD: assembly, docking, the contacts, the wiring, the key lock and the over-heat cut-off.",
@@ -53,12 +53,12 @@
       "caption": "The printed lock's cartridge fits the same bay"
     },
     {
-      "src": "images/kp_exploded.png",
-      "caption": "Demo: a dial-code lock cartridge. A rotary knob, an ATtiny85 and a micro servo move the same bolt"
+      "src": "images/dl_side.png",
+      "caption": "Demo: a mechanical dial lock, numbered 0-9, with a 4-6 digit code. Dial it to unlock; press the button and spin to lock"
     },
     {
-      "src": "images/kp_side.png",
-      "caption": "Demo: turn the knob like a safe dial to unlock, press it to lock"
+      "src": "images/dl_exploded.png",
+      "caption": "The dial lock's cartridge: a notched wheel per digit, the fence and latch, the spring button with its ramp, the lifter"
     }
   ],
   "viewer_default": "dock_base",
@@ -264,32 +264,81 @@
       "material": "PETG, flat",
       "optional": true
     },
-    "kp_cartridge": {
-      "name": "Dial-code lock (demo): cartridge",
-      "what": "Demo: holds the servo, the rotary encoder and the board; use it instead of lock_cartridge",
+    "dl_cartridge": {
+      "name": "Dial lock (demo): cartridge",
+      "what": "Holds the wheels on its fixed tube, the fence, button and lifter; use it instead of lock_cartridge",
       "qty": "1",
       "material": "PETG or ASA, standing on its bottom",
       "optional": true
     },
-    "kp_lifter": {
-      "name": "Dial-code lock (demo): lifter",
-      "what": "Carries the steel bolt (replaces lock_yoke); the servo horn's pin runs in its slot",
+    "dl_wheel_1": {
+      "name": "Dial lock (demo): wheel 1",
+      "what": "One wheel per digit; its notch sets the digit (example code here, print your own). Wheel 1 is next to the dial",
+      "qty": "1",
+      "material": "PETG, flat, 100 % infill, fine layers",
+      "optional": true
+    },
+    "dl_wheel_2": {
+      "name": "Dial lock (demo): wheel 2",
+      "what": "",
+      "qty": "1",
+      "material": "PETG, flat, 100 % infill, fine layers",
+      "optional": true
+    },
+    "dl_wheel_3": {
+      "name": "Dial lock (demo): wheel 3",
+      "what": "",
+      "qty": "1",
+      "material": "PETG, flat, 100 % infill, fine layers",
+      "optional": true
+    },
+    "dl_wheel_4": {
+      "name": "Dial lock (demo): wheel 4",
+      "what": "",
+      "qty": "1",
+      "material": "PETG, flat, 100 % infill, fine layers",
+      "optional": true
+    },
+    "dl_wheels": {
+      "name": "Dial lock (demo): all wheels",
+      "what": "The wheels on one plate",
+      "qty": "1 set",
+      "material": "PETG, flat",
+      "optional": true
+    },
+    "dl_spindle": {
+      "name": "Dial lock (demo): spindle",
+      "what": "Turns with the dial; its drive cam picks up the wheels",
+      "qty": "1",
+      "material": "PETG or PA12, 100 % infill, on its side",
+      "optional": true
+    },
+    "dl_dial": {
+      "name": "Dial lock (demo): dial",
+      "what": "Numbered 0-9; pressed on the spindle",
+      "qty": "1",
+      "material": "PETG or ASA, face down, fine layers",
+      "optional": true
+    },
+    "dl_fence": {
+      "name": "Dial lock (demo): fence",
+      "what": "Rises into the wheels' notches at the right code; its tooth latches the button",
+      "qty": "1",
+      "material": "PETG, 100 % infill",
+      "optional": true
+    },
+    "dl_plunger": {
+      "name": "Dial lock (demo): button",
+      "what": "Push button: its ramp lifts the bolt, its notch takes the latch",
+      "qty": "1",
+      "material": "PETG, 100 % infill",
+      "optional": true
+    },
+    "dl_lifter": {
+      "name": "Dial lock (demo): lifter",
+      "what": "Carries the steel bolt (replaces lock_yoke); its pin rides on the button's ramp",
       "qty": "1",
       "material": "PETG or PA12, 100 % infill",
-      "optional": true
-    },
-    "kp_horn": {
-      "name": "Dial-code lock (demo): horn",
-      "what": "Servo horn with the crank pin hole at 7 mm",
-      "qty": "1",
-      "material": "PETG, 100 % infill, flat",
-      "optional": true
-    },
-    "kp_knob": {
-      "name": "Dial-code lock (demo): knob",
-      "what": "Knob for the EC11 encoder's 6 mm D shaft",
-      "qty": "1",
-      "material": "PETG or ASA, top face down",
       "optional": true
     },
     "plock_key": {
@@ -334,8 +383,8 @@
       "file": "PRINTED_LOCK.md"
     },
     {
-      "label": "Dial-code lock (demo)",
-      "file": "KEYPAD_LOCK.md"
+      "label": "Dial combination lock (demo)",
+      "file": "DIAL_LOCK.md"
     },
     {
       "label": "Shopping list with links and prices (India)",

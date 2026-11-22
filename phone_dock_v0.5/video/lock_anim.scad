@@ -2,13 +2,13 @@
   Lock video scene: how the three locks move the steel bolt. Uses the real parts from phone_dock_v0.5.scad
   (lock_type is set per frame). The dock, cartridge, cover and shoe are drawn see-through; the moving lock
   parts and the bolt solid. Set per frame by make_lock_video.py (-D L_xxx=...).
-  Visual only: the store lock's body and key, the keypad lock's servo and knob.
+  Visual only: the store lock's body and key.
 */
 include <../phone_dock_v0.5.scad>
 PART = "none";
 $fn = 40;
 
-L_turn     = 1;     // store / keypad: 1 = locked, 0 = unlocked
+L_turn     = 1;     // store lock: 1 = locked, 0 = unlocked
 L_key_out  = 0;     // store key / printed key: how far out of the lock, mm (0 = fully in)
 L_key_rot  = 0;     // store key: turned, degrees
 L_shift    = 0;     // printed lock: shuttle pushed in, mm (0 = locked, plk_S = unlocked)
@@ -16,6 +16,11 @@ L_wafer    = 0;     // printed lock: wafer height (−plk_drop = dropped, 0 = le
 L_show_key = 1;
 L_ghost    = 0.16;  // see-through alpha of the dock, cartridge, cover and shoe
 L_case_dy  = 0;     // the case (shoe) slid up the rails, mm
+L_dl_s     = 0;     // dial lock: button out, mm (0 = pushed in, locked; dl_stroke = out)
+L_dl_rot   = 0;     // dial lock: dial (and drive cam) turned, degrees
+L_dl_w     = [0, 0, 0, 0, 0, 0];   // dial lock: each wheel's turn, degrees (front first)
+L_dl_f     = 0;     // dial lock: fence raised, mm
+L_dl_cut   = 0;     // dial lock close-up: 1 = the wheels' near halves cut away, the button see-through
 
 GHOST = [0.55, 0.62, 0.72, L_ghost];
 BOLT = [1.0, 0.82, 0.1];
@@ -61,15 +66,23 @@ module scene() {
     }
     color([0.45, 0.75, 0.95]) plk_lifter(t);
     bolt_at(plk_dz_s(L_shift));
-  } else {
-    color([0.45, 0.75, 0.95]) kp_lifter(L_turn);
-    color([0.9, 0.9, 0.92]) kp_horn(L_turn);
-    bolt_at(yoke_dz(L_turn));
-    // The servo (see-through, so the horn shows behind it), the encoder's shaft and the knob.
-    color([0.15, 0.3, 0.75, 0.45]) translate([kp_srv_x0, kp_srv_y0, kp_zs - kp_srv_w/2]) cube([kp_srv_h, kp_srv_l, kp_srv_w]);
-    color([0.75, 0.75, 0.78]) translate([lock_panel_inner_x - 3, kp_enc_y, kp_enc_z]) rotate([0, 90, 0]) cylinder(d=kp_enc_shaft_d, h=lock_panel_t + kp_knob_gap + 10, $fn=24);
-    color([0.18, 0.18, 0.2]) translate([lock_face_x + kp_knob_gap - kp_knob_press, kp_enc_y, kp_enc_z]) rotate([kp_knob_a, 0, 0]) rotate([0, 90, 0]) kp_knob();
+  } else {                                  // dial lock
+    color([0.45, 0.75, 0.95]) dl_lifter(L_dl_s);
+    color([0.75, 0.75, 0.78]) dl_fence(L_dl_f);
+    color([0.8, 0.8, 0.84]) dl_spindle(L_dl_rot);
+    for (i = [0:dl_n - 1]) color([0.95, 0.8, 0.3])
+      if (L_dl_cut > 0) intersection() { dl_wheel_placed(i, L_dl_w[i]); translate([0, dl_y, -100]) cube([200, 100, 200]); }   // keep the far half
+      else dl_wheel_placed(i, L_dl_w[i]);
+    color([0.15, 0.15, 0.17]) dl_dial_placed(L_dl_rot);
+    bolt_at(dl_lift_at(L_dl_s) - dl_lift);
+    color([0.85, 0.55, 0.15, L_dl_cut > 0 ? 0.45 : 1]) dl_plunger(L_dl_s);
   }
   ghosts();                                 // last, so the see-through parts blend over the solid ones
 }
 scene();
+
+// Label anchors for make_lock_video.py (dock frame): wheel, notch (at the bottom), fence, latch tooth, drive cam, dial.
+echo(dl_label_points = [[dl_wx(1) + dl_wt/2, dl_y + 0.5, dl_zd + dl_R - 0.5], [dl_wx(0) + dl_wt/2, dl_y + 0.5, dl_zd - dl_R + 1],
+                        [dl_wx(dl_n - 1), dl_y, dl_ftop - 1.2], [dl_tooth_x[0] + 0.5, dl_tooth_y[0], dl_stem_top - 0.5],
+                        [dl_cam_x[0] + 1, dl_y + 2, dl_zd + dl_cam[0] - 1], [lock_face_x + 0.6 + dl_knob[1], dl_y, dl_zd + dl_knob[0]/2 - 1]]);
+echo(dl_focus = [dl_cam_x[0] + 6, lock_y - 1, dl_zd - 4]);

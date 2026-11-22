@@ -7,7 +7,7 @@
 
 > **One design, about ₹3,650–5,600 in Mumbai** ([`SHOPPING_LIST_INDIA.md`](SHOPPING_LIST_INDIA.md)). The only choice is how you build the dock's electronics: **hand-wired on perfboard**, or on a **small ordered PCB** (same circuit and parts, about ₹700–2,300 more). Everything printed is the same either way; see [`WIRING.md`](WIRING.md).
 >
-> Videos: `video/mechanism_demo.mp4` (the whole dock) and `video/lock_demo.mp4` (how each of the three locks works).
+> Videos: `video/mechanism_demo.mp4` (the whole dock) and `video/lock_demo.mp4` (how each of the three locks works: store, printed, dial).
 >
 > **Website:** https://praneth2580.github.io/3D-Models/phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
 
@@ -183,7 +183,7 @@ To make the window removable instead of bonded, you would need a screwed front f
 
   ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
 - **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a chunky 6 × 10 mm printed key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
-- **Or try the dial-code demo:** [`KEYPAD_LOCK.md`](KEYPAD_LOCK.md) has a demo electronic lock in a third cartridge (`lock_type = "keypad"`): turn the knob like a safe dial to unlock, press it to lock. An ATtiny85 and a micro servo move the same steel bolt. It needs the bike's 5 V to open and isn't weatherproofed: a concept to try, not for everyday use.
+- **Or a dial combination lock (demo):** [`DIAL_LOCK.md`](DIAL_LOCK.md) has a fully mechanical safe-style lock in a third cartridge (`lock_type = "dial"`): one dial numbered 0–9 and a 4–6 digit code. Dial the code and the button pops out and the bolt drops. Press the button and spin the dial to lock. No key, no power; 3 small springs. A concept, checked in CAD only.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**

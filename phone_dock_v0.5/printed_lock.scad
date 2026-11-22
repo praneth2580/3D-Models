@@ -28,9 +28,9 @@
 */
 
 // ------------------------- SETTINGS ---------------------------------
-lock_type = "store";        // "store" = bought 16 mm cam lock (default); "printed" = this lock; "keypad" = the dial
-                            // demo (keypad_lock.scad). Picks the lock
-                            // cartridge; the dock (receiver / dock_base) and the lock cover are the same for both.
+lock_type = "store";        // "store" = bought 16 mm cam lock (default); "printed" = this lock; "dial" = the dial
+                            // combination lock (dial_lock.scad). Picks the lock
+                            // cartridge; the dock (receiver / dock_base) and the lock cover are the same for all.
 lock_code = [2, 0, 1, 2];   // CHANGE THIS before printing: one digit 0-2 per wafer, front (keyhole end) to back.
                             // Digit = cut depth in plk_step steps. Avoid all-equal codes like [1,1,1,1].
 plk_step = 1.0;             // depth step between digits. 1 mm: forgiving to print, a wrong cut still blocks by 0.75 mm

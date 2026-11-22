@@ -77,9 +77,9 @@ Only if you print `modular/base_plate` + `modular/receiver` instead of `dock_bas
 
 You get 5 of each board, so spares or a second set cost nothing more.
 
-## Demo: dial-code lock
+## Demo: dial combination lock
 
-The dial-code demo ([`KEYPAD_LOCK.md`](KEYPAD_LOCK.md)) has its own parts list there: about ₹360–830 (est.) instead of the ₹270 cam lock.
+The mechanical dial lock ([`DIAL_LOCK.md`](DIAL_LOCK.md)) needs only 3 small compression springs (one assortment kit, about ₹100–250 est.) and about 12 cm³ of printing: roughly ₹150–350 instead of the ₹270 cam lock.
 
 ## Optional: printed lock instead of the cam lock
 
