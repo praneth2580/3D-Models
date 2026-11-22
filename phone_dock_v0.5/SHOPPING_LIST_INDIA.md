@@ -25,7 +25,7 @@ The case, the dock, the printed parts and the components are identical. Only the
 
 | Part | Where | Price |
 |---|---|---|
-| **3D printing**, about 340 cm³ of parts, roughly 280–320 g as printed. PETG or ASA; clamps 100 % infill, the rest 4 walls and 30–40 % infill. Skip `bar_shim` (see below) | A Mumbai FDM service at about ₹5–6/g: [Robu (EasyMech)](https://robu.in/?p=901845), [Zbotic](https://zbotic.in/3d-printing-service/), [iamRapid](https://iamrapid.com/3d-printing-services/), [Makenica (Mumbai)](https://makenica.com/3d-printing-services-in-mumbai). Upload the STLs for an exact price | ₹1,500–2,000 |
+| **3D printing**, about 350 cm³ of parts (including the 7 cm³ lock cartridge), roughly 290–330 g as printed. PETG or ASA; clamps 100 % infill, the rest 4 walls and 30–40 % infill. Skip `bar_shim` (see below) | A Mumbai FDM service at about ₹5–6/g: [Robu (EasyMech)](https://robu.in/?p=901845), [Zbotic](https://zbotic.in/3d-printing-service/), [iamRapid](https://iamrapid.com/3d-printing-services/), [Makenica (Mumbai)](https://makenica.com/3d-printing-services-in-mumbai). Upload the STLs for an exact price | ₹1,500–2,000 |
 | AO3401A P-MOSFET × 2 (1 spare) | [Robu](https://robu.in/?s=AO3401&post_type=product), ₹4.47 each | ₹9 |
 | 2N7002 MOSFET × 2 | [Robu](https://robu.in/?s=2N7000&post_type=product), ₹2.80 each | ₹6 |
 | USBLC6-2SC6 USB ESD (ST) × 1 | [Robu](https://robu.in/?s=USBLC6&post_type=product), ₹20 | ₹20 |
@@ -83,7 +83,7 @@ If you print the lock ([`PRINTED_LOCK.md`](PRINTED_LOCK.md)), leave out the ₹2
 
 | Item | Where | Price |
 |---|---|---|
-| Printing the lock parts: shuttle, 4 wafers, key, lifter, cover (about 9 cm³, 12 g). They replace `lock_yoke` and `lock_cover`, and you print the printed-lock version of the dock (`receiver_plock` or `dock_base_plock`) instead of the standard one, at the same size | Add them to the main print order | ₹60–120 (est.) |
+| Printing the lock parts: shuttle, 4 wafers, key, lifter (about 7 cm³, 9 g). The lifter replaces `lock_yoke`, and `plock_cartridge` replaces `lock_cartridge` at the same size. The dock and the lock cover are the standard ones | Add them to the main print order | ₹50–100 (est.) |
 | 4 small compression springs: 3 mm OD, 0.3 mm wire, about 8 mm long, **9 coils or fewer** (stainless) | A spring assortment kit (Amazon.in, "mini compression spring assortment"), or Lamington Road | ₹100–300 (est.) |
 
 The total is a little under the store lock. Choose it for your own key code, no drilling and a key you can reprint, not to save money.

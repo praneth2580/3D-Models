@@ -334,6 +334,7 @@ module dock_in_plate_frame() {
       color(xr([0.38,0.42,0.46])) dock_receiver();
       color(xr([0.30,0.30,0.30])) dock_lid();
       color(xr([0.30,0.30,0.30])) lock_cover();
+      color(xr([0.34,0.34,0.37])) lock_cartridge();
       lock_body_visual();
       if (A_section != "x") spring_pins(A_case_dy);
       translate([0, A_case_dy, A_explode*1.4]) case_assembly_visual();

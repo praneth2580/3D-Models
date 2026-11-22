@@ -7,11 +7,13 @@
   springs. The steel bolt and the strike are unchanged (they carry the load).
 
   How it works:
-    - SHUTTLE: a printed block in a channel in the lock pod, behind a slot (the keyhole) in the side wall.
-      Pushing the key in pushes the shuttle 7 mm into the pod; pulling the key back brings it out again.
+    - CARTRIDGE: the dock's lock bay takes either lock in a printed cartridge (lock_cartridge in the main
+      file). This lock's cartridge has the keyhole slot in its face plate, the shuttle channel and the groove.
+    - SHUTTLE: a printed block in a channel in the cartridge, behind the keyhole slot. Pushing the key in
+      pushes the shuttle 7 mm in; pulling the key back brings it out again.
     - WAFERS: 4 flat wafers ride in the shuttle, each pushed down by a spring onto the key's top edge, so the
-      key's cut sets each wafer's height. Each wafer has a tab on its side that runs in a groove in the pod
-      wall. The groove only lets a tab through at exactly the right height. With the right key all 4 tabs
+      key's cut sets each wafer's height. Each wafer has a tab on its side that runs in a groove in the
+      cartridge. The groove only lets a tab through at exactly the right height. With the right key all 4 tabs
       line up and the shuttle moves; with no key (the springs drop the wafers) or a wrong key, a tab hits
       the groove's shoulder and the shuttle can't move.
     - LIFTER: the part that carries the steel bolt (it replaces the yoke). A pin on it runs in a slanted
@@ -26,8 +28,8 @@
 */
 
 // ------------------------- SETTINGS ---------------------------------
-lock_type = "store";        // "store" = bought 16 mm cam lock (default); "printed" = this lock. The lock pod's
-                            // inside differs, so the receiver / dock_base must be exported for the lock you use.
+lock_type = "store";        // "store" = bought 16 mm cam lock (default); "printed" = this lock. Picks the lock
+                            // cartridge; the dock (receiver / dock_base) and the lock cover are the same for both.
 lock_code = [2, 0, 1, 2];   // CHANGE THIS before printing: one digit 0-2 per wafer, front (keyhole end) to back.
                             // Digit = cut depth in plk_step steps. Avoid all-equal codes like [1,1,1,1].
 plk_step = 1.0;             // depth step between digits. 1 mm: forgiving to print, a wrong cut still blocks by 0.75 mm
@@ -85,7 +87,7 @@ plk_pin_x = lock_panel_inner_x - plk_a;
 plk_zr = plk_pin_z - plk_zc;                        // pin height in the S frame when locked
 plk_plate_x0 = pod_high_x0 + 1.5;
 plk_plate_top = plk_pin_z + plk_pin_d/2 + 2;
-plk_drain_x = lock_panel_inner_x - 4;               // the lock cover's drain under the shuttle
+plk_drain_x = lock_panel_inner_x - lock_nut_len/2;   // the lock cover's front drain: under the shuttle, or the store lock's nut
 
 function plk_wx(i) = plk_front + plk_wslot/2 + i*plk_pitch;   // wafer i centre (S x)
 function plk_cut(i) = lock_code[i]*plk_step;
@@ -107,13 +109,17 @@ assert(plk_sy_pin - plk_track_depth - (plk_wy_pin + 0.15) >= 1.5, "Track breaks 
 assert(plk_a + 0.3 + plk_track_r <= plk_L - 0.4 && plk_a - plk_S - 0.3 - plk_track_r >= 0.4, "Track runs off the shuttle.");
 assert(plk_zr + plk_track_r <= plk_sz1 - 0.5 && plk_zr - plk_rise - plk_track_r >= plk_sz0 + 0.5, "Track runs off the shuttle's height.");
 assert(plk_S >= plk_wt + 2*plk_gclear + 0.5, "Unlocked, the innermost wafer would still be in its pocket: the key could come out.");   // no pocket lies further in
-assert(plk_zc + plk_sz1 + 0.2 <= pod_top_z - 1.2, "Shuttle channel breaks the top of the pod.");
-assert(plk_yc - plk_sy_tab + plk_tab_p + 0.3 + plk_gclear <= pod_y1 - 1.2, "Tab groove breaks the pod's side wall.");
-assert(plk_lifter_y[0] - 0.3 >= pod_y0 + 1.2, "Lifter pocket breaks the pod's side wall.");
+assert(plk_zc + plk_sz1 + 0.2 <= bay_top_z - cart_clear - 1.2, "Shuttle channel breaks the top of the cartridge.");
+assert(plk_yc - plk_sy_tab + plk_tab_p + 0.3 + plk_gclear <= bay_y1 - cart_clear - 1.5, "Tab groove breaks the cartridge's side wall.");
+assert(plk_lifter_y[0] - 0.3 >= bay_y0, "Lifter pocket breaks out of the bay.");
+assert(abs(plk_yc - lock_y) + plk_key_t/2 + 0.25 <= notch_hw - cart_clear - 1.2 && plk_zc + plk_kt + 0.25 <= notch_top_z - cart_clear - 1.2,
+       "Keyhole slot breaks out of the cartridge's face plate.");
+assert(cart_screw[0] - 1.25 >= plk_pin_x + 3.8 + 0.8 && cart_screw[1] + 1.25 <= plk_yc - plk_sy_pin - 0.2 - 0.8,
+       "Cartridge screw breaks into the lifter pocket or the shuttle channel.");
 assert(plk_lifter_y[0] >= bolt_y - arm_wy/2 && plk_lifter_y[1] <= bolt_y + arm_wy/2, "Lifter plate must join the bolt arm.");
-assert(plk_plate_top + 0.5 <= pod_top_z - 1.2, "Lifter pocket breaks the top of the pod.");
+assert(plk_plate_top + 0.5 <= bay_top_z - cart_clear - 1.2, "Lifter pocket breaks the top of the cartridge.");
 assert(yoke_bottom_locked - plk_rise >= pod_bottom_z + lock_cover_t + 0.3, "Unlocked lifter hits the lock cover.");
-assert(abs(lock_panel_inner_x - plk_S - plk_L - (pod_high_x0 + 1.2)) < 0.01, "Fully pushed, the shuttle should just reach the channel's end (its stop).");
+assert(abs(lock_panel_inner_x - plk_S - plk_L - bay_x0) < 0.01, "Fully pushed, the shuttle should just reach the bay's back wall (its stop).");
 assert(plk_zc + plk_kb - plk_shoulder - 0.25 >= pod_bottom_z + lock_cover_t + 0.5, "Keyhole runs into the lock cover.");
 echo(printed_lock_code = lock_code, shuttle_len = plk_L, spring_length_range = [plk_pocket_top - plk_wz1 - plk_lift, plk_pocket_top - plk_wz1 + plk_drop]);
 
@@ -193,7 +199,8 @@ module plk_lifter(turn=1) {
 
 module plk_to_dock(s=0) translate([lock_panel_inner_x - s, plk_yc, plk_zc]) rotate([0, 0, 180]) children();
 
-// Cuts in the lock pod for this lock (called from lock_pod_cuts in the main file).
+// Cuts for this lock in its cartridge (called from lock_cartridge in the main file). The channel and the
+// lifter pocket run out of the cartridge's open back into the bay, whose back wall is the shuttle's stop.
 module plk_pod_cuts() {
   x_ch0 = pod_high_x0 + 1.2;
   // Shuttle channel, open underneath (closed by the lock cover).
@@ -229,10 +236,11 @@ module plk_placed(turn=1, key=true) {
 module plk_xslice(c, h, xc) color(c) translate([0, 0, h]) linear_extrude(0.05)
   multmatrix([[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]]) projection(cut=true) rotate([0, 90, 0]) translate([-xc, 0, 0]) children();
 
-module plk_dock() { if (mount == "merged") dock_base(); else dock_receiver(); }
+// The dock with the cartridge in it: everything the moving parts run in.
+module plk_dock() { if (mount == "merged") dock_base(); else dock_receiver(); lock_cartridge(); }
 
 // ------------------------- EXPORTS (print orientation) --------------
-PLK_PARTS = ["plock_shuttle", "plock_wafer", "plock_wafers", "plock_key", "plock_lifter", "plock_cover", "plock_dock",
+PLK_PARTS = ["plock_shuttle", "plock_wafer", "plock_wafers", "plock_key", "plock_lifter",
              "plock_check_pod", "plock_check_cover", "plock_check_parts", "plock_check_pin", "plock_check_nokey",
              "plock_check_wrongkey", "plock_check_keyout", "plock_check_backdrive", "plock_exploded", "plock_cutaway"];
 function plk_is_part(p) = len([for (n = PLK_PARTS) if (n == p) 1]) > 0;
@@ -246,8 +254,6 @@ module plk_part(p) {
   else if (p == "plock_wafers") for (i = [0:plk_n - 1]) translate([0, i*16, 0]) rotate([0, -90, 0]) translate([-plk_wx(i) + plk_wt/2, 0, 0]) plk_wafer(i);
   else if (p == "plock_key") translate([0, 0, plk_key_t/2]) rotate([-90, 0, 0]) plk_key();       // flat
   else if (p == "plock_lifter") translate([0, 0, -yoke_bottom_locked]) plk_lifter(1);           // bottom down
-  else if (p == "plock_cover") translate([0, 0, -pod_bottom_z]) lock_cover();
-  else if (p == "plock_dock") plk_dock();                                                       // the dock with this lock's pod
   // Interference checks. "Must be empty" ones print nothing if OK; "must collide" ones must give a solid.
   else if (p == "plock_check_pod")      for (t = [0, 0.25, 0.5, 0.75, 1]) intersection() { plk_dock(); plk_moving(t); }   // empty / touch
   else if (p == "plock_check_cover")    for (t = [0, 1]) intersection() { lock_cover(); plk_moving(t); }                    // touch (it sits on the cover)
@@ -271,7 +277,8 @@ module plk_part(p) {
   }
   else if (p == "plock_cutaway") {                  // slices through wafer 2 (key in, locked), seen from the keyhole side
     xc = lock_panel_inner_x - plk_wx(1);
-    plk_xslice([0.62, 0.7, 0.82], 0, xc) plk_dock();
+    plk_xslice([0.62, 0.7, 0.82], 0, xc) if (mount == "merged") dock_base(); else dock_receiver();
+    plk_xslice([0.42, 0.44, 0.48], 0.05, xc) lock_cartridge();
     plk_xslice([0.85, 0.55, 0.15], 0.1, xc) plk_to_dock(0) plk_shuttle();
     plk_xslice([1.0, 0.82, 0.15], 0.2, xc) plk_to_dock(0) plk_wafer(1, 0);
     plk_xslice([0.2, 0.45, 0.85], 0.3, xc) plk_to_dock(0) plk_key();

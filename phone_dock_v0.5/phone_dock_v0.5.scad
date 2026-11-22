@@ -244,6 +244,10 @@ pod_top_z = -1;
 pod_bottom_z = -30.5;
 roof_t = 3;
 lock_cover_t = 2;
+// Lock bay: the tall part of the pod is one plain bay that takes either lock (store or printed) as a printed
+// cartridge. The cartridge goes up into the bay from below; its face plate fills a notch in the side wall.
+cart_clear = 0.2;           // cartridge in the bay, per side
+notch_hw = 9.5;             // half-width of the side-wall notch (the face plate): the 16 mm lock bore + 1.5 mm
 
 amps_offset_y = -10;        // AMPS centre sits this far above the shoe centre (negative = below: the plate sits
                             // low on the case so the lock pod fits above it)
@@ -383,6 +387,14 @@ yoke_y0 = lock_y - crank_r - crank_pin_d/2 - 1.8;    // unlocked, the crank pin 
 yoke_y1 = lock_y + crank_pin_d/2 + 1.8;
 bolt_x = (strike_x0 + strike_x1)/2;
 bolt_y = pod_y0 + 1.5 + arm_wy/2 + 0.5;
+bay_x0 = pod_high_x0 + 1.2;                          // the bay: just big enough for the store lock's crank sweep
+bay_y0 = lock_y - crank_sweep_r;
+bay_y1 = lock_y + crank_sweep_r;
+bay_top_z = lock_z + crank_sweep_r;
+cart_z0 = pod_bottom_z + lock_cover_t - 0.1;          // cartridge bottom: sits on the lock cover
+notch_top_z = lock_z + notch_hw;
+cart_screw = [lock_panel_inner_x - lock_nut_len - 3.5, bay_y0 + 2.65];   // lock cover to cartridge (M3 x 8 self-tapping)
+cart_screw_l = 6;                                      // its 2.5 mm pilot hole's depth
 strike_y1 = body_h/2 - 0.3;
 strike_head_d = steel_keeper ? keeper_csk_d : strike_cbore_d;
 strike_load_face_y = bolt_y - keeper_win_t/2;        // the window's load side (the case is pulled +y)
@@ -449,6 +461,13 @@ assert(lock_y - crank_sweep_r >= pod_y0 + 1.0 && lock_y + crank_sweep_r <= pod_y
 assert(yoke_y0 >= pod_y0 + 1.0 && yoke_y1 <= pod_y1 - 1.0, "Yoke pocket breaks the pod walls.");
 assert(bolt_y - arm_wy/2 - 0.3 >= pod_y0 + 1.0 && bolt_y + arm_wy/2 + 0.3 <= pod_y1 - 1.0, "Bolt-arm pocket breaks the pod walls.");
 assert(yoke_x0 - 0.3 >= pod_high_x0 + 1.2, "Yoke pocket breaks into the low part of the pod.");
+assert(bay_y0 >= pod_y0 + 1.0 && bay_y1 <= pod_y1 - 1.0 && bay_top_z <= pod_top_z - 1.2, "Lock bay breaks the pod walls.");
+assert(lock_bore_d/2 + 1.0 <= notch_hw - cart_clear && notch_top_z <= bay_top_z - 1.0, "Cartridge face plate too small for the lock bore.");
+assert(lock_y - lock_nut_clear_d/2 >= bay_y0 + cart_clear && lock_z + lock_nut_clear_d/2 <= bay_top_z - cart_clear
+       && lock_z - lock_nut_clear_d/2 >= cart_z0 + 2.5, "Store lock nut doesn't fit the cartridge.");
+assert(cart_screw[0] + 1.25 + 0.8 <= lock_panel_inner_x - lock_nut_len && cart_screw[1] - 1.25 >= bay_y0 + cart_clear + 0.8
+       && cart_z0 + cart_screw_l + 0.8 <= lock_z - sqrt(max(0, pow(lock_bore_d/2 + 0.3, 2) - pow(lock_y - cart_screw[1] - 1.25, 2))),
+       "Cartridge screw breaks into the store lock's cavities.");
 assert(lock_face_x + 1.2 <= body_w/2 + 0.6, "Lock face sticks out past the case side.");
 assert(merged || pod_y0 >= amps_offset_y + base_depth/2 + 1.5, "Lock pod would hit the base plate.");
 assert(pod_y0 >= amps_offset_y + pad_l/2 + 1.5, "Lock pod would hit the clamp pads.");
@@ -773,12 +792,13 @@ module lock_pod_solid() {
     translate([(lock_face_x - pod_high_x0)/2, 0, 0]) rounded_prism(lock_face_x - pod_high_x0, pod_y1 - pod_y0, pod_top_z - pod_bottom_z, 3);
 }
 
+// The dock's cuts are the same for both locks: the bay and the notch take either lock's cartridge.
 module lock_pod_cuts() {
-  if (lock_type == "printed") plk_pod_cuts();   // the printed lock's shuttle channel, lifter pocket and keyhole
-  else store_lock_cuts();
-  // Arm pocket under the roof, open underneath.
-  translate([bolt_x - arm_wx/2 - 0.3, bolt_y - arm_wy/2 - 0.3, pod_bottom_z - 1])
-    cube([yoke_x0 + 1 - bolt_x + arm_wx/2 + 0.3, arm_wy + 0.6, roof_bottom_z - pod_bottom_z + 1]);
+  // Lock bay, open underneath.
+  translate([bay_x0, bay_y0, pod_bottom_z - 1]) cube([lock_panel_inner_x - bay_x0, bay_y1 - bay_y0, bay_top_z - pod_bottom_z + 1]);
+  // Notch in the side wall for the cartridge's face plate (and the lock cover's tab under it).
+  translate([lock_panel_inner_x - 0.05, lock_y - notch_hw, pod_bottom_z - 1]) cube([lock_face_x - lock_panel_inner_x + 1, 2*notch_hw, notch_top_z - pod_bottom_z + 1]);
+  lock_arm_pocket();
   // Bolt guide through the roof (rectangular, for the flat bolt).
   translate([bolt_x - keeper_win_w/2, bolt_y - keeper_win_t/2, roof_bottom_z - 0.05]) cube([keeper_win_w, keeper_win_t, roof_t + 0.1]);
   // Cover recess + 2 x M3 inserts.
@@ -787,7 +807,14 @@ module lock_pod_cuts() {
   for (p = lock_cover_screws()) translate([p[0], p[1], pod_bottom_z + lock_cover_t - 0.05]) cylinder(d=4.2, h=5.05);
 }
 
-// Store cam lock: body bore, D-shaped panel bore, nut cavity (reached from below, under the cover), crank, yoke.
+// Arm pocket under the roof, open underneath (the yoke's or the lifter's arm carries the bolt).
+module lock_arm_pocket()
+  translate([bolt_x - arm_wx/2 - 0.3, bolt_y - arm_wy/2 - 0.3, pod_bottom_z - 1])
+    cube([yoke_x0 + 1 - bolt_x + arm_wx/2 + 0.3, arm_wy + 0.6, roof_bottom_z - pod_bottom_z + 1]);
+
+// Store cam lock (cut into its cartridge): body bore, D-shaped bore through the face plate, nut cavity
+// (open on the cartridge's upper side, so the nut goes on at the bench; the strip under it joins the face
+// plate to the cartridge), a drain from it, crank, yoke.
 module store_lock_cuts() {
   translate([crank_x1 - 0.05, lock_y, lock_z]) rotate([0,90,0]) cylinder(d=lock_bore_d + 0.6, h=lock_panel_inner_x - crank_x1 + 0.1);
   translate([lock_panel_inner_x - 0.05, lock_y, lock_z]) rotate([0,90,0])
@@ -795,8 +822,9 @@ module store_lock_cuts() {
       cylinder(d=lock_bore_d, h=lock_panel_t + 0.2);
       translate([-lock_bore_flat/2, -lock_bore_d/2, -0.1]) cube([lock_bore_flat, lock_bore_d, lock_panel_t + 0.4]);
     }
-  translate([lock_panel_inner_x - lock_nut_len, lock_y - lock_nut_clear_d/2, pod_bottom_z - 1])
-    cube([lock_nut_len, lock_nut_clear_d, lock_z + lock_nut_clear_d/2 - pod_bottom_z + 1]);
+  translate([lock_panel_inner_x - lock_nut_len, lock_y - lock_nut_clear_d/2, lock_z - lock_nut_clear_d/2])
+    cube([lock_nut_len, bay_y1 + 1 - (lock_y - lock_nut_clear_d/2), lock_nut_clear_d]);
+  translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 1]) cube([3, 6, lock_z - lock_nut_clear_d/2 - pod_bottom_z + 1.05]);
   // Crank sweep.
   translate([crank_x0 - 0.4, lock_y, lock_z]) rotate([0,90,0]) cylinder(r=crank_sweep_r, h=crank_x1 - crank_x0 + 0.5);
   // Yoke pocket (full travel), open underneath for assembly.
@@ -804,23 +832,44 @@ module store_lock_cuts() {
     cube([yoke_x1 - yoke_x0 + 0.6, yoke_y1 - yoke_y0 + 0.6, yoke_top_locked + 0.5 - pod_bottom_z + 1]);
 }
 
-// On the pod's upper side, clear of the arm pocket, the lock bore and the nut (printed lock: clear of its
-// shuttle channel and wafer pockets).
-function lock_cover_screws() = [[bolt_x - 2, pod_y1 - 4],
-                                lock_type == "printed" ? [pod_high_x0 + 2, pod_y1 - 4] : [lock_panel_inner_x - lock_nut_len - 5, pod_y1 - 4]];
+// Lock cartridge (dock frame): fills the bay, its face plate fills the notch flush with the side wall. It holds
+// whichever lock lock_type picks: the store lock is bolted through its face plate, the printed lock runs in it.
+// It goes in from below with the lock already in it; the lock cover holds it up and is screwed into it.
+module lock_cartridge() {
+  difference() {
+    union() {
+      translate([bay_x0 + cart_clear, bay_y0 + cart_clear, cart_z0])
+        cube([lock_panel_inner_x - bay_x0 - cart_clear, bay_y1 - bay_y0 - 2*cart_clear, bay_top_z - cart_clear - cart_z0]);
+      translate([lock_panel_inner_x - 0.01, lock_y - notch_hw + cart_clear, cart_z0])
+        cube([lock_face_x - lock_panel_inner_x + 0.01, 2*(notch_hw - cart_clear), notch_top_z - cart_clear - cart_z0]);
+    }
+    if (lock_type == "printed") plk_pod_cuts();   // shuttle channel, lifter pocket, tab groove, keyhole
+    else store_lock_cuts();
+    lock_arm_pocket();
+    translate([cart_screw[0], cart_screw[1], cart_z0 - 0.05]) cylinder(d=2.5, h=cart_screw_l + 0.05);
+  }
+}
+
+// On the pod's upper side, behind the bay, clear of the arm pocket.
+function lock_cover_screws() = [[bolt_x - 2, pod_y1 - 4], [pod_high_x0 - 2, pod_y1 - 4]];
 
 module lock_cover() {
   difference() {
-    translate([pod_low_x0 + 1.2, pod_y0 + 1.7, pod_bottom_z])
-      cube([lock_panel_inner_x - (pod_low_x0 + 1) - 0.4, pod_y1 - pod_y0 - 3.4, lock_cover_t - 0.1]);
-    for (p = lock_cover_screws()) translate([p[0], p[1], pod_bottom_z - 0.05]) {
+    union() {
+      translate([pod_low_x0 + 1.2, pod_y0 + 1.7, pod_bottom_z])
+        cube([lock_panel_inner_x - (pod_low_x0 + 1) - 0.4, pod_y1 - pod_y0 - 3.4, lock_cover_t - 0.1]);
+      // Tab under the cartridge's face plate: closes the bottom of the notch, flush with the side wall.
+      translate([lock_panel_inner_x - 0.5, lock_y - notch_hw + cart_clear, pod_bottom_z])
+        cube([lock_face_x - lock_panel_inner_x + 0.5, 2*(notch_hw - cart_clear), lock_cover_t - 0.1]);
+    }
+    for (p = concat(lock_cover_screws(), [cart_screw])) translate([p[0], p[1], pod_bottom_z - 0.05]) {
       cylinder(d=3.4, h=lock_cover_t + 0.1);
       cylinder(d1=6.4, d2=3.4, h=1.5);
     }
-    // Drain slot under the bolt (water that gets past the strike runs out).
+    // Drain slots: under the bolt (water that gets past the strike), and under the lock's front end (rain
+    // that gets in at the keyhole).
     translate([bolt_x - 1.5, bolt_y - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
-    // Printed lock: a second drain under its shuttle, for rain that gets in at the keyhole.
-    if (lock_type == "printed") translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
+    translate([plk_drain_x - 1.5, plk_yc - 3, pod_bottom_z - 0.05]) cube([3, 6, lock_cover_t + 0.1]);
   }
 }
 
@@ -894,6 +943,23 @@ module lock_mechanism(turn=1) {
   if (lock_type == "printed") plk_placed(turn);   // shuttle, wafers, key and lifter
   else { color([0.75,0.75,0.78]) crank_placed(turn); color([0.55,0.58,0.62]) lock_yoke(turn); }
   lock_bolt(turn);
+}
+
+// Picture only: the store cam lock (body, face flange, nut, keyway), roughly.
+module store_cam_lock() {
+  translate([0, lock_y, lock_z]) rotate([0, 90, 0]) {
+    color([0.75, 0.75, 0.78]) difference() {
+      union() {
+        translate([0, 0, crank_x1 + 0.3]) cylinder(d=lock_bore_d - 0.2, h=lock_face_x - crank_x1 - 0.3);
+        translate([0, 0, lock_face_x]) cylinder(d=20, h=1.2);
+      }
+      translate([-0.6, -3, lock_face_x + 0.6]) cube([1.2, 6, 1]);
+    }
+    color([0.6, 0.6, 0.62]) translate([0, 0, lock_panel_inner_x - lock_nut_len + 0.5]) difference() {
+      cylinder(d=lock_nut_clear_d - 2, h=3, $fn=6);
+      translate([0, 0, -0.1]) cylinder(d=lock_bore_d, h=3.2);
+    }
+  }
 }
 
 module dock_lid() {
@@ -1103,7 +1169,8 @@ module dock_stack() {
   translate([0,0,EXPLODE*0.4]) { color([0.25,0.28,0.32]) dock_shoe(); color([0.62,0.62,0.66]) keeper_part(); }
   if (merged) color([0.20,0.45,0.70]) dock_base(); else color([0.38,0.42,0.46]) dock_receiver();
   color([0.30,0.30,0.30]) translate([0,0,-EXPLODE*0.5]) dock_lid();
-  lock_mechanism(1);
+  color([0.34,0.34,0.37]) translate([0,0,-EXPLODE*0.25]) lock_cartridge();
+  translate([0,0,-EXPLODE*0.25]) lock_mechanism(1);
   color([0.30,0.30,0.30]) translate([0,0,-EXPLODE*0.5]) lock_cover();
 }
 
@@ -1149,6 +1216,16 @@ else if (PART == "pad_spacer") pad_spacer();
 else if (PART == "lock_yoke") lock_yoke(1);
 else if (PART == "crank_template") crank_template();
 else if (PART == "lock_cover") lock_cover();
+else if (PART == "lock_bay_exploded") {          // picture: the dock's lock bay and the cartridge for lock_type, from below
+  color([0.38, 0.42, 0.46]) if (merged) dock_base(); else dock_receiver();
+  translate([0, 0, -55]) {
+    color([0.34, 0.34, 0.37]) lock_cartridge();
+    lock_mechanism(1);
+    if (lock_type != "printed") store_cam_lock();
+  }
+  color([0.30, 0.30, 0.30]) translate([0, 0, -95]) lock_cover();
+}
+else if (PART == "lock_cartridge") translate([0, 0, -cart_z0]) lock_cartridge();   // standing on its bottom, as in the dock
 else if (PART == "strike_keeper") strike_keeper();
 else if (PART == "strike_keeper_2d") translate([-strike_x0, -strike_y0]) strike_keeper_2d();   // laser template, corner at the origin
 else if (plk_is_part(PART)) plk_part(PART);

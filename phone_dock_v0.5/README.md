@@ -67,7 +67,7 @@ How the bulk was removed:
 |---|---|---|---|
 | 1 | **Handlebar clamps** (×2) | `clamp_body.stl`, `clamp_cap.stl`, `bar_shim.stl`, `pad_spacer.stl` | **A:** each clamp pad has 2 × M5 inserts, 36 mm apart fore-aft |
 | 2 | **Base plate** (swap later for a smart base) | `base_plate.stl` or `base_plate.dxf` (metal) | **B:** AMPS pattern (4 × M5, 30 × 38 mm) through rubber grommets, plus a Ø14 mm cable hole |
-| 3 | **Dock / receiver** | `receiver.stl` (includes the lock pod), `dock_lid.stl`, `lock_cover.stl`, `lock_yoke.stl`, `crank_template.stl` (drilling guide for the lock's cam) | **C:** dovetail rails, a central nose with the contact pads, and a printed strike block (with a key-steel bearing block) for the lock bolt |
+| 3 | **Dock / receiver** | `receiver.stl` (includes the lock pod), `dock_lid.stl`, `lock_cartridge.stl` (holds the lock in the pod), `lock_cover.stl`, `lock_yoke.stl`, `crank_template.stl` (drilling guide for the lock's cam) | **C:** dovetail rails, a central nose with the contact pads, and a printed strike block (with a key-steel bearing block) for the lock bolt |
 | 4 | **Phone case** | `case_shell.stl`, `case_back.stl`, `window_template.stl`, `shoe.stl` (the strike is printed with it; `strike_keeper*` only if `steel_keeper = true`) | |
 
 `cam_template.stl` is left over from the earlier cam latch and is no longer used.
@@ -80,7 +80,7 @@ The base plate and the dock can be printed as **one part**, `one_piece/dock_base
 
 - **The look:**
   - The base takes **the case's own outline** (176 × 84 mm, inside the case's 178 × 85), so from the rider's seat it is hidden behind the case. Only the small LED strip shows below the case's lower edge.
-  - **Side walls** rise to 0.5 mm under the case, so from the side the case and the base read as **one slab**, with no gap and no steps. The right wall is also the lock's face panel, so the keyhole sits flush in it.
+  - **Side walls** rise to 0.5 mm under the case, so from the side the case and the base read as **one slab**, with no gap and no steps. The lock cartridge's face plate sits flush in a notch in the right wall, so the keyhole sits flush in it too.
   - **End walls** close the bottom end either side of the LED strip, and the top end left of the dock. Only the docking slot, where the shoe and the strike slide in, stays open. Drain holes at the low corners let rain out.
   - The **lock pod is 7 mm lower**, so it no longer shows above the case's top-right corner. Nothing sticks out above the case now.
   - The underside has a **rounded edge** all round.
@@ -163,7 +163,14 @@ To make the window removable instead of bonded, you would need a screwed front f
   None of this has been load-tested.
 
 **Lock (SELECT):**
-- **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a flat card key that slides straight in through a slot in the side wall, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It needs the printed-lock version of the dock (`printed_lock/receiver_plock.stl` or `dock_base_plock.stl`), because the inside of the lock pod is different. It is a deterrent, though: a good store-bought lock is more secure.
+- **One dock, either lock:** the lock pod is a plain bay, and the lock comes in a printed **cartridge** that slides up into it from below. The cartridge's face plate fills a notch in the pod's side wall, flush with it, and the lock cover holds the cartridge in.
+  - **Store lock:** `lock_cartridge.stl`. Its face plate has the 16 mm D-shaped hole, and the lock's nut clamps onto it.
+  - **Printed lock:** `printed_lock/plock_cartridge.stl`. Its face plate has the key slot.
+  - The dock, the lock cover, the bolt and the strike are the same for both. To change locks later, print the other cartridge: no new dock.
+  - The cartridge can't be pulled out through the notch: inside the wall it is wider than the notch, and the lock cover is screwed into it.
+
+  ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
+- **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a flat card key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
 - **The lock's own steel cam is the crank.**
@@ -176,11 +183,12 @@ To make the window removable instead of bonded, you would need a screwed front f
   - the yoke (`lock_yoke`), printed in PA12 or machined from aluminium;
   - 15 mm of **14 × 9 mm DIN 6885 parallel-key steel** (h9) as the bolt. Press it into the yoke's rectangular pocket with retaining compound;
   - a second **10 mm piece of the same key steel** as the strike's bearing block, plus 2 × M3 × 10 socket screws (see *The case*). Ask the bearing shop to cut both pieces (15 mm and 10 mm) when you buy the bar.
-- **Assembly:**
-  1. Put the yoke and bolt in from below.
-  2. Slide the lock in from the side, so the crank pin enters the yoke slot.
-  3. Fit the nut.
-  4. Screw on `lock_cover`, which has a drain slot under the bolt.
+- **Assembly (on the bench first, then into the dock):**
+  1. Push the lock through the cartridge's face plate from the front. Slip the nut on through the opening in the cartridge's upper side and tighten it.
+  2. Fit the crank (the drilled cam) and its pin. Turn the key to locked, so the pin points up.
+  3. Put the yoke into its pocket in the cartridge from below, with the crank pin in its slot, and press the bolt into the yoke.
+  4. Push the whole cartridge up into the bay from below, with the bolt going up through the guide in the pod's roof.
+  5. Screw on `lock_cover`: 2 screws into the dock, and 1 M3 × 8 self-tapping screw into the cartridge. The cover has drain slots under the bolt and under the lock's front end.
 - **Size:** the pod is 54 × 25 mm. It sits 30 mm deep behind the case back, just above the base plate and clamp pads, and its top edge shows about 6 mm above the case's top-right corner.
 - **Security level:** a printed dock stops casual theft, not someone with tools.
 

@@ -35,7 +35,15 @@
     },
     {
       "src": "images/plock_cutaway.png",
-      "caption": "Printed lock cut through a wafer: the key sets its height, and its tab must line up with the groove in the pod wall"
+      "caption": "Printed lock cut through a wafer: the key sets its height, and its tab must line up with the groove in the cartridge"
+    },
+    {
+      "src": "images/lock_bay_store.png",
+      "caption": "One dock, either lock: the store lock in its cartridge, which slides up into the lock bay; the cover holds it in"
+    },
+    {
+      "src": "images/lock_bay_printed.png",
+      "caption": "The printed lock's cartridge fits the same bay"
     }
   ],
   "viewer_default": "receiver",
@@ -153,9 +161,15 @@
       "qty": "1",
       "material": "PA12 best, or PETG"
     },
+    "lock_cartridge": {
+      "name": "Lock cartridge",
+      "what": "Holds the 16 mm store lock: slides up into the dock's lock bay, its face plate flush in the side wall. The lock's nut clamps its face plate",
+      "qty": "1",
+      "material": "ASA or PETG, 100 % infill, standing on its bottom"
+    },
     "lock_cover": {
       "name": "Lock cover",
-      "what": "Closes the lock pod, with a drain slot",
+      "what": "Closes the lock pod and holds the cartridge in (screwed into it), with drain slots. The same for both locks",
       "qty": "1",
       "material": "ASA or PETG"
     },
@@ -172,18 +186,11 @@
       "material": "6 mm steel plate",
       "optional": true
     },
-    "receiver_plock": {
-      "name": "Printed lock: dock",
-      "what": "The dock with the printed lock's channel, groove and keyhole slot. Use it instead of receiver if you print the lock",
+    "plock_cartridge": {
+      "name": "Printed lock: cartridge",
+      "what": "Use it instead of lock_cartridge if you print the lock: the key slot, the shuttle's channel and the wafer groove. It fits the standard dock",
       "qty": "1",
-      "material": "ASA or PETG, as the receiver",
-      "optional": true
-    },
-    "dock_base_plock": {
-      "name": "Printed lock: one-piece base",
-      "what": "The one-piece dock base with the printed lock's pod. Use it instead of one_piece/dock_base if you print the lock",
-      "qty": "1",
-      "material": "ASA or PETG, as dock_base",
+      "material": "ASA or PETG, 100 % infill, standing on its bottom",
       "optional": true
     },
     "plock_shuttle": {
@@ -198,13 +205,6 @@
       "what": "Carries the steel bolt (replaces lock_yoke); its pin runs in the shuttle's track",
       "qty": "1",
       "material": "PA12 or PETG, 100 % infill, standing on its bottom",
-      "optional": true
-    },
-    "plock_cover": {
-      "name": "Printed lock: cover",
-      "what": "Closes the lock pod and holds the shuttle in (replaces lock_cover)",
-      "qty": "1",
-      "material": "ASA or PETG, flat",
       "optional": true
     },
     "plock_wafer_1": {

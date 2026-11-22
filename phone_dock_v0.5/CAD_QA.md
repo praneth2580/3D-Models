@@ -358,6 +358,34 @@ Update 15 (2026-11-22): **printed lock redesigned as a push-key lock, for 3D pri
 - **Images:** `plock_exploded.png` and `plock_cutaway.png` (coloured slices through wafer 2) re-rendered.
 - **Not checked:** spring force and how the wafers feel; friction of the 57° track; how the tabs fit a real print of the dock's groove; wear of the key's cuts.
 
+Update 16 (2026-11-22): **one dock for either lock: the lock goes in a printed cartridge** (owner: make the slot the same size and adjust the lock, or make a housing for the store-bought one). Before this, each lock needed its own dock, because the inside of the pod was cut for one lock or the other.
+- **Design:**
+  - The tall part of the pod is now one plain **bay**, open underneath. It is the box around the store lock's crank sweep: x from `pod_high_x0 + 1.2` to the side wall, y and top at `lock_y ± crank_sweep_r` and `lock_z + crank_sweep_r`. The side wall gets a **notch** (`lock_y ± notch_hw`, up to `lock_z + notch_hw`, `notch_hw = 9.5`).
+  - `lock_cartridge()` fills the bay (0.2 mm clear) and the notch (its face plate, flush). `lock_type` picks what is cut into it: `store_lock_cuts()` (bore, D-hole through the face plate, nut cavity, crank sweep, yoke pocket) or `plk_pod_cuts()` (channel, lifter pocket, tab groove and pockets, key slot). Both cartridges share the outside shape. The dock (`receiver`, `one_piece/dock_base`) and the lock cover are now the same for both locks.
+  - **Retention:** inside the wall the cartridge is wider than the notch by 1.3 mm each side and at the top, so it can't be pulled out sideways. It sits on the lock cover, and the cover is screwed into it with an M3 × 8 self-tapping screw (2.5 mm pilot) as well as into the dock. Both of the cover's dock screws are now behind the bay, at `bolt_x - 2` and `pod_high_x0 - 2`. The cover has a tab that closes the bottom of the notch, flush with the wall.
+  - **Store lock:** the nut cavity opens on the cartridge's upper side, not underneath. Otherwise the face plate was a separate body (first export: 2 bodies). The strip under the nut joins it, and the nut goes on at the bench. The store lock, crank, yoke and bolt go in with the cartridge as one unit. A drain runs from the nut cavity to the cover's front drain.
+  - **Printed lock:** unchanged parts. The groove is now in the cartridge, so if the tabs rub, only the small cartridge is reprinted. The shuttle's end stop is the bay's back wall (the channel runs out of the cartridge's open back).
+  - The cover's front drain moved to `lock_panel_inner_x - lock_nut_len/2`, under the shuttle or the store lock's nut; it is on both covers now.
+- **Asserts (new):** bay inside the pod walls; face plate covers the 16 mm bore; nut fits the cartridge with the strip under it; cartridge screw clear of the store lock's cavities and of the printed lock's lifter pocket and channel; key slot inside the face plate. The printed lock's pod asserts now check against the cartridge. All 4 combinations pass with no warnings.
+- **Exported** (watertight, consistent winding, one body each): `receiver` 51.2 cm³ and `one_piece/dock_base` 179.5 cm³ (identical for both locks; checked by exporting `receiver` with each `lock_type`), `lock_cartridge` 6.95 cm³ (new), `printed_lock/plock_cartridge` 7.30 cm³ (new), `lock_cover` 2.00 cm³. Removed: `printed_lock/receiver_plock`, `dock_base_plock`, `plock_cover`.
+- **Checks:**
+
+| Check | Modular | One-piece |
+|---|---|---|
+| Cartridge vs dock, store and printed | no overlap | no overlap |
+| Cartridge on its way in, lowered 3, 8, 15, 25 and 32 mm, store and printed | no overlap | no overlap |
+| **Must collide:** cartridge pulled 0.5 mm out through the side wall | 13.17 mm³ | 13.17 mm³ |
+| Cartridge vs lock cover | touch only | touch only |
+| Lock cover vs dock | no overlap | no overlap |
+| Store crank, yoke and bolt vs cartridge and vs dock, turn 0, 0.5, 1 | no overlap | no overlap |
+| Store lock body (D section) and face flange vs cartridge / dock | touch only | touch only |
+| Printed lock: `plock_check_pod`, `_cover`, `_parts`, `_pin` (with the cartridge) | no overlap / touch | no overlap / touch |
+| Printed lock, **must collide:** no key, wrong key, key out while unlocked, bolt pushed down | 1.26, 0.90, 5.67, 0.63 mm³ | the same |
+
+- **Images:** new `lock_bay_store.png` and `lock_bay_printed.png` (`PART="lock_bay_exploded"`: the dock, the cartridge with its lock lowered out of the bay, the cover below). `plock_cutaway.png` (now shows the cartridge inside the dock) and `merged_underside.png` (the open bay) re-rendered. `video/mechanism_anim.scad` now draws the cartridge; **the video itself is not re-rendered** (it needs the Linux toolchain: Pillow and imageio-ffmpeg).
+- **Trade-off:** the pod's side walls are 1.0–1.2 mm and its roof 1.5 mm over the whole bay, where before they were that thin only along the crank sweep. The cartridge fills the bay and backs them.
+- **Not checked:** how the cartridge fits a real print of the bay; how well the self-tapping screw holds in PETG; whether the store lock's nut can be turned by hand or with a spanner through the side opening.
+
 Tool: OpenSCAD 2021.01, command-line render of every `PART`, default parameters.
 
 ## Renders
