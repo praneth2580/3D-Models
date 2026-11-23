@@ -44,7 +44,8 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 | `dxf_when` | The same for DXF files: `{"<stem>": {"mount": "modular"}}` |
 | `see_title`, `see_sub` | Heading and text of the pictures section |
 | `gallery` | `[{"src": "images/x.png", "caption": "..."}]` |
-| `viewer_default` | The STL shown first, without `.stl` |
+| `viewer_default` | The STL shown first, without `.stl`. Or a list of them: the first one in the chosen build is shown (and the viewer follows the build picker) |
+| `parts.<stem>.view` | `true` for a view-only model (an assembly, say): marked "view only" in the parts table, left out of the zips and the printable-parts count |
 | `parts` | `{"stem": {"name", "what", "qty", "material", "note", "optional"}}`, listed in this order |
 | `dxf` | `{"stem": "description"}` |
 | `exclude` | File patterns to leave out of the page and zip, such as `["old_part.stl"]` |

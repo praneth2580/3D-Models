@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Renders the lock video (how the store, printed and dial locks move the bolt) from lock_anim.scad.
+Renders the lock video (how the store, printed, dial and tubular locks move the bolt) from lock_anim.scad.
 
 Needs: openscad (2021.01+), Pillow, imageio-ffmpeg. Set OPENSCAD if it isn't "openscad" on the PATH
 (on Windows: "C:/Program Files/OpenSCAD/openscad.com").
@@ -147,7 +147,17 @@ SCENES += [
     (T_POP_END, T_CASE + 2.3, "Unlocked: the bolt is down, the case slides off"),
     (T_PRESS, T_PRESS_END, "To lock, just press the button: its ramp lifts the bolt, the latch snaps into its notch"),
     (T_PRESS_END, T_END - 0.5, "Locked with one press. To open it again, the whole code has to be dialled"),
-    (T_END - 0.5, T_END + 3.0, ""),
+]
+T4 = T_END - 0.5                        # tubular key lock
+TL_CLOSE = [82, 29, -14, 35, 0, 10, 125]
+SCENES += [
+    (T4, T4 + 2.6, "4. Tubular key lock (printed): a hollow key, 6 pins. No key: the drivers cross into the plug"),
+    (T4 + 2.6, T4 + 5.0, "The key goes in: each notch pushes its pin back to exactly the gap between plug and housing"),
+    (T4 + 5.0, T4 + 7.6, "Now the plug turns: a quarter turn, and the crank's steel pin pulls the yoke and the bolt down"),
+    (T4 + 7.6, T4 + 10.0, "Unlocked: the case slides off. The key's tabs are behind the face, so it can't come out"),
+    (T4 + 10.0, T4 + 12.2, "Turn back: the bolt rises into the strike, and the tabs line up with their notches again"),
+    (T4 + 12.2, T4 + 14.6, "Pull the key out: the springs push the drivers back across the gap, and the plug is held"),
+    (T4 + 14.6, T4 + 18.0, ""),
 ]
 DURATION = SCENES[-1][1]
 
@@ -172,7 +182,7 @@ def case_off(t, t0):
     return ramp(t, t0, t0 + 0.9, 0, 40) if t < t0 + 1.2 else ramp(t, t0 + 1.2, t0 + 2.1, 40, 0)
 
 def state(t):
-    p = dict(lock_type='"store"', L_turn=1, L_key_out=0, L_key_rot=0, L_shift=0, L_wafer=0, L_show_key=1, L_case_dy=0,
+    p = dict(lock_type='"store"', L_tl_cut=0, L_turn=1, L_key_out=0, L_key_rot=0, L_shift=0, L_wafer=0, L_show_key=1, L_case_dy=0,
              L_dl_s=0, L_dl_rot=0, L_dl_w="[0,0,0,0,0,0]", L_dl_f=0, L_dl_l=0, L_dl_h=0, L_dl_cut=0)
     if t < 14.5:                                   # store lock
         p["L_key_out"] = 35 if t < 3.3 else (ramp(t, 3.3, 5.0, 35, 0) if t < 13.0 else ramp(t, 13.4, 14.4, 0, 35))
@@ -190,6 +200,19 @@ def state(t):
         p["L_shift"] = ramp(t, 18.5, 20.8, 0, PLK_S) if t < 23.3 else ramp(t, 23.5, 25.4, PLK_S, 0)
         p["L_case_dy"] = case_off(t, 21.1) if 21.1 <= t < 23.3 else 0
         c = cam(t, 14.5, 27.5)
+    elif t >= T4:                                  # tubular lock
+        u = t - T4
+        p["lock_type"] = '"tubular"'
+        p["L_key_out"] = 40 if u < 2.8 else (ramp(u, 2.8, 4.6, 40, 0) if u < 12.2 else ramp(u, 12.9, 14.3, 0, 40))
+        p["L_turn"] = ramp(u, 5.8, 7.4, 1, 0) if u < 10.0 else ramp(u, 10.2, 11.8, 0, 1)
+        p["L_case_dy"] = case_off(t, T4 + 7.7) if 7.7 <= u < 10.0 else 0
+        wide = cam(t, T4 + 5.0, T4 + 12.2, 44, 60)
+        if u < 5.0: c = TL_CLOSE
+        elif u < 5.6: c = lerp(TL_CLOSE, wide, ease((u - 5.0)/0.6))
+        elif u < 12.2: c = wide
+        elif u < 12.8: c = lerp(wide, TL_CLOSE, ease((u - 12.2)/0.6))
+        else: c = TL_CLOSE
+        p["L_tl_cut"] = int(u < 5.0 or u >= 12.8)   # the pins' cut view only while the key goes in and out (it renders slowly)
     else:                                          # dial lock
         p["lock_type"] = '"dial"'; p["L_show_key"] = 0
         a = dl_state_at(t)
@@ -205,7 +228,7 @@ def state(t):
         p["L_dl_h"] = f"{dl_hammer_at(sb):.3f}"
         p["L_dl_s"] = f"{sb:.3f}"
         p["L_case_dy"] = case_off(t, T_CASE) if T_CASE <= t < T_PRESS else 0
-        wide = cam(t, 27.5, DURATION, 44, 62)
+        wide = cam(t, 27.5, T4, 44, 62)
         if t < 29.0: c = wide
         elif t < 29.6: c = lerp(wide, CLOSE, ease((t - 29.0)/0.6))
         elif t < T_POP_END: c = CLOSE           # close on the wheels (near halves cut away), the fence, latch and hammer
@@ -248,8 +271,8 @@ def annotate(png, t, out):
         d.text(((W - d.textlength(cap, font=f))/2, H - 56), cap, font=f, fill=(255, 255, 255, 255))
     if t < 3.0 or t >= SCENES[-1][0]:
         a = int(255*min(1, min(t, DURATION - t)/0.6 + 0.2))
-        title, sub = (("How the locks work", "Handlebar phone dock v0.5: one dock, three lock cartridges") if t < 3.0 else
-                      ("Store, printed or dial lock", "Same dock, cover, steel bolt and strike  |  CAD: phone_dock_v0.5.scad"))
+        title, sub = (("How the locks work", "Handlebar phone dock v0.5: one dock, four lock cartridges") if t < 3.0 else
+                      ("Store, push-key, dial or tubular lock", "Same dock, cover, steel bolt and strike  |  CAD: phone_dock_v0.5.scad"))
         f1, f2 = load_font(True, 44), load_font(False, 24)
         d.rectangle([0, 0, W, 150], fill=(20, 24, 30, min(215, a)))
         d.text(((W - d.textlength(title, font=f1))/2, 30), title, font=f1, fill=(255, 255, 255, a))

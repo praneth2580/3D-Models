@@ -265,6 +265,7 @@ class Project:
             rows.append(dict(stem=stem, file=os.path.basename(rel), rel=rel, name=m.get("name", pretty(stem)),
                              what=m.get("what", ""), qty=str(m.get("qty", "1")), material=m.get("material", ""),
                              note=m.get("note", ""), optional=m.get("optional", False), when=m.get("when", {}),
+                             view=m.get("view", False),
                              size=os.path.getsize(os.path.join(self.dir, rel))))
         return rows
 
@@ -299,6 +300,7 @@ class Project:
 
     def make_zip(self, path):
         pats = NEVER_ZIP + [f"*/{p}" for p in self.exclude]
+        pats += [f"{self.folder}/{p['rel']}" for p in self.part_rows() if p["view"]]   # view-only models: not in the zip
         with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
             for d, dirs, files in os.walk(self.dir):
                 dirs[:] = sorted(dirs)
@@ -393,9 +395,9 @@ class Project:
 
         rows = ""
         for p in parts:
-            opt = " <span class='opt'>(optional)</span>" if p["optional"] else ""
+            opt = " <span class='opt'>(view only, not for printing)</span>" if p["view"] else " <span class='opt'>(optional)</span>" if p["optional"] else ""
             note = f"<br><span class='opt'>{esc(p['note'])}</span>" if p["note"] else ""
-            rows += (f"<tr data-when='{esc(json.dumps(p['when']))}' data-file='{esc(p['file'])}'><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
+            rows += (f"<tr data-when='{esc(json.dumps(p['when']))}' data-file='{esc(p['file'])}'{' data-view=1' if p['view'] else ''}><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
                      f"<td>{esc(p['qty'])}</td><td>{esc(p['material'])}</td>"
                      f"<td><a class='file' href='files/{esc(p['file'])}' download>{esc(p['file'])}</a> "
                      f"<span class='opt'>{fmt_size(p['size'])}</span></td></tr>")

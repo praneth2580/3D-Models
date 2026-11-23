@@ -33,11 +33,14 @@
 // "assembly", "case_shell", "case_back", "window_template", "shoe", "dock_lid", "clamp_body", "clamp_cap",
 // "bar_shim", "pad_spacer", "lock_cartridge" (for lock_type), "lock_yoke", "crank_template" (drilling guide for
 // the lock's own cam), "lock_cover", "strike_keeper", "strike_keeper_2d" (DXF; only with steel_keeper = true),
-// "lock_bay_exploded" (picture).
+// "lock_bay_exploded" (picture), "assembled_view" (view-only model: the dock with lock_type's lock fitted).
 // One-piece mount (mount = "merged", the default): "dock_base" (dock + base plate in one part), "iso_pad" (rubber pad, x2).
 // Modular mount (mount = "modular"): "receiver" (the dock), "base_plate", "base_plate_2d" (DXF).
 // Optional printed lock (printed_lock.scad, PRINTED_LOCK.md, lock_type = "printed"): "plock_shuttle", "plock_wafer"
 // (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_lifter", and "lock_cartridge".
+// Optional dial lock (dial_lock.scad, DIAL_LOCK.md, lock_type = "dial"): "dl_*".
+// Optional tubular lock (tubular_lock.scad, TUBULAR_LOCK.md, lock_type = "tubular"): "tl_housing", "tl_plug",
+// "tl_crank", "tl_key", "tl_pins", and "lock_cartridge"; checks "tl_check_*".
 PART = "assembly";
 SHOW_PHONE = true;
 SHOW_BAR = true;
@@ -847,6 +850,7 @@ module lock_cartridge() {
     }
     if (lock_type == "printed") plk_pod_cuts();   // shuttle channel, lifter pocket, tab groove, keyhole
     else if (lock_type == "dial") dl_cuts();      // button, lifter, wheel pack, fence and springs
+    else if (lock_type == "tubular") tl_cuts();   // keyhole, housing pocket, crank and yoke space
     else store_lock_cuts();
     lock_arm_pocket();
     translate([cart_screw[0], cart_screw[1], cart_z0 - 0.05]) cylinder(d=2.5, h=cart_screw_l + 0.05);
@@ -946,6 +950,7 @@ module crank_placed(turn=1) {
 module lock_mechanism(turn=1) {
   if (lock_type == "printed") plk_placed(turn);   // shuttle, wafers, key and lifter
   else if (lock_type == "dial") dl_placed(turn);     // dial, wheels, fence, button and lifter
+  else if (lock_type == "tubular") tl_placed(turn);  // housing, plug, pins, crank, yoke and key
   else { color([0.75,0.75,0.78]) crank_placed(turn); color([0.55,0.58,0.62]) lock_yoke(turn); }
   lock_bolt(turn);
 }
@@ -1200,9 +1205,21 @@ module assembly() {
   if (SHOW_BAR) % rotate([0,90,0]) cylinder(d=bar_d, h=700, center=true);
 }
 
+// View-only model (website viewer): the dock (one-piece base or receiver) with lock_type's lock fitted, locked,
+// key in: cartridge, mechanism, bolt and cover in one mesh. Not for printing.
+module lock_assembled_view() {
+  if (merged) dock_base(); else dock_receiver();
+  lock_cartridge();
+  lock_mechanism(1);
+  if (lock_type == "store") store_cam_lock();
+  lock_cover();
+}
+
 include <printed_lock.scad>
 include <dial_lock.scad>
-assert(lock_type == "store" || lock_type == "printed" || lock_type == "dial", "lock_type must be \"store\", \"printed\" or \"dial\".");
+include <tubular_lock.scad>
+assert(lock_type == "store" || lock_type == "printed" || lock_type == "dial" || lock_type == "tubular",
+       "lock_type must be \"store\", \"printed\", \"dial\" or \"tubular\".");
 
 // ------------------------- PART SELECTOR -----------------------------
 if (PART == "assembly") assembly();
@@ -1232,9 +1249,11 @@ else if (PART == "lock_bay_exploded") {          // picture: the dock's lock bay
   }
   color([0.30, 0.30, 0.30]) translate([0, 0, -95]) lock_cover();
 }
+else if (PART == "assembled_view") lock_assembled_view();     // view only: the dock with lock_type's lock fitted, locked
 else if (PART == "lock_cartridge") translate([0, 0, -cart_z0]) lock_cartridge();   // standing on its bottom, as in the dock
 else if (PART == "strike_keeper") strike_keeper();
 else if (PART == "strike_keeper_2d") translate([-strike_x0, -strike_y0]) strike_keeper_2d();   // laser template, corner at the origin
 else if (plk_is_part(PART)) plk_part(PART);
 else if (dl_is_part(PART)) dl_part(PART);
+else if (tl_is_part(PART)) tl_part(PART);
 else if (PART != "none") echo("Unknown PART.");

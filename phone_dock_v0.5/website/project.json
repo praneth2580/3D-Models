@@ -53,6 +53,18 @@
       "caption": "The printed lock's cartridge fits the same bay"
     },
     {
+      "src": "images/tl_exploded.png",
+      "caption": "Optional tubular key lock: a hollow printed key, the plug with 6 key pins, the housing with 6 drivers and springs, the crank and the standard yoke"
+    },
+    {
+      "src": "images/tl_cutaway.png",
+      "caption": "Tubular lock cut through its axis: with the right key, every key pin and driver meets exactly at the gap between plug and housing, so the plug turns"
+    },
+    {
+      "src": "images/tl_keyhole.png",
+      "caption": "The tubular lock's keyhole: two tab notches (the key fits one way round, and comes out only when locked) and the pin tips"
+    },
+    {
       "src": "images/dl_side.png",
       "caption": "Demo: a mechanical dial lock, numbered 0-9, with a 4-6 digit code. Dial it to unlock; press the button to lock (that also clears the code)"
     },
@@ -61,11 +73,62 @@
       "caption": "The dial lock's cartridge: a notched wheel per digit, the fence and latch, the spring button with its ramp, the lifter"
     }
   ],
-  "viewer_default": "dock_base",
+  "viewer_default": [
+    "assembled_store",
+    "assembled_printed",
+    "assembled_tubular",
+    "assembled_dial",
+    "dock_base",
+    "receiver"
+  ],
   "exclude": [
     "cam_template.stl"
   ],
   "parts": {
+    "assembled_store": {
+      "name": "Assembled: one-piece base with the store cam lock",
+      "what": "The dock base with the store cam lock fitted, locked: cartridge, lock parts, steel bolt and cover in one model, to see how it all goes together",
+      "qty": "-",
+      "material": "-",
+      "view": true,
+      "when": {
+        "mount": "merged",
+        "lock": "store"
+      }
+    },
+    "assembled_printed": {
+      "name": "Assembled: one-piece base with the printed push-key lock",
+      "what": "The dock base with the printed push-key lock fitted, locked: cartridge, lock parts, steel bolt and cover in one model, to see how it all goes together",
+      "qty": "-",
+      "material": "-",
+      "view": true,
+      "when": {
+        "mount": "merged",
+        "lock": "printed"
+      }
+    },
+    "assembled_tubular": {
+      "name": "Assembled: one-piece base with the tubular key lock",
+      "what": "The dock base with the tubular key lock fitted, locked: cartridge, lock parts, steel bolt and cover in one model, to see how it all goes together",
+      "qty": "-",
+      "material": "-",
+      "view": true,
+      "when": {
+        "mount": "merged",
+        "lock": "tubular"
+      }
+    },
+    "assembled_dial": {
+      "name": "Assembled: one-piece base with the dial lock (demo)",
+      "what": "The dock base with the dial lock (demo) fitted, locked: cartridge, lock parts, steel bolt and cover in one model, to see how it all goes together",
+      "qty": "-",
+      "material": "-",
+      "view": true,
+      "when": {
+        "mount": "merged",
+        "lock": "dial"
+      }
+    },
     "case_shell": {
       "name": "Case shell",
       "what": "Front of the slim case: the window lip, side walls and plug bay",
@@ -206,11 +269,14 @@
     },
     "lock_yoke": {
       "name": "Lock yoke",
-      "what": "Carries the steel bolt; driven by the lock's cam",
+      "what": "Carries the steel bolt; driven by the crank (the store lock's cam, or the tubular lock's printed crank)",
       "qty": "1",
       "material": "PA12 best, or PETG",
       "when": {
-        "lock": "store"
+        "lock": [
+          "store",
+          "tubular"
+        ]
       }
     },
     "lock_cartridge": {
@@ -224,7 +290,7 @@
     },
     "lock_cover": {
       "name": "Lock cover",
-      "what": "Closes the lock pod and holds the cartridge in (screwed into it), with drain slots. The same for both locks",
+      "what": "Closes the lock pod and holds the cartridge in (screwed into it), with drain slots. The same for every lock",
       "qty": "1",
       "material": "ASA or PETG"
     },
@@ -456,6 +522,66 @@
       "when": {
         "lock": "printed"
       }
+    },
+    "tl_cartridge": {
+      "name": "Tubular lock: cartridge",
+      "what": "Use it instead of lock_cartridge: the keyhole, the housing's pocket and the crank's space. It fits the standard dock",
+      "qty": "1",
+      "material": "PETG or ASA, standing on its bottom",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
+    },
+    "tl_housing": {
+      "name": "Tubular lock: housing",
+      "what": "The plug's bore, the 6 driver chambers and the stop pocket; drops into the cartridge from below",
+      "qty": "1",
+      "material": "PETG, 100 % infill, standing on its back face",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
+    },
+    "tl_plug": {
+      "name": "Tubular lock: plug",
+      "what": "Turns in the housing; holds the 6 key pins. The key's tabs turn it",
+      "qty": "1",
+      "material": "PETG, 100 % infill, on its back face, 0.12-0.15 mm layers",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
+    },
+    "tl_crank": {
+      "name": "Tubular lock: crank",
+      "what": "Screwed to the back of the plug; its 4 mm steel pin drives the standard lock_yoke",
+      "qty": "1",
+      "material": "PETG or PA12, 100 % infill, flat",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
+    },
+    "tl_key": {
+      "name": "Tubular lock: key",
+      "what": "Hollow tube key with 6 cuts and two tabs (example code here: print your own from tl_code)",
+      "qty": "1+",
+      "material": "PETG (or PC / PA), 100 % infill, on its bow",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
+    },
+    "tl_pins": {
+      "name": "Tubular lock: pins",
+      "what": "6 key pins (they differ: set by tl_code) and 6 drivers",
+      "qty": "1 set",
+      "material": "PETG, standing, 0.1-0.12 mm layers",
+      "optional": true,
+      "when": {
+        "lock": "tubular"
+      }
     }
   },
   "dxf": {
@@ -486,6 +612,10 @@
     {
       "label": "Wiring: circuit, parts, perfboard or PCB, bring-up",
       "file": "WIRING.md"
+    },
+    {
+      "label": "Tubular key lock (printed, optional alternative to the store lock)",
+      "file": "TUBULAR_LOCK.md"
     },
     {
       "label": "Printed push-key lock (optional alternative to the store lock)",
@@ -542,6 +672,11 @@
           "id": "printed",
           "label": "Printed push-key",
           "note": "your own key code"
+        },
+        {
+          "id": "tubular",
+          "label": "Tubular key",
+          "note": "printed, turn key"
         },
         {
           "id": "dial",

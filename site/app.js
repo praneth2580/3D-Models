@@ -80,10 +80,18 @@ const VIEWER = (function () {
   const buttons = [...btns.querySelectorAll(".part-btn")];
 
   let show = (i) => { current = i; buttons.forEach((b) => b.setAttribute("aria-selected", String(+b.dataset.i === i))); };
+  // The part shown first: P.default is a stem or a list of stems; the first one that is in the chosen build wins.
+  const defaults = [].concat(P.default || []);
+  const pick = () => {
+    for (const d of defaults) { const k = P.parts.findIndex((p, i) => visible[i] && p.file.replace(/\.stl$/i, "") === d); if (k >= 0) return k; }
+    return Math.max(0, visible.indexOf(true));
+  };
   api.setVisible = (vis) => {
+    const was = current >= 0 ? defaults.indexOf(P.parts[current].file.replace(/\.stl$/i, "")) : -1;
     visible = vis;
     buttons.forEach((b, i) => { b.hidden = !vis[i]; });
-    if (current >= 0 && !vis[current]) { const k = vis.indexOf(true); if (k >= 0 && started) show(k); }
+    // Showing a default (say, the assembled model for one lock) or a part no longer in the build: switch to the new default.
+    if (started && current >= 0 && (!vis[current] || was >= 0)) { const k = pick(); if (k !== current) show(k); }
   };
 
   if (!window.THREE || !THREE.STLLoader || !THREE.OrbitControls) {
@@ -151,9 +159,7 @@ const VIEWER = (function () {
   // Load the first part only when the viewer comes into view, so the page itself stays light.
   const start = () => {
     if (started) return; started = true; resize();
-    let first = P.parts.findIndex((p, i) => visible[i] && p.file.replace(/\.stl$/i, "") === P.default);
-    if (first < 0) first = Math.max(0, visible.indexOf(true));
-    show(first);
+    show(pick());
   };
   if ("IntersectionObserver" in window) {
     new IntersectionObserver((es, o) => { if (es.some((e) => e.isIntersecting)) { start(); o.disconnect(); } }, { rootMargin: "200px" }).observe(canvas);
@@ -185,7 +191,7 @@ const VIEWER = (function () {
       const ok = fits(JSON.parse(r.dataset.when || "{}"));
       r.hidden = !(ok || showAll);
       r.classList.toggle("other", !ok);
-      if (ok && /\.stl$/i.test(r.dataset.file)) n++;
+      if (ok && /\.stl$/i.test(r.dataset.file) && !r.dataset.view) n++;
     });
     document.getElementById("b-count").innerHTML = `<b>${n}</b> printable parts for <b>${esc(label())}</b>`;
     VIEWER.setVisible(P.parts.map((p) => showAll || fits(p.when)));
@@ -204,7 +210,7 @@ const VIEWER = (function () {
   const zipBtn = document.getElementById("b-zip"), status = document.getElementById("b-status");
   zipBtn.addEventListener("click", async () => {
     if (!window.JSZip) { status.textContent = "The zip tool couldn't load. Use the download links in the list instead."; return; }
-    const files = [...new Set(rows.filter((r) => fits(JSON.parse(r.dataset.when || "{}"))).map((r) => r.dataset.file))];
+    const files = [...new Set(rows.filter((r) => !r.dataset.view && fits(JSON.parse(r.dataset.when || "{}"))).map((r) => r.dataset.file))];
     const zip = new JSZip();
     const folder = zip.folder(P.slug + "-" + Object.values(state).join("-"));
     zipBtn.disabled = true;

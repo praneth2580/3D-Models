@@ -7,7 +7,7 @@
 
 > **One design, about ₹3,650–5,600 in Mumbai** ([`SHOPPING_LIST_INDIA.md`](SHOPPING_LIST_INDIA.md)). The only choice is how you build the dock's electronics: **hand-wired on perfboard**, or on a **small ordered PCB** (same circuit and parts, about ₹700–2,300 more). Everything printed is the same either way; see [`WIRING.md`](WIRING.md).
 >
-> Videos: `video/mechanism_demo.mp4` (the whole dock) and `video/lock_demo.mp4` (how each of the three locks works: store, printed, dial).
+> Videos: `video/mechanism_demo.mp4` (the whole dock) and `video/lock_demo.mp4` (how each of the four locks works: store, printed push-key, dial, tubular key).
 >
 > **Website:** https://praneth2580.github.io/3D-Models/phone_dock_v0.5/ (3D viewer and free downloads). **License:** CC BY-NC-SA 4.0, see [`LICENSE.md`](LICENSE.md).
 
@@ -178,11 +178,14 @@ To make the window removable instead of bonded, you would need a screwed front f
 - **One dock, either lock:** the lock pod is a plain bay, and the lock comes in a printed **cartridge** that slides up into it from below. The cartridge's face plate fills a notch in the pod's side wall, flush with it, and the lock cover holds the cartridge in.
   - **Store lock:** `lock_cartridge.stl`. Its face plate has the 16 mm D-shaped hole, and the lock's nut clamps onto it.
   - **Printed lock:** `printed_lock/plock_cartridge.stl`. Its face plate has the key slot.
-  - The dock, the lock cover, the bolt and the strike are the same for both. To change locks later, print the other cartridge: no new dock.
+  - **Tubular key lock:** `tubular_lock/tl_cartridge.stl`, with the lock's printed housing in it.
+  - The dock, the lock cover, the bolt and the strike are the same for every lock. To change locks later, print the other cartridge: no new dock.
+  - To see each lock fitted in the one-piece base, open `assembled/assembled_<lock>.stl` (store, printed, tubular, dial) in any STL viewer, or in the website's 3D viewer. They are view-only models, not for printing (`PART="assembled_view"` with your `lock_type`).
   - The cartridge can't be pulled out through the notch: inside the wall it is wider than the notch, and the lock cover is screwed into it.
 
   ![The lock bay and the store lock's cartridge](images/lock_bay_store.png)
 - **Or print one:** [`PRINTED_LOCK.md`](PRINTED_LOCK.md) has a push-key lock designed for 3D printing: a chunky 6 × 10 mm printed key that slides straight in through a slot in the cartridge's face plate, 4 wafers and 4 small springs. It drives the same steel bolt, with your own key code and no drilling. It is a deterrent, though: a good store-bought lock is more secure.
+- **Or a printed tubular key lock:** [`TUBULAR_LOCK.md`](TUBULAR_LOCK.md) has a pin-tumbler lock with a round, hollow printed key (`lock_type = "tubular"`): push it in and turn it a quarter turn, like the store lock. 6 pins with 3 cut depths give 729 codes. Its printed crank drives the store lock's own yoke and steel bolt, with no drilling; you add 6 small springs, a 4 × 8 mm steel pin and one screw. The tube shape is what makes a turning printed key strong enough. Checked in CAD, not yet printed.
 - **Or a dial combination lock (demo):** [`DIAL_LOCK.md`](DIAL_LOCK.md) has a fully mechanical safe-style lock in a third cartridge (`lock_type = "dial"`): one dial numbered 0–9 and a 4–6 digit code. Dial the code and the button pops out and the bolt drops. **Press the button to lock**: the press also clears the code, so the whole code is needed to open it again. No key, no power; 3 small springs. A concept, checked in CAD only.
 - Use a 16 mm (5/8") tubular quarter-turn cam lock with a **key removable only when locked**.
 - From the inside face of the 3 mm panel to the cam seat it must measure 16 mm (`lock_body_len`). Its nut must fit within 22 mm (`lock_nut_clear_d`).
@@ -307,7 +310,7 @@ With the modular option, the lowest point is about 9 mm above bar level and the 
 1. Make a cardboard mock-up on the bike (178 × 85 mm). Measure the bar and choose the clamp spacing.
 2. Print and fit the clamps and the dock base (or, for the modular option, the base plate). Check the clearance and steering lock.
 3. Measure the phone. Print the shell and back cover. Check the phone fit, the O-ring fit and the camera relief before bonding the window.
-4. Buy the 16 mm lock (or print the [printed lock](PRINTED_LOCK.md)), the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list), and the rubber, washers and spacers for the clamp bolts (grommets for the modular option). `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, the lock cartridge and the yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
+4. Buy the 16 mm lock (or print the [tubular key lock](TUBULAR_LOCK.md) or the [printed push-key lock](PRINTED_LOCK.md)), the 14 × 9 mm key steel, 10 P75 pogo pins, the thermostat, the dock-board parts (`WIRING.md` parts list), and the rubber, washers and spacers for the clamp bolts (grommets for the modular option). `SHOPPING_LIST_INDIA.md` has links, prices and an estimated total for buying in Mumbai. Decide on perfboard or a PCB for the dock board. Update the SELECT parameters, print the shoe, the lock cartridge and the yoke, and bench-test docking. Also test that the key goes in easily from the side, behind the top corner, once the case is on the bike.
 5. Do a spray test with dry tissue inside, then a ride test without the phone, then a heat test with the phone.
 
 ## Exporting

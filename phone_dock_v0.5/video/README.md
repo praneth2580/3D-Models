@@ -23,20 +23,22 @@
 
 ## Lock video
 
-`lock_demo.mp4` (1280 × 720, 24 fps, about 49 s) shows just the lock pod, see-through, with the moving lock parts solid, for each of the three lock cartridges:
+`lock_demo.mp4` (1280 × 720, 24 fps, about 64 s) shows just the lock pod, see-through, with the moving lock parts solid, for each of the four lock cartridges:
 
 | Time | Scene |
 |---|---|
 | 0–3 s | Title |
 | 3–14.5 s | **Store cam lock:** the key goes in and turns a quarter turn; the crank pin pulls the yoke and the steel bolt down; the case slides off and back on; turn back and the bolt rises into the strike against its steel block |
 | 14.5–27.5 s | **Printed push-key lock:** no key, the wafers drop; the chunky key lifts them level; pushed 7 mm, the shuttle's slanted track lowers the lifter and the bolt; the case slides off and on; pulled back, the bolt rises and the key comes out |
-| 27.5–46 s | **Dial lock:** a labelled close-up with the wheels' near halves cut away. The dial is turned right, left, right, left to the code (the wheels are picked up by their pins, simulated by the script), every notch comes to the bottom, the fence rises, its latch lets the button go, the button pops out and the bolt drops. On its way out a hump lifts the reset hammer, which snaps the front wheel home (the code is cleared). The case slides off and on, then one press of the button locks it |
-| 46–49 s | Closing title |
+| 27.5–45.8 s | **Dial lock:** a labelled close-up with the wheels' near halves cut away. The dial is turned right, left, right, left to the code (the wheels are picked up by their pins, simulated by the script), every notch comes to the bottom, the fence rises, its latch lets the button go, the button pops out and the bolt drops. On its way out a hump lifts the reset hammer, which snaps the front wheel home (the code is cleared). The case slides off and on, then one press of the button locks it |
+| 45.8–60.4 s | **Tubular key lock:** a close-up cut through the lock's axis. With no key the drivers cross into the plug; the hollow key goes in and its notches push every pin to the gap between plug and housing. Then, in the wide view, a quarter turn: the crank's steel pin pulls the yoke and the bolt down; the case slides off and on; turn back, the bolt rises. Back in the close-up, the key comes out and the drivers drop back across the gap |
+| 60.4–63.8 s | Closing title |
 
 It is rendered from `lock_anim.scad` by `make_lock_video.py`, which sets `lock_type` per frame:
 
 ```sh
-python3 make_lock_video.py                 # -> lock_demo.mp4 (about 3 minutes with 8 jobs)
+python3 make_lock_video.py                 # -> lock_demo.mp4 (about 3 minutes with 8 jobs, plus the tubular lock's
+                                           #    cut close-ups: about 30 s per frame each, about 20 more minutes)
 python3 make_lock_video.py --test 6,20,33  # contact sheet
 ```
 

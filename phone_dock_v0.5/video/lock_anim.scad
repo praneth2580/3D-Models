@@ -1,5 +1,5 @@
 /*
-  Lock video scene: how the three locks move the steel bolt. Uses the real parts from phone_dock_v0.5.scad
+  Lock video scene: how the four locks move the steel bolt. Uses the real parts from phone_dock_v0.5.scad
   (lock_type is set per frame). The dock, cartridge, cover and shoe are drawn see-through; the moving lock
   parts and the bolt solid. Set per frame by make_lock_video.py (-D L_xxx=...).
   Visual only: the store lock's body and key.
@@ -23,6 +23,7 @@ L_dl_f     = 0;     // dial lock: fence raised, mm
 L_dl_l     = 0;     // dial lock: latch's tooth raised, mm (its arm bends when it's above the fence)
 L_dl_h     = 0;     // dial lock: hammer raised, mm
 L_dl_cut   = 0;     // dial lock close-up: 1 = the wheels' near halves cut away, the button see-through
+L_tl_cut   = 1;     // tubular lock: 1 = cut on the axis's horizontal plane (the upper half removed), so the pins show
 
 GHOST = [0.55, 0.62, 0.72, L_ghost];
 BOLT = [1.0, 0.82, 0.1];
@@ -49,6 +50,7 @@ module store_key() {                       // tubular key on the lock axis, turn
   }
 }
 
+module tl_cut() if (L_tl_cut > 0) render() intersection() { children(); translate([40, 0, -60]) cube([80, 80, 60 + lock_z]); } else children();
 module bolt_at(dz) color(BOLT) translate([bolt_x - bolt_w/2, bolt_y - bolt_t/2, yoke_bottom_locked + dz]) cube([bolt_w, bolt_t, bolt_len]);
 
 module scene() {
@@ -68,6 +70,20 @@ module scene() {
     }
     color([0.45, 0.75, 0.95]) plk_lifter(t);
     bolt_at(plk_dz_s(L_shift));
+  } else if (lock_type == "tubular") {      // tubular lock: L_turn turns it, L_key_out pulls the key out
+    o = max(L_key_out, 0);
+    kp = min(tl_xs + tl_T + tl_play, tl_xs + o);          // key pins' back ends = drivers' front ends (right key)
+    color([0.55, 0.36, 0.20]) tl_cut() tl_housing();
+    color([0.85, 0.55, 0.15]) tl_cut() tl_plug(L_turn, min(o, tl_play));
+    color([0.95, 0.85, 0.30]) tl_cut() {
+      for (i = [0:tl_n - 1]) tl_rot(L_turn) tl_at(kp, tl_pa(i)) tl_keypin(i);
+      for (i = [0:tl_n - 1]) tl_at(kp - tl_drv, tl_pa(i)) tl_driver();
+    }
+    color([0.2, 0.2, 0.22]) tl_cut() for (i = [0:tl_n - 1]) tl_at(tl_xfl, tl_pa(i)) tl_spring(kp - tl_drv - tl_xfl);
+    color([0.8, 0.8, 0.84]) { tl_crank(L_turn); tl_steel_pin(L_turn); }
+    color([0.45, 0.75, 0.95]) lock_yoke(L_turn);
+    if (L_show_key) color([0.25, 0.5, 0.85]) tl_cut() tl_key(tl_code, L_turn, o);
+    bolt_at(yoke_dz(L_turn));
   } else {                                  // dial lock
     color([0.45, 0.75, 0.95]) dl_lifter(L_dl_s);
     color([0.75, 0.75, 0.78]) dl_fence(L_dl_f, L_dl_l);
