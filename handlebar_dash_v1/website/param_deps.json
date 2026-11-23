@@ -4,11 +4,15 @@
  "defaults": {
   "bar_d": 22.2,
   "clamp_w": 24,
+  "cradle_span": 110,
+  "head_back": 32,
+  "head_up": 20,
   "riser": 30,
-  "hood_len": 28,
   "insert_d": 4.2,
+  "m4_insert_d": 5.6,
   "gp_hole": 5.3,
-  "fit": 0.3
+  "fit": 0.3,
+  "led_d": 5.2
  },
  "parts": {
   "head_shell": [
@@ -19,14 +23,34 @@
   ],
   "head_cover": [
    "insert_d",
+   "m4_insert_d",
+   "fit"
+  ],
+  "head_cover_stalk": [
+   "insert_d",
    "gp_hole",
    "fit"
   ],
-  "head_hood": [
-   "hood_len",
+  "lip_gasket": [],
+  "head_brow": [
+   "fit",
+   "led_d"
+  ],
+  "telltale_diffusers": [],
+  "gps_cap": [
    "fit"
   ],
-  "lip_gasket": [],
+  "cradle": [
+   "bar_d",
+   "clamp_w",
+   "cradle_span",
+   "head_back",
+   "head_up"
+  ],
+  "cradle_cap": [
+   "bar_d",
+   "clamp_w"
+  ],
   "clamp_upper": [
    "bar_d",
    "clamp_w",

@@ -2,7 +2,7 @@
 
 **Status: phase 1 ready to build; the display head is modelled (v1).** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md); its firmware compiles. The display head's CAD is [`handlebar_dash.scad`](handlebar_dash.scad), its STLs in [`parts/`](parts/) (checked in CAD, not printed yet). The interface box comes next. This file is the design brief: what we know about the bike, the plan, the display head, and the open questions.
 
-![The display head on its clamp, from the rider's seat](images/hd_rider.png)
+![The display head on the handlebar, from the rider's seat](images/hd_rider.png)
 
 A round colour display on its own handlebar clamp that **replaces the stock instrument cluster**. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds its own sensors: GPS (speed, trip, clock), battery voltage, air temperature, and lean angle and g-force.
 
@@ -73,7 +73,7 @@ Speed (needle), odometer, trips A, B and F (distance since low fuel), 12-hour cl
   - an automotive 12 V to 5 V supply.
   
   It sends ready-made readings to the display.
-- **Display head** on the handlebar clamp: the **Waveshare ESP32-S3 2.8" round touch display** (480 × 480, ST7701 panel, GT911 touch; about ₹3,700–4,700 in India), with GPS, a light sensor for automatic brightness, and a sun hood. It connects to the interface box by one thin 4-wire cable (+12 V, ground, dash bus H and L).
+- **Display head** on the handlebar clamp: the **Waveshare ESP32-S3 2.8" round touch display** (480 × 480, ST7701 panel, GT911 touch; about ₹3,700–4,700 in India), with GPS, a light sensor for automatic brightness and an optional row of 8 LED tell-tales. It sits on the handlebar, Harley-style, in a cradle. It connects to the interface box by one thin 4-wire cable (+5 V from the box's supply, ground, dash bus H and L).
 - **Why two boxes:** round ESP32-S3 displays use most of their pins for the screen, leaving too few for the bike's signals. Lean angle also needs the motion sensor on the frame.
 
 **The buses:**
@@ -103,11 +103,13 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
    
    The logger's parts are reused in the interface box.
 2. **Electronics on the bench:** interface box and display working together, with a recorded log played back as if it were the bike.
-3. **Enclosures (OpenSCAD):** the display head with its clamp and sun hood, and the interface box. Like the other projects: parametric, printable, with asserts and fit checks.
+3. **Enclosures (OpenSCAD):** the display head with its cradle and tell-tales (done, v1), and the interface box. Like the other projects: parametric, printable, with asserts and fit checks.
 4. **Firmware:** the screens (speed, gear, fuel, trips, clock, tell-tales, lean angle), the odometer, brightness, the INFO button.
 5. **On the bike,** keeping the stock cluster so it can be refitted (for servicing or inspection).
 
 ## The display head (v1 CAD)
+
+![The tell-tales, lit](images/hd_brow.png)
 
 ![Taken apart](images/hd_exploded.png)
 
@@ -119,29 +121,63 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 
 **The head is 102.5 mm across and 39.6 mm deep.**
 
+**Owner's choices:**
+- **No sun hood.**
+- **Status lights** ("options to show status indicators like high beam, abs"): an optional row of LED tell-tales.
+- **On the handlebar, not above it** ("something like the harleys"): the head sits low behind the bar in a cradle.
+
+**Two options** (`mount`, `telltales`; the build picker on the website follows them):
+
+| Option | Choices |
+|---|---|
+| `mount` | **`"bar"`** (default): on the handlebar, Harley-style. `"stalk"`: on a GoPro-style joint above the bar |
+| `telltales` | **`"brow"`** (default): 8 LED tell-tales above the screen. `"none"`: the tell-tales on the screen only, and a plain GPS cap |
+
+The firmware shows the tell-tales on the screen in both cases. The LEDs are for when the screen is off or washed out by the sun: lit LEDs are much easier to see in sunlight than an LCD.
+
 How it goes together:
 1. **Shell:** a round tube with a thin front lip. The lip overlaps the glass's black border by 2.2 mm and never reaches the screen. The glass sits on a 0.8 mm foam ring (`lip_gasket`).
 2. **Carrier:** the display screws to it with 4 × M2 × 6 into its own standoffs. The GPS module and the CAN board stick to its back with foam tape. Display and carrier slide into the shell from the back; a key and groove at the top stop it going in rotated.
 3. **Back cover:** a plug that closes the back and presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 countersunk screws go through the side wall into heat-set inserts in the cover. There are no screws on the front. It also carries:
-   - the GX12 4-pin socket for the cable to the interface box;
-   - a **GoPro-style 3-prong joint**, set low so the head sits above the clamp.
-4. **Sun hood:** reaches 28 mm past the screen. It's held by the top two cover screws (M3 × 12), and the GPS antenna sits under it, which plastic doesn't block.
-5. **Handlebar clamp:** two halves around the bar with a 1 mm rubber strip and 2 × M4 bolts and nuts. Its 2-prong joint meets the cover's 3 prongs; one M5 bolt with a nyloc nut sets the tilt. Any GoPro handlebar mount also fits.
+   - the GX12 4-pin socket, at the top, where the plug clears the bike's handlebar clamp;
+   - the mount's fixings: 2 M4 inserts for the cradle, or the GoPro-style joint.
+4. **Tell-tale brow:** an arc above the screen, held by the top two cover screws (M3 × 12). From the rider's left it shows:
+   - **turn left, high beam, neutral, ABS, engine, low fuel, battery, turn right.**
+   
+   Construction:
+   - Each icon is cut through the 0.8 mm front skin and sits in its own light chamber, so no colour bleeds into the next.
+   - A white diffuser square sits behind each icon (`telltale_diffusers`). The chambers are open underneath, so the squares slide in from below.
+   - A 5 mm addressable RGB LED (WS2812B family) at the back of each chamber means one data wire drives all 8, and the firmware sets each one's colour.
+   - The brow prints standing on its front face, so the icons come out crisp. The "A" and "B" in ABS have stencil bridges, so no pieces fall out.
+   - The GPS antenna sits under the brow's tail; plastic doesn't block GPS.
+5. **Cradle (on the bar):** two bar clamps either side of the bike's own handlebar clamp (`cradle_span`, 110 mm by default), joined by a bridge that bolts to the back cover with 2 × M4 bolts into heat-set inserts.
+   - Each clamp is the cradle's upper half plus a separate cap (`cradle_cap`), with a 1 mm rubber strip and 2 × M4 bolts and nuts.
+   - The head's back sits 32 mm behind the bar's centre (`head_back`), and its centre 20 mm above the bar (`head_up`), so its lower part drops below the bar line, as on a Harley.
+   - **Turning the cradle on the bar sets the tilt.**
+6. **Stalk (option):** the 2-piece clamp with a GoPro-style joint; one M5 bolt with a nyloc nut sets the tilt. Any GoPro handlebar mount fits the stalk cover.
 
 **Checks done (CAD):**
 - every part exports as one watertight body;
 - the parts only touch where they should;
 - the foam ring is squeezed;
-- the clamp halves don't overlap;
-- **the head clears the clamp and the bar at any tilt from 0 to 60°**;
+- the brow clears the GPS antenna;
+- **on the bar:** the head clears the bar, the cradle and a stand-in for the bike's handlebar clamp (`bike_clamp`, 60 × 40 mm, top 24 mm above the bar: MEASURE yours). The cradle clears its caps and that stand-in **from 0 to 40° of tilt**; at 45° its bridge reaches the stand-in. Asserts check the clamps and the bridge against `bike_clamp`;
+- **on a stalk:** the head clears the clamp at any tilt from 0 to 60°;
 - **Waveshare's own 3D model** of the board, placed in the housing: every point is inside the 48.23 mm bore (its largest radius is 47.94 mm), in front of the carrier (only the 4 standoff ends touch it), and behind the foam ring.
+
+**Measure on your bike before printing the cradle:**
+- your handlebar clamp's width, depth and height (`bike_clamp`);
+- the free bar either side of it (`cradle_span`);
+- the bar diameter.
 
 **Not in v1 yet:**
 - the light sensor's window;
 - a USB-C access hole (firmware updates can go over Wi-Fi);
 - the carrier's mounts for the GPS and CAN boards (foam tape for now).
 
-**The joint's GoPro dimensions are PROVISIONAL:** check a real GoPro mount against `clamp_upper` before relying on that.
+**Provisional:**
+- the GoPro joint's dimensions (stalk option);
+- the free GPIO pins on the display board: the dash bus on GPIO19/20, the LED data on GPIO0. Check them against the board's schematic.
 
 ## Other bikes
 
@@ -157,7 +193,7 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 
 - A working speedometer (and odometer) is required on the road. The dash must always show speed, and must fall back to GPS speed if the bus goes quiet.
 - Royal Enfield's manuals say electrical changes not done by an authorised centre can void the warranty. The adapter harness avoids cutting wires, and the stock cluster can be plugged back in.
-- The display must be readable in direct sun (the stock LCD also looks dull in overhead sun, as its manual says). Pick a bright IPS panel and fit a hood.
+- The display must be readable in direct sun (the stock LCD also looks dull in overhead sun, as its manual says). Pick a bright IPS panel; the LED tell-tales stay readable even when the screen washes out.
 
 ## Parts and cost
 
