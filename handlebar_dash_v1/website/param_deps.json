@@ -1,0 +1,41 @@
+{
+ "generated": "2026-11-23",
+ "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
+ "defaults": {
+  "bar_d": 22.2,
+  "clamp_w": 24,
+  "riser": 30,
+  "hood_len": 28,
+  "insert_d": 4.2,
+  "gp_hole": 5.3,
+  "fit": 0.3
+ },
+ "parts": {
+  "head_shell": [
+   "fit"
+  ],
+  "head_carrier": [
+   "fit"
+  ],
+  "head_cover": [
+   "insert_d",
+   "gp_hole",
+   "fit"
+  ],
+  "head_hood": [
+   "hood_len",
+   "fit"
+  ],
+  "lip_gasket": [],
+  "clamp_upper": [
+   "bar_d",
+   "clamp_w",
+   "riser",
+   "gp_hole"
+  ],
+  "clamp_lower": [
+   "bar_d",
+   "clamp_w"
+  ]
+ }
+}

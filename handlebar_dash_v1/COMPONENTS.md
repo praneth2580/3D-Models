@@ -16,6 +16,17 @@
 | **Dash bus transceiver** | **SN65HVD230 module**, the common blue board (HiLetgo 3-pack: one here, two in the interface box) | **Yes**: a slot in the housing | Amazon.in: [HiLetgo 3 pcs SN65HVD230](https://www.amazon.in/HiLetgo-SN65HVD230-Transceiver-Communication-Protection/dp/B07ZT7LLSK) (about ₹1,502 for 3) | ₹1,500 for 3 |
 | **Cable to the interface box** | 4-core shielded cable, 0.5 mm², about 1 m, and a **GX12 4-pin** plug and panel socket | **Yes** (the GX12 socket's 12 mm hole) | Amazon.in: [GX12 aviation connector sets](https://www.amazon.in/10Sets-Aviation-Connector-Diameter-Circular/dp/B0CPV765NQ); cable: any | ₹300–600 (est.) |
 
+**Hardware for the display head and clamp** (any equivalent; Amazon.in, or Nagdevi Street):
+- 4 × M2 × 6 screws (display to carrier);
+- 4 × M3 heat-set inserts (5.7 mm long, 4.2 mm hole), 2 × M3 × 8 and 2 × M3 × 12 countersunk screws;
+- 1 × M5 × 20 bolt with a nyloc nut (the joint);
+- 2 × M4 × 20 bolts and nuts (the clamp);
+- a 1 mm rubber strip for inside the clamp;
+- 0.8 mm closed-cell foam sheet (or print `lip_gasket` in TPU);
+- double-sided foam tape.
+
+About ₹300–600 (est.).
+
 ## Interface box (behind the headlamp)
 
 | Part | Exact item | Model fits this? | Where | Price |

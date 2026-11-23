@@ -1,6 +1,8 @@
 # Handlebar Dash (v1): a round digital dash that replaces the stock instruments
 
-**Status: planning, phase 1 ready to build.** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md). The dash itself is not built yet. This file is the design brief: what we know about the bike, the plan, and the open questions.
+**Status: phase 1 ready to build; the display head is modelled (v1).** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md); its firmware compiles. The display head's CAD is [`handlebar_dash.scad`](handlebar_dash.scad), its STLs in [`parts/`](parts/) (checked in CAD, not printed yet). The interface box comes next. This file is the design brief: what we know about the bike, the plan, the display head, and the open questions.
+
+![The display head on its clamp, from the rider's seat](images/hd_rider.png)
 
 A round colour display on its own handlebar clamp that **replaces the stock instrument cluster**. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds its own sensors: GPS (speed, trip, clock), battery voltage, air temperature, and lean angle and g-force.
 
@@ -104,6 +106,42 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 3. **Enclosures (OpenSCAD):** the display head with its clamp and sun hood, and the interface box. Like the other projects: parametric, printable, with asserts and fit checks.
 4. **Firmware:** the screens (speed, gear, fuel, trips, clock, tell-tales, lean angle), the odometer, brightness, the INFO button.
 5. **On the bike,** keeping the stock cluster so it can be refitted (for servicing or inspection).
+
+## The display head (v1 CAD)
+
+![Taken apart](images/hd_exploded.png)
+
+`handlebar_dash.scad` (OpenSCAD 2021.01, with asserts); `PART=` picks an export. Modelled around the **Waveshare ESP32-S3 2.8" round display board**, from Waveshare's published outline drawing and its official 3D model (STEP, 2024-12-26):
+- the cover glass is 95.86 mm across and 1.26 mm thick;
+- the visible screen is 70.13 mm across;
+- the board is 9.73 mm deep in all;
+- it has four M2 brass standoffs whose ends are 9.71 mm behind the glass, at (±18.0, −25.56) and (±29.5, +15.14) mm from the glass centre.
+
+**The head is 102.5 mm across and 39.6 mm deep.**
+
+How it goes together:
+1. **Shell:** a round tube with a thin front lip. The lip overlaps the glass's black border by 2.2 mm and never reaches the screen. The glass sits on a 0.8 mm foam ring (`lip_gasket`).
+2. **Carrier:** the display screws to it with 4 × M2 × 6 into its own standoffs. The GPS module and the CAN board stick to its back with foam tape. Display and carrier slide into the shell from the back; a key and groove at the top stop it going in rotated.
+3. **Back cover:** a plug that closes the back and presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 countersunk screws go through the side wall into heat-set inserts in the cover. There are no screws on the front. It also carries:
+   - the GX12 4-pin socket for the cable to the interface box;
+   - a **GoPro-style 3-prong joint**, set low so the head sits above the clamp.
+4. **Sun hood:** reaches 28 mm past the screen. It's held by the top two cover screws (M3 × 12), and the GPS antenna sits under it, which plastic doesn't block.
+5. **Handlebar clamp:** two halves around the bar with a 1 mm rubber strip and 2 × M4 bolts and nuts. Its 2-prong joint meets the cover's 3 prongs; one M5 bolt with a nyloc nut sets the tilt. Any GoPro handlebar mount also fits.
+
+**Checks done (CAD):**
+- every part exports as one watertight body;
+- the parts only touch where they should;
+- the foam ring is squeezed;
+- the clamp halves don't overlap;
+- **the head clears the clamp and the bar at any tilt from 0 to 60°**;
+- **Waveshare's own 3D model** of the board, placed in the housing: every point is inside the 48.23 mm bore (its largest radius is 47.94 mm), in front of the carrier (only the 4 standoff ends touch it), and behind the foam ring.
+
+**Not in v1 yet:**
+- the light sensor's window;
+- a USB-C access hole (firmware updates can go over Wi-Fi);
+- the carrier's mounts for the GPS and CAN boards (foam tape for now).
+
+**The joint's GoPro dimensions are PROVISIONAL:** check a real GoPro mount against `clamp_upper` before relying on that.
 
 ## Other bikes
 

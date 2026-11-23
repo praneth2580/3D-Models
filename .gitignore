@@ -11,3 +11,6 @@ __pycache__/
 # Rendered video frames, export logs
 */video/frames/
 */exports/.*.log
+
+# Arduino build output
+*/firmware/*/build/

@@ -2,14 +2,212 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display that reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds its own: GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Planning. Phase 1 is ready to build: a small listen-only logger that records the bike's CAN bus, plus a few multimeter checks, to work out which messages carry speed and the rest. No printable parts yet: the housings will be modelled around the parts in the components list.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round housing around the Waveshare 2.8\" display, a carrier, a back cover, a sun hood with the GPS antenna, and a handlebar clamp with a GoPro-style joint. The interface box comes next.",
   "order": 3,
   "eyebrow": "Open-source &middot; work in progress",
-  "sections": ["plan.html"],
-  "nav": [["Plan", "#plan"]],
+  "sections": [
+    "plan.html"
+  ],
+  "nav": [
+    [
+      "Plan",
+      "#plan"
+    ]
+  ],
   "docs": [
-    {"label": "README: design brief, what we know about the bike, the plan", "file": "README.md"},
-    {"label": "Components: the exact parts (Amazon.in / Flipkart first)", "file": "COMPONENTS.md"},
-    {"label": "Phase 1: the CAN logger, wiring, ride plan and measurements", "file": "PHASE1_LOGGER.md"}
-  ]
+    {
+      "label": "README: design brief, the display head, what we know about the bike, the plan",
+      "file": "README.md"
+    },
+    {
+      "label": "Components: the exact parts (Amazon.in / Flipkart first)",
+      "file": "COMPONENTS.md"
+    },
+    {
+      "label": "Phase 1: the CAN logger, wiring, ride plan and measurements",
+      "file": "PHASE1_LOGGER.md"
+    }
+  ],
+  "cover": "images/hd_rider.png",
+  "see_title": "The display head (v1)",
+  "see_sub": "Modelled around Waveshare's published drawing and 3D model of the 2.8\" display: the housing is 102.5 mm across and 39.6 mm deep.",
+  "gallery": [
+    {
+      "src": "images/hd_rider.png",
+      "caption": "From the rider's seat: the 2.8\" round screen (70 mm visible) behind a thin lip, the sun hood on top, the clamp below"
+    },
+    {
+      "src": "images/hd_side.png",
+      "caption": "From the side: the hood reaches 28 mm past the screen; the head tilts on its joint (clear of the clamp at any angle from 0 to 60 degrees)"
+    },
+    {
+      "src": "images/hd_exploded.png",
+      "caption": "Taken apart: the shell, the carrier (the display screws to it with its own 4 standoffs), the back cover with the joint, and the hood"
+    }
+  ],
+  "viewer_default": "head_assembled",
+  "part_groups": [
+    {
+      "label": "Display head",
+      "parts": [
+        "head_shell",
+        "head_carrier",
+        "head_cover",
+        "head_hood",
+        "lip_gasket"
+      ]
+    },
+    {
+      "label": "Handlebar clamp",
+      "parts": [
+        "clamp_upper",
+        "clamp_lower"
+      ]
+    },
+    {
+      "label": "Assembled (view only)",
+      "parts": [
+        "head_assembled"
+      ]
+    }
+  ],
+  "parts": {
+    "head_shell": {
+      "name": "Shell",
+      "what": "The round housing with the thin front lip. The display slides in from the back",
+      "qty": "1",
+      "material": "PETG (ASA for the final part). Lip face down, no supports"
+    },
+    "head_carrier": {
+      "name": "Carrier",
+      "what": "The display screws to it (4 x M2 x 6 into its own standoffs); the GPS module and the CAN board go on its back",
+      "qty": "1",
+      "material": "PETG. Plate down"
+    },
+    "head_cover": {
+      "name": "Back cover",
+      "what": "Closes the back, presses the display onto the foam ring, carries the GoPro-style joint and the GX12 socket",
+      "qty": "1",
+      "material": "PETG, 4 perimeters (the joint). Plug edge down, joint up"
+    },
+    "head_hood": {
+      "name": "Sun hood",
+      "what": "Shades the screen; the GPS antenna sits under it (plastic doesn't block GPS)",
+      "qty": "1",
+      "material": "PETG. Standing on its front edge"
+    },
+    "lip_gasket": {
+      "name": "Foam ring",
+      "what": "0.8 mm ring between the lip and the glass. Print in TPU, or cut it from 0.8 mm closed-cell foam",
+      "qty": "1",
+      "material": "TPU 85A-95A, or foam"
+    },
+    "clamp_upper": {
+      "name": "Clamp, upper",
+      "what": "Around the bar, with the 2 fingers of the joint (fits the cover's 3)",
+      "qty": "1",
+      "material": "PETG, 4 perimeters"
+    },
+    "clamp_lower": {
+      "name": "Clamp, lower",
+      "what": "The other half, with traps for 2 M4 nuts",
+      "qty": "1",
+      "material": "PETG"
+    },
+    "head_assembled": {
+      "name": "Display head, assembled",
+      "what": "The head on its clamp, with a simplified display (view only)",
+      "qty": "-",
+      "view": true
+    }
+  },
+  "customize": {
+    "entry": "handlebar_dash.scad",
+    "sources": [
+      "handlebar_dash.scad"
+    ],
+    "part_var": "PART",
+    "groups": [
+      {
+        "label": "Your handlebar",
+        "params": [
+          {
+            "name": "bar_d",
+            "label": "Handlebar diameter at the clamp",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 20,
+            "max": 32,
+            "help": "22.2 (7/8\"), 25.4 (1\") or 28.6 (1-1/8\")."
+          },
+          {
+            "name": "clamp_w",
+            "label": "Clamp width along the bar",
+            "unit": "mm",
+            "step": 1,
+            "min": 16,
+            "max": 40
+          },
+          {
+            "name": "riser",
+            "label": "Joint height above the bar's centre",
+            "unit": "mm",
+            "step": 1,
+            "min": 22,
+            "max": 60,
+            "help": "Raise it to clear your bike's own bar clamp."
+          }
+        ]
+      },
+      {
+        "label": "Hood",
+        "params": [
+          {
+            "name": "hood_len",
+            "label": "How far the sun hood reaches past the screen",
+            "unit": "mm",
+            "step": 1,
+            "min": 0,
+            "max": 45
+          }
+        ]
+      },
+      {
+        "label": "Bought hardware",
+        "params": [
+          {
+            "name": "insert_d",
+            "label": "M3 heat-set insert holes",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 3.8,
+            "max": 4.8,
+            "help": "Check your inserts' recommended hole."
+          },
+          {
+            "name": "gp_hole",
+            "label": "Joint bolt hole (M5)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 5.0,
+            "max": 5.8
+          }
+        ]
+      },
+      {
+        "label": "Printer fit",
+        "note": "Change these only after a test print.",
+        "params": [
+          {
+            "name": "fit",
+            "label": "Clearance around the display's glass (per side)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 0.1,
+            "max": 0.8
+          }
+        ]
+      }
+    ]
+  }
 }

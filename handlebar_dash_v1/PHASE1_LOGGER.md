@@ -123,4 +123,4 @@ python3 tools/can_analyze.py canlog_001.log --field 1A0:2:2:le --csv speed.csv  
 
 The analysis tool was tested on a made-up log with a hidden speed signal, a switch and noise: it found the speed field (and its scale) first and the switch alone. **The real bike is the test that matters.** Send me the logs, the marker notes and the measurements, and I'll do the analysis and write the signal map.
 
-**Not yet tested:** the firmware has not been compiled or run (no ESP32 toolchain on this machine yet). Expect a first compile to need small fixes.
+**Compiled, not yet run on a board:** the firmware builds with no errors or warnings (Arduino ESP32 core 3.3.13, for the ESP32-C6 and the ESP32-S3, all warnings on). It hasn't run on real hardware yet.
