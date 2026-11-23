@@ -1,0 +1,14 @@
+<section id="plan">
+  <div class="wrap">
+    <h2>The plan</h2>
+    <p class="sub">Two boxes and three buses. The bike's wiring stays untouched: the interface box plugs into the stock cluster's connector, and the stock cluster can always go back on.</p>
+    <div class="features">
+      <div class="feature"><h3>Display head</h3><p>A 2.8" round 480 &times; 480 display (Waveshare ESP32-S3 board) on its own handlebar clamp, with GPS, automatic brightness and a sun hood.</p></div>
+      <div class="feature"><h3>Interface box</h3><p>Behind the headlamp, on the bike's cluster plug: reads the bike's CAN bus (listen only), the fuel sender, the gear sensor and the lamp wires, and holds the lean-angle sensor (an ESP32-C6 with two CAN controllers).</p></div>
+      <div class="feature"><h3>OBD+ port</h3><p>A standard 16-pin OBD-II socket on the interface box: any scan tool or ELM327 dongle plugs straight in.</p></div>
+      <div class="feature"><h3>Expansion slots</h3><p>Three sealed 6-pin slots (12 V, 5 V, ground, the dash's own CAN bus, one spare input or output). Add-ons talk only to the dash's bus, never to the bike's.</p></div>
+      <div class="feature"><h3>Phase 1: learn the bike</h3><p>Speed only reaches the stock cluster over CAN, and the messages aren't published. A small logger records the bus with GPS speed, and a script finds the speed message and the switches.</p></div>
+      <div class="feature"><h3>Then build it</h3><p>Electronics on the bench, the housings in OpenSCAD (modelled around the exact parts in the components list), the screens, and finally the bike.</p></div>
+    </div>
+  </div>
+</section>

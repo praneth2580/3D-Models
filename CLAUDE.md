@@ -39,7 +39,7 @@ _site/                 built website (gitignored)
 - **Generator:** `python3 site/build.py` builds `_site/`, using the Python standard library only.
 - **Project list:** add `--readme` to also refresh the project table in the root README.
 - **Preview:** `python3 -m http.server -d _site`.
-- **A project** is any top-level folder with `.stl` or `.scad` files. Each one gets:
+- **A project** is any top-level folder with `.stl` or `.scad` files, or with a `website/project.json` (a project still being planned, such as the handlebar dash before its CAD: owner asked "why am i not seeing it on the website"). Each one gets:
   - a page with a gallery and video;
   - a three.js STL viewer (CDN r128);
   - a download-all zip plus single STL and DXF files;

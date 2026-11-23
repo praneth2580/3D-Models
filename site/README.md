@@ -13,7 +13,7 @@ python3 site/build.py --readme   # also refresh the project table in the root RE
 
 ## What counts as a project
 
-A project is any top-level folder (not hidden, not `site`) that contains `.stl` or `.scad` files. With no setup at all, its page gets:
+A project is any top-level folder (not hidden, not `site`) that contains `.stl` or `.scad` files, or a `website/project.json` (a project still being planned, with no models yet: its page shows the intro, the sections and the docs). With no setup at all, its page gets:
 
 | Section | Comes from |
 |---|---|

@@ -558,7 +558,8 @@ def discover():
         d = os.path.join(ROOT, name)
         if not os.path.isdir(d) or name.startswith(".") or name in SKIP_DIRS:
             continue
-        if walk_files(d, {".stl", ".scad"}):
+        # A project: a folder with models, or one with a website/project.json (a project still being planned).
+        if walk_files(d, {".stl", ".scad"}) or os.path.exists(os.path.join(d, "website", "project.json")):
             projs.append(Project(name))
     projs.sort(key=lambda p: (p.order, p.title.lower()))
     return projs
