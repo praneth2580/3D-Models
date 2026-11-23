@@ -1,0 +1,313 @@
+{
+ "generated": "2026-11-23",
+ "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
+ "defaults": {
+  "phone_w": 75.0,
+  "phone_l": 160.0,
+  "phone_t": 9.0,
+  "phone_corner_r": 9.0,
+  "screen_mask": 2.0,
+  "camera_x": 0,
+  "camera_y": 62,
+  "camera_w": 34,
+  "camera_h": 36,
+  "camera_protrusion": 3.0,
+  "phone_port": "usbc",
+  "usb_side": 1,
+  "usb_port_y": 0,
+  "bar_d": 22.2,
+  "riser_h": 10,
+  "riser_d": 22,
+  "arm_back": 0,
+  "spacer_h": 0,
+  "lock_bore_d": 16.0,
+  "lock_bore_flat": 14.6,
+  "lock_body_len": 16.0,
+  "lock_nut_clear_d": 22,
+  "crank_t": 3.0,
+  "bolt_w": 14.0,
+  "bolt_t": 9.0,
+  "pin_block_depth": 15.6,
+  "pin_free": 1.5,
+  "cable_d": 4.2,
+  "led_d": 3.2,
+  "therm_l": 20,
+  "therm_w": 10,
+  "therm_t": 4.0,
+  "thermal_cutoff": true,
+  "corner_insert_d": 4.2,
+  "shoe_insert_d": 4.2,
+  "iso_washer_t": 2.0,
+  "iso_washer_d": 15,
+  "iso_spacer_d": 8.0,
+  "lock_code": [
+   2,
+   0,
+   1,
+   2
+  ],
+  "dial_code": [
+   3,
+   7,
+   1,
+   9
+  ],
+  "tl_code": [
+   1,
+   0,
+   2,
+   2,
+   0,
+   1
+  ],
+  "tl_bore_r": 8.6,
+  "tl_hole": 3.4
+ },
+ "parts": {
+  "case_shell": [
+   "phone_w",
+   "phone_l",
+   "phone_t",
+   "phone_corner_r",
+   "screen_mask",
+   "phone_port",
+   "usb_side",
+   "corner_insert_d"
+  ],
+  "case_back": [
+   "phone_w",
+   "phone_l",
+   "phone_corner_r",
+   "camera_x",
+   "camera_y",
+   "camera_w",
+   "camera_h",
+   "camera_protrusion",
+   "phone_port",
+   "usb_side",
+   "usb_port_y",
+   "therm_l",
+   "therm_w",
+   "therm_t",
+   "thermal_cutoff",
+   "shoe_insert_d"
+  ],
+  "window_template": [
+   "phone_w",
+   "phone_l",
+   "phone_corner_r",
+   "phone_port"
+  ],
+  "shoe": [
+   "phone_w",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t",
+   "thermal_cutoff"
+  ],
+  "dock_base": [
+   "phone_w",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t",
+   "pin_block_depth",
+   "cable_d",
+   "led_d",
+   "iso_washer_d",
+   "iso_spacer_d"
+  ],
+  "iso_pad": [
+   "iso_spacer_d"
+  ],
+  "dock_lid": [],
+  "receiver": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t",
+   "pin_block_depth",
+   "cable_d",
+   "led_d"
+  ],
+  "base_plate": [],
+  "shoe_modular": [
+   "phone_w",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t",
+   "thermal_cutoff"
+  ],
+  "case_back_modular": [
+   "phone_w",
+   "phone_l",
+   "phone_corner_r",
+   "camera_x",
+   "camera_y",
+   "camera_w",
+   "camera_h",
+   "camera_protrusion",
+   "phone_port",
+   "usb_side",
+   "usb_port_y",
+   "therm_l",
+   "therm_w",
+   "therm_t",
+   "thermal_cutoff",
+   "shoe_insert_d"
+  ],
+  "strike_keeper_modular": [
+   "phone_w",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "clamp_body": [
+   "bar_d",
+   "riser_h",
+   "riser_d",
+   "arm_back"
+  ],
+  "clamp_cap": [],
+  "bar_shim": [
+   "bar_d"
+  ],
+  "pad_spacer": [
+   "spacer_h"
+  ],
+  "lock_yoke": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "lock_cartridge": [
+   "lock_bore_d",
+   "lock_bore_flat",
+   "lock_body_len",
+   "lock_nut_clear_d",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "lock_cover": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "crank_template": [
+   "crank_t"
+  ],
+  "strike_keeper": [
+   "phone_w",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "plock_cartridge": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "plock_shuttle": [
+   "lock_body_len",
+   "crank_t"
+  ],
+  "plock_lifter": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "plock_wafer_1": [
+   "lock_code"
+  ],
+  "plock_wafer_2": [
+   "lock_code"
+  ],
+  "plock_wafer_3": [
+   "lock_code"
+  ],
+  "plock_wafer_4": [
+   "lock_code"
+  ],
+  "plock_wafers": [
+   "lock_code"
+  ],
+  "dl_cartridge": [
+   "dial_code",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "dl_wheel_1": [
+   "dial_code"
+  ],
+  "dl_wheel_2": [
+   "dial_code"
+  ],
+  "dl_wheel_3": [
+   "dial_code"
+  ],
+  "dl_wheel_4": [
+   "dial_code"
+  ],
+  "dl_wheels": [
+   "dial_code"
+  ],
+  "dl_spindle": [
+   "dial_code"
+  ],
+  "dl_dial": [],
+  "dl_fence": [
+   "lock_body_len",
+   "crank_t"
+  ],
+  "dl_hammer": [],
+  "dl_plunger": [
+   "lock_body_len",
+   "crank_t"
+  ],
+  "dl_lifter": [
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "plock_key": [
+   "lock_code",
+   "lock_body_len",
+   "crank_t"
+  ],
+  "tl_cartridge": [
+   "tl_code",
+   "lock_body_len",
+   "crank_t",
+   "bolt_w",
+   "bolt_t"
+  ],
+  "tl_housing": [
+   "tl_code",
+   "tl_bore_r",
+   "tl_hole"
+  ],
+  "tl_plug": [
+   "tl_code",
+   "tl_hole"
+  ],
+  "tl_crank": [],
+  "tl_key": [
+   "tl_code"
+  ],
+  "tl_pins": [
+   "tl_code"
+  ]
+ }
+}

@@ -50,6 +50,10 @@ _site/                 built website (gitignored)
 - **When adding STLs:** add their descriptions to `website/project.json` → `parts`, or they show with auto names.
 - **Repo URL:** the build reads it from `GITHUB_REPOSITORY`, or from the git remote with credentials stripped. Never print the remote URL.
 - **Pages:** the source is set to "GitHub Actions" in the repo settings (already done).
+- **Part groups and the customizer (2026-11-23; owner: "i want the models to be grouped together and allow custom resizing as per the models not all resizing only the specific section that are resizeable"):** `project.json` `part_groups` (collapsible headings in the viewer and the table) and `customize` (settings per group). Each part shows only the settings that change it, from `website/param_deps.json`.
+  - **Rerun `python3 site/param_deps.py <project>` after CAD changes** and commit the JSON (build.py warns when stale).
+  - Parts are made in the visitor's browser by `site/scad-worker.js` (openscad-wasm 0.0.4 from jsDelivr, `--backend=Manifold`, binary STL; fonts in `site/fonts/`, OFL). New settings: add them to `customize` with a label and range; parts made differently from `PART=<stem>` need `parts.<stem>.make`.
+  - Don't run the downloaded wasm locally with Node (not allowed here); test it in Chrome on the local preview.
 
 ## Phone dock (phone_dock_v0.5/)
 

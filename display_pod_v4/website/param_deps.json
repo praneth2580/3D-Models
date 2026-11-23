@@ -1,0 +1,71 @@
+{
+ "generated": "2026-11-23",
+ "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
+ "defaults": {
+  "pcb_t": 1.2,
+  "display_glass_d": 36.0,
+  "rear_component_h": 4.0,
+  "battery_t": 4.0,
+  "battery_w": 20.0,
+  "battery_l": 30.0,
+  "usb_plug_w": 12.5,
+  "usb_plug_h": 7.0,
+  "switch_nub_out": 1.0,
+  "switch_slot_w": 5.0,
+  "switch_slot_h": 2.2,
+  "bar_d": 22.2,
+  "clamp_w": 22.0,
+  "display_tilt": 40,
+  "cup_offset_y": -8.0,
+  "cup_floor_z": 26.0,
+  "detent_ball_d": 2.5,
+  "insert_hole_d": 3.2,
+  "receiver_pilot_d": 2.5,
+  "entry_clear": 0.4,
+  "track_clear": 0.3
+ },
+ "parts": {
+  "housing": [
+   "pcb_t",
+   "rear_component_h",
+   "usb_plug_w",
+   "usb_plug_h",
+   "switch_nub_out",
+   "switch_slot_w",
+   "switch_slot_h",
+   "insert_hole_d"
+  ],
+  "rear_cover": [
+   "battery_t",
+   "battery_w",
+   "battery_l",
+   "detent_ball_d"
+  ],
+  "board_retainer": [],
+  "receiver": [
+   "receiver_pilot_d",
+   "entry_clear",
+   "track_clear"
+  ],
+  "clamp_upper": [
+   "bar_d",
+   "clamp_w",
+   "display_tilt",
+   "cup_offset_y",
+   "cup_floor_z"
+  ],
+  "clamp_lower": [
+   "bar_d",
+   "clamp_w"
+  ],
+  "usb_plug": [
+   "usb_plug_w",
+   "usb_plug_h"
+  ],
+  "cover_gasket": [],
+  "bayonet_test_male": [
+   "battery_t",
+   "detent_ball_d"
+  ]
+ }
+}

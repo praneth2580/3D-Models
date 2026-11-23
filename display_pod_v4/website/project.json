@@ -8,21 +8,76 @@
   "see_title": "The design",
   "see_sub": "Renders from the OpenSCAD model. The pod is 45 mm across the front and 20 mm deep, with a 4 mm ring around the lens.",
   "gallery": [
-    {"src": "images/assembly_rear.png", "caption": "On its handlebar clamp, tilted toward the rider"},
-    {"src": "images/pod.png", "caption": "The rear cover's male bayonet: three lugs, one wider so it fits only one way"},
-    {"src": "images/section.png", "caption": "Cut through: lens, display, board, retainer and battery bay"}
+    {
+      "src": "images/assembly_rear.png",
+      "caption": "On its handlebar clamp, tilted toward the rider"
+    },
+    {
+      "src": "images/pod.png",
+      "caption": "The rear cover's male bayonet: three lugs, one wider so it fits only one way"
+    },
+    {
+      "src": "images/section.png",
+      "caption": "Cut through: lens, display, board, retainer and battery bay"
+    }
   ],
   "viewer_default": "housing",
   "parts": {
-    "housing": {"name": "Housing", "what": "Part A: front shell and side wall. The lens bonds into its front; no front screws", "qty": "1", "material": "PETG for the prototype, ASA final. Rear face on the bed, no supports"},
-    "rear_cover": {"name": "Rear cover", "what": "Part B: battery bay, gasket seat and the male bayonet", "qty": "1", "material": "ASA or PETG. Gasket face on the bed"},
-    "board_retainer": {"name": "Board retainer", "what": "Holds the display board forward on a foam pad, and separates it from the battery", "qty": "1", "material": "ASA or PETG"},
-    "receiver": {"name": "Bayonet receiver", "what": "Part C: the twist-lock socket with L-shaped tracks and the ball-plunger detent", "qty": "1", "material": "ASA or PETG, 0.12 mm layers"},
-    "clamp_upper": {"name": "Clamp, upper", "what": "Part D: handlebar clamp with the tilted receiver cup", "qty": "1", "material": "ASA or PETG. Supports from the build plate only"},
-    "clamp_lower": {"name": "Clamp, lower", "what": "Part D: handlebar clamp, lower half", "qty": "1", "material": "ASA or PETG"},
-    "usb_plug": {"name": "USB plug", "what": "Seals the USB-C opening", "qty": "1", "material": "TPU 95A, slow"},
-    "cover_gasket": {"name": "Cover gasket", "what": "Seals the rear cover (or cut it from 1 mm silicone sheet with the DXF)", "qty": "1", "material": "TPU 85A-95A"},
-    "bayonet_test_male": {"name": "Bayonet fit test", "what": "Print this and the receiver first, to tune the bayonet's fit", "qty": "1", "material": "Same as the cover", "optional": true}
+    "housing": {
+      "name": "Housing",
+      "what": "Part A: front shell and side wall. The lens bonds into its front; no front screws",
+      "qty": "1",
+      "material": "PETG for the prototype, ASA final. Rear face on the bed, no supports"
+    },
+    "rear_cover": {
+      "name": "Rear cover",
+      "what": "Part B: battery bay, gasket seat and the male bayonet",
+      "qty": "1",
+      "material": "ASA or PETG. Gasket face on the bed"
+    },
+    "board_retainer": {
+      "name": "Board retainer",
+      "what": "Holds the display board forward on a foam pad, and separates it from the battery",
+      "qty": "1",
+      "material": "ASA or PETG"
+    },
+    "receiver": {
+      "name": "Bayonet receiver",
+      "what": "Part C: the twist-lock socket with L-shaped tracks and the ball-plunger detent",
+      "qty": "1",
+      "material": "ASA or PETG, 0.12 mm layers"
+    },
+    "clamp_upper": {
+      "name": "Clamp, upper",
+      "what": "Part D: handlebar clamp with the tilted receiver cup",
+      "qty": "1",
+      "material": "ASA or PETG. Supports from the build plate only"
+    },
+    "clamp_lower": {
+      "name": "Clamp, lower",
+      "what": "Part D: handlebar clamp, lower half",
+      "qty": "1",
+      "material": "ASA or PETG"
+    },
+    "usb_plug": {
+      "name": "USB plug",
+      "what": "Seals the USB-C opening",
+      "qty": "1",
+      "material": "TPU 95A, slow"
+    },
+    "cover_gasket": {
+      "name": "Cover gasket",
+      "what": "Seals the rear cover (or cut it from 1 mm silicone sheet with the DXF)",
+      "qty": "1",
+      "material": "TPU 85A-95A"
+    },
+    "bayonet_test_male": {
+      "name": "Bayonet fit test",
+      "what": "Print this and the receiver first, to tune the bayonet's fit",
+      "qty": "1",
+      "material": "Same as the cover",
+      "optional": true
+    }
   },
   "dxf": {
     "lens": "The 36.2 mm x 1 mm polycarbonate lens",
@@ -31,13 +86,272 @@
     "retainer_foam": "1.5 mm foam pad for the board retainer"
   },
   "download_note": "The STLs in <code>exports/</code> are already in print orientation, made from the default (partly estimated) measurements. Check <a href=\"#adjust\">the settings below</a> against your board, battery and bike, then run <code>tools/check.sh</code> and <code>tools/export.sh</code>. Print settings and the hardware list are in the docs.",
-  "sections": ["build.html"],
-  "nav": [["Build", "#build"]],
+  "sections": [
+    "build.html"
+  ],
+  "nav": [
+    [
+      "Build",
+      "#build"
+    ]
+  ],
   "docs": [
-    {"label": "README: overview and layout", "file": "README.md"},
-    {"label": "Measurements: every dimension, its source and whether to check it", "file": "documentation/measurements.md"},
-    {"label": "Assembly: hardware list and steps", "file": "documentation/assembly.md"},
-    {"label": "Print settings and bayonet fit tuning", "file": "documentation/print_settings.md"},
-    {"label": "Design log", "file": "documentation/design_log.md"}
-  ]
+    {
+      "label": "README: overview and layout",
+      "file": "README.md"
+    },
+    {
+      "label": "Measurements: every dimension, its source and whether to check it",
+      "file": "documentation/measurements.md"
+    },
+    {
+      "label": "Assembly: hardware list and steps",
+      "file": "documentation/assembly.md"
+    },
+    {
+      "label": "Print settings and bayonet fit tuning",
+      "file": "documentation/print_settings.md"
+    },
+    {
+      "label": "Design log",
+      "file": "documentation/design_log.md"
+    }
+  ],
+  "part_groups": [
+    {
+      "label": "The pod",
+      "parts": [
+        "housing",
+        "rear_cover",
+        "board_retainer",
+        "usb_plug",
+        "cover_gasket"
+      ]
+    },
+    {
+      "label": "Handlebar mount",
+      "parts": [
+        "receiver",
+        "clamp_upper",
+        "clamp_lower"
+      ]
+    },
+    {
+      "label": "Fit test (print first)",
+      "parts": [
+        "bayonet_test_male"
+      ]
+    }
+  ],
+  "customize": {
+    "entry": "scad/main.scad",
+    "sources": [
+      "scad/bayonet_lugs.scad",
+      "scad/bayonet_receiver.scad",
+      "scad/display_housing.scad",
+      "scad/front_bezel.scad",
+      "scad/handlebar_mount.scad",
+      "scad/lib.scad",
+      "scad/main.scad",
+      "scad/parameters.scad",
+      "scad/pcb_mounts.scad",
+      "scad/rear_cover.scad"
+    ],
+    "part_var": "part",
+    "groups": [
+      {
+        "label": "Your board and battery",
+        "note": "Estimates in the design: measure yours (see the measurements guide).",
+        "params": [
+          {
+            "name": "pcb_t",
+            "label": "Board thickness",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 0.8,
+            "max": 2.0
+          },
+          {
+            "name": "display_glass_d",
+            "label": "Display glass diameter",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 33,
+            "max": 38
+          },
+          {
+            "name": "rear_component_h",
+            "label": "Tallest part on the board's back (with the battery plug in)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 8
+          },
+          {
+            "name": "battery_t",
+            "label": "Battery thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 8
+          },
+          {
+            "name": "battery_w",
+            "label": "Battery width",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 10,
+            "max": 30
+          },
+          {
+            "name": "battery_l",
+            "label": "Battery length (with its protection board)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 15,
+            "max": 40
+          },
+          {
+            "name": "usb_plug_w",
+            "label": "USB-C cable plug: width",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 8,
+            "max": 16
+          },
+          {
+            "name": "usb_plug_h",
+            "label": "USB-C cable plug: height",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 4,
+            "max": 10
+          },
+          {
+            "name": "switch_nub_out",
+            "label": "Switch lever: how far it sticks out past the board",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "name": "switch_slot_w",
+            "label": "Switch slot: length (along the slide)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 3,
+            "max": 8
+          },
+          {
+            "name": "switch_slot_h",
+            "label": "Switch slot: height",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 1.5,
+            "max": 4
+          }
+        ]
+      },
+      {
+        "label": "Your handlebar",
+        "params": [
+          {
+            "name": "bar_d",
+            "label": "Handlebar diameter at the mount",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 20,
+            "max": 32,
+            "help": "22.2 (7/8\"), 25.4 (1\") or 28.6 (1-1/8\")."
+          },
+          {
+            "name": "clamp_w",
+            "label": "Clamp width along the bar",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 14,
+            "max": 30,
+            "help": "Check the free length of bar you have."
+          },
+          {
+            "name": "display_tilt",
+            "label": "Screen tilt toward you",
+            "unit": "°",
+            "step": 1,
+            "min": 0,
+            "max": 70
+          },
+          {
+            "name": "cup_offset_y",
+            "label": "Pod behind (-) or ahead (+) of the bar",
+            "unit": "mm",
+            "step": 0.5,
+            "min": -20,
+            "max": 20
+          },
+          {
+            "name": "cup_floor_z",
+            "label": "Pod height above the bar's centre",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 18,
+            "max": 40
+          }
+        ]
+      },
+      {
+        "label": "Bought hardware",
+        "params": [
+          {
+            "name": "detent_ball_d",
+            "label": "Detent ball plunger: ball diameter",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 1.5,
+            "max": 4
+          },
+          {
+            "name": "insert_hole_d",
+            "label": "M2 heat-set insert holes",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 2.8,
+            "max": 3.6,
+            "help": "Check your insert brand's recommended hole."
+          },
+          {
+            "name": "receiver_pilot_d",
+            "label": "M3 screw pilot holes in the receiver",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 2.2,
+            "max": 2.9
+          }
+        ]
+      },
+      {
+        "label": "Printer fit",
+        "note": "Change these only after printing the bayonet fit test.",
+        "params": [
+          {
+            "name": "entry_clear",
+            "label": "Bayonet: clearance in the slots and bore (per side)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 0.15,
+            "max": 0.8
+          },
+          {
+            "name": "track_clear",
+            "label": "Bayonet: clearance in the tracks (per side)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 0.1,
+            "max": 0.7
+          }
+        ]
+      }
+    ]
+  }
 }

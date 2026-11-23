@@ -199,6 +199,11 @@
       "optional": true,
       "when": {
         "mount": "modular"
+      },
+      "make": {
+        "set": {
+          "mount": "modular"
+        }
       }
     },
     "base_plate": {
@@ -209,6 +214,11 @@
       "optional": true,
       "when": {
         "mount": "modular"
+      },
+      "make": {
+        "set": {
+          "mount": "modular"
+        }
       }
     },
     "shoe_modular": {
@@ -219,6 +229,12 @@
       "optional": true,
       "when": {
         "mount": "modular"
+      },
+      "make": {
+        "part": "shoe",
+        "set": {
+          "mount": "modular"
+        }
       }
     },
     "case_back_modular": {
@@ -230,6 +246,12 @@
       "optional": true,
       "when": {
         "mount": "modular"
+      },
+      "make": {
+        "part": "case_back",
+        "set": {
+          "mount": "modular"
+        }
       }
     },
     "strike_keeper_modular": {
@@ -240,6 +262,12 @@
       "optional": true,
       "when": {
         "mount": "modular"
+      },
+      "make": {
+        "part": "strike_keeper",
+        "set": {
+          "mount": "modular"
+        }
       }
     },
     "clamp_body": {
@@ -325,6 +353,12 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "part": "lock_cartridge",
+        "set": {
+          "lock_type": "printed"
+        }
       }
     },
     "plock_shuttle": {
@@ -335,6 +369,11 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "set": {
+          "lock_type": "printed"
+        }
       }
     },
     "plock_lifter": {
@@ -345,6 +384,11 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "set": {
+          "lock_type": "printed"
+        }
       }
     },
     "plock_wafer_1": {
@@ -355,6 +399,13 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "part": "plock_wafer",
+        "set": {
+          "plock_index": 0,
+          "lock_type": "printed"
+        }
       }
     },
     "plock_wafer_2": {
@@ -365,6 +416,13 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "part": "plock_wafer",
+        "set": {
+          "plock_index": 1,
+          "lock_type": "printed"
+        }
       }
     },
     "plock_wafer_3": {
@@ -375,6 +433,13 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "part": "plock_wafer",
+        "set": {
+          "plock_index": 2,
+          "lock_type": "printed"
+        }
       }
     },
     "plock_wafer_4": {
@@ -385,6 +450,13 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "part": "plock_wafer",
+        "set": {
+          "plock_index": 3,
+          "lock_type": "printed"
+        }
       }
     },
     "plock_wafers": {
@@ -395,6 +467,11 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "set": {
+          "lock_type": "printed"
+        }
       }
     },
     "dl_cartridge": {
@@ -405,6 +482,12 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "part": "lock_cartridge",
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_wheel_1": {
@@ -415,6 +498,13 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "part": "dl_wheel",
+        "set": {
+          "dl_index_n": 0,
+          "lock_type": "dial"
+        }
       }
     },
     "dl_wheel_2": {
@@ -425,6 +515,13 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "part": "dl_wheel",
+        "set": {
+          "dl_index_n": 1,
+          "lock_type": "dial"
+        }
       }
     },
     "dl_wheel_3": {
@@ -435,6 +532,13 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "part": "dl_wheel",
+        "set": {
+          "dl_index_n": 2,
+          "lock_type": "dial"
+        }
       }
     },
     "dl_wheel_4": {
@@ -445,6 +549,13 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "part": "dl_wheel",
+        "set": {
+          "dl_index_n": 3,
+          "lock_type": "dial"
+        }
       }
     },
     "dl_wheels": {
@@ -455,6 +566,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_spindle": {
@@ -465,6 +581,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_dial": {
@@ -475,6 +596,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_fence": {
@@ -485,6 +611,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_hammer": {
@@ -495,6 +626,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_plunger": {
@@ -505,6 +641,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "dl_lifter": {
@@ -515,6 +656,11 @@
       "optional": true,
       "when": {
         "lock": "dial"
+      },
+      "make": {
+        "set": {
+          "lock_type": "dial"
+        }
       }
     },
     "plock_key": {
@@ -525,6 +671,11 @@
       "optional": true,
       "when": {
         "lock": "printed"
+      },
+      "make": {
+        "set": {
+          "lock_type": "printed"
+        }
       }
     },
     "tl_cartridge": {
@@ -535,6 +686,12 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "part": "lock_cartridge",
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     },
     "tl_housing": {
@@ -545,6 +702,11 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     },
     "tl_plug": {
@@ -555,6 +717,11 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     },
     "tl_crank": {
@@ -565,6 +732,11 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     },
     "tl_key": {
@@ -575,6 +747,11 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     },
     "tl_pins": {
@@ -585,6 +762,11 @@
       "optional": true,
       "when": {
         "lock": "tubular"
+      },
+      "make": {
+        "set": {
+          "lock_type": "tubular"
+        }
       }
     }
   },
@@ -701,5 +883,543 @@
       "mount": "modular"
     }
   },
-  "video_title": "The whole dock"
+  "video_title": "The whole dock",
+  "part_groups": [
+    {
+      "label": "Case",
+      "parts": [
+        "case_shell",
+        "case_back",
+        "window_template"
+      ]
+    },
+    {
+      "label": "Dock and mount",
+      "parts": [
+        "dock_base",
+        "iso_pad",
+        "shoe",
+        "strike_keeper",
+        "dock_lid"
+      ]
+    },
+    {
+      "label": "Handlebar clamps",
+      "parts": [
+        "clamp_body",
+        "clamp_cap",
+        "bar_shim",
+        "pad_spacer"
+      ]
+    },
+    {
+      "label": "Lock: parts every lock shares",
+      "parts": [
+        "lock_cover",
+        "lock_yoke"
+      ]
+    },
+    {
+      "label": "Store cam lock",
+      "parts": [
+        "lock_cartridge",
+        "crank_template"
+      ]
+    },
+    {
+      "label": "Printed push-key lock",
+      "parts": [
+        "plock_cartridge",
+        "plock_shuttle",
+        "plock_lifter",
+        "plock_key",
+        "plock_wafers",
+        "plock_wafer_1",
+        "plock_wafer_2",
+        "plock_wafer_3",
+        "plock_wafer_4"
+      ]
+    },
+    {
+      "label": "Tubular key lock",
+      "parts": [
+        "tl_cartridge",
+        "tl_housing",
+        "tl_plug",
+        "tl_crank",
+        "tl_key",
+        "tl_pins"
+      ]
+    },
+    {
+      "label": "Dial lock (demo)",
+      "parts": [
+        "dl_cartridge",
+        "dl_dial",
+        "dl_spindle",
+        "dl_wheels",
+        "dl_wheel_1",
+        "dl_wheel_2",
+        "dl_wheel_3",
+        "dl_wheel_4",
+        "dl_fence",
+        "dl_hammer",
+        "dl_plunger",
+        "dl_lifter"
+      ]
+    },
+    {
+      "label": "Modular mount (option)",
+      "parts": [
+        "receiver",
+        "base_plate",
+        "shoe_modular",
+        "case_back_modular",
+        "strike_keeper_modular"
+      ]
+    },
+    {
+      "label": "Assembled (view only)",
+      "parts": [
+        "assembled_store",
+        "assembled_printed",
+        "assembled_tubular",
+        "assembled_dial"
+      ],
+      "closed": true
+    }
+  ],
+  "customize": {
+    "entry": "phone_dock_v0.5.scad",
+    "sources": [
+      "phone_dock_v0.5.scad",
+      "lib/printed_lock.scad",
+      "lib/dial_lock.scad",
+      "lib/tubular_lock.scad"
+    ],
+    "part_var": "PART",
+    "groups": [
+      {
+        "label": "Your phone",
+        "params": [
+          {
+            "name": "phone_w",
+            "label": "Phone width (short side)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 50,
+            "max": 95,
+            "help": "Measure with calipers, without a case."
+          },
+          {
+            "name": "phone_l",
+            "label": "Phone length",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 100,
+            "max": 190
+          },
+          {
+            "name": "phone_t",
+            "label": "Phone thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 5,
+            "max": 14,
+            "help": "At the thickest point, not counting the camera bump."
+          },
+          {
+            "name": "phone_corner_r",
+            "label": "Corner radius (seen from the front)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 1,
+            "max": 15
+          },
+          {
+            "name": "screen_mask",
+            "label": "Front lip over the phone's edge",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0.5,
+            "max": 5,
+            "help": "Set it to the phone's own black border, so the lip doesn't cover the screen."
+          },
+          {
+            "name": "camera_x",
+            "label": "Camera: across the width (from the centre)",
+            "unit": "mm",
+            "step": 0.5,
+            "min": -40,
+            "max": 40
+          },
+          {
+            "name": "camera_y",
+            "label": "Camera: toward the top (from the centre)",
+            "unit": "mm",
+            "step": 0.5,
+            "min": -90,
+            "max": 90
+          },
+          {
+            "name": "camera_w",
+            "label": "Camera opening: width",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 5,
+            "max": 70
+          },
+          {
+            "name": "camera_h",
+            "label": "Camera opening: height",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 5,
+            "max": 70
+          },
+          {
+            "name": "camera_protrusion",
+            "label": "Camera bump height",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0,
+            "max": 6
+          },
+          {
+            "name": "phone_port",
+            "label": "Charging port",
+            "choices": [
+              [
+                "usbc",
+                "USB-C"
+              ],
+              [
+                "microusb",
+                "Micro-USB"
+              ]
+            ],
+            "help": ""
+          },
+          {
+            "name": "usb_side",
+            "label": "In landscape, the charging port is on the",
+            "choices": [
+              [
+                1,
+                "right"
+              ],
+              [
+                -1,
+                "left"
+              ]
+            ],
+            "help": ""
+          },
+          {
+            "name": "usb_port_y",
+            "label": "Port offset from the centre of the phone's end",
+            "unit": "mm",
+            "step": 0.1,
+            "min": -20,
+            "max": 20,
+            "help": "Most phones: 0."
+          }
+        ]
+      },
+      {
+        "label": "Your handlebar and bike",
+        "params": [
+          {
+            "name": "bar_d",
+            "label": "Handlebar diameter at the clamps",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 20,
+            "max": 32,
+            "help": "22.2 (7/8\"), 25.4 (1\") or 28.6 (1-1/8\")."
+          },
+          {
+            "name": "riser_h",
+            "label": "Your bike's highest clamp bolt head, above the top of the bar",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 0,
+            "max": 40
+          },
+          {
+            "name": "riser_d",
+            "label": "... and from the bar's centre to that bolt head's far edge",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 0,
+            "max": 50
+          },
+          {
+            "name": "arm_back",
+            "label": "Move the mount fore (+) or aft (-)",
+            "unit": "mm",
+            "step": 0.5,
+            "min": -20,
+            "max": 20
+          },
+          {
+            "name": "spacer_h",
+            "label": "Raise the mount (pad spacer height)",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 0,
+            "max": 30
+          }
+        ]
+      },
+      {
+        "label": "Your key codes",
+        "note": "Set your own: everyone who downloads the ready-made files shares the example codes.",
+        "params": [
+          {
+            "name": "tl_code",
+            "label": "Tubular lock: one digit per pin",
+            "type": "code",
+            "digits": [
+              0,
+              2
+            ],
+            "length": [
+              4,
+              6
+            ],
+            "help": "0, 1 or 2 for each pin, pin 1 first. Avoid all-equal codes."
+          },
+          {
+            "name": "lock_code",
+            "label": "Printed push-key lock: one digit per wafer",
+            "type": "code",
+            "digits": [
+              0,
+              2
+            ],
+            "length": [
+              4,
+              4
+            ],
+            "help": "0, 1 or 2 for each of the 4 wafers, keyhole end first."
+          },
+          {
+            "name": "dial_code",
+            "label": "Dial lock: the combination",
+            "type": "code",
+            "digits": [
+              0,
+              9
+            ],
+            "length": [
+              4,
+              6
+            ],
+            "help": "4 to 6 digits, 0-9."
+          }
+        ]
+      },
+      {
+        "label": "The store-bought lock",
+        "params": [
+          {
+            "name": "lock_bore_d",
+            "label": "Lock thread diameter",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 12,
+            "max": 22
+          },
+          {
+            "name": "lock_bore_flat",
+            "label": "Lock thread across the flats",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 10,
+            "max": 22
+          },
+          {
+            "name": "lock_body_len",
+            "label": "Panel inner face to the cam seat",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 8,
+            "max": 25
+          },
+          {
+            "name": "lock_nut_clear_d",
+            "label": "Lock nut across corners, plus clearance",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 16,
+            "max": 28
+          },
+          {
+            "name": "crank_t",
+            "label": "Thickness of the lock's own cam (the crank)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 1,
+            "max": 5
+          }
+        ]
+      },
+      {
+        "label": "Bought hardware",
+        "params": [
+          {
+            "name": "bolt_w",
+            "label": "Steel bolt: width",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 10,
+            "max": 16
+          },
+          {
+            "name": "bolt_t",
+            "label": "Steel bolt: thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 6,
+            "max": 10
+          },
+          {
+            "name": "pin_block_depth",
+            "label": "Pogo pin length",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 10,
+            "max": 20
+          },
+          {
+            "name": "pin_free",
+            "label": "Pogo pin tip protrusion",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0.5,
+            "max": 3
+          },
+          {
+            "name": "cable_d",
+            "label": "USB lead thickness (hole)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 3,
+            "max": 6
+          },
+          {
+            "name": "led_d",
+            "label": "LED light-pipe hole",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 5.5
+          },
+          {
+            "name": "therm_l",
+            "label": "Thermostat: length",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 10,
+            "max": 30
+          },
+          {
+            "name": "therm_w",
+            "label": "Thermostat: width",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 5,
+            "max": 15
+          },
+          {
+            "name": "therm_t",
+            "label": "Thermostat: thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 8
+          },
+          {
+            "name": "thermal_cutoff",
+            "label": "Over-heat cut-off (thermostat)",
+            "choices": [
+              [
+                true,
+                "fitted"
+              ],
+              [
+                false,
+                "left out (link DET to GND)"
+              ]
+            ],
+            "help": ""
+          },
+          {
+            "name": "corner_insert_d",
+            "label": "M3 heat-set insert holes (case corners)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 3.5,
+            "max": 5
+          },
+          {
+            "name": "shoe_insert_d",
+            "label": "M3 heat-set insert holes (shoe)",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 3.5,
+            "max": 5
+          },
+          {
+            "name": "iso_washer_t",
+            "label": "Rubber washer thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "name": "iso_washer_d",
+            "label": "Steel washer diameter",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 10,
+            "max": 20
+          },
+          {
+            "name": "iso_spacer_d",
+            "label": "M5 spacer outside diameter",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 6,
+            "max": 10
+          }
+        ]
+      },
+      {
+        "label": "Printer fit",
+        "note": "Change these only after a fit test shows tight or loose parts.",
+        "params": [
+          {
+            "name": "tl_bore_r",
+            "label": "Tubular lock: housing bore radius",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 8.45,
+            "max": 8.9,
+            "help": "Raise by 0.05 if the plug rubs."
+          },
+          {
+            "name": "tl_hole",
+            "label": "Tubular lock: pin holes",
+            "unit": "mm",
+            "step": 0.05,
+            "min": 3.2,
+            "max": 3.7
+          }
+        ]
+      }
+    ]
+  }
 }

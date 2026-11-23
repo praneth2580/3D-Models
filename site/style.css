@@ -101,8 +101,53 @@ figcaption { padding: 10px 14px; color: var(--sub); font-size: .9rem; }
 /* viewer */
 .viewer { display: grid; gap: 16px; }
 @media (min-width: 860px) { .viewer { grid-template-columns: 240px 1fr; } }
-.part-list { display: flex; flex-wrap: wrap; gap: 6px; align-content: start; }
-@media (min-width: 860px) { .part-list { flex-direction: column; flex-wrap: nowrap; max-height: 520px; overflow-y: auto; } }
+.part-list { display: flex; flex-direction: column; gap: 6px; align-content: start; max-height: 340px; overflow-y: auto; }
+@media (min-width: 860px) { .part-list { max-height: 520px; } }
+.pgroup { display: flex; flex-direction: column; gap: 6px; }
+.pgroup + .pgroup { margin-top: 4px; }
+.pg-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; padding: 6px 4px; border: 0;
+  background: none; color: var(--ink); font: inherit; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  text-align: left; cursor: pointer; position: sticky; top: 0; z-index: 1; background: var(--bg); }
+.pg-head::before { content: "\25BE"; color: var(--sub); margin-right: 2px; }
+.pg-head[aria-expanded="false"]::before { content: "\25B8"; }
+.pg-head span:first-child { flex: 1; }
+.pg-n { color: var(--sub); font-weight: 600; font-size: .78rem; }
+.pg-body { display: flex; flex-direction: column; gap: 6px; }
+@media (max-width: 859px) { .pg-body { flex-direction: row; flex-wrap: wrap; } }
+.adj-badge { display: inline-block; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent);
+  font-size: .72rem; font-weight: 700; white-space: nowrap; }
+.stage-info .yours { color: var(--accent); font-weight: 700; }
+tr.group-row th { text-align: left; padding: 16px 10px 6px; font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--sub);
+  background: var(--band); border-bottom: 1px solid var(--line); }
+
+/* customizer: make the selected part to your sizes */
+.custom { margin-top: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.custom h3 { margin: 0 0 4px; font-size: 1.1rem; }
+.custom .sub { margin: 0 0 14px; font-size: .9rem; }
+.custom fieldset { border: 0; border-top: 1px solid var(--line); margin: 0; padding: 12px 0 4px; min-width: 0; }
+.custom legend { font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--sub); padding: 0 8px 0 0; }
+.cz-note { margin: 0 0 10px; font-size: .88rem; color: var(--sub); }
+.cz-grid { display: grid; gap: 12px 18px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.cz-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cz-field label { font-size: .9rem; font-weight: 600; }
+.cz-field small { color: var(--sub); font-size: .78rem; }
+.cz-field.changed label::after { content: " \2022 changed"; color: var(--accent); font-weight: 700; font-size: .75rem; }
+.cz-field input, .cz-field select { font: inherit; font-size: .95rem; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--ink); width: 100%; min-width: 0; box-sizing: border-box; }
+.cz-field input:focus, .cz-field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cz-num { display: flex; align-items: center; gap: 8px; }
+.cz-num .unit { color: var(--sub); font-size: .85rem; }
+.cz-err { color: #d6336c; font-size: .8rem; font-weight: 600; }
+.cz-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.cz-actions .btn, .b-sum button.btn { font: inherit; font-weight: 700; font-size: .95rem; padding: 10px 16px; cursor: pointer; }
+.cz-actions .btn[disabled], .b-sum .btn[disabled] { opacity: .55; cursor: default; filter: none; }
+.cz-status { margin: 10px 0 0; font-size: .9rem; color: var(--sub); min-height: 1.4em; }
+.cz-fail { color: #d6336c; font-weight: 600; }
+.cz-none { margin: 0; color: var(--sub); font-size: .92rem; }
+.cz-cmd { margin-top: 12px; font-size: .88rem; }
+.cz-cmd summary { cursor: pointer; color: var(--sub); }
+.cz-cmd pre { white-space: pre-wrap; word-break: break-all; }
+@media (max-width: 560px) { .cz-actions .btn { flex: 1 1 100%; } }
 .part-btn { text-align: left; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink);
   font: inherit; font-size: .9rem; cursor: pointer; }
 .part-btn small { display: block; color: var(--sub); font-size: .78rem; }

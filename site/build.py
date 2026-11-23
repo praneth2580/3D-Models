@@ -254,10 +254,52 @@ class Project:
 
     def media_url(self, rel): return "media/" + os.path.basename(rel)
 
+    def part_groups(self):
+        """[(label, closed, [stems])]: the groups in project.json, then "Other parts" for the rest."""
+        stems = [os.path.splitext(os.path.basename(p))[0] for p in self.stls]
+        groups, seen = [], set()
+        for g in self.cfg.get("part_groups", []):
+            members = [s for s in g["parts"] if s in stems and s not in seen]
+            seen.update(members)
+            if members: groups.append((g["label"], bool(g.get("closed")), members))
+        meta = self.cfg.get("parts", {})
+        rest = [s for s in meta if s in stems and s not in seen] + [s for s in stems if s not in meta and s not in seen]
+        if rest: groups.append(("Other parts" if groups else "", False, rest))
+        return groups
+
+    def customize(self):
+        """The in-browser customizer's settings (project.json "customize"), with each default read from the CAD,
+        and which settings change which part (website/param_deps.json, made by site/param_deps.py)."""
+        cz = self.cfg.get("customize")
+        if not cz: return None, {}
+        params = [q for g in cz["groups"] for q in g["params"]]
+        defaults = {}
+        for src in cz["sources"]:
+            text = open(os.path.join(self.dir, src), encoding="utf-8").read()
+            for q in params:
+                if q["name"] in defaults: continue
+                m = re.search(r"^\s*" + re.escape(q["name"]) + r"\s*=\s*([^;]+);", text, re.M)
+                if m:
+                    try: defaults[q["name"]] = json.loads(m.group(1).strip())
+                    except ValueError: pass
+        missing = [q["name"] for q in params if q["name"] not in defaults]
+        if missing: sys.exit(f"{self.folder}: customize settings with no literal default in the sources: {missing}")
+        deps = load_json(os.path.join(self.webdir, "param_deps.json"), {})
+        if not deps:
+            print(f"  ! {self.folder}: no website/param_deps.json; run site/param_deps.py {self.folder}")
+        elif deps.get("defaults") != defaults or set(deps.get("parts", {})) != {s for s, m in self.cfg.get("parts", {}).items() if not m.get("view")}:
+            print(f"  ! {self.folder}: website/param_deps.json looks out of date; run site/param_deps.py {self.folder}")
+        groups = [dict(label=g["label"], note=g.get("note", ""), params=[dict(q, default=defaults[q["name"]]) for q in g["params"]])
+                  for g in cz["groups"]]
+        data = dict(entry=cz["entry"], part_var=cz.get("part_var", "PART"), sources=cz["sources"], groups=groups)
+        return data, deps.get("parts", {})
+
     def part_rows(self):
         meta = self.cfg.get("parts", {})
         stems = [os.path.splitext(os.path.basename(p))[0] for p in self.stls]
-        order = [s for s in meta if s in stems] + [s for s in stems if s not in meta]
+        order = [st for _, _, members in self.part_groups() for st in members]
+        group_of = {st: k for k, (_, _, members) in enumerate(self.part_groups()) for st in members}
+        cz, deps = self.customize()
         rows = []
         for stem in order:
             m = meta.get(stem, {})
@@ -265,7 +307,9 @@ class Project:
             rows.append(dict(stem=stem, file=os.path.basename(rel), rel=rel, name=m.get("name", pretty(stem)),
                              what=m.get("what", ""), qty=str(m.get("qty", "1")), material=m.get("material", ""),
                              note=m.get("note", ""), optional=m.get("optional", False), when=m.get("when", {}),
-                             view=m.get("view", False),
+                             view=m.get("view", False), group=group_of.get(stem, 0),
+                             make=dict(part=m.get("make", {}).get("part", stem), set=m.get("make", {}).get("set", {})),
+                             params=[] if (m.get("view") or not cz) else deps.get(stem, []),
                              size=os.path.getsize(os.path.join(self.dir, rel))))
         return rows
 
@@ -293,6 +337,9 @@ class Project:
             shutil.copy2(os.path.join(self.dir, rel), os.path.join(out, "files", os.path.basename(rel)))
         for rel in self.media:
             shutil.copy2(os.path.join(self.dir, rel), os.path.join(out, "media", os.path.basename(rel)))
+        for rel in (self.cfg.get("customize") or {}).get("sources", []):     # for the in-browser customizer
+            os.makedirs(os.path.dirname(os.path.join(out, "scad", rel)), exist_ok=True)
+            shutil.copy2(os.path.join(self.dir, rel), os.path.join(out, "scad", rel))
         self.zip_name = f"{self.slug}.zip"
         self.zip_size = self.make_zip(os.path.join(out, "files", self.zip_name))
         with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
@@ -376,12 +423,16 @@ class Project:
 </section>"""
 
         viewer = ""
+        cz, _ = self.customize()
+        custom_sub = (" Parts marked <span class=\"adj-badge\">your size</span> can be made to your own measurements, right here: "
+                      "pick one and change the settings under the viewer.") if cz else ""
+        custom_box = '<div class="custom" id="custom" hidden></div>' if cz else ""
         if parts:
-            viewer = """
+            viewer = f"""
 <section id="viewer">
   <div class="wrap">
     <h2>Look at every part in 3D</h2>
-    <p class="sub">Pick a part, then drag to rotate, scroll or pinch to zoom, and right-drag to pan.<span class="build-note" hidden> Showing the parts for <b class="build-name"></b> (<a href="#choose">change</a>).</span></p>
+    <p class="sub">Pick a part, then drag to rotate, scroll or pinch to zoom, and right-drag to pan.<span class="build-note" hidden> Showing the parts for <b class="build-name"></b> (<a href="#choose">change</a>).</span>{custom_sub}</p>
     <div class="viewer">
       <div class="part-list" id="part-buttons" role="tablist" aria-label="Parts"></div>
       <div class="stage">
@@ -390,14 +441,19 @@ class Project:
         <a class="btn small stage-dl" id="stage-dl" href="#" download>Download this STL</a>
       </div>
     </div>
+    {custom_box}
   </div>
 </section>"""
 
-        rows = ""
+        rows, group_heads = "", self.part_groups()
+        last_group = None
         for p in parts:
+            if p["group"] != last_group and group_heads[p["group"]][0]:
+                rows += f"<tr class='group-row' data-group='{p['group']}'><th colspan='5'>{esc(group_heads[p['group']][0])}</th></tr>"
+            last_group = p["group"]
             opt = " <span class='opt'>(view only, not for printing)</span>" if p["view"] else " <span class='opt'>(optional)</span>" if p["optional"] else ""
             note = f"<br><span class='opt'>{esc(p['note'])}</span>" if p["note"] else ""
-            rows += (f"<tr data-when='{esc(json.dumps(p['when']))}' data-file='{esc(p['file'])}'{' data-view=1' if p['view'] else ''}><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
+            rows += (f"<tr data-when='{esc(json.dumps(p['when']))}' data-file='{esc(p['file'])}' data-group='{p['group']}'{' data-view=1' if p['view'] else ''}><td>{esc(p['name'])}{opt}</td><td>{esc(p['what'])}{note}</td>"
                      f"<td>{esc(p['qty'])}</td><td>{esc(p['material'])}</td>"
                      f"<td><a class='file' href='files/{esc(p['file'])}' download>{esc(p['file'])}</a> "
                      f"<span class='opt'>{fmt_size(p['size'])}</span></td></tr>")
@@ -417,6 +473,7 @@ class Project:
         docs = self.docs()
         opts = c.get("build_options", [])
         builder = ""
+        mine_btn = '<button class="btn ghost" id="b-zip-mine" type="button">... with your sizes (.zip)</button>' if cz else ""
         if opts and parts:
             groups_html = "".join(
                 f'<div class="b-opt"><span class="b-label">{esc(o["label"])}</span><div class="chips" role="radiogroup" aria-label="{esc(o["label"])}">'
@@ -432,6 +489,7 @@ class Project:
       <div class="b-sum">
         <span class="b-count" id="b-count"></span>
         <button class="btn" id="b-zip" type="button">Download this build (.zip)</button>
+        {mine_btn}
         <label class="b-all"><input type="checkbox" id="b-all"> Show every part</label>
       </div>
       <p class="b-status" id="b-status" aria-live="polite"></p>
@@ -472,14 +530,16 @@ class Project:
   </div>
 </section>"""
 
-        data = dict(parts=[dict(file=p["file"], name=p["name"], qty=p["qty"], when=p["when"]) for p in parts],
-                    default=c.get("viewer_default"), options=c.get("build_options", []), slug=self.slug)
+        data = dict(parts=[dict(file=p["file"], name=p["name"], qty=p["qty"], when=p["when"], group=p["group"],
+                                make=p["make"], params=p["params"]) for p in parts],
+                    groups=[dict(label=lb, closed=cl) for lb, cl, _ in self.part_groups()],
+                    customize=cz, default=c.get("viewer_default"), options=c.get("build_options", []), slug=self.slug)
         scripts = ""
         if parts:
             scripts = ('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n'
                        '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>\n'
                        '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>\n'
-                       + ('<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>\n' if c.get("build_options") else ""))
+                       + ('<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>\n' if c.get("build_options") or cz else ""))
         scripts += f'<script>window.PROJECT = {json.dumps(data)};</script>\n<script src="../app.js"></script>'   # viewer, build picker, tabs, gallery
         body = hero + see + viewer + download + adjust_html + extra + docs_html
         return page(f"{self.title}", self.summary[:200], body, "../", nav, cover, scripts)
@@ -562,8 +622,9 @@ def main():
     if not projs: sys.exit("no projects found (folders with .stl or .scad files)")
     shutil.rmtree(OUT, ignore_errors=True)
     os.makedirs(OUT)
-    for f in ("style.css", "app.js"):
+    for f in ("style.css", "app.js", "scad-worker.js"):
         shutil.copy2(os.path.join(SITE_SRC, f), os.path.join(OUT, f))
+    shutil.copytree(os.path.join(SITE_SRC, "fonts"), os.path.join(OUT, "fonts"))   # for text() in the customizer (SIL OFL)
     open(os.path.join(OUT, ".nojekyll"), "w").close()
     for p in projs:
         p.build()

@@ -46,7 +46,10 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 | `gallery` | `[{"src": "images/x.png", "caption": "..."}]` |
 | `viewer_default` | The STL shown first, without `.stl`. Or a list of them: the first one in the chosen build is shown (and the viewer follows the build picker) |
 | `parts.<stem>.view` | `true` for a view-only model (an assembly, say): marked "view only" in the parts table, left out of the zips and the printable-parts count |
-| `parts` | `{"stem": {"name", "what", "qty", "material", "note", "optional"}}`, listed in this order |
+| `parts` | `{"stem": {"name", "what", "qty", "material", "note", "optional"}}`, listed in this order (within their groups) |
+| `part_groups` | Headings for the 3D viewer's part list and the parts table: `[{"label": "Case", "parts": ["case_shell", ...], "closed": false}]`. Each heading opens and closes; parts in no group go under "Other parts" |
+| `customize` | The in-browser customizer ("Make it your size"), see below |
+| `parts.<stem>.make` | How OpenSCAD makes the part, for the customizer: `{"part": "shoe", "set": {"mount": "modular"}}`. Default: the part variable set to the stem, nothing else |
 | `dxf` | `{"stem": "description"}` |
 | `exclude` | File patterns to leave out of the page and zip, such as `["old_part.stl"]` |
 | `download_note` | HTML shown under the downloads |
@@ -61,3 +64,36 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 Every section is HTML using the classes in `style.css`. Images go in as `media/<file name>` and downloads as `files/<file name>`.
 
 **Examples:** `phone_dock_v0.5/website/` and `display_pod_v4/website/`.
+
+## Make it your size: the in-browser customizer
+
+With a `customize` block, each part in the 3D viewer gets a "Make it your size" panel. Visitors change the settings, press **Make this part**, and OpenSCAD runs in their browser (`scad-worker.js`, a background thread with [openscad-wasm](https://www.npmjs.com/package/openscad-wasm) 0.0.4, OpenSCAD 2025.07.18 with the fast Manifold engine, loaded from jsDelivr; about 14 MB, only when first used). The new STL shows in the viewer and can be downloaded. With build options there is also **"... with your sizes (.zip)"**: the parts whose settings were changed are made in the browser, the rest are the ready-made files. Values are kept in the visitor's browser (`localStorage`), shared by all the project's parts.
+
+**Each part offers only the settings that change it.** That list is worked out by OpenSCAD, not by hand:
+
+```sh
+python3 site/param_deps.py phone_dock_v0.5     # writes phone_dock_v0.5/website/param_deps.json; commit it
+```
+
+It exports every part as CSG (fast, no mesh) with each setting changed in turn, and records which settings change which part. **Run it after any CAD change** that could change that (new parts, moved settings, new dependencies). `build.py` warns when the file looks out of date (a default changed, or the parts differ), and reads every default from the CAD itself.
+
+```json
+"customize": {
+  "entry": "phone_dock_v0.5.scad",
+  "sources": ["phone_dock_v0.5.scad", "lib/tubular_lock.scad"],
+  "part_var": "PART",
+  "groups": [
+    {"label": "Your phone", "note": "optional text", "params": [
+      {"name": "phone_w", "label": "Phone width", "unit": "mm", "step": 0.1, "min": 50, "max": 95, "help": "..."},
+      {"name": "phone_port", "label": "Charging port", "choices": [["usbc", "USB-C"], ["microusb", "Micro-USB"]]},
+      {"name": "tl_code", "label": "Key code", "type": "code", "digits": [0, 2], "length": [4, 6]}
+    ]}
+  ]
+}
+```
+
+- `sources`: every `.scad` file the entry includes (paths in the project). They are published under `scad/` for the browser.
+- Each setting needs a literal default in the sources (`name = 22.2;`), and is passed to OpenSCAD with `-D`, so it overrides the file's value (the last assignment wins).
+- The design's own `assert()`s still apply: a refused size shows the assert's message on the page.
+- `text()` in a model uses the Liberation Sans fonts in `site/fonts/` (SIL Open Font License, `OFL.txt`).
+- Big parts take about 1-5 s in a desktop browser; a phone is slower.
