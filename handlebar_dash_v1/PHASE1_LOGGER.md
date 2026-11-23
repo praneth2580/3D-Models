@@ -8,6 +8,8 @@ Before the dash can show the bike's speed, we need to know **which CAN messages 
 
 ## Parts (INR, estimates)
 
+**Exact items and Amazon.in / Flipkart links: [`COMPONENTS.md`](COMPONENTS.md)** (phase 1 section). The board, the transceiver and the GPS are the ones the dash's housings will be modelled around, so buy those exactly.
+
 | Part | Notes | Price |
 |---|---|---|
 | ESP32-C6-DevKitC-1 | The future interface box's microcontroller (two CAN controllers) | ₹700–1,000 (est.) |

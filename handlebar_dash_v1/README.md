@@ -121,23 +121,11 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 - Royal Enfield's manuals say electrical changes not done by an authorised centre can void the warranty. The adapter harness avoids cutting wires, and the stock cluster can be plugged back in.
 - The display must be readable in direct sun (the stock LCD also looks dull in overhead sun, as its manual says). Pick a bright IPS panel and fit a hood.
 
-## Rough cost (INR, all estimates)
+## Parts and cost
 
-| Part | Price |
-|---|---|
-| Waveshare ESP32-S3 2.8" round touch display (480 × 480) | ₹3,700–4,700 (listed prices, check) |
-| ESP32-C6 board for the interface box (the phase-1 logger) | ₹700–1,000 (est.) |
-| CAN transceiver modules (SN65HVD230, 3.3 V), one per bus, 3 in all | ₹360–600 (est.) |
-| 16-pin OBD-II socket (OBD+), 3 expansion sockets, self-resetting fuses | ₹400–900 (est.) |
-| Royal Enfield 6-pin to 16-pin OBD-II adapter cable (phase 1) | ₹800–1,800 (est.) |
-| GPS module (u-blox M8/M10 class) | ₹600–1,500 (est.) |
-| Motion sensor (6-axis IMU) | ₹150–700 (est.) |
-| Air temperature sensor, light sensor | ₹100–300 (est.) |
-| Automotive 12 V → 5 V supply, protection parts | ₹200–500 (est.) |
-| microSD socket and card (logger) | ₹300–600 (est.) |
-| Connectors, adapter harness, cable | ₹300–1,000 (est.) |
-| Printing (two enclosures, clamp, hood) | ₹600–1,500 (est.) |
-| **Total** | **about ₹8,000–14,000 (est.)** |
+**The exact parts, with Amazon.in / Flipkart links and prices: [`COMPONENTS.md`](COMPONENTS.md).** The housings will be modelled around the parts marked "Model fits this" there: the Waveshare 2.8" round display board, the ESP32-C6-DevKitC-1, the SN65HVD230 boards, the NEO-M8N GPS with its 25 mm patch antenna, the GY-521 motion sensor, the Envistia 12 V → 5 V supply, the STAR055 OBD-II socket and the GX12 sockets.
+
+Rough total: about **₹20,000–23,000 buying everything on Amazon.in / Flipkart**, or about **₹13,000–16,000** buying the display and the ESP32-C6 from Indian electronics stores (Robu, Hubtronics, Evelta), which list them for a fraction of the Amazon price. Plus printing, about ₹600–1,500 (est.). All from listings on 2026-11-23, or estimates.
 
 ## Open questions
 
