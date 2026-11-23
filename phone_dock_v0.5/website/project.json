@@ -465,7 +465,7 @@
     },
     "dl_dial": {
       "name": "Dial lock (demo): dial",
-      "what": "Numbered 0-9; pressed on the spindle",
+      "what": "Numbered 0-9 round its rim; pressed on the spindle",
       "qty": "1",
       "material": "PETG or ASA, face down, fine layers",
       "optional": true,

@@ -1,6 +1,6 @@
 # Dial combination lock (demo)
 
-A **fully mechanical** combination lock for the dock, with **one dial**, like a safe: no key and no power. The dial is numbered 0–9, and your code is **4, 5 or 6 digits**. **Dial the code to open; press the button to lock.** That one press also clears the code. It comes in its own lock cartridge, so it fits the same lock bay as the store-bought cam lock and the printed lock (`lock_type = "dial"`). The dock, the lock cover, the steel bolt and the strike are unchanged.
+A **fully mechanical** combination lock for the dock, with **one dial**, like a safe: no key and no power. The dial is numbered 0–9 round its rim, and your code is **4, 5 or 6 digits**. **Dial the code to open; press the button to lock.** That one press also clears the code. It comes in its own lock cartridge, so it fits the same lock bay as the store-bought cam lock and the printed lock (`lock_type = "dial"`). The dock, the lock cover, the steel bolt and the strike are unchanged.
 
 > **A demo / concept.** It is checked in CAD, but not printed or tested. A patient person can feel out the code of a printed dial lock, so treat it as a deterrent, and keep the store lock for the best security.
 
@@ -19,7 +19,7 @@ Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in h
   4. turn **left**, stop at **9**.
 
   With the last digit, the **button pops out** and the bolt drops. Slide the case off.
-- **The rule for any length:** for an N-digit code, turn right for the 1st digit, passing it N−1 times and stopping on the Nth. Then go left for the 2nd, passing it N−2 times. Keep alternating; for the last digit, turn straight to it. The index mark is the small triangle at the dial's left side.
+- **The rule for any length:** for an N-digit code, turn right for the 1st digit, passing it N−1 times and stopping on the Nth. Then go left for the 2nd, passing it N−2 times. Keep alternating; for the last digit, turn straight to it. Read the number on the dial's **rim**, next to the index mark (the small triangle on the face plate, at the dial's upper left as you face the side of the dock). That part of the rim faces the rider, so you can read it from the seat.
 - **To lock:** dock the case and **press the button in**. That's all. The bolt goes up into the case, and the button stays in.
   - The press also **clears the code**: a small hammer snaps the front wheel back to its "home" position, so the lock can only be opened again by dialling the whole code.
   - The button also clears it on its way out when you unlock, so the dial never sits at your code.
@@ -27,6 +27,7 @@ Watch it work in `video/lock_demo.mp4`: its third part shows the wheels cut in h
 ## How it works
 
 - **Dial, spindle and drive cam:** the dial turns a spindle through a fixed tube in the face plate. At the spindle's rear end is the drive cam.
+  - The dial has **ten flats round its rim**, with 0–9 engraved on them, upright as you read them (like a luggage lock), and a grip rib on each corner.
 - **Wheels:** one per digit, turning freely on the tube.
   - Each wheel and the cam have small pins (**flies**) on their faces. Turning the dial, the cam picks up the first wheel after nearly a turn, that wheel picks up the next, and so on. That's why each digit needs one fewer turn than the one before, as on a safe.
   - Each wheel has one **notch** in its rim. Where the notch sits on the wheel sets that wheel's digit.
@@ -54,7 +55,7 @@ STLs are in [`dial_lock/`](dial_lock/), made with the example code `[3, 7, 1, 9]
 | Cartridge | `dl_cartridge.stl` | 1 | Standing on its bottom face, as it sits in the dock. It includes the fixed tube the wheels turn on. It replaces `lock_cartridge` |
 | Wheels | `dl_wheel_1.stl` … `dl_wheel_4.stl` (or `dl_wheels.stl`) | 1 each | Flat, 100 % infill, 0.12–0.16 mm layers. **They differ** (each notch is in a different place). Wheel 1 is the front one, next to the dial, with the heart cam |
 | Spindle with drive cam | `dl_spindle.stl` | 1 | On its side, 100 % infill, PETG or PA12 |
-| Dial | `dl_dial.stl` | 1 | Face down, fine layers so the numbers come out |
+| Dial | `dl_dial.stl` | 1 | Face down (the face is plain; the numbers are on the rim's ten flats). Fine layers so the numbers come out; rub white paint into them to make them easy to read |
 | Fence with latch | `dl_fence.stl` | 1 | On its bottom, 100 % infill, PETG (the latch arm flexes) |
 | Reset hammer | `dl_hammer.stl` | 1 | Flat, 100 % infill |
 | Button (bar) | `dl_plunger.stl` | 1 | On its bottom, 100 % infill |

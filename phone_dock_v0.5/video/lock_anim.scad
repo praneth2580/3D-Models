@@ -92,7 +92,7 @@ module scene() {
     for (i = [0:dl_n - 1]) color([0.95, 0.8, 0.3])
       if (L_dl_cut > 0) intersection() { dl_wheel_placed(i, L_dl_w[i]); translate([0, dl_y, -100]) cube([200, 100, 200]); }   // keep the far half
       else dl_wheel_placed(i, L_dl_w[i]);
-    color([0.15, 0.15, 0.17]) dl_dial_placed(L_dl_rot);
+    color([0.78, 0.78, 0.8]) dl_dial_placed(L_dl_rot);
     bolt_at(dl_lift_at(L_dl_s) - dl_lift);
     color([0.85, 0.55, 0.15, L_dl_cut > 0 ? 0.45 : 1]) dl_plunger(L_dl_s);
   }

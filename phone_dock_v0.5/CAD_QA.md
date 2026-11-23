@@ -504,6 +504,14 @@ Update 25 (2026-11-23): **the lock files open in OpenSCAD without errors** (owne
 - **Checked:** the main file, the three lock files and `video/lock_anim.scad` open with no warnings or errors; the main file with each `lock_type`, too. Exports through the lock files match the committed STLs (`tl_key`, `plock_wafers`, `dl_wheels`: same volume and triangle count).
 - **Docs:** the lock guides now say to set the code in `lib/<lock>.scad` and to open the top-level file; adjust page; `CLAUDE.md`.
 
+Update 26 (2026-11-23): **the dial lock's numbers are on the dial's rim** (owner: "the key lock dial number should be on the side instead of the in the flat side"). Only the dial lock has numbers.
+- **The dial** (`dl_dial()`): ten flats round the rim (15 mm across the corners, 6 mm wide), digit 0-9 engraved 0.5 mm deep on each flat (3 mm tall, upright to the reader, reading outward), a 1 mm grip rib on each corner in place of the 24 round bumps. The outer face is plain. Its envelope is no bigger than before (ribs out to r 7.75, as the old bumps).
+- **The index mark moved** from the dial's 9 o'clock to 45° from its top, toward the rider edge (`dl_index_a`). At 9 o'clock the rim faces down toward the rider edge, so from the seat its number would be seen almost edge-on; at 45° the flat faces the rider. The digits turned with it: at rot 0 the 0 is at the mark, as before, so the dialling, the notch angles (`dl_gate_a`), the spindle's flat and the assembly step ("0 at the index mark when the cam's pin is at the top") are unchanged.
+- **Asserts:** new: the digits fit on a flat; the index-mark assert now checks the mark's height too (it ends about 1.4 mm below the plate's top edge). All pass.
+- **Checks:** `dl_check_cart`, `dl_check_dock` (includes the dial) and `dl_check_cover` empty on both mounts; `dl_check_parts` touch only, as before.
+- **Exported:** `dl_dial` 0.95 cm³ (was 1.03), watertight, one body; `dl_cartridge` re-exported (the index triangle moved; same volume, 6.93 cm³, and triangle count); `assembled/assembled_dial.stl` (binary).
+- **Renders:** the dial is light grey in the preview so the numbers show. `dl_side.png` (now from the rider's side) and `dl_exploded.png` re-rendered; the dial section of `video/lock_demo.mp4` (27.5-45.8 s) re-rendered, the rest kept.
+
 ## Renders
 - These parts all render with **no warnings and no errors**:
   - `case_shell`, `case_back`, `window_template`;

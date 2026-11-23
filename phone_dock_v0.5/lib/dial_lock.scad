@@ -42,6 +42,10 @@ dl_rise = 1.5;              // how far the fence rises into the notches
 dl_heart_r = [3.6, 7.5];    // front wheel's heart cam: low, high radius
 dl_zd = -12.8;              // dial axis height (dock z)
 dl_knob = [15, 6];          // dial: diameter, thickness
+dl_dig_size = 3.0;          // the dial's digits (on the rim): height, mm
+dl_dig_depth = 0.5;         // ... engraved this deep
+dl_index_a = 45;            // index mark: degrees from the top of the dial toward the rider edge (-y); the digit
+                            // there is read on the rim, which faces the rider
 dl_stroke = 11.2;           // button travel
 dl_ramp = 40;               // button ramp angle
 dl_lift = crank_r;          // bolt travel (7)
@@ -102,16 +106,19 @@ dl_delta = 2*asin((dl_fly[0]/2)/dl_fly[2]);                       // flies touch
 function dl_dir(i) = i % 2 == 0 ? -1 : 1;                          // 1st digit right, 2nd left, ...
 function dl_gate_a(i) = ((36*dial_code[i] - dl_dir(i)*(dl_n - i)*dl_delta) % 360 + 360) % 360;
 dl_home_rot = -(dl_gate_a(0) + 180);                              // front wheel at home: heart's low point (opposite its notch) down
-// ...and the dial's index mark (9 o'clock, -y side).
-dl_index = [dl_y - (dl_knob[0]/2 + 0.65), dl_zd];
+// ...and the dial's index mark, on the face plate beside the rim (dl_index_a from the top, toward -y).
+dl_index_r = dl_knob[0]/2 + 0.65;
+dl_index = [dl_y - dl_index_r*sin(dl_index_a), dl_zd + dl_index_r*cos(dl_index_a)];
 
 // ------------------------- CHECKS -----------------------------------
 assert(dl_n >= 4 && dl_n <= 6, "dial_code: 4 to 6 digits.");
 assert(min(dial_code) >= 0 && max(dial_code) <= 9, "dial_code: digits 0-9.");
 assert(dl_cam_x[0] >= dl_plate_x[1] + 0.6, "Too many wheels for the bay: the drive cam runs into the lifter.");
 assert(dl_zd + dl_R + 0.6 <= bay_top_z - cart_clear - 1.0, "Wheels break the top of the cartridge.");
-assert(abs(dl_index[0] - lock_y) + 0.6 <= notch_hw - cart_clear - 0.3, "No room for the index mark on the face plate.");
+assert(abs(dl_index[0] - lock_y) + 0.9 <= notch_hw - cart_clear - 0.3 && dl_index[1] + 0.9 <= notch_top_z - cart_clear - 0.3,
+       "No room for the index mark on the face plate.");
 assert(dl_zd + dl_knob[0]/2 <= notch_top_z + 1.5, "Dial stands too high above the face plate.");
+assert(dl_dig_size <= dl_knob[0]*sin(18) - 1.2 && dl_dig_size*0.6 <= dl_knob[1] - 1.5, "The digits don't fit on the dial's rim flats.");
 assert(dl_arm_z >= dl_stem_top + 0.5, "Latch arm runs into the button's stem.");
 assert(dl_rise + 0.2 <= dl_gate[2] && dl_rise >= dl_notch_d, "The fence must rise far enough to free the latch, and fit the notches.");
 assert(dl_tab[0] + dl_stroke + dl_tab[1] <= dl_tooth_x[0] - 0.4, "Spring tab runs into the latch.");
@@ -130,7 +137,7 @@ echo(dial_lock = dial_code, wheels = dl_n, cam_x = dl_cam_x, wheel_axis = [dl_y,
 echo(dl_anim = [dl_n, dl_delta, [for (i = [0:dl_n - 1]) dl_gate_a(i)], dial_code, dl_home_rot, dl_hump_s, dl_h_lift, dl_stroke]);
 
 // ------------------------- PARTS ------------------------------------
-module dl_digit(d, size=3.2) linear_extrude(0.6) text(str(d), size=size, font="Liberation Sans:style=Bold", halign="center", valign="center");
+module dl_digit(d, size=3.2, h=0.6) linear_extrude(h) text(str(d), size=size, font="Liberation Sans:style=Bold", halign="center", valign="center");
 // Fly on a wheel face, at the wheel's top (local -x). s = +1 front face, -1 rear face. Wheel frame: axis z, front = +z.
 module dl_fly_pin(s) translate([-dl_fly[2], 0, s > 0 ? dl_wt/2 - 0.01 : -dl_wt/2 - dl_fly[1] + 0.01]) cylinder(d=dl_fly[0], h=dl_fly[1], $fn=16);
 module dl_gate_cut(i) rotate(dl_gate_a(i)) translate([dl_R + 0.01, 0, -dl_wt]) linear_extrude(2*dl_wt)
@@ -169,14 +176,19 @@ module dl_spindle(rot=0) translate([0, dl_y, dl_zd]) rotate([rot, 0, 0]) transla
   cylinder(r=dl_cam[0], h=dl_cam[1], $fn=48);
   translate([-dl_fly[2], 0, dl_cam[1] - 0.01]) cylinder(d=dl_fly[0], h=dl_fly[1], $fn=16);   // drive pin, at the top
 }
-// Dial: digits 0-9 on its face.
+// Dial: ten flats round its rim, digits 0-9 engraved on them (read on the rim beside the index mark, like a
+// luggage lock), a grip rib on each corner; the outer face is plain. Digit d's flat is at dl_index_a + 36d
+// degrees, so at rot 0 the 0 is at the index mark (the dial's turns per digit are as before).
+dl_flat_a = dl_knob[0]/2*cos(18);                                 // flat's distance from the axis
 module dl_dial() difference() {
   union() {
-    cylinder(d=dl_knob[0], h=dl_knob[1], $fn=60);
-    for (k = [0:23]) rotate(k*15 + 7.5) translate([dl_knob[0]/2 - 0.25, 0, 0]) cylinder(d=1.0, h=dl_knob[1], $fn=8);   // grip
+    rotate(dl_index_a - 18) cylinder(d=dl_knob[0], h=dl_knob[1], $fn=10);   // flats centred on the digits
+    for (k = [0:9]) rotate(dl_index_a - 18 + k*36) translate([dl_knob[0]/2 - 0.25, 0, 0]) cylinder(d=1.0, h=dl_knob[1], $fn=8);   // grip ribs
   }
   translate([0, 0, -0.1]) difference() { cylinder(d=dl_spindle_d + 0.2, h=dl_knob[1] - 1, $fn=24); translate([dl_spindle_d/2 - 0.4, -2, 0]) cube([1, 4, 10]); }
-  for (d = [0:9]) rotate(90 + d*36) translate([dl_knob[0]/2 - 2.6, 0, dl_knob[1] - 0.5]) rotate(-90) dl_digit(d, 2.6);
+  // Upright to someone looking at the rim at the index: the digit's top away from them, reading outward (+x).
+  for (d = [0:9]) rotate(dl_index_a + d*36) translate([dl_flat_a - dl_dig_depth, 0, dl_knob[1]/2]) rotate([0, 90, 0]) rotate(180)
+    dl_digit(d, dl_dig_size, dl_dig_depth + 0.2);
 }
 module dl_dial_placed(rot=0) translate([lock_face_x + 0.6, dl_y, dl_zd]) rotate([rot, 0, 0]) rotate([0, 90, 0]) rotate(180) dl_dial();
 
@@ -263,7 +275,8 @@ module dl_cuts() {
   translate([dl_hx - 0.6, dl_py[0] - 1.4, pod_bottom_z - 1]) cube([1.2, 1.6, dl_h_bar + 1.0 + dl_h_lift + 0.3 - pod_bottom_z + 1]);
   // Spindle bore through the face plate, and the index mark (a small engraved triangle pointing at the dial).
   translate([lock_panel_inner_x - 0.6, dl_y, dl_zd]) rotate([0, 90, 0]) cylinder(d=dl_tube[1] + 0.2, h=lock_panel_t + 0.8, $fn=28);
-  translate([lock_face_x - 0.4, dl_index[0], dl_index[1]]) rotate([0, 90, 0]) linear_extrude(0.5) polygon([[-0.9, -0.5], [0.9, -0.5], [0, 0.6]]);
+  translate([lock_face_x - 0.4, dl_y, dl_zd]) rotate([dl_index_a - 90, 0, 0]) translate([0, -dl_index_r, 0]) rotate([0, 90, 0])
+    linear_extrude(0.5) polygon([[-0.9, -0.5], [0.9, -0.5], [0, 0.6]]);
 }
 // Added back after the cuts: the fixed tube the wheels turn on.
 module dl_tube_part() translate([dl_wx(dl_n - 1) - 0.3, dl_y, dl_zd]) rotate([0, 90, 0]) difference() {
@@ -284,7 +297,7 @@ module dl_placed(turn=1) {
   color([0.5, 0.5, 0.55]) dl_hammer(0);
   color([0.95, 0.8, 0.3]) for (i = [0:dl_n - 1]) dl_wheel_placed(i, open ? dl_rots_reset()[i] : dl_rots(false)[i]);
   color([0.8, 0.8, 0.84]) dl_spindle(0);
-  color([0.15, 0.15, 0.17]) dl_dial_placed(0);
+  color([0.78, 0.78, 0.8]) dl_dial_placed(0);
 }
 DL_PARTS = ["dl_wheel", "dl_wheels", "dl_spindle", "dl_dial", "dl_fence", "dl_hammer", "dl_plunger", "dl_lifter",
             "dl_check_cart", "dl_check_dock", "dl_check_parts", "dl_check_cover", "dl_check_scrambled", "dl_check_held",
