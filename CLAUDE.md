@@ -124,6 +124,12 @@ A round minimal-bezel enclosure for the ESP32-2424S012 1.28" round display, with
 - **Tools:** `tools/check.sh` runs clearance checks (all must pass); `tools/export.sh` writes `exports/`.
 - **Design brief:** follow `display_pod_v4/CLAUDE.md` when working on it. Never invent unknown board measurements.
 
+## Handlebar dash (handlebar_dash_v1/), started 2026-11-23
+
+A round colour display on its own handlebar clamp that **replaces the stock instrument cluster** (owner's choices: replace the stock instruments, large round display, handlebar clamp; show GPS speed/trip, clock, battery voltage, air temperature, lean angle/g, and the bike's gear, fuel and indicators). Reference bike: the J-platform 350 with harness J1D3 (Meteor 350); keep it generic, bike values as settings.
+- **Status: planning.** `README.md` is the design brief: the stock cluster's 18-pin connector (from Royal Enfield's J1D3 schematic), the CAN bus (ECU, ABS, cluster, OBD-2 and Diagnostic sockets; speed arrives only over CAN), the two-box plan (interface box on the bike's cluster connector + display head) and the phases (phase 1: a listen-only CAN logger on the OBD-2 socket, and measurements on the bike).
+- `reference/` holds Royal Enfield's manual and schematic (never committed). The schematic URL is in the manual's wiring-diagram QR code.
+
 ## How to verify CAD changes (do this every time)
 
 1. **Asserts:** `openscad -o /tmp/x.csg -D 'PART="none"' file.scad` must give no WARNING or ERROR.
