@@ -87,7 +87,9 @@ Print all of them at 0.2 mm layers or finer, with elephant's-foot compensation o
 
 ## Choose your key code
 
-In `printed_lock.scad`, set `lock_code`: one digit per wafer, 0, 1 or 2, front to back.
+**To look at the lock in OpenSCAD, open `printed_lock.scad`** (not the file in `lib/`, which only holds the parts and settings and gives errors on its own). It shows `PART="plock_exploded"`; change `PART` at its end to see or export any part.
+
+In `lib/printed_lock.scad`, set `lock_code`: one digit per wafer, 0, 1 or 2, front to back.
 - **Avoid all-equal codes** like `[1, 1, 1, 1]`.
 - **Combinations:** 4 wafers with 3 depths give 81 codes.
 - **Keep it private:** don't publish your own code or the STLs made with it.

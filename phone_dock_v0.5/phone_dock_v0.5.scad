@@ -36,10 +36,10 @@
 // "lock_bay_exploded" (picture), "assembled_view" (view-only model: the dock with lock_type's lock fitted).
 // One-piece mount (mount = "merged", the default): "dock_base" (dock + base plate in one part), "iso_pad" (rubber pad, x2).
 // Modular mount (mount = "modular"): "receiver" (the dock), "base_plate", "base_plate_2d" (DXF).
-// Optional printed lock (printed_lock.scad, PRINTED_LOCK.md, lock_type = "printed"): "plock_shuttle", "plock_wafer"
+// Optional printed lock (lib/printed_lock.scad, PRINTED_LOCK.md, lock_type = "printed"): "plock_shuttle", "plock_wafer"
 // (with plock_index = 0..3), "plock_wafers", "plock_key", "plock_lifter", and "lock_cartridge".
-// Optional dial lock (dial_lock.scad, DIAL_LOCK.md, lock_type = "dial"): "dl_*".
-// Optional tubular lock (tubular_lock.scad, TUBULAR_LOCK.md, lock_type = "tubular"): "tl_housing", "tl_plug",
+// Optional dial lock (lib/dial_lock.scad, DIAL_LOCK.md, lock_type = "dial"): "dl_*".
+// Optional tubular lock (lib/tubular_lock.scad, TUBULAR_LOCK.md, lock_type = "tubular"): "tl_housing", "tl_plug",
 // "tl_crank", "tl_key", "tl_pins", and "lock_cartridge"; checks "tl_check_*".
 PART = "assembly";
 SHOW_PHONE = true;
@@ -206,6 +206,11 @@ drain_d = 3.0;
 // round pin. No custom steel parts: the crank is the lock's own cam with one hole drilled in it.
 // Pulling the case pushes the bolt sideways (shear), never along its travel, so a tug cannot
 // turn the lock; locked, the crank pin is at top dead centre, so pushing the bolt down cannot either.
+// Which lock cartridge: "store" = the bought 16 mm cam lock (default); "printed" = the printed push-key lock
+// (lib/printed_lock.scad); "dial" = the dial combination lock (lib/dial_lock.scad); "tubular" = the tubular key lock
+// (lib/tubular_lock.scad). The dock (receiver / dock_base) and the lock cover are the same for all. To look at one
+// lock, open printed_lock.scad, dial_lock.scad or tubular_lock.scad instead of this file.
+lock_type = "store";
 lock_bore_d = 16.0;         // SELECT
 lock_bore_flat = 14.6;      // SELECT: across the flats of the lock thread
 lock_panel_t = 3.0;
@@ -1215,9 +1220,11 @@ module lock_assembled_view() {
   lock_cover();
 }
 
-include <printed_lock.scad>
-include <dial_lock.scad>
-include <tubular_lock.scad>
+// The optional locks' parts and settings (key codes). These files are not models on their own: open the
+// top-level printed_lock.scad, dial_lock.scad or tubular_lock.scad to look at a lock.
+include <lib/printed_lock.scad>
+include <lib/dial_lock.scad>
+include <lib/tubular_lock.scad>
 assert(lock_type == "store" || lock_type == "printed" || lock_type == "dial" || lock_type == "tubular",
        "lock_type must be \"store\", \"printed\", \"dial\" or \"tubular\".");
 

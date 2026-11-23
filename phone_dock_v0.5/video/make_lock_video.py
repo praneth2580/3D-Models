@@ -29,7 +29,7 @@ def load_font(bold, size):
             except OSError: pass
     return ImageFont.load_default()
 
-PLK_S, PLK_DROP = 7.0, 1.3        # printed lock: shuttle travel and wafer drop (printed_lock.scad)
+PLK_S, PLK_DROP = 7.0, 1.3        # printed lock: shuttle travel and wafer drop (lib/printed_lock.scad)
 
 
 # (start, end, caption)
@@ -111,7 +111,7 @@ T_CASE = T_POP_END + 0.5
 T_PRESS = T_CASE + 2.3                  # one press: the bolt goes up, the hammer clears the code, the latch snaps in
 T_PRESS_END = T_PRESS + 2.0
 T_END = T_PRESS_END + 2.6
-def dl_hammer_at(s):                    # as dl_hammer_at() in dial_lock.scad: the hump in the button's groove
+def dl_hammer_at(s):                    # as dl_hammer_at() in lib/dial_lock.scad: the hump in the button's groove
     s0, s1, s2, s3 = DL_HUMP
     if s >= s0 or s <= s3: return 0.0
     if s >= s1: return DL_HLIFT*(s0 - s)/(s0 - s1)

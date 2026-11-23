@@ -76,7 +76,9 @@ It also uses the steel bolt, the bearing block, the standard `lock_cover` and it
 
 ## Choose your code
 
-In `dial_lock.scad`, set `dial_code`: 4, 5 or 6 digits, 0–9. The wheels follow it. With 6 digits the wheel pack just fits between the face plate and the lifter (an assert checks it). Then export the wheels:
+**To look at the lock in OpenSCAD, open `dial_lock.scad`** (not the file in `lib/`, which only holds the parts and settings and gives errors on its own). It shows `PART="dl_exploded"`; change `PART` at its end to see or export any part.
+
+In `lib/dial_lock.scad`, set `dial_code`: 4, 5 or 6 digits, 0–9. The wheels follow it. With 6 digits the wheel pack just fits between the face plate and the lifter (an assert checks it). Then export the wheels:
 
 ```sh
 openscad -D 'lock_type="dial"' -D 'PART="dl_wheels"' -o dl_wheels.stl phone_dock_v0.5.scad

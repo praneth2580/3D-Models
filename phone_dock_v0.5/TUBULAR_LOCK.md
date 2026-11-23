@@ -76,7 +76,9 @@ All in PETG (or ASA). Elephant's-foot compensation on.
 
 ## Choose your key code
 
-In `tubular_lock.scad`, set `tl_code`: one digit per pin, 0, 1 or 2, pin 1 first.
+**To look at the lock in OpenSCAD, open `tubular_lock.scad`** (not the file in `lib/`, which only holds the parts and settings and gives errors on its own). It shows `PART="tl_exploded"`; change `PART` at its end to see or export any part.
+
+In `lib/tubular_lock.scad`, set `tl_code`: one digit per pin, 0, 1 or 2, pin 1 first.
 - **Which pin is which:** looking at the keyhole, with its two notches at 6 and 8 o'clock, pin 1 is at 5 o'clock, then anticlockwise: pin 2 at 3, pin 3 at 1, pin 4 at 11, pin 5 at 9 and pin 6 at 7 o'clock.
 - **Avoid** all-equal codes and codes with only one non-zero digit.
 - **Combinations:** 6 pins with 3 depths give 729 codes.
