@@ -62,7 +62,11 @@
     },
     {
       "src": "images/tl_keyhole.png",
-      "caption": "The tubular lock's keyhole: two tab notches (the key fits one way round, and comes out only when locked) and the pin tips"
+      "caption": "The tubular lock's keyhole, no key: two tab notches (the key fits one way round, and comes out only when locked) and the 6 pin tips, all at the same height, so the code can't be read through the keyhole"
+    },
+    {
+      "src": "images/tl_cutaway_nokey.png",
+      "caption": "The same cut with no key: every tip stands at the same height; the code is in the hidden length of each key pin, and the drivers (with a thin stem inside the spring) cross into the plug and hold it"
     },
     {
       "src": "images/dl_side.png",
@@ -575,7 +579,7 @@
     },
     "tl_pins": {
       "name": "Tubular lock: pins",
-      "what": "6 key pins (they differ: set by tl_code) and 6 drivers",
+      "what": "6 key pins (they differ inside, set by tl_code; the tips are all alike) and 6 drivers",
       "qty": "1 set",
       "material": "PETG, standing, 0.1-0.12 mm layers",
       "optional": true,

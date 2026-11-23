@@ -72,14 +72,14 @@ module scene() {
     bolt_at(plk_dz_s(L_shift));
   } else if (lock_type == "tubular") {      // tubular lock: L_turn turns it, L_key_out pulls the key out
     o = max(L_key_out, 0);
-    kp = min(tl_xs + tl_T + tl_play, tl_xs + o);          // key pins' back ends = drivers' front ends (right key)
+    kp = [for (i = [0:tl_n - 1]) min(tl_kp_rest(i), tl_xs + o)];   // key pins' back ends = drivers' front ends (right key)
     color([0.55, 0.36, 0.20]) tl_cut() tl_housing();
     color([0.85, 0.55, 0.15]) tl_cut() tl_plug(L_turn, min(o, tl_play));
     color([0.95, 0.85, 0.30]) tl_cut() {
-      for (i = [0:tl_n - 1]) tl_rot(L_turn) tl_at(kp, tl_pa(i)) tl_keypin(i);
-      for (i = [0:tl_n - 1]) tl_at(kp - tl_drv, tl_pa(i)) tl_driver();
+      for (i = [0:tl_n - 1]) tl_rot(L_turn) tl_at(kp[i], tl_pa(i)) tl_keypin(i);
+      for (i = [0:tl_n - 1]) tl_at(kp[i] - tl_drv, tl_pa(i)) tl_driver();
     }
-    color([0.2, 0.2, 0.22]) tl_cut() for (i = [0:tl_n - 1]) tl_at(tl_xfl, tl_pa(i)) tl_spring(kp - tl_drv - tl_xfl);
+    color([0.2, 0.2, 0.22]) tl_cut() for (i = [0:tl_n - 1]) tl_at(tl_xfl, tl_pa(i)) tl_spring(kp[i] - tl_drv - tl_xfl);
     color([0.8, 0.8, 0.84]) { tl_crank(L_turn); tl_steel_pin(L_turn); }
     color([0.45, 0.75, 0.95]) lock_yoke(L_turn);
     if (L_show_key) color([0.25, 0.5, 0.85]) tl_cut() tl_key(tl_code, L_turn, o);

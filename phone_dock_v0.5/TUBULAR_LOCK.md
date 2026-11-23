@@ -21,16 +21,18 @@ Stand at the right-hand side of the bike, facing the keyhole.
 - **To lock:** with the case docked, turn the key back **clockwise** a quarter turn. The bolt rises into the case's strike. Now pull the key out.
 - **The key comes out only when locked.** Turned, its tabs are behind the cartridge's face, so you can't walk away and leave it unlocked by mistake.
 
-![The keyhole (no key): the two tab notches at the bottom, the plug's face and the 6 key pins' tips](images/tl_keyhole.png)
+![The keyhole (no key): the two tab notches at the bottom, the plug's face and the 6 key pins' tips, all at the same height](images/tl_keyhole.png)
 
 ## How it works
 
 ![Cut through the lock's axis, key in, locked: the springs (dark), drivers and key pins (yellow), the plug (orange) and the housing (brown)](images/tl_cutaway.png)
 
+![The same cut with no key: the tips stand at the same height, and the drivers cross into the plug](images/tl_cutaway_nokey.png)
+
 - **The key** is a printed tube with **6 notches** in its end, each 0, 1 or 2 mm deep (your code), and two small **tabs** on its side.
-- **The plug** (orange) turns inside the **housing** (brown). It has 6 holes on a circle, one per notch. In each sits a **key pin** (yellow): a short pin with a thin tip that sticks out of the plug's front face.
-- Behind each hole, in the housing, is a **driver** (another short pin) and a **spring**.
-- **With no key**, the springs push every driver half into the plug's holes. A driver straddling the gap between plug and housing stops the plug turning, like a pin through a hinge.
+- **The plug** (orange) turns inside the **housing** (brown). It has 6 holes on a circle, one per notch. In each sits a **key pin** (yellow): a short pin with a thin tip that sticks out of the plug's front face. The tips are all the same length; the code is in the length of each pin's thicker part, hidden inside the plug.
+- Behind each hole, in the housing, is a **driver** (another short pin, with a thin stem at the back that sits inside its spring) and a **spring**.
+- **With no key**, the springs push every driver into the plug's holes. A driver straddling the gap between plug and housing stops the plug turning, like a pin through a hinge. All six tips then stand at the same height in the keyhole (3.4 mm above the plug's face), so looking in or measuring them tells nothing about the code.
 - **With the right key**, pushed in until its end rests on the plug's front face, each notch pushes its key pin back by just the right amount. Every key pin's back end, and every driver's front end, meets exactly at the gap between the plug and the housing (the **shear line**). Nothing crosses the gap, so the plug turns.
 - **A wrong cut** (one step, 1 mm, off) leaves that pin or its driver 1 mm across the gap, so the plug still can't turn.
 - **The crank:** a printed crank on the back of the plug turns with it. Its steel pin sits in the yoke's sideways slot, exactly as the store lock's crank does: a quarter turn pulls the yoke and the steel bolt 7 mm down.
@@ -45,6 +47,7 @@ Stand at the right-hand side of the bike, facing the keyhole.
 - **Print orientation sets the accuracy:**
   - The key prints standing on its bow with the cut end at the top, so the notch depths are exact layer heights (1 mm = 5 layers at 0.2 mm).
   - The housing, the plug and the pins print standing on end, so all their holes and circles come out round. Round parts printed lying down sag at the top; that is why the housing is a separate part instead of a hole in the cartridge (which prints standing up, with the lock's axis lying down).
+- **Nothing to read through the keyhole** (Update 27): in the first version the tips stood at the code's heights (1.4, 2.4 or 3.4 mm), so anyone with a torch and a ruler could read the code and print a key. Now, as in store-bought tubular locks, the tips are level and the code is in the hidden part of each pin. The cost: with no key, a pin with a 0 digit lets its driver go 2 mm further into the plug than one with a 2 digit, and there was no length to spare for longer drivers. So each driver is a short 3 mm head with a 2 mm stem at the back that runs inside the spring (it takes no extra length): whatever the digits, a head or a stem bridges the gap. The springs stretch further with no key, so they are 10 mm long instead of 8.
 - **1 mm steps, 3 depths:** forgiving to print, and one step wrong still blocks by 1 mm. More depths would need longer springs: a key with the wrong cut pushes a pin up to 2 mm further back, and the spring must still have room. With 3 depths, a spring is never squeezed below 2.9 mm (an 8-coil spring of 0.3 mm wire closes solid at 2.4 mm). There is no more room: the lock fills the bay from the face plate to the yoke.
 - **Metal springs:** printed springs give almost no force, so the 6 springs are bought, as for the push-key lock.
 - **Steel crank pin:** a 4 × 8 mm steel dowel pin, pressed into the printed crank. The housing's back face sits 0.2 mm in front of it, so it can't work loose forward; backwards, it stays in the crank even if it slides to the bay's back wall.
@@ -61,13 +64,13 @@ STLs are in [`tubular_lock/`](tubular_lock/), already in print orientation. **Pr
 | Plug | `tl_plug.stl` | 1 | Standing on its back face, 100 % infill, 0.12–0.15 mm layers |
 | Crank | `tl_crank.stl` | 1 | Flat, shaft up, 100 % infill, PETG or PA12 |
 | Key | `tl_key.stl` | 1+ | On its bow, cut end up, 100 % infill, 0.2 mm layers (or 0.1 mm), PETG or PC/PA. Print a spare |
-| Pins | `tl_pins.stl` | 1 set | Standing, 0.1–0.12 mm layers. Top row: key pins 1–6, left to right (they differ). Bottom row: 6 drivers (all the same) |
+| Pins | `tl_pins.stl` | 1 set | Standing, 0.1–0.12 mm layers. Top row: key pins 1–6, left to right (they differ: the thick part's length is the code). Bottom row: 6 drivers (all the same), on their heads, stem up |
 | Yoke | `lock_yoke.stl` (the store lock's) | 1 | As for the store lock |
 
 All in PETG (or ASA). Elephant's-foot compensation on.
 
 **Hardware:**
-- 6 compression springs: **3 mm outside diameter, 0.3 mm wire, about 8 mm long, 8 coils or fewer**, stainless steel.
+- 6 compression springs: **3 mm outside diameter, 0.3 mm wire, about 10 mm long, 8 coils or fewer**, stainless steel. The driver's 2 mm stem goes inside, so the inside must be at least 2.2 mm (3 mm OD with 0.3 mm wire gives 2.4).
 - 1 steel dowel pin **4 × 8 mm** (or 8 mm cut from 4 mm silver-steel rod), the crank pin.
 - 1 **M3 × 8 countersunk screw** (ISO 10642, 6 mm head): holds the crank to the plug.
 - The steel bolt, the bearing block, the standard `lock_cover` and its 3 screws, as for the store lock.
@@ -93,7 +96,7 @@ openscad -D 'lock_type="tubular"' -D 'PART="tl_pins"' -o tl_pins.stl phone_dock_
 openscad -D 'lock_type="tubular"' -D 'PART="lock_cartridge"' -o tl_cartridge.stl phone_dock_v0.5.scad
 ```
 
-A key pin for a digit d is 4.6 + d mm long (2.2 mm body, 2.4 + d mm tip). To see the lock in the full assembly, set `lock_type = "tubular"`.
+A key pin for a digit d is 5.2 + d mm long: a 0.8 + d mm thick part and a 4.4 mm tip (all the tips are the same, so the keyhole shows nothing). To see the lock in the full assembly, set `lock_type = "tubular"`.
 
 ## Fit test (do this first)
 
@@ -107,8 +110,8 @@ Print the housing, the plug, the pins and the key.
 
 On the bench first, then into the dock.
 1. **Crank:** press the 4 mm steel pin into the crank's hole, flush with its front face (the side with the shaft), with a drop of retaining compound.
-2. **Drivers and springs:** stand the housing on its back face. Drop a spring into each of the 6 chambers, then a driver on top, with a dab of grease.
-3. **Key pins:** put the key in the plug. Turn the plug over (key underneath) and drop each key pin into its hole, tip first. They are different lengths (4.6, 5.6 or 6.6 mm): with the key in, each one sits **flush with the plug's back face** only in its own hole. Seen from the back the order is mirrored, so check each one with a straight edge rather than counting. A dab of grease holds them.
+2. **Drivers and springs:** stand the housing on its back face. Drop a spring into each of the 6 chambers, then a driver on top, stem down into the spring, with a dab of grease.
+3. **Key pins:** put the key in the plug. Turn the plug over (key underneath) and drop each key pin into its hole, tip first. They are different lengths (5.2, 6.2 or 7.2 mm): with the key in, each one sits **flush with the plug's back face** only in its own hole. Seen from the back the order is mirrored, so check each one with a straight edge rather than counting. A dab of grease holds them.
 4. **Plug into the housing:** with the key still in, push the plug into the housing's bore, its lug in the lug pocket and its holes over the drivers. Press the springs down until the plug sits on the bottom of the bore.
 5. **Crank:** from the back, push the crank's shaft through the housing into the plug's socket. Hold the housing as it sits in the dock (square end down) with the plug's tab slots at the bottom: the crank pin must point straight up. Drive the M3 × 8 countersunk screw in from the front, through the plug's face (take the key out for this; the drivers now hold the plug still). Now the unit holds together.
 6. **Into the cartridge:** push the unit up into the cartridge from below: the housing into its pocket, the crank into the slot behind it.
@@ -131,13 +134,14 @@ These checks are built in as `PART="tl_check_*"` (run with `lock_type="tubular"`
 | The parts against each other, at 5 points of the turn (`tl_check_parts`) | Touching only |
 | The key's bow vs the case shell, back cover and shoe, locked and unlocked (`tl_check_case`) | No overlap |
 | **Right key**, plug turned 3° and 45° (`tl_check_rightkey`) | Touching only: it turns |
-| **No key**, plug turned 3° (`tl_check_nokey`) | **Blocked** (0.49 mm³) |
+| **No key**, plug turned 3° (`tl_check_nokey`) | **Blocked** (0.71 mm³; 0.82 mm³ for a code with no 2s, held by the drivers' stems) |
 | **Wrong key**: each pin one step off on its own, and all of them (`tl_check_wrongkey`, `tl_wrong_i = 0..5`) | **Blocked**, every one (0.06 mm³ for a single pin at 3°) |
 | **Key pulled out while unlocked** (`tl_check_keyout`) | **Blocked** (2.05 mm³): the tabs hit the cartridge |
 | **Key put in the wrong way round**, turned 60°, 120°, 180°, 240° or 300°, half in (`tl_check_keyangle`) | **Blocked** at each angle (2.9–5.7 mm³) |
 | **Plug turned 3° past either end** (`tl_check_stops`) | **Blocked** (0.19 mm³): the lug hits its pocket's end |
 | **Bolt pushed down while locked** (`tl_check_backdrive`) | **Blocked** (1.86 mm³): the yoke sits on the crank pin at top dead centre |
 | Housing pushed back 0.3 mm into the cartridge | **Blocked** (16.4 mm³): its back corners sit on the cartridge (the key's push goes into the dock) |
+| **No key: the tips** | All 6 stand 3.4 mm above the plug's face, whatever the code (they used to stand at 1.4, 2.4 or 3.4 mm: the code) |
 | All parts | Watertight single bodies (the pins file: 12 separate pins) |
 
 **CAD checks are not a physical test.** Print it, try it, and keep the store-bought lock as the option if the printed one doesn't work reliably on your printer.

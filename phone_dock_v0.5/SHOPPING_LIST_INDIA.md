@@ -88,7 +88,7 @@ If you print the tubular key lock ([`TUBULAR_LOCK.md`](TUBULAR_LOCK.md)), leave 
 | Item | Where | Price |
 |---|---|---|
 | Printing the lock parts: housing, plug, crank, key, 12 pins (about 9 cm³, 11 g). `tl_cartridge` replaces `lock_cartridge` and is smaller. The yoke, the dock and the lock cover are the standard ones | Add them to the main print order; ask for fine layers (0.1–0.12 mm) on the pins | ₹60–150 (est.) |
-| 6 small compression springs: 3 mm OD, 0.3 mm wire, about 8 mm long, **8 coils or fewer** (stainless) | A spring assortment kit (Amazon.in, "mini compression spring assortment"), or Lamington Road | ₹100–300 (est.) |
+| 6 small compression springs: 3 mm OD, 0.3 mm wire, about 10 mm long, **8 coils or fewer** (stainless) | A spring assortment kit (Amazon.in, "mini compression spring assortment"), or Lamington Road | ₹100–300 (est.) |
 | 1 steel dowel pin, 4 × 8 mm (or 8 mm of 4 mm silver-steel rod) | Nagdevi Street, or a dowel pin assortment on Amazon.in | ₹10–150 (est.) |
 | 1 M3 × 8 countersunk socket screw (ISO 10642) | Nagdevi Street | ₹5–10 (est.) |
 

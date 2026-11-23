@@ -12,7 +12,12 @@
     - PLUG: turns in the HOUSING. It has 6 holes on a circle, one per notch. In each sits a KEY PIN (printed,
       stepped: a thin tip pokes forward out of the plug's pin face). Behind the plug, in the housing, each hole
       continues as a chamber with a DRIVER pin and a spring.
-    - No key: the springs push the drivers half into the plug's holes, so the plug can't turn.
+    - The tips are all the same length; the code is in the length of each key pin's thicker body, inside the plug.
+      So with no key every tip stands at the same height in the keyhole: looking in, or measuring the tips, gives
+      nothing away (Update 27: the tips used to stand at the code's heights, readable through the keyhole).
+    - No key: the springs push the drivers into the plug's holes, so the plug can't turn. How far each one goes in
+      depends on its pin's digit (1.2 to 3.2 mm), so the drivers have a thin stem at the back that runs inside the
+      spring: whatever the digit, a driver's head or stem bridges the gap between plug and housing.
     - The right key: pushed in until its end sits on the pin face, each notch pushes its key pin back by just the
       right amount: every key pin's back end, and every driver's front end, meet exactly at the gap between the
       plug and the housing (the shear line). Now the plug turns.
@@ -44,10 +49,12 @@ tl_pin_d = 3.0;             // key pins' body and drivers
 tl_tip_d = 2.0;             // key pins' thin tip
 tl_hole = 3.4;              // their holes (printed standing; drill 3.5 if tight)
 tl_tip_hole = 2.4;
-tl_w = 2.2;                 // key pin body length
-tl_T = 1.2;                 // how far the drivers cross into the plug with no key
-tl_drv = 2.0;               // driver length
+tl_w = 0.8;                 // key pin body length for a 0 digit (each digit step adds tl_step; the tips are all alike)
+tl_T = 1.2;                 // how far the drivers cross into the plug with no key, at least (pins with the top digit)
+tl_drv = 1.4;               // driver's head length (the spring pushes on its back)
+tl_stem = [2.0, 2.7];       // driver's stem, inside the spring: diameter, length
 tl_spr = 4.9;               // spring length with the right key in; a 2-step-wrong key squeezes it 2 mm more (2.9)
+tl_spr_free = 10;           // the springs' free length (bought: 3 mm OD, 0.3 mm wire, about 10 mm long)
 tl_floor = 0.8;             // housing's back wall behind the chambers
 tl_frame = 1.2;             // cartridge wall behind the face plate (joins the face plate to the cartridge)
 tl_play = 0.2;              // plug's end play: springs push it forward, the key pushes it back onto the housing
@@ -84,8 +91,9 @@ tl_hx1 = tl_xf - 0.1;                                          // housing front
 tl_px1 = tl_hx1 - tl_play;                                     // plug front, key in (pushed back)
 tl_xpf = tl_px1 - tl_sleeve;                                   // plug's pin face = where the key's end stops
 tl_xstep = tl_xpf - tl_nar;                                    // the key pins' shoulders stop here (no key)
-tl_xs = tl_xstep - tl_w - tl_T;                                // shear line = plug's back face, key in
-tl_tip0 = tl_nar + tl_T;                                       // key pin tip length for a 0 digit
+tl_range = (tl_depths - 1)*tl_step;                            // deepest cut (2 mm)
+tl_xs = tl_xstep - tl_w - tl_T - tl_range;                     // shear line = plug's back face, key in
+tl_tip_l = tl_nar + tl_T + tl_range;                           // every key pin's tip (shoulder to end)
 tl_xfl = tl_xs - tl_drv - tl_spr;                              // chamber floor
 tl_hx0 = tl_xfl - tl_floor;                                    // housing back
 tl_cx1 = tl_hx0 - tl_play;                                     // crank front (key in)
@@ -101,7 +109,12 @@ tl_boss_x = [cart_screw[0] - 2.4, cart_screw[0] + 2.4];
 // ------------------------- CHECKS ------------------------------------
 assert(tl_n >= 4 && tl_n <= 6, "tl_code: 4 to 6 pins.");
 assert(min(tl_code) >= 0 && max(tl_code) <= tl_depths - 1, "tl_code digits must be 0 to tl_depths - 1.");
-assert(tl_spr - (tl_depths - 1)*tl_step >= 2.9, "Spring would close solid under a wrong key.");
+assert(tl_spr - tl_range >= 2.9, "Spring would close solid under a wrong key.");
+assert(tl_spr + tl_T + tl_range + tl_play <= tl_spr_free - 1.0, "Springs too short: with no key, a pin with a 0 digit gets too little push.");
+assert(tl_stem[0] <= 2*1.35 - 0.3 - 0.3, "Driver's stem too thick for the spring.");
+assert(tl_drv + tl_stem[1] + tl_range <= tl_spr + tl_drv - 0.2 + 1e-6, "Driver's stem would hit the chamber floor under a wrong key.");
+assert(tl_drv + tl_stem[1] - (tl_T + tl_range + tl_play) >= 0.6, "With no key, a driver must still bridge the shear line.");
+assert(tl_w >= 0.8, "Key pin body too short.");
 assert(tl_cx0 - yoke_x1 >= 0.5 - 1e-6, "Crank hits the yoke.");
 assert(tl_cx1 - tl_cpin_l >= bay_x0 + 0.2 && tl_cx1 - tl_cpin_l <= yoke_x0 + 1.0, "Crank pin: must reach through the yoke, short of the bay's back wall.");
 assert(tl_house_r + 0.2 + 1.0 <= (bay_y1 - bay_y0)/2 - cart_clear, "Housing pocket breaks the cartridge's side walls.");
@@ -201,15 +214,22 @@ module tl_key(code=tl_code, turn=1, out=0) tl_rot(turn) translate([out, 0, 0]) d
 }
 
 // Key pin i (local z axis, back at z = 0), driver, spring.
+// Key pin i: body tl_w + digit steps long (the code), then the tip, the same for every pin.
+function tl_body(i) = tl_w + tl_code[i]*tl_step;
 module tl_keypin(i) {
   cylinder(d1=tl_pin_d - 0.6, d2=tl_pin_d, h=0.3, $fn=32);
-  translate([0, 0, 0.3]) cylinder(d=tl_pin_d, h=tl_w - 0.3, $fn=32);
-  translate([0, 0, tl_w - 0.01]) cylinder(d=tl_tip_d, h=tl_tip0 + tl_code[i]*tl_step - 0.2 + 0.01, $fn=24);
-  translate([0, 0, tl_w + tl_tip0 + tl_code[i]*tl_step - 0.2]) cylinder(d1=tl_tip_d, d2=tl_tip_d - 0.4, h=0.2, $fn=24);
+  translate([0, 0, 0.3]) cylinder(d=tl_pin_d, h=tl_body(i) - 0.3, $fn=32);
+  translate([0, 0, tl_body(i) - 0.01]) cylinder(d=tl_tip_d, h=tl_tip_l - 0.2 + 0.01, $fn=24);
+  translate([0, 0, tl_body(i) + tl_tip_l - 0.2]) cylinder(d1=tl_tip_d, d2=tl_tip_d - 0.4, h=0.2, $fn=24);
 }
+// Driver (local z, pointing +x when placed): head from z = 0 to tl_drv (its back face at z = 0 takes the spring),
+// stem behind it (z < 0), inside the spring.
 module tl_driver() {
-  cylinder(d1=tl_pin_d - 0.6, d2=tl_pin_d, h=0.3, $fn=32);
-  translate([0, 0, 0.3]) cylinder(d=tl_pin_d, h=tl_drv - 0.6, $fn=32);
+  translate([0, 0, -tl_stem[1]]) {
+    cylinder(d1=tl_stem[0] - 0.4, d2=tl_stem[0], h=0.2, $fn=24);
+    translate([0, 0, 0.2]) cylinder(d=tl_stem[0], h=tl_stem[1] - 0.19, $fn=24);
+  }
+  cylinder(d=tl_pin_d, h=tl_drv - 0.3, $fn=32);
   translate([0, 0, tl_drv - 0.3]) cylinder(d1=tl_pin_d, d2=tl_pin_d - 0.6, h=0.3, $fn=32);
 }
 module tl_spring(l) linear_extrude(l, twist=-360*6, slices=72) translate([1.35, 0]) circle(0.15, $fn=8);
@@ -231,12 +251,15 @@ module tl_screw(turn=1) tl_rot(turn) {        // M3 x 8 countersunk, picture and
 }
 
 // Where the pins sit. key = code of the key in it (undef: no key). Key pin back end, driver front end (x):
-function tl_kp_x(i, key) = is_undef(key) ? tl_xs + tl_T + tl_play : tl_xs + (key[i] - tl_code[i])*tl_step;
+// No key: each key pin's shoulder rests on the pin face's step (the plug pushed forward by tl_play), so its back end
+// is further forward the smaller its digit, while every tip ends at the same place.
+function tl_kp_rest(i) = tl_xs + tl_T + tl_range - tl_code[i]*tl_step + tl_play;
+function tl_kp_x(i, key) = is_undef(key) ? tl_kp_rest(i) : min(tl_kp_rest(i), tl_xs + (key[i] - tl_code[i])*tl_step);
 module tl_pins(turn=1, key=tl_code) {
   for (i = [0:tl_n - 1]) {
     x = tl_kp_x(i, key);
     tl_rot(turn) tl_at(x, tl_pa(i)) tl_keypin(i);
-    tl_at(min(x, tl_xs + tl_T + tl_play) - tl_drv, tl_pa(i)) tl_driver();
+    tl_at(x - tl_drv, tl_pa(i)) tl_driver();
   }
 }
 module tl_springs(key=tl_code) for (i = [0:tl_n - 1]) let(x = tl_kp_x(i, key) - tl_drv) tl_at(tl_xfl, tl_pa(i)) tl_spring(x - tl_xfl);
@@ -272,7 +295,7 @@ module tl_placed(turn=1, key=true) {
 // ------------------------- PART SELECTOR (PART = "tl_...") -----------
 TL_PARTS = ["tl_housing", "tl_plug", "tl_crank", "tl_key", "tl_pins", "tl_check_cart", "tl_check_dock", "tl_check_cover",
             "tl_check_parts", "tl_check_case", "tl_check_rightkey", "tl_check_nokey", "tl_check_wrongkey", "tl_check_keyout",
-            "tl_check_stops", "tl_check_backdrive", "tl_check_keyangle", "tl_exploded", "tl_cutaway"];
+            "tl_check_stops", "tl_check_backdrive", "tl_check_keyangle", "tl_exploded", "tl_cutaway", "tl_cutaway_nokey"];
 tl_wrong_i = -1;           // tl_check_wrongkey: which pin's cut is one step off (-1 = all of them)
 tl_turns = [1, 0.75, 0.5, 0.25, 0];
 function tl_is_part(p) = len([for (n = TL_PARTS) if (n == p) 1]) > 0;
@@ -280,7 +303,7 @@ function tl_wrong_key() = [for (i = [0:tl_n - 1]) (tl_wrong_i < 0 || tl_wrong_i 
 module tl_dock() { if (mount == "merged") dock_base(); else dock_receiver(); }
 module tl_moving(turn) { tl_plug(turn); tl_pins(turn); tl_crank(turn); tl_steel_pin(turn); tl_screw(turn); lock_yoke(turn); tl_key(tl_code, turn); }
 module tl_turning(turn, key) { tl_plug(turn, is_undef(key) ? tl_play : 0); for (i = [0:tl_n - 1]) tl_rot(turn) tl_at(tl_kp_x(i, key), tl_pa(i)) tl_keypin(i); }
-module tl_fixed(key) { tl_housing(); for (i = [0:tl_n - 1]) tl_at(min(tl_kp_x(i, key), tl_xs + tl_T + tl_play) - tl_drv, tl_pa(i)) tl_driver(); }
+module tl_fixed(key) { tl_housing(); for (i = [0:tl_n - 1]) tl_at(tl_kp_x(i, key) - tl_drv, tl_pa(i)) tl_driver(); }
 
 module tl_half() render() intersection() { children(); translate([40, 0, -60]) cube([80, 80, 60 + lock_z]); }
 module tl_part(p) {
@@ -289,9 +312,9 @@ module tl_part(p) {
   else if (p == "tl_crank") tl_to_print(tl_cx0) tl_crank(1);                      // flat, shaft up
   else if (p == "tl_key")                                                          // bow on the bed, cut end up
     multmatrix([[0, 1, 0, -lock_y], [0, 0, -1, lock_z], [-1, 0, 0, tl_kbx + tl_bow[2]], [0, 0, 0, 1]]) tl_key(tl_code, 1);
-  else if (p == "tl_pins") {                                                       // key pins 1-6 in a row, drivers below
+  else if (p == "tl_pins") {                                                       // key pins 1-6 in a row (standing on their backs), drivers below
     for (i = [0:tl_n - 1]) translate([i*6, 0, 0]) tl_keypin(i);
-    for (i = [0:tl_n - 1]) translate([i*6, -6, 0]) tl_driver();
+    for (i = [0:tl_n - 1]) translate([i*6, -6, tl_drv]) rotate([180, 0, 0]) tl_driver();   // on the head's front, stem up
   }
   // Checks: these must be empty or only touch.
   else if (p == "tl_check_cart")  for (t = tl_turns) intersection() { lock_cartridge(); union() { tl_housing(); tl_moving(t); } }
@@ -319,7 +342,7 @@ module tl_part(p) {
     color([0.45, 0.45, 0.50]) translate([-12, 0, 0]) tl_crank(1);
     color([0.55, 0.36, 0.20]) tl_housing();
     color([0.70, 0.70, 0.74]) translate([10, 0, 0]) tl_springs();
-    color([0.95, 0.85, 0.30]) translate([16, 0, 0]) for (i = [0:tl_n - 1]) tl_at(tl_xs + tl_T + tl_play - tl_drv, tl_pa(i)) tl_driver();
+    color([0.95, 0.85, 0.30]) translate([16, 0, 0]) for (i = [0:tl_n - 1]) tl_at(tl_xs + tl_T + tl_play - tl_drv + 3, tl_pa(i)) tl_driver();
     color([0.95, 0.85, 0.30]) translate([24, 0, 0]) for (i = [0:tl_n - 1]) tl_at(tl_xs, tl_pa(i)) tl_keypin(i);
     color([0.85, 0.55, 0.15]) translate([33, 0, 0]) tl_plug(1);
     color([0.75, 0.75, 0.78]) translate([44, 0, 0]) tl_screw(1);
@@ -335,5 +358,15 @@ module tl_part(p) {
     color([0.75, 0.75, 0.78]) tl_half() { tl_steel_pin(1); tl_screw(1); }
     color([0.55, 0.58, 0.62]) tl_half() lock_yoke(1);
     color([0.25, 0.50, 0.85]) tl_half() tl_key(tl_code, 1);
+  }
+  else if (p == "tl_cutaway_nokey") {   // picture: the same cut with no key: every tip at the same height
+    color([0.34, 0.34, 0.37]) tl_half() lock_cartridge();
+    color([0.55, 0.36, 0.20]) tl_half() tl_housing();
+    color([0.85, 0.55, 0.15]) tl_half() tl_plug(1, tl_play);
+    color([0.95, 0.85, 0.30]) tl_half() tl_pins(1, undef);
+    color([0.20, 0.20, 0.22]) tl_half() tl_springs(undef);
+    color([0.45, 0.45, 0.50]) tl_half() tl_crank(1);
+    color([0.75, 0.75, 0.78]) tl_half() { tl_steel_pin(1); tl_screw(1); }
+    color([0.55, 0.58, 0.62]) tl_half() lock_yoke(1);
   }
 }
