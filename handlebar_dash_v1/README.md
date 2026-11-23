@@ -1,11 +1,12 @@
 # Handlebar Dash (v1): a round digital dash that replaces the stock instruments
 
-**Status: planning.** Nothing is built yet. This file is the design brief: what we know about the bike, the plan, and the open questions.
+**Status: planning, phase 1 ready to build.** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md). The dash itself is not built yet. This file is the design brief: what we know about the bike, the plan, and the open questions.
 
 A round colour display on its own handlebar clamp that **replaces the stock instrument cluster**. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds its own sensors: GPS (speed, trip, clock), battery voltage, air temperature, and lean angle and g-force.
 
 - **Reference bike:** a 2021-on single-cylinder 350 on the "J" platform, harness **J1D3** (the Meteor 350). Every bike-specific value (handlebar size, clamp position, harness adapter, signal map, fuel and gear sensor calibration) will be a setting, so the other bikes on the same platform can be added with the least work (see [Other bikes](#other-bikes)).
 - **Owner's choices (2026-11-23):** replace the stock instruments; a large round display; its own handlebar clamp; show GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force, and the bike's own signals (gear, fuel, indicators); read the bike's documentation.
+- **Then:** the **2.8" round display** ("bigger is better"); an **OBD+ port and expansion slots** so it can grow; **the Meteor 350 first** (all its variants), other bikes later.
 
 ## What we know about the bike
 
@@ -61,7 +62,7 @@ Speed (needle), odometer, trips A, B and F (distance since low fuel), 12-hour cl
 
 ## Plan
 
-**Proposed layout: two boxes.**
+**Layout: two boxes, three buses.**
 - **Interface box**, where the stock cluster's connector is (behind the headlamp). It plugs into the bike's 18-pin cluster connector through an adapter harness, so no wires are cut, and it holds:
   - the CAN transceiver;
   - the gear sensor's 5 V supply and the fuel sender bias;
@@ -70,11 +71,29 @@ Speed (needle), odometer, trips A, B and F (distance since low fuel), 12-hour cl
   - an automotive 12 V to 5 V supply.
   
   It sends ready-made readings to the display.
-- **Display head** on the handlebar clamp: a round ESP32-S3 display with GPS, a light sensor for automatic brightness, and a sun hood. It connects to the interface box by one thin 4-wire cable.
+- **Display head** on the handlebar clamp: the **Waveshare ESP32-S3 2.8" round touch display** (480 × 480, ST7701 panel, GT911 touch; about ₹3,700–4,700 in India), with GPS, a light sensor for automatic brightness, and a sun hood. It connects to the interface box by one thin 4-wire cable (+12 V, ground, dash bus H and L).
 - **Why two boxes:** round ESP32-S3 displays use most of their pins for the screen, leaving too few for the bike's signals. Lean angle also needs the motion sensor on the frame.
 
+**The buses:**
+- **The bike's bus (listen only).** The interface box reads the bike's CAN bus but never transmits on it, so nothing the dash does can upset the ECU or the ABS.
+- **The dash bus (ours).** A second, private CAN bus (500 kbit/s) links the interface box, the display head and the expansion slots. Anything added later talks only to this bus, never to the bike's. The interface box's microcontroller is an **ESP32-C6**, which has two CAN controllers: one for each bus, with no extra chip.
+- **The OBD+ port.** A standard **16-pin OBD-II socket** on the interface box: the bike's CAN bus (pins 6 and 14), ground (4 and 5) and fused +12 V (16), as in cars. Any scan tool or ELM327 dongle plugs straight in, and the bike's own 6-pin service socket stays free.
+
+**Expansion slots (3).** Sealed 6-pin sockets on the interface box, all the same:
+
+| Pin | Signal |
+|---|---|
+| 1 | +12 V, switched with the ignition, fused at 1 A per slot (self-resetting fuse) |
+| 2 | +5 V, 500 mA |
+| 3 | Ground |
+| 4 | Dash bus CAN H |
+| 5 | Dash bus CAN L |
+| 6 | One spare input or output, protected (for a simple switch or sensor) |
+
+A module plugged in gets power and joins the dash bus. Examples for later: a tyre-pressure receiver, a heated-grip controller, an auxiliary light switch, a second display, a data logger. The dash bus's message list will be published with the firmware, so others can make modules.
+
 **Phases:**
-1. **Logger and measurements (needs the bike).** A small ESP32 and CAN transceiver plugged into the OBD-2 socket, listening only, logging to a microSD card. Ride, rev, change gear, use the indicators and so on, then work out the messages. Also measure:
+1. **Logger and measurements (needs the bike), see [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md).** A small ESP32 and CAN transceiver plugged into the OBD-2 socket, listening only, logging to a microSD card. Ride, rev, change gear, use the indicators and so on, then work out the messages. Also measure:
    - the bus's termination, with the cluster in and out;
    - the fuel sender's resistance from full to empty;
    - the gear sensor's voltage in each gear;
@@ -106,9 +125,11 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 
 | Part | Price |
 |---|---|
-| Round ESP32-S3 touch display, 2.1" (480 × 480) or 2.8" (480 × 480) | ₹3,000–5,000 (est.) |
-| ESP32-S3 board for the interface box (the phase-1 logger) | ₹500–800 (est.) |
-| CAN transceiver module (SN65HVD230, 3.3 V) | ₹120–200 (est.) |
+| Waveshare ESP32-S3 2.8" round touch display (480 × 480) | ₹3,700–4,700 (listed prices, check) |
+| ESP32-C6 board for the interface box (the phase-1 logger) | ₹700–1,000 (est.) |
+| CAN transceiver modules (SN65HVD230, 3.3 V), one per bus, 3 in all | ₹360–600 (est.) |
+| 16-pin OBD-II socket (OBD+), 3 expansion sockets, self-resetting fuses | ₹400–900 (est.) |
+| Royal Enfield 6-pin to 16-pin OBD-II adapter cable (phase 1) | ₹800–1,800 (est.) |
 | GPS module (u-blox M8/M10 class) | ₹600–1,500 (est.) |
 | Motion sensor (6-axis IMU) | ₹150–700 (est.) |
 | Air temperature sensor, light sensor | ₹100–300 (est.) |
@@ -116,11 +137,12 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 | microSD socket and card (logger) | ₹300–600 (est.) |
 | Connectors, adapter harness, cable | ₹300–1,000 (est.) |
 | Printing (two enclosures, clamp, hood) | ₹600–1,500 (est.) |
-| **Total** | **about ₹6,000–12,000 (est.)** |
+| **Total** | **about ₹8,000–14,000 (est.)** |
 
 ## Open questions
 
-- **Display size:** 2.1" or 2.8" round (both 480 × 480): the bigger one is easier to read, costs more and needs a larger housing.
+- **Your bike's service socket:** black or red? Some 6-pin to 16-pin adapters are sold for the black (Euro 4) socket only. The schematic shows two 6-pin sockets ("OBD-2" and "Diagnostic"); check which is fitted and its colour before buying the adapter.
+- **The display head's free pins:** the 2.8" board's spare header pins must carry the dash bus (2 pins to a CAN transceiver). Check on the board.
 - **The connector:** the mating part for the bike's 18-pin cluster plug, so the adapter harness doesn't need any cutting. Find its part number, or take one from a used cluster.
 - **Room for the interface box** behind the headlamp, once the stock cluster is gone.
 - **Other bikes:** which ones to support first.
