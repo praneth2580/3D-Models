@@ -5,7 +5,7 @@
   "logo_text": "DASH",
   "telltales": "face",
   "icon_size": 5.5,
-  "logo_gap": 21,
+  "bezel": 12.4,
   "trim": true,
   "bar_d": 22.2,
   "clamp_w": 24,
@@ -24,17 +24,19 @@
    "logo_text",
    "telltales",
    "icon_size",
-   "logo_gap",
+   "bezel",
    "trim",
    "fit",
    "led_d"
   ],
   "head_shell_plain": [
    "logo_text",
+   "bezel",
    "trim",
    "fit"
   ],
   "trim_ring": [
+   "bezel",
    "fit"
   ],
   "head_carrier": [

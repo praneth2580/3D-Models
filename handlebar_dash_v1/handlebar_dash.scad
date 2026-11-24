@@ -19,14 +19,15 @@
     3. COVER: a plug that closes the back. Its front edge presses the carrier forward, so the glass seats on the foam
        ring. 4 x M3 x 10 pan-head screws through the shoulder into heat-set inserts in the cover hold it all.
     TELL-TALES (owner: "options to show status indicators like high beam, abs"; "look like they are part of the model
-       too, not an extra addon ... look are a great deal important"; then "reduce icon sizes and try to reduce bezels
-       too, and place the display a bit below so the logo can be placed above it"): the display sits disp_drop below the
-       gauge's centre, so the bezel is a slim 3 mm below the screen and 15 mm above it, where the LOGO sits centred
-       with the tell-tales either side of it (6 mm icons, 4 a side), as in the gauge faces of the Indian Scout, KOSO and
-       Daytona. Each icon is cut through the face's 0.8 mm skin into its own light chamber with a 5 mm addressable RGB
-       LED behind it (one data line); fill the icons flush with translucent white UV resin. The logo: logo_text, or
-       your own SVG/DXF (logo_file). icons: which and in what order; telltales = "none": no lamps. The top of the face
-       is hollow: the LEDs go in from inside (windows in the bore), and the GPS antenna lies behind the logo.
+       too, not an extra addon ... look are a great deal important"; "reduce icon sizes ... reduce bezels ... the logo
+       above it"; then "how about showing them on the sides"): the screen is centred in an even bezel (bezel, 12.4 mm
+       from the glass's bore), the LOGO is centred above it, and the tell-tales run in a curve down each side of the
+       screen (5.5 mm icons, 4 a side), as in the gauge faces of the Indian Scout, KOSO and Daytona. Each icon is cut
+       through the face's 0.8 mm skin into its own light chamber with a 5 mm addressable RGB LED behind it (one data
+       line); fill the icons flush with translucent white UV resin. The logo: logo_text, or your own SVG/DXF
+       (logo_file). icons: which and in what order; telltales = "none": no lamps. The face is hollow behind its front
+       wall, all round: the LEDs go in from inside (windows in the bore), their wires run round the hollow to the top,
+       and the GPS antenna lies behind the logo.
     4. MOUNT: a GoPro-style 3-prong joint on the cover: it fits the printed bar clamp here, or any GoPro handlebar
        mount. One M5 bolt sets the tilt.
 
@@ -74,27 +75,24 @@ carrier_skirt = 1.6;        // its tube wall
 bay = 14;                   // room behind the carrier for the GPS module, the CAN board and the wires
 cover_plug = 8;             // how far the cover plugs into the shell
 cover_back = 3.0;           // the cover's back plate
-key_w = 6;                  // the anti-rotation key (on the side) and its groove
-key_a = 0;                  // its angle (degrees from +x)
+key_w = 6;                  // the anti-rotation key and its groove
+key_a = 315;                // its angle (degrees from +x): low on one side, clear of the tell-tales and the wire notches
 key_d = 1.2;
 screw_ang = [60, 120, 240, 300];   // the 4 radial cover screws (degrees from +x)
 insert_d = 4.2;             // M3 heat-set inserts in the cover's ring (SELECT: check your inserts)
 insert_l = 5.7;
 csk_d = 6.0;                // M3 countersunk head
 cover_ring = 7;             // the cover plug's ring (radial width): carries the inserts
-disp_drop = 6;              // FIXED (only 6 fits: less leaves no room for the icons, more shortens the hollow for the GPS antenna)
-                            // the display sits this far below the gauge's centre: a slim 3 mm bezel below it and
-                            //   room above it for the logo and the tell-tales (owner: "place the display a bit below so the
-                            //   logo can be placed above it ... reducing the overall bezel")
+bezel = 12.4;               // the face's width outside the glass's bore (an even bezel all round): the gauge's size.
+                            //   It must take the tell-tales (bigger icons need more) and the logo.
 face_skin = 0.8;            // the face's front skin: the icons go through it
 iw = 1.2;                   // the bore's wall, inside the face
 ow = 1.6;                   // the face's outer wall, around the hollow
-icons = ["left", "beam", "neutral", "abs", "engine", "fuel", "battery", "right"];   // rider's left to right: half left of the logo, half right
-icon_size = 5.5;            // icon height, mm (owner: smaller icons)
+icons = ["left", "beam", "neutral", "abs", "engine", "fuel", "battery", "right"];   // half down the rider's left side (top first), half up the right
+icon_size = 5.5;            // icon height, mm (bigger: widen the bezel)
 cell_d = 6.0;               // each icon's light chamber: depth (front to the LED)
 led_d = 5.2;                // 5 mm LED hole
 cell_back = 2.0;            // the wall the LEDs sit in
-logo_gap = 21;              // degrees from the top to the first icon each side (room for the logo; wider logo: raise it)
 logo_text = "DASH";         // the logo above the screen, engraved: your own word ("" = none)
 logo_file = "";             // or your own logo as an SVG or DXF file (it takes the place of the text), scaled to logo_size high
 logo_size = 4.5;            // logo height, mm
@@ -144,8 +142,8 @@ gp_drop = 30;               // the joint sits this far below the head's centre, 
 $fn = 120;
 bore_r = glass_d/2 + fit;
 shell_r = bore_r + wall_t;                           // the back of the shell (around the cover)
-face_r = shell_r + disp_drop;                         // the gauge's face, centred disp_drop above the display: its bottom is
-hc = [0, disp_drop];                                  //   flush with the back (shell_r)
+face_r = bore_r + bezel;                              // the gauge's face
+hc = [0, 0];                                          // its centre (the display's)
 glass_z = gasket_t - gasket_squeeze;                 // the glass's front face, squeezed onto the foam
 z_carrier = glass_z + standoff_z;                    // the carrier's front face = the standoffs' ends
 z_cov = z_carrier + carrier_t + bay;                 // the cover's front edge = the carrier skirt's back end
@@ -163,14 +161,13 @@ assert(z_screw - csk_d/2 > z_cov + 0.5 && z_screw + csk_d/2 < shell_len - 0.5, "
 assert(glass_d/2 > active_d/2, "glass smaller than the screen?");
 assert(gp_drop + gp_r + 3 <= shell_r, "The joint must stay on the cover.");
 assert(z_screw - 3.1 >= cav_z1 + 0.15, "The cover screws' seats would break into the face ring's hollow.");
-assert(z_sh0 > z_front + 20, "The face's shoulder starts too far forward (lower disp_drop).");
+assert(z_sh0 > z_front + 20, "The face's shoulder starts too far forward (a smaller bezel).");
 assert(gps_patch[1] + z_front + ow + 0.3 <= cav_z1 - 0.2, "The GPS antenna is longer than the face's hollow.");
 assert(cradle_span - clamp_w >= bike_clamp[0] + 4, "The cradle's clamps would sit on your bike's handlebar clamp: widen cradle_span.");
 assert(head_back - bridge[0] >= bike_clamp[1]/2 + 3, "The cradle's bridge would hit your bike's handlebar clamp: raise head_back.");
 assert(head_back - bridge[0] >= cl_r + 6 + 2, "The bridge would hit the clamp caps' bolt ears: raise head_back.");
-echo(head = [2*face_r, head_len], bezel = [disp_drop + face_r - bore_r, face_r - disp_drop - bore_r], glass_z = glass_z, z_carrier = z_carrier, z_cov = z_cov, shell_len = shell_len);
+echo(head = [2*face_r, head_len], bezel = face_r - bore_r, glass_z = glass_z, z_carrier = z_carrier, z_cov = z_cov, shell_len = shell_len);
 
-assert(!(telltales == "face" && len(icons) > 0) || icon_r*sin(logo_gap) - cell_w/2 - 1.4 >= gps_patch[0]/2 + 0.5, "The icons nearest the logo would run into the GPS antenna: raise logo_gap.");   // the chamber and its walls
 
 // ------------------------- HELPERS ------------------------------------
 module ring(r0, r1, h) difference() { cylinder(r=r1, h=h); translate([0, 0, -0.1]) cylinder(r=r0, h=h + 0.2); }
@@ -200,42 +197,44 @@ module display_dummy() {
 }
 
 // ------------------------- SHELL ---------------------------------------
-// A gauge cup whose face is centred disp_drop above the display (the display's centre is the origin): a slim bezel
-// below the screen, the logo and the tell-tales above it. Its outline is one hull, from the face's rounded edge back to
-// the cover (shell_r, centred on the display): flush at the bottom, a 45-degree shoulder at the top, so it prints face
-// down without supports. The top of the face is hollow behind its front skin: the tell-tales' light chambers and the GPS
-// antenna (behind the logo) live there.
+// A gauge cup: the face (face_r) round the screen, a 45-degree shoulder back to the cover (shell_r), so it prints face
+// down without supports; the front edge rounded. The face is hollow behind its front wall, all round: the tell-tales'
+// light chambers, their LEDs' wires and the GPS antenna (behind the logo) live there.
 z_front = -lip_t;
-top_drop = disp_drop + face_r - shell_r;              // how far the face's top stands above the back's
+top_drop = face_r - shell_r;                          // how far the face stands out beyond the back
 z_sh1 = shell_len;                                    // the shoulder ends at the back
-z_sh0 = z_sh1 - top_drop;                             // and starts here (45 degrees at the top)
-cav_z1 = z_sh0 + 3.5;                                 // the hollow ends (the screws' wall behind it is solid)
-cav_y0 = 28;                                          // the hollow is only above this (the top of the face)
+z_sh0 = z_sh1 - top_drop;                             // and starts here (45 degrees)
+cav_z1 = min(z_sh0 + 3.5, z_screw - 3.1 - 0.2);       // the hollow ends (clear of the cover screws' seats)
 module disk(c, r, z) translate([c[0], c[1], z]) cylinder(r=r, h=0.01, $fn=240);
 module cup_hull(inset=0) hull() {
   translate([hc[0], hc[1], z_front + round_r + inset]) rotate_extrude($fn=240) translate([face_r - round_r - inset, 0]) circle(round_r, $fn=16);
   disk(hc, face_r - inset, z_sh0);
   disk([0, 0], shell_r - inset, z_sh1 - 0.01);
 }
-// The tell-tales: half each side of the logo, on a circle round the screen.
+// The tell-tales: in a curve down each side of the screen.
 cell_w = icon_size + 1.6;                             // each chamber: width along the arc
-cell_h = icon_size + 1.5;                             //   and height
+cell_h = icon_size + 1.5;                             //   and height (radial)
 icon_r = bore_r + iw + cell_h/2 + 0.2;
 icon_pitch = (cell_w + 1.4)/icon_r*180/PI;
 n_ic = len(icons);
 n_left = ceil(n_ic/2);
-// Icon i's angle in the head frame (x is mirrored as seen from the front: the rider's left is +x).
-function icon_a(i) = i < n_left ? 90 - (logo_gap + (n_left - 1 - i)*icon_pitch) : 90 + logo_gap + (i - n_left)*icon_pitch;
-// The face's edge, from the display's centre, in direction a.
-function edge_r(a) = disp_drop*sin(a) + sqrt(face_r*face_r - pow(disp_drop*cos(a), 2));
+// Icon i's angle in the head frame (x is mirrored as seen from the front: the rider's left is +x). Down the left side,
+// then up the right, so the list reads rider's left to right and the turn arrows sit at the top of each side.
+function icon_a(i) = i < n_left ? ((n_left - 1)/2 - i)*icon_pitch : 180 + ((n_ic - n_left - 1)/2 - (i - n_left))*icon_pitch;
+function ang_d(a, b) = abs((a - b + 540) % 360 - 180);
 gps_a = 90;                                           // the GPS antenna: behind the logo
-logo_y = (bore_r + iw + disp_drop + face_r - (trim ? trim_wh[0] : 0))/2;
+logo_y = (bore_r + iw + face_r - (trim ? trim_wh[0] : 0))/2;
 icon_col = [["left", [0.1, 0.9, 0.2]], ["right", [0.1, 0.9, 0.2]], ["neutral", [0.1, 0.9, 0.2]], ["beam", [0.15, 0.4, 1]],
             ["abs", [1, 0.6, 0]], ["engine", [1, 0.6, 0]], ["fuel", [1, 0.6, 0]], ["battery", [1, 0.1, 0.1]], ["oil", [1, 0.1, 0.1]]];
 function icon_colour(n) = [for (c = icon_col) if (c[0] == n) c[1]][0];
 with_icons = telltales == "face" && n_ic > 0;
-icons_fit = [for (i = [0:max(0, len(icons) - 1)]) if (telltales == "face" && len(icons) > 0)   // a list, not a statement: no CSG nodes
-  assert(icon_r + cell_h/2 + ow <= edge_r(icon_a(i)) - (trim ? trim_wh[0] + 0.3 : 0), str("Icon ", i + 1, " (", icons[i], ") runs off the face: smaller icon_size, fewer icons or a lower logo_gap.")) i];
+// Checks (lists, not statements: no CSG nodes): the icons fit the bezel, and each clears the GPS antenna and the key.
+icons_fit = with_icons ? assert(icon_r + cell_h/2 + ow <= face_r - (trim ? trim_wh[0] + 0.3 : 0),
+  "The tell-tales don't fit the bezel: a smaller icon_size or a bigger bezel.") true : true;
+icons_clear = [for (i = [0:max(0, n_ic - 1)]) if (with_icons)
+  assert(ang_d(icon_a(i), gps_a)*PI/180*icon_r >= cell_w/2 + 1.4 + gps_patch[0]/2 + 0.5
+      && ang_d(icon_a(i), key_a)*PI/180*icon_r >= cell_w/2 + 1.4 + key_w/2 + 3 + 0.5,
+    str("Icon ", i + 1, " (", icons[i], ") runs into the GPS antenna or the key: fewer icons or a smaller icon_size.")) i];
 // The icons, drawn as the rider sees them, about icon_size tall, with no loose islands (stencil bridges in A and B).
 module icon2d(n, s=icon_size) scale(s/8) {
   if (n == "left" || n == "right") mirror([n == "right" ? 1 : 0, 0]) polygon([[-4, 0], [-0.6, 3.2], [-0.6, 1.2], [4, 1.2], [4, -1.2], [-0.6, -1.2], [-0.6, -3.2]]);
@@ -275,15 +274,17 @@ module head_shell() difference() {
   union() {
     difference() {
       cup_hull();
-      // the hollow (top of the face only), around the bore's wall
+      // the hollow, around the bore's wall
       difference() {
-        intersection() { cup_hull(ow); translate([-200, cav_y0, z_front + ow]) cube([400, 200, cav_z1 - z_front - ow]); }
+        intersection() { cup_hull(ow); translate([-200, -200, z_front + ow]) cube([400, 400, cav_z1 - z_front - ow]); }
         translate([0, 0, z_front - 1]) cylinder(r=bore_r + iw, h=60);
       }
     }
+    // a rib in the hollow behind the key's groove
+    intersection() { ring_box(key_a, key_w + 6, bore_r + iw - 0.1, face_r, z_carrier - 1, cav_z1 + 0.1); cup_hull(); }
     // the tell-tales' block in the hollow (its chambers are cut below)
     if (with_icons) for (i = [0:n_ic - 1]) intersection() {
-      ring_box(icon_a(i), cell_w + 2*1.4, bore_r + iw - 0.1, edge_r(icon_a(i)), z_front + ow - 0.1, z_cell1 + cell_back);
+      ring_box(icon_a(i), cell_w + 2*1.4, bore_r + iw - 0.1, face_r, z_front + ow - 0.1, z_cell1 + cell_back);
       cup_hull();
     }
   }
