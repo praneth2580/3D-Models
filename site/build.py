@@ -11,7 +11,7 @@ a table of the settings to adjust for your own hardware, and links to its docs.
 Optional, per project: <project>/website/project.json (title, summary, part descriptions, ...) and HTML
 sections in the same folder. See site/README.md for the format. Standard library only.
 """
-import fnmatch, html, json, os, re, shutil, subprocess, sys, zipfile
+import fnmatch, html, json, os, re, shutil, subprocess, sys, urllib.parse, zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_SRC = os.path.join(ROOT, "site")
@@ -219,6 +219,85 @@ SITE_LIC = SITE.get("license", {})
 SITE_LICENSE_HTML = (f'Unless a project says otherwise, licensed <a href="{esc(SITE_LIC["url"])}">{esc(SITE_LIC["name"])}</a>.'
                      if SITE_LIC else "")
 
+# ------------------------------------------------------------------ what to buy (website/buy.json)
+# Stores with a search page, and which ones suit each kind of part. A search link opens the store's own search for
+# the item; it says nothing about stock or price (checked listings go in an item's "buy" list instead).
+STORES = {
+    "amazon": ("Amazon.in", "https://www.amazon.in/s?k={q}"),
+    "flipkart": ("Flipkart", "https://www.flipkart.com/search?q={q}"),
+    "robu": ("Robu.in", "https://robu.in/?s={q}&post_type=product"),
+    "evelta": ("Evelta", "https://evelta.com/search.php?search_query={q}"),
+    "ecomp": ("ElectronicsComp", "https://www.electronicscomp.com/index.php?route=product/search&search={q}"),
+    "digikey": ("DigiKey India", "https://www.digikey.in/en/products/result?keywords={q}"),
+}
+STORE_SETS = {
+    "modules": ["amazon", "flipkart", "robu", "evelta", "ecomp"],             # hobby boards and modules
+    "components": ["robu", "evelta", "ecomp", "digikey", "amazon"],           # chips, transistors, diodes, passives
+    "hardware": ["amazon", "flipkart"],                                       # screws, inserts, rubber, tools
+    "general": ["amazon", "flipkart"],
+}
+
+
+def buy_link(store, url, price="", note=""):
+    extra = " ".join(x for x in (price, note) if x)
+    return (f'<a class="shop" href="{esc(url)}" rel="nofollow noopener">{esc(store)}</a>'
+            + (f' <span class="opt">{esc(extra)}</span>' if extra else ""))
+
+
+def buy_where(it):
+    exact = "".join(f'<li>{buy_link(b["store"], b["url"], b.get("price", ""), b.get("note", ""))}</li>' for b in it.get("buy", []))
+    q = it.get("search")
+    stores = STORE_SETS.get(it.get("stores", "general"), []) if q else []
+    search = " &middot; ".join(
+        f'<a href="{esc(STORES[k][1].format(q=urllib.parse.quote_plus(q)))}" rel="nofollow noopener">{esc(STORES[k][0])}</a>' for k in stores)
+    out = f'<ul class="shops">{exact}</ul>' if exact else ""
+    if search:
+        out += f'<p class="search"><span class="opt">Search &ldquo;{esc(q)}&rdquo;:</span> {search}</p>'
+    if it.get("local"):
+        out += f'<p class="search"><span class="opt">In Mumbai: {esc(it["local"])}</span></p>'
+    if it.get("where"):
+        out += f'<p class="search"><span class="opt">{esc(it["where"])}</span></p>'
+    return out
+
+
+def buy_section(cfg, has_builds):
+    if not cfg:
+        return ""
+    head = "<thead><tr><th>Item</th><th>What it's for</th><th>Qty</th><th>Price (INR)</th><th>Where to buy</th></tr></thead>"
+    tables = []
+    for g in cfg.get("groups", []):
+        rows = ""
+        for it in g.get("items", []):
+            fit = (' <span class="fit-badge" title="The printed parts are modelled around this exact item">model fits this</span>'
+                   if it.get("fits") else "")
+            note = f"<br><span class='opt'>{esc(it['note'])}</span>" if it.get("note") else ""
+            when = f" data-when='{esc(json.dumps(it['when']))}'" if it.get("when") else ""
+            rows += (f"<tr{when}><td>{esc(it['name'])}{fit}</td><td>{esc(it.get('for', ''))}{note}</td>"
+                     f"<td>{esc(str(it.get('qty', '')))}</td><td class='price'>{esc(it.get('price', ''))}</td>"
+                     f"<td>{buy_where(it)}</td></tr>")
+        gnote = f'<p class="small-note">{esc(g["note"])}</p>' if g.get("note") else ""
+        tables.append(f'<h3 class="table-title">{esc(g["label"])}</h3>{gnote}'
+                      f'<div class="table-wrap"><table class="parts buy">{head}<tbody>{rows}</tbody></table></div>')
+    totals = "".join(f"<tr><td>{esc(a)}</td><td class='price'>{esc(b)}</td></tr>" for a, b in cfg.get("totals", []))
+    totals_html = (f'<h3 class="table-title">Totals</h3><div class="table-wrap"><table class="parts small">'
+                   f'<tbody>{totals}</tbody></table></div>') if totals else ""
+    build_note = (' <span class="build-note" hidden>Showing the items for <b class="build-name"></b> '
+                  '(<a href="#choose">change</a>).</span>') if has_builds else ""
+    end_note = f'<p class="small-note">{esc(cfg["note"])}</p>' if cfg.get("note") else ""
+    sub = esc(cfg.get("sub", "Everything to buy besides the printed parts, and where to get it in India."))
+    return f"""
+<section id="buy">
+  <div class="wrap">
+    <h2>{esc(cfg.get("title", "What to buy"))}</h2>
+    <p class="sub">{sub}{build_note}</p>
+    <p class="small-note">Prices are in INR, as listed on the date given, or estimates marked (est.); they change often. Named links go to a listing that was checked. The search links open each store's own search for the item: check that the listing matches before you order.</p>
+    {"".join(tables)}
+    {totals_html}
+    {end_note}
+  </div>
+</section>"""
+
+
 def chip_note(ch):
     return f'<small>{esc(ch["note"])}</small>' if ch.get("note") else ""
 
@@ -372,6 +451,8 @@ class Project:
         nav += [("Download", "#download")]
         adjust = self.fragment("adjust.html")
         groups = scad_params(self.dir) if not adjust else []
+        buy_cfg = load_json(os.path.join(self.webdir, "buy.json"), None)
+        nav += [("What to buy", "#buy")] if buy_cfg else []
         nav += [("Adjust", "#adjust")] if adjust or groups else []
         nav += [(t, h) for t, h in c.get("nav", [])]
         nav += [("Docs", "#docs")] if self.docs() else []
@@ -541,7 +622,8 @@ class Project:
                        '<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>\n'
                        + ('<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>\n' if c.get("build_options") or cz else ""))
         scripts += f'<script>window.PROJECT = {json.dumps(data)};</script>\n<script src="../app.js"></script>'   # viewer, build picker, tabs, gallery
-        body = hero + see + viewer + download + adjust_html + extra + docs_html
+        buy = buy_section(buy_cfg, bool(opts and parts))
+        body = hero + see + viewer + download + buy + adjust_html + extra + docs_html
         return page(f"{self.title}", self.summary[:200], body, "../", nav, cover, scripts)
 
     def gallery(self):

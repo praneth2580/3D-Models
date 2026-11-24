@@ -1,0 +1,48 @@
+{
+  "title": "What to buy",
+  "sub": "The display board, the battery and everything else besides the printed parts, with where to get it in India. The parts list is in documentation/assembly.md; prices here are estimates.",
+  "groups": [
+    {
+      "label": "Electronics",
+      "note": "The housing is modelled around this exact board: buy the same one.",
+      "items": [
+        {"name": "ESP32-2424S012 1.28\" round display board (ESP32-C3)", "for": "The display and its processor (sold as \"Electrobot ESP32-C3 1.28in\"; the model is on its silkscreen)", "qty": 1, "price": "₹900–1,500 (est.)", "fits": true,
+         "search": "ESP32-2424S012", "stores": "modules", "note": "Check the listing photo shows \"ESP32-2424S012\" on the board."},
+        {"name": "LiPo cell with protection PCB, 402030 (about 200–250 mAh), JST 1.25 mm 2-pin plug", "for": "The battery, in the cover's bay (1 mm room to swell)", "qty": 1, "price": "₹150–300 (est.)", "fits": true,
+         "search": "402030 lipo battery", "stores": "modules", "note": "Check the plug's polarity against the board before connecting: clones often have it reversed."},
+        {"name": "USB-C cable", "for": "Power and charging, through the TPU plug", "qty": 1, "price": "₹100–250 (est.)", "search": "USB C cable", "stores": "general"}
+      ]
+    },
+    {
+      "label": "Lens, seals and foam",
+      "items": [
+        {"name": "Clear polycarbonate, 1 mm (a 36.2 mm disc: lens.dxf)", "for": "The lens", "qty": "an offcut", "price": "₹100–200 (est.)", "search": "1mm polycarbonate sheet clear", "stores": "hardware", "local": "a plastic-sheet dealer (or a laser-cutting shop)"},
+        {"name": "Thin closed-cell foam tape, 0.5 mm", "for": "The foam ring behind the lens (display_gasket.dxf)", "qty": "a roll", "price": "₹100–200 (est.)", "search": "0.5mm foam tape", "stores": "hardware"},
+        {"name": "EVA or PORON foam, 1.5 mm", "for": "The pad on the board retainer", "qty": "a sheet", "price": "₹50–150 (est.)", "search": "EVA foam sheet 1.5mm", "stores": "hardware"},
+        {"name": "1 mm silicone or EPDM sheet (or print the gasket in TPU)", "for": "The cover gasket", "qty": "an offcut", "price": "₹50–150 (est.)", "search": "1mm silicone rubber sheet", "stores": "hardware", "local": "a rubber/seal shop"},
+        {"name": "Clear RTV silicone (or a VHB ring)", "for": "Bonds the lens", "qty": 1, "price": "₹100–250 (est.)", "search": "clear RTV silicone", "stores": "general"},
+        {"name": "Rubber shim, about 1 mm, 22 x 75 mm", "for": "Wraps the bar inside the clamp", "qty": 1, "price": "₹0–50 (est.)", "where": "An old bicycle inner tube works."}
+      ]
+    },
+    {
+      "label": "Screws and the bayonet's ball plunger",
+      "items": [
+        {"name": "M2 x 3 heat-set inserts (3.2 mm hole)", "for": "The cover's screws", "qty": 3, "price": "₹60–150 (est.)", "search": "M2 heat set insert", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M2 x 8 socket cap screws, stainless", "for": "The cover", "qty": 3, "price": "₹30–60 (est.)", "search": "M2 x 8 socket cap screw stainless", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M4 stainless spring-ball plunger (ball 2.5 mm, stroke at least 0.8 mm)", "for": "The bayonet's click", "qty": 1, "price": "₹100–250 (est.)", "search": "M4 spring ball plunger", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M3 x 6–8 thread-forming screws for plastic, pan head", "for": "The receiver into the cup", "qty": 3, "price": "₹30–60 (est.)", "search": "M3 self tapping screw for plastic", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M5 x 25 socket cap screws + M5 nyloc nuts", "for": "The bar clamp", "qty": "2 + 2", "price": "₹30–60 (est.)", "search": "M5 x 25 socket cap screw", "stores": "hardware", "local": "Nagdevi Street"}
+      ]
+    },
+    {
+      "label": "3D printing (by a service)",
+      "items": [
+        {"name": "Printing: housing, cover, retainer, receiver, clamp (ASA, or PETG for a prototype) + the USB plug in TPU 95A", "for": "Upload the STLs for an exact quote", "qty": "1 set", "price": "₹300–700 (est.)",
+         "buy": [{"store": "Robu (EasyMech)", "url": "https://robu.in/?p=901845"}, {"store": "Zbotic", "url": "https://zbotic.in/3d-printing-service/"},
+                 {"store": "iamRapid", "url": "https://iamrapid.com/3d-printing-services/"}, {"store": "Makenica (Mumbai)", "url": "https://makenica.com/3d-printing-services-in-mumbai"}]}
+      ]
+    }
+  ],
+  "totals": [["Everything, with printing", "about ₹1,900–4,000 (est.)"]],
+  "note": "All prices here are estimates (not checked on listings)."
+}

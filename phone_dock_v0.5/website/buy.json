@@ -1,0 +1,90 @@
+{
+  "title": "What to buy",
+  "sub": "All the electronics, the lock, the hardware and the printing for one complete dock and case, with where to get it in India. Details in SHOPPING_LIST_INDIA.md and WIRING.md.",
+  "groups": [
+    {
+      "label": "Dock electronics",
+      "note": "The dock board: hand-wired on perfboard (option A) or an ordered PCB (option B, below). Prices as listed on 2026-11-20.",
+      "items": [
+        {"name": "AO3401A P-MOSFET", "for": "Switches 5 V onto the pins only while a case is docked", "qty": "2 (1 spare)", "price": "₹9",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=AO3401&post_type=product", "price": "₹4.47 each"}], "search": "AO3401", "stores": "components"},
+        {"name": "2N7002 MOSFET", "for": "Shorts the red OFF LED while power is on", "qty": 2, "price": "₹6",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=2N7000&post_type=product", "price": "₹2.80 each"}], "search": "2N7002", "stores": "components"},
+        {"name": "USBLC6-2SC6 USB ESD protection (ST)", "for": "Protects the USB data lines", "qty": 1, "price": "₹20",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=USBLC6&post_type=product", "price": "₹20"}], "search": "USBLC6-2SC6", "stores": "components"},
+        {"name": "Resettable fuse 1.5 A (ASMD1210-150)", "for": "Over-current protection", "qty": 2, "price": "₹10",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=resettable+fuse+1.5A&post_type=product", "price": "₹4.98 each"}], "search": "resettable fuse 1.5A", "stores": "components"},
+        {"name": "3 mm LEDs: yellow, green, red", "for": "PWR, DOCK and OFF lights", "qty": "2 of each", "price": "₹7",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=3mm+led+green&post_type=product", "price": "about ₹1 each"}], "search": "3mm LED", "stores": "components", "local": "Lamington Road"},
+        {"name": "Resistors (1k x 4, 10k, 100k x 2) + 10 µF capacitor", "for": "The switch and LED circuits", "qty": "as listed", "price": "₹25 (est.)", "search": "resistor kit 1/4W", "stores": "components", "local": "Lamington Road"},
+        {"name": "Perfboard 8 x 12 cm, double-sided", "for": "The dock board (option A)", "qty": 1, "price": "₹114",
+         "buy": [{"store": "Robu.in", "url": "https://robu.in/?s=zero+pcb&post_type=product", "price": "₹114"}], "search": "double sided perfboard", "stores": "modules"},
+        {"name": "P75-B1 pogo pins, packs of 5", "for": "The 10 contacts (2 rows); a third pack for spares is optional", "qty": "2 packs", "price": "₹398",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0FBMK81HZ", "price": "₹199 per pack"}], "search": "P75 pogo pin", "stores": "modules"},
+        {"name": "KSD9700 thermostat, 45 °C, normally closed", "for": "Cuts the charging if the case gets hot", "qty": 1, "price": "₹40–60 (est.)",
+         "buy": [{"store": "iFuturetech", "url": "https://ifuturetech.org/product/ksd9700-250v-5a-plastic-thermostatic-temperature-switch-nc-45-c/", "price": "₹25 + delivery"}], "search": "KSD9700 45 NC", "stores": "components", "local": "Lamington Road"},
+        {"name": "Case lead: USB-A to 90° USB-C (or 90° micro-USB)", "for": "From the case's pads to the phone", "qty": 1, "price": "₹141–249",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0GKQ4VF41", "note": "(USB-C)"}, {"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0DTJZP5ZS", "price": "₹249", "note": "(micro-USB)"}],
+         "search": "90 degree USB C cable", "stores": "general"},
+        {"name": "Bike lead: any USB-A cable, to cut", "for": "Wired straight into the dock", "qty": 1, "price": "₹100–140", "search": "USB A cable", "stores": "general"},
+        {"name": "12 V handlebar USB charger", "for": "Only if your bike has no USB socket (wire it after the ignition)", "qty": "0–1", "price": "₹0–249",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0HNTBGQBT"}], "search": "bike handlebar USB charger 12V", "stores": "general"},
+        {"name": "Thermal pad 0.5 mm (optional)", "for": "Better heat sensing at the thermostat", "qty": "0–1", "price": "₹0–199",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0DGXFS866"}], "search": "thermal pad 0.5mm", "stores": "general"}
+      ]
+    },
+    {
+      "label": "Option B: an ordered PCB instead of perfboard",
+      "items": [
+        {"name": "Dock board PCB (21.5 x 14.5 mm), 2-layer, 1.6 mm (and the pin and pad strips if you like)", "for": "Replaces the perfboard; you get 5 of each", "qty": "5 boards", "price": "₹800–2,400 + delivery",
+         "buy": [{"store": "Lion Circuits", "url": "https://lioncircuits.com/", "price": "₹799 per 5 boards of one design", "note": "(Indian fab)"}],
+         "where": "JLCPCB is the alternative: cheap boards, but international delivery and duty. Ask for ENIG (gold) on the pad strip."}
+      ]
+    },
+    {
+      "label": "Lock",
+      "items": [
+        {"name": "16 mm cam lock, quarter turn (confirm the turn with the seller)", "for": "The store lock; its own cam becomes the crank", "qty": 1, "price": "₹270", "when": {"lock": "store"},
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0HDJVVXCW", "price": "₹270"}], "where": "The same lock is ₹275 on Flipkart.", "search": "16mm cam lock", "stores": "hardware"},
+        {"name": "3.2 mm drill bit + M3 bolt, nut and a 4 mm OD spacer", "for": "The crank pin (store lock)", "qty": "1 set", "price": "₹40–60 (est.)", "when": {"lock": "store"}, "local": "a hardware shop"},
+        {"name": "14 x 9 mm key steel (DIN 6885), cut 15 mm + 10 mm", "for": "The lock bolt and its bearing block (every lock)", "qty": "25 mm", "price": "₹100–200 (est.)",
+         "where": "A bearing or power-transmission shop: ask them to cut it."},
+        {"name": "Small compression springs, 3 mm OD, 0.3 mm wire (stainless)", "for": "The printed lock (4, about 8 mm, 9 coils or fewer), the tubular lock (6, about 10 mm, 8 coils or fewer) or the dial lock (3)", "qty": "an assortment kit", "price": "₹100–300 (est.)", "when": {"lock": ["printed", "tubular", "dial"]},
+         "search": "mini compression spring assortment", "stores": "hardware", "local": "Lamington Road"},
+        {"name": "Steel dowel pin, 4 x 8 mm", "for": "The tubular lock's crank", "qty": 1, "price": "₹10–150 (est.)", "when": {"lock": "tubular"}, "search": "dowel pin assortment", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M3 x 8 countersunk socket screw (ISO 10642)", "for": "The tubular lock's plug to its crank", "qty": 1, "price": "₹5–10 (est.)", "when": {"lock": "tubular"}, "local": "Nagdevi Street"}
+      ]
+    },
+    {
+      "label": "Hardware, seals and glue",
+      "items": [
+        {"name": "M3 heat-set inserts", "for": "Case and dock screws", "qty": "about 14", "price": "₹60–100 (est.)",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0DZFR748C", "price": "₹289 for 50"}], "search": "M3 heat set insert", "stores": "hardware", "local": "Lamington Road or Nagdevi Street"},
+        {"name": "M3 / M5 screws, nuts, washers", "for": "Assembly and the clamps", "qty": "a set", "price": "₹150–200 (est.)", "search": "M5 socket head screw", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M5 round spacers, 8 mm OD, 10 mm long, + M5 plain washers", "for": "Compression limiters at the clamp bolts (one-piece base)", "qty": "4 + 4", "price": "₹40–80 (est.)", "when": {"mount": "merged"}, "local": "Lamington Road or Nagdevi Street"},
+        {"name": "M5 rubber washers (about 2 mm) + M5 x 15 large steel washers (DIN 9021)", "for": "Damping at the clamp bolts (one-piece base)", "qty": "4 + 4", "price": "₹30–60 (est.)", "when": {"mount": "merged"}, "local": "Nagdevi Street, or a rubber/seal shop"},
+        {"name": "2 mm neoprene or EPDM sheet offcut (or print iso_pad in TPU 95A)", "for": "The 2 clamp pads (24 x 50 mm each)", "qty": "an offcut", "price": "₹30–80 (est.)", "when": {"mount": "merged"}, "search": "2mm neoprene sheet", "stores": "hardware", "local": "a rubber/seal shop"},
+        {"name": "Rubber grommets with sleeves (bike side-panel type)", "for": "The modular base plate", "qty": 4, "price": "₹60–120 (est.)", "when": {"mount": "modular"}, "local": "a bike spares shop"},
+        {"name": "1.5 mm silicone O-ring cord", "for": "The case's back-cover seal", "qty": "a length", "price": "₹50–100 (est.)", "search": "1.5mm silicone o ring cord", "stores": "hardware", "local": "a rubber or seal shop"},
+        {"name": "2 mm polycarbonate offcut (not acrylic: it cracks)", "for": "The case's window", "qty": "an offcut", "price": "₹100–200 (est.)", "search": "2mm polycarbonate sheet", "stores": "hardware", "local": "a plastic-sheet dealer"},
+        {"name": "Araldite Klear, 10 g", "for": "Window bond, potting the lead, the bearing block", "qty": 3, "price": "₹200",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/dp/B0BXY85PXH", "price": "₹68 each"}], "search": "Araldite Klear", "stores": "general"},
+        {"name": "Bar shims: strips of old bicycle inner tube", "for": "Instead of printing bar_shim", "qty": "a strip", "price": "₹0"}
+      ]
+    },
+    {
+      "label": "3D printing (by a service)",
+      "items": [
+        {"name": "Printing: about 405 cm³, 340–390 g (PETG or ASA)", "for": "Clamps at 100 % infill, the rest 4 walls and 30–40 %. Get 2–3 quotes: it's the biggest cost", "qty": "1 set", "price": "₹1,750–2,500",
+         "buy": [{"store": "Robu (EasyMech)", "url": "https://robu.in/?p=901845"}, {"store": "Zbotic", "url": "https://zbotic.in/3d-printing-service/"},
+                 {"store": "iamRapid", "url": "https://iamrapid.com/3d-printing-services/"}, {"store": "Makenica (Mumbai)", "url": "https://makenica.com/3d-printing-services-in-mumbai"}]}
+      ]
+    }
+  ],
+  "totals": [
+    ["Option A: dock board on perfboard", "≈ ₹3,650–5,600"],
+    ["Option B: dock board on an ordered PCB", "≈ ₹4,350–7,900"],
+    ["Modular mount option", "about ₹250–650 less"]
+  ],
+  "note": "Assumes you already have a soldering iron, solder and a multimeter. Robu shipping is about ₹50–100 (est.)."
+}

@@ -404,6 +404,7 @@ const CUSTOM = (function () {
   try { Object.assign(state, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) { /* storage blocked: use the defaults */ }
   const all = document.getElementById("b-all");
   const rows = [...document.querySelectorAll("#download tr[data-when]")];
+  const buyRows = [...document.querySelectorAll("#buy tr[data-when]")];   // the shopping list follows the build too
   const fits = (when) => Object.entries(when || {}).every(([k, v]) => (Array.isArray(v) ? v : [v]).includes(state[k]));
   const label = () => P.options.map((o) => (o.choices.find((c) => c.id === state[o.id]) || {}).label).join(" + ");
 
@@ -416,6 +417,11 @@ const CUSTOM = (function () {
       r.hidden = !(ok || showAll);
       r.classList.toggle("other", !ok);
       if (ok && /\.stl$/i.test(r.dataset.file) && !r.dataset.view) n++;
+    });
+    buyRows.forEach((r) => {
+      const ok = fits(JSON.parse(r.dataset.when || "{}"));
+      r.hidden = !(ok || showAll);
+      r.classList.toggle("other", !ok);
     });
     document.querySelectorAll("#download tr.group-row").forEach((g) => {
       g.hidden = !rows.some((r) => !r.hidden && r.dataset.group === g.dataset.group);

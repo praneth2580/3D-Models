@@ -1,0 +1,125 @@
+{
+  "title": "What to buy",
+  "sub": "All the electronics and hardware for the dash, besides the printed parts: the display head, the interface box, the small circuit parts, the screws and rubber, the phase 1 logger and the printing. Exact items are in COMPONENTS.md, the circuits in ELECTRONICS.md.",
+  "groups": [
+    {
+      "label": "Display head: electronics",
+      "note": "Buy the items marked \"model fits this\" exactly: the housing is modelled around them.",
+      "items": [
+        {"name": "Waveshare ESP32-S3 2.8\" round display, 480 x 480", "for": "The screen and the head's processor (ESP32-S3-Touch-LCD-2.8C, or the no-touch ESP32-S3-LCD-2.8C)", "qty": 1, "price": "₹3,700–9,200", "fits": true,
+         "buy": [{"store": "Hubtronics", "url": "https://hubtronics.in/esp32-s3-touch-lcd-2.8c", "price": "about ₹3,677 incl. GST"},
+                 {"store": "Evelta", "url": "https://evelta.com/esp32-s3-2-8inch-480x480-capacitive-touch-round-display-development-board", "price": "₹4,396"},
+                 {"store": "Robu.in", "url": "https://robu.in/?p=2382855"},
+                 {"store": "Amazon.in", "url": "https://www.amazon.in/ESP32-S3-Development-Resolution-Dual-Core-Processor/dp/B0DXF39GPM", "price": "₹9,224", "note": "(rebadged, no touch)"}],
+         "search": "ESP32-S3-Touch-LCD-2.8C", "stores": "modules", "note": "Prices as listed on 2026-11-23."},
+        {"name": "u-blox NEO-M8N GPS module", "for": "GPS speed, trip and clock (its own 25 mm antenna isn't used)", "qty": 1, "price": "₹1,490–1,750", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/m8n-gps-module/s?k=m8n+gps+module", "price": "₹1,490", "note": "(Techtonics, with ceramic antenna)"}],
+         "search": "NEO-M8N GPS module", "stores": "modules", "note": "Also Robocraze's NEO-M8N with active ceramic antenna (about ₹1,731). Avoid the \"for Pixhawk\" round pucks."},
+        {"name": "18 x 18 mm active GPS patch antenna, IPEX (u.FL) lead", "for": "Lies flat at the top inside the housing, facing the sky", "qty": 1, "price": "₹150–350 (est.)", "fits": true,
+         "search": "18x18 GPS active antenna IPEX", "stores": "modules"},
+        {"name": "BH1750 light sensor (GY-302)", "for": "Automatic screen brightness", "qty": 1, "price": "₹120–250 (est.)", "fits": true,
+         "search": "BH1750 GY-302", "stores": "modules"},
+        {"name": "SN65HVD230 CAN transceiver modules, 3-pack", "for": "One in the head, two in the interface box (bike bus and dash bus)", "qty": "1 pack of 3", "price": "₹1,500", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/HiLetgo-SN65HVD230-Transceiver-Communication-Protection/dp/B07ZT7LLSK", "price": "about ₹1,502 for 3", "note": "(HiLetgo)"}],
+         "search": "SN65HVD230 CAN module", "stores": "modules"},
+        {"name": "WS2812B 5050 RGB LEDs on 10 mm round boards (\"with heatsink\")", "for": "The 8 tell-tales in the face", "qty": "8 (packs of 10+)", "price": "₹150–400 (est.)", "fits": true, "when": {"telltales": "face"},
+         "search": "WS2812B 10mm heatsink", "stores": "modules"},
+        {"name": "74HCT125 quad buffer (DIP-14)", "for": "Turns the board's 3.3 V LED signal into 5 V", "qty": 1, "price": "₹30–60 (est.)", "when": {"telltales": "face"},
+         "search": "74HCT125", "stores": "components"},
+        {"name": "Translucent white UV resin (pen, or clear resin + white pigment)", "for": "Fills the icon cut-outs flush, diffuses the LEDs", "qty": 1, "price": "₹300–600 (est.)", "when": {"telltales": "face"},
+         "search": "UV resin pen clear", "stores": "general"},
+        {"name": "GX12 4-pin aviation plug and panel socket + 1 m of 4-core shielded cable (0.5 mm²)", "for": "The cable from the head to the interface box", "qty": "1 set", "price": "₹300–600 (est.)", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/10Sets-Aviation-Connector-Diameter-Circular/dp/B0CPV765NQ", "note": "(GX12 sets)"}],
+         "search": "GX12 4 pin aviation connector", "stores": "modules"}
+      ]
+    },
+    {
+      "label": "Interface box: electronics",
+      "items": [
+        {"name": "Espressif ESP32-C6-DevKitC-1-N8", "for": "The box's processor: two CAN controllers (bike bus, dash bus)", "qty": 1, "price": "₹800–2,650", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/Espressif-ESP32-C6-DevKitC-1-N8-Development-Board/dp/B0BRMSDR4R", "price": "₹2,439–2,650"}],
+         "search": "ESP32-C6-DevKitC-1", "stores": "modules", "note": "Robu, Hubtronics and Evelta usually list it for much less."},
+        {"name": "MPU-6050 motion sensor (GY-521)", "for": "Lean angle and g-force (fixed to the frame)", "qty": 1, "price": "₹250", "fits": true,
+         "search": "GY-521 MPU6050", "stores": "modules", "note": "Upgrade later: BNO085, about ₹2,900."},
+        {"name": "12 V to 5 V 3 A sealed converter (Envistia)", "for": "Powers everything (8–24 V in)", "qty": 1, "price": "₹1,142", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/Step-Down-Waterproof-Miniature-Converter-Supply/dp/B07MYPCM73", "price": "about ₹1,142"}],
+         "search": "12V to 5V 3A buck converter waterproof", "stores": "modules", "note": "Any sealed 8–36 V input 5 V 3 A converter of the same size works too."},
+        {"name": "16-pin OBD-II female socket with shell (STAR055)", "for": "The OBD+ port (the bike's CAN bus, as in cars)", "qty": 1, "price": "₹300–700 (est.)", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/StarAutolink-Female-Connector-Diagnostic-Terminals/dp/B0FN4GV5YL"}],
+         "search": "OBD2 female connector 16 pin", "stores": "modules"},
+        {"name": "GX12 6-pin panel sockets + metal dust caps", "for": "The 3 expansion slots", "qty": 3, "price": "₹500–900 (est.)", "fits": true,
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/Panel-Mounted-Thread-Aviation-Connectors/dp/B00OK6G6QW", "note": "(sockets)"},
+                 {"store": "Amazon.in", "url": "https://www.amazon.in/Metal-Connector-Protective-Waterproof-Dust-Proof/dp/B0C2M3KDRH", "note": "(dust caps)"}],
+         "search": "GX12 6 pin aviation connector", "stores": "modules"},
+        {"name": "DS18B20 waterproof temperature probe, 1 m", "for": "Air temperature, outside the box in the shade", "qty": 1, "price": "₹150–300 (est.)",
+         "search": "DS18B20 waterproof", "stores": "modules"},
+        {"name": "The bike-side 18-pin cluster plug", "for": "The adapter harness, so no bike wires are cut", "qty": 1, "price": "unknown",
+         "where": "Its part number isn't known yet: phase 1 photos will identify it, or take one from a used cluster."}
+      ]
+    },
+    {
+      "label": "Circuit parts (both boxes)",
+      "note": "For the circuits in ELECTRONICS.md, all through-hole for hand soldering.",
+      "items": [
+        {"name": "PCF8574 I/O expander board (I2C)", "for": "Reads the 8 optocoupler inputs", "qty": 1, "price": "₹80–150 (est.)", "search": "PCF8574 module", "stores": "modules"},
+        {"name": "PC817 optocouplers", "for": "The lamp and switch inputs (bike's 12 V kept away from the chip)", "qty": "8 (buy 10)", "price": "₹50–100 (est.)", "search": "PC817", "stores": "components", "local": "Lamington Road"},
+        {"name": "IRF4905 P-channel MOSFET (TO-220)", "for": "The power latch's switch", "qty": 1, "price": "₹40–80 (est.)", "search": "IRF4905", "stores": "components", "local": "Lamington Road"},
+        {"name": "BC547 NPN transistors", "for": "The power latch", "qty": 2, "price": "₹10 (est.)", "search": "BC547", "stores": "components", "local": "Lamington Road"},
+        {"name": "Diodes: 1N4148 (10), BAT85 (5), 1N4744A 15 V zener (1), SS34 Schottky (1)", "for": "Latch, input clamps, the head's power input", "qty": "as listed", "price": "₹60–120 (est.)", "search": "1N4148 diode", "stores": "components", "local": "Lamington Road"},
+        {"name": "P6KE24A TVS diode", "for": "Clamps voltage spikes from the bike", "qty": 1, "price": "₹20–40 (est.)", "search": "P6KE24A", "stores": "components"},
+        {"name": "Self-resetting fuses (PTC): 3 x 1 A, 3 x 0.5 A, 1 x 2 A, 1 x 1.5 A, 1 x 0.1 A", "for": "Expansion slots, OBD+ port, the head's cable, the gear sensor", "qty": 9, "price": "₹150–300 (est.)", "search": "resettable fuse PTC", "stores": "components"},
+        {"name": "Inline blade fuse holder + 3 A fuses", "for": "The main feed from the battery", "qty": 1, "price": "₹50–100 (est.)", "search": "inline blade fuse holder", "stores": "general", "local": "Lamington Road"},
+        {"name": "Resistor kit (1/4 W) + 2 x 1 W resistors (100 Ω)", "for": "Dividers, pull-ups; the fuel sender's pull-up (final value after phase 1)", "qty": "1 kit", "price": "₹150–300 (est.)", "search": "resistor kit 1/4W", "stores": "components", "local": "Lamington Road"},
+        {"name": "Capacitors: 100 nF ceramic (20), 470 µF 35 V, 1000 µF 10 V", "for": "Filtering", "qty": "as listed", "price": "₹80–150 (est.)", "search": "100nF ceramic capacitor", "stores": "components", "local": "Lamington Road"},
+        {"name": "3-pin jumpers, header pins, IC socket, JST-XH connectors", "for": "Plug-in modules and the input jumpers", "qty": "a few", "price": "₹150–300 (est.)", "search": "JST XH connector kit", "stores": "components", "local": "Lamington Road"},
+        {"name": "Perfboard, about 9 x 15 cm and 5 x 7 cm", "for": "The interface box's board, the head's small board", "qty": 2, "price": "₹80–150 (est.)", "search": "perfboard", "stores": "modules", "local": "Lamington Road"},
+        {"name": "Hook-up wire (24 AWG), 30 AWG wire-wrap wire, heat shrink", "for": "Wiring; chaining the LEDs", "qty": "1 each", "price": "₹200–400 (est.)", "search": "30 AWG wire wrap wire", "stores": "general", "local": "Lamington Road"},
+        {"name": "Conformal coating spray", "for": "Protects the boards from damp", "qty": 1, "price": "₹300–600 (est.)", "search": "conformal coating spray", "stores": "general"}
+      ]
+    },
+    {
+      "label": "Screws, inserts and rubber",
+      "items": [
+        {"name": "M2 x 6 screws", "for": "Display to carrier", "qty": 4, "price": "(in the ₹300–600 below)", "search": "M2 x 6 screw", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M3 heat-set inserts (5.7 mm long, 4.2 mm hole) + M3 x 10 pan-head screws", "for": "The back cover", "qty": "4 + 4", "price": "", "search": "M3 heat set insert", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M4 heat-set inserts (5.6 mm hole): 4 x 8 mm long, 4 x 6 mm long", "for": "The bar clamps and their feet", "qty": 8, "price": "", "when": {"mount": "bar"}, "search": "M4 heat set insert", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M4 x 14 bolts + rubber washers, M4 x 20 bolts", "for": "Feet to the cover (from inside), the clamps (up from below)", "qty": "4 + 4", "price": "", "when": {"mount": "bar"}, "search": "M4 bolt stainless", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "2 mm rubber sheet (or print the pads in TPU)", "for": "The pads between the clamps' feet and the cover", "qty": "a small piece", "price": "", "when": {"mount": "bar"}, "search": "2mm rubber sheet", "stores": "hardware", "local": "Nagdevi Street or a rubber/seal shop"},
+        {"name": "M4 heat-set inserts (8 mm) + M4 x 14 bolts", "for": "Cover to the cluster adapter", "qty": "2 + 2", "price": "", "when": {"mount": "cluster"}, "search": "M4 heat set insert", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M6 bolts and nuts, about M6 x 16–20", "for": "The adapter to your cluster bracket (one per hole)", "qty": "2–3", "price": "", "when": {"mount": "cluster"}, "search": "M6 bolt nut", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "M5 x 20 bolt + nyloc nut, 2 x M4 x 20 bolts and nuts", "for": "The GoPro-style joint and its clamp", "qty": "1 + 2", "price": "", "when": {"mount": "stalk"}, "search": "M5 nyloc nut bolt", "stores": "hardware", "local": "Nagdevi Street"},
+        {"name": "1 mm rubber strip", "for": "Inside the bar clamps", "qty": "a strip", "price": "", "search": "1mm rubber strip", "stores": "hardware"},
+        {"name": "0.8 mm closed-cell foam sheet (or print the gasket in TPU)", "for": "The foam ring under the face, on the glass's border", "qty": "a sheet", "price": "", "search": "closed cell foam sheet 1mm adhesive", "stores": "hardware"},
+        {"name": "Double-sided foam tape", "for": "The GPS module and CAN board on the carrier", "qty": "a roll", "price": "₹300–600 (est.) for this whole group", "search": "double sided foam tape", "stores": "hardware"}
+      ]
+    },
+    {
+      "label": "Phase 1: the CAN logger",
+      "note": "The ESP32-C6, a CAN transceiver and the GPS above are reused here first.",
+      "items": [
+        {"name": "Royal Enfield 6-pin to 16-pin OBD-II adapter", "for": "Reaches the bike's service socket. Check your socket's colour first, and ask the seller to confirm it fits the Meteor 350", "qty": 1, "price": "₹1,000–1,900 (est.)",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/Diagnostic-Connector-Adapter-Enfield-Himalayan/dp/B0BRZWPHYC", "note": "(\"16 PIN to 6 PIN for Himalayan and Hunter\")"}],
+         "search": "Royal Enfield 6 pin OBD2 adapter", "stores": "general"},
+        {"name": "16-pin OBD-II male plug to open wires (pigtail)", "for": "So nothing is cut on the bike", "qty": 1, "price": "₹400–1,000 (est.)",
+         "buy": [{"store": "Amazon.in", "url": "https://www.amazon.in/iKKEGOL-Connector-Diagnostic-Extension-Pigtail/dp/B0828YHWFG", "note": "(iKKEGOL)"}],
+         "search": "OBD2 male pigtail open wire", "stores": "general"},
+        {"name": "microSD module (SPI, 3.3 V) + an 8–32 GB microSD card", "for": "The logs", "qty": 1, "price": "₹100–200 (est.) + card", "search": "micro SD card module SPI", "stores": "modules"},
+        {"name": "12 V to USB car charger + USB-C cable", "for": "Powers the logger from the OBD socket", "qty": 1, "price": "₹200–400 (est.)", "search": "12V USB car charger", "stores": "general"}
+      ]
+    },
+    {
+      "label": "3D printing (by a service)",
+      "items": [
+        {"name": "Printing: the shell, carrier, cover, trim ring and the mount", "for": "PETG for a prototype, ASA for the final parts. Upload the STLs for an exact quote", "qty": "1 set", "price": "₹600–1,500 (est.)",
+         "buy": [{"store": "Robu (EasyMech)", "url": "https://robu.in/?p=901845"}, {"store": "Zbotic", "url": "https://zbotic.in/3d-printing-service/"},
+                 {"store": "iamRapid", "url": "https://iamrapid.com/3d-printing-services/"}, {"store": "Makenica (Mumbai)", "url": "https://makenica.com/3d-printing-services-in-mumbai"}]}
+      ]
+    }
+  ],
+  "totals": [
+    ["Phase 1 logger", "about ₹5,600–8,100 using Indian electronics stores for the ESP32-C6, ₹7,300–9,800 on Amazon.in / Flipkart only"],
+    ["The whole dash (phase 1 parts reused)", "about ₹14,000–17,000 using Indian electronics stores for the display and the ESP32-C6, ₹21,000–24,000 on Amazon.in / Flipkart only"],
+    ["Plus printing", "about ₹600–1,500 (est.)"]
+  ],
+  "note": "Listed prices from 2026-11-23; (est.) = not checked on a listing. Tools you'll want: a multimeter, a 12 V 3 A bench supply, a soldering iron; optionally a USB logic analyser (₹500–800 (est.))."
+}

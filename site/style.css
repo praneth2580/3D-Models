@@ -334,3 +334,17 @@ body.lb-open { overflow: hidden; }
 .cz-file input[type=file] { max-width: 100%; font: inherit; font-size: 13px; color: var(--muted, #9aa3ad); }
 .cz-file-name { font-family: ui-monospace, monospace; font-size: 13px; overflow-wrap: anywhere; }
 .cz-file .btn { padding: 4px 10px; font-size: 13px; }
+
+/* What to buy */
+.parts.buy { table-layout: fixed; width: 100%; }
+.parts.buy td:first-child { white-space: normal; width: 24%; }
+.parts.buy th:nth-child(1) { width: 24%; } .parts.buy th:nth-child(2) { width: 28%; }
+.parts.buy th:nth-child(3) { width: 9%; } .parts.buy th:nth-child(4) { width: 13%; } .parts.buy th:nth-child(5) { width: 26%; }
+.buy td.price { white-space: normal; }
+.buy ul.shops { list-style: none; margin: 0; padding: 0; }
+.buy ul.shops li { margin: 0 0 3px; }
+.buy a.shop { font-weight: 600; }
+.buy p.search { margin: 3px 0 0; font-size: .85rem; line-height: 1.5; }
+.fit-badge { display: inline-block; margin-left: 4px; padding: 1px 7px; border-radius: 999px; font-size: .7rem; font-weight: 600;
+  background: var(--band); border: 1px solid var(--line); color: var(--sub); white-space: nowrap; vertical-align: middle; }
+@media (max-width: 640px) { .parts.buy td:first-child { width: auto; } .parts.buy { table-layout: auto; } }

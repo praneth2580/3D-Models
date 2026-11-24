@@ -57,6 +57,24 @@ The richer page is built from `project.json`, plus optional HTML sections in the
 | `docs` | `[{"label": "...", "file": "README.md"}]`, replacing the automatic list |
 | `license` | `{"name": "...", "url": "..."}` |
 
+**What to buy: `website/buy.json`.** A "What to buy" section (after Download, with its own nav link): every item to buy besides the printed parts, grouped, with checked listings and ready-made search links at the Indian stores that suit that kind of part.
+
+```json
+{"title": "What to buy", "sub": "...", "note": "...",
+ "groups": [{"label": "Display head: electronics", "note": "...", "items": [
+   {"name": "...", "for": "what it's for", "qty": 1, "price": "₹3,700–9,200", "fits": true, "note": "...",
+    "when": {"mount": "bar"},
+    "buy": [{"store": "Evelta", "url": "https://...", "price": "₹4,396", "note": "(no touch)"}],
+    "search": "ESP32-S3-Touch-LCD-2.8C", "stores": "modules",
+    "local": "Lamington Road", "where": "free text"}]}],
+ "totals": [["The whole dash", "about ₹14,000–17,000"]]}
+```
+
+- `buy`: listings that were checked (shown first, with their price). `search` + `stores` adds search links: `modules` (Amazon.in, Flipkart, Robu.in, Evelta, ElectronicsComp), `components` (Robu.in, Evelta, ElectronicsComp, DigiKey India, Amazon.in), `hardware` and `general` (Amazon.in, Flipkart). The stores and their search URLs are `STORES` in `build.py`. `local`: a Mumbai market; `where`: any other advice.
+- `fits: true` adds a "model fits this" badge (the printed parts are modelled around that exact item).
+- `when` works as for parts: the build picker hides items for options not chosen.
+- Prices in INR; mark unchecked ones "(est.)".
+
 **Special HTML files:**
 - `features.html`: shown inside the pictures section.
 - `adjust.html`: replaces the automatic "Adjust it to your hardware" section.
