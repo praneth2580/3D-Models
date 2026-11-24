@@ -1,6 +1,6 @@
 /*
   The dash on the bike, for the video (make_dash_video.py sets the variables below per frame).
-  The bike is a SIMPLE STAND-IN for the reference bike's front end (a 350 cruiser: round headlamp, 41 mm fork, 19"
+  The bike is a SIMPLE STAND-IN, painted a sunset orange, for the reference bike's front end (a 350 cruiser: round headlamp, 41 mm fork, 19"
   front wheel, wide pulled-back 22.2 mm bar, teardrop tank). Its sizes are estimates for the pictures, not
   measurements, and it carries no maker's badges.
   Frame: the dash file's bike frame: the bar's centre at the origin, x along the bar, y forward, z up.
@@ -17,13 +17,12 @@ CLOCK = "10:42";
 STEER = 0;                // degrees, about the steering axis (pictures only)
 
 // ---- the stand-in bike (estimates) ----
-HOLES = [0, 110, 0];      // the stock cluster bracket's holes (the adapter's origin)
 yoke = [0, 60, -80];      // the top yoke's centre on the steering axis
 rake = 27;
 fork_x = 100;             // the fork tubes, either side
 axis_d = [0, sin(rake), -cos(rake)];
 function on_axis(t) = yoke + t*axis_d;
-tank_col = [0.08, 0.16, 0.3];
+tank_col = [0.86, 0.34, 0.07];   // a sunset orange (the owner's colour choice; no maker's livery or badges)
 black = [0.07, 0.07, 0.08];
 chrome = [0.78, 0.8, 0.83];
 alu = [0.6, 0.61, 0.63];
@@ -96,26 +95,25 @@ module tank_frame() {
   color(black) along(on_axis(60) + [0, -20, 0], [0, -540, -255], 60);                           // the backbone
 }
 
-// The dash, with the tell-tales lit as LIT says and the screen showing SCREEN.
+// The dash on its handlebar cradle (mount = "bar"), with the tell-tales lit as LIT says and the screen showing SCREEN.
+// The parts come from ../parts/ (turned back from their print poses).
 module dash() {
-  translate(HOLES) {
-    color([0.25, 0.26, 0.28]) import("../parts/cluster_adapter.stl", convexity=4);
-    head_placed() {
-      color([0.16, 0.17, 0.19]) translate([0, 0, -lip_t]) import("../parts/head_shell.stl", convexity=6);
-      color([0.22, 0.23, 0.26]) translate([0, 0, z_cov]) import("../parts/head_cover.stl", convexity=4);
-      color([0.78, 0.79, 0.82]) translate([0, 0, z_front]) import("../parts/trim_ring.stl", convexity=4);
-      display_dummy();
-      logo_fill();
-      for (i = [0:len(icons) - 1]) {
-        on = len([for (n = LIT) if (n == icons[i]) 1]) > 0;
-        color(on ? icon_colour(icons[i]) : [0.3, 0.3, 0.32]) translate([0, 0, z_front - 0.03]) linear_extrude(face_skin) at_icon(i) offset(-0.05) icon2d(icons[i]);
-      }
-      screen();
-    }
-    color([0.22, 0.22, 0.24]) stock_bracket_dummy();
+  rotate([-tilt, 0, 0]) color([0.2, 0.21, 0.23]) {
+    rotate([0, -90, 0]) translate([0, 0, -(cradle_span/2 + cradle_clamp_w/2)]) import("../parts/cradle.stl", convexity=4);
+    for (sx = [-1, 1]) translate([sx*cradle_span/2, 0, 0]) rotate([0, -90, 0]) translate([0, 0, -cradle_clamp_w/2]) import("../parts/cradle_cap.stl", convexity=4);
   }
-  // the stock bracket's arm down to the top yoke (stand-in)
-  color([0.3, 0.3, 0.32]) hull() { translate(HOLES + [0, 0, -stock_plate[2] - 0.5]) cube([40, 20, 1], center=true); translate(yoke + [0, 25, 12]) cube([40, 20, 2], center=true); }
+  head_placed() {
+    color([0.16, 0.17, 0.19]) translate([0, 0, -lip_t]) import("../parts/head_shell.stl", convexity=6);
+    color([0.22, 0.23, 0.26]) translate([0, 0, z_cov]) import("../parts/head_cover.stl", convexity=4);
+    color([0.78, 0.79, 0.82]) translate([0, 0, z_front]) import("../parts/trim_ring.stl", convexity=4);
+    display_dummy();
+    logo_fill();
+    for (i = [0:len(icons) - 1]) {
+      on = len([for (n = LIT) if (n == icons[i]) 1]) > 0;
+      color(on ? icon_colour(icons[i]) : [0.3, 0.3, 0.32]) translate([0, 0, z_front - 0.03]) linear_extrude(face_skin) at_icon(i) offset(-0.05) icon2d(icons[i]);
+    }
+    screen();
+  }
 }
 
 // ---- the screen (2D, upright as the rider sees it, mirrored into the head frame) ----

@@ -176,26 +176,20 @@ The firmware shows the tell-tales on the screen too. The LEDs stay readable when
 3. **Back cover:** a plug that presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 × 10 pan-head screws go through the shoulder into heat-set inserts in the cover. There are no screws on the front. It also carries:
    - the GX12 4-pin socket, at the top;
    - the mount's fixings.
-4. **Where the stock cluster was (the default; owner: the mount hidden behind the gauge):** the dash replaces the stock cluster, so it bolts onto the stock **cluster bracket** (Royal Enfield part 1100515/B on the Meteor 350) with a printed **cluster adapter**, and nothing shows round the gauge from the seat.
-   - Its **foot** sits on the bracket: M6 bolts come up from below, through the bracket's own rubber grommets, into nuts captive in the foot.
-   - Its **pad** screws to the cover's 2 M4 inserts (the same as the cradle's), between two gussets that leave the bolts reachable.
-   - Fit the adapter to the gauge on the bench, then bolt the adapter on from below. The screen's tilt (`tilt`, 25°) is built into the adapter.
-   - **Measure first: no sizes are published for the bracket, so these are placeholders:**
-     - `stock_holes`: the bracket's holes for the cluster, from their centre ([x along the bar, y forward]; 2 holes 40 mm apart now);
-     - `stock_bolt`: their bolt (M6);
-     - `stock_tilt`: the bracket's slope;
-     - `cl_back`, `cl_up`, `cl_x`: where you want the gauge: its back face behind the holes, its centre above the bracket, and sideways (the stock cluster sat off centre; 0 centres the gauge on the holes).
-   - Checked clear of the gauge from 0 to 40° of tilt and across the website's ranges; an assert refuses a gauge set so low it would sit on the foot.
-5. **On the bar (cradle, option):** two bar clamps either side of the bike's own handlebar clamp, joined by a bridge that bolts to the back cover with 2 × M4 bolts into heat-set inserts.
-   - Each clamp is a half of the cradle plus a separate cap (`cradle_cap`), with a 1 mm rubber strip and 2 × M4 bolts and nuts.
-   - The head sits behind the bar, its centre 20 mm above it, so its lower part drops below the bar line.
-   - **Turning the cradle on the bar sets the tilt.**
+4. **On the handlebar (the cradle, the default; owner: "it should be on the handlebar and should not be visible outside the dash"):** two slim 12 mm bar clamps sit right beside the bike's own handlebar clamp, 2 mm from it. Two arms run back over them to a pad that bolts to the cover's 2 M4 inserts.
+   - **Hidden from the seat:** the gauge sits where it covers the whole cradle from the rider's eye (`rider_eye`, an estimate: 650 mm behind and 450 mm above the bar's centre). The CAD works this out: it takes the smallest setback behind the bar that hides the clamps, and puts the gauge's centre on the line from the eye to the clamps. With an 80 mm bike clamp, the gauge's back is 87.5 mm behind the bar and its centre 22 mm above it. A check (`check_hidden`) looks from the eye and confirms no part of the cradle shows.
+   - **It depends on your bike's clamp width (`bike_clamp_w`).** The clamps can hide behind the 102.5 mm gauge only if the bike's clamp is about 85 mm wide or less (at 25° of tilt). Wider, and an assert says so. **80 mm is a placeholder: measure yours first.**
+   - Each clamp is the cradle's upper half plus a separate cap (`cradle_cap`), with a 1 mm rubber strip. 2 × M4 × 20 bolts per clamp come up from below, through the cap, into M4 inserts in the upper half (so the arms can run over them).
+   - The gauge's place is worked out for the tilt you set (`tilt`, 25°); on the bike, turn the cradle on the bar to that tilt before tightening.
+5. **Where the stock cluster was (option):** a printed **cluster adapter** bolts onto the stock cluster bracket (Royal Enfield part 1100515/B on the Meteor 350) and to the cover's 2 M4 inserts.
+   - Its foot sits on the bracket: M6 bolts come up from below, through the bracket's own rubber grommets, into nuts captive in the foot.
+   - **Measure first, these are placeholders:** `stock_holes` (the holes, [x along the bar, y forward]), `stock_bolt`, `stock_tilt`, and where the gauge goes (`cl_back`, `cl_up`, `cl_x`).
 6. **On a stalk (option):** the GoPro-style joint, or any GoPro handlebar mount.
 
 **The Meteor 350's handlebar:**
 - **The bar is 22.2 mm (7/8").** Every riser maker for the Meteor gives this (Hepco & Becker, Voigt MT, xparts), and it's the default `bar_d`.
 - **The clamp:** the Meteor's top clamp is a one-piece die-cast part with the RE logo (the same part as the Interceptor 650's), sitting on two risers.
-- **No published clamp size:** so `bike_clamp` is a **generous estimate, 100 × 45 mm with its top 28 mm above the bar**. The cradle's clamps are 135 mm apart (`cradle_span`), and the head's back is 34 mm behind the bar (`head_back`).
+- **No published clamp size:** so the clamp is a placeholder, **80 × 45 mm with its top 28 mm above the bar** (`bike_clamp_w`, `bike_clamp_d`, `bike_clamp_h`). Its width matters most: the cradle's clamps sit right beside it, and the gauge can hide them only if it's about 85 mm or less.
 - **Measure on your bike:**
   - the clamp's width, depth and height;
   - the straight bar either side of it (the cradle's clamps need about 80 mm of straight bar each side of the centre);
@@ -207,7 +201,7 @@ The firmware shows the tell-tales on the screen too. The LEDs stay readable when
 - the parts only touch where they should, with 8 icons, 6, 11, none, no logo, and a 40 mm logo gap with 6 mm icons;
 - the foam ring is squeezed;
 - the GPS antenna clears the carrier and the cover;
-- **on the bar:** the head and the cradle clear the bar, the clamp caps and the bike's clamp (the estimate) **from 0 to 30° of tilt** (at 33° the head's lower edge reaches the estimated clamp; with your bike's real clamp size this limit moves);
+- **on the handlebar:** the head and the cradle clear the bar, the clamp caps and the bike's clamp (the placeholder) **from 0 to 30° of tilt**, and with clamps from 50 to 90 mm wide; **seen from the rider's eye, no part of the cradle shows outside the gauge** (`check_hidden`); the pad sits flat on the cover;
 - **on a stalk:** the head clears from 0 to 45°;
 - **Waveshare's own 3D model** of the board, placed in the housing: every point is inside the 48.23 mm bore (its largest radius is 47.94 mm), in front of the carrier (only the 4 standoff ends touch it), and behind the foam ring.
 

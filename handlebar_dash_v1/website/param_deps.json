@@ -10,6 +10,9 @@
   "icon_size": 5.5,
   "logo_w": 24,
   "trim": true,
+  "bike_clamp_w": 80,
+  "bike_clamp_d": 45,
+  "bike_clamp_h": 28,
   "cl_back": 20,
   "cl_up": 62,
   "cl_x": 0,
@@ -18,9 +21,6 @@
   "stock_bolt": 6.5,
   "bar_d": 22.2,
   "clamp_w": 24,
-  "cradle_span": 135,
-  "head_back": 34,
-  "head_up": 20,
   "riser": 30,
   "insert_d": 4.2,
   "m4_insert_d": 5.6,
@@ -80,15 +80,18 @@
    "fit"
   ],
   "cradle": [
+   "telltales",
+   "bike_clamp_w",
+   "bike_clamp_d",
+   "bike_clamp_h",
+   "tilt",
    "bar_d",
-   "clamp_w",
-   "cradle_span",
-   "head_back",
-   "head_up"
+   "m4_insert_d",
+   "fit",
+   "led_board_t"
   ],
   "cradle_cap": [
-   "bar_d",
-   "clamp_w"
+   "bar_d"
   ],
   "clamp_upper": [
    "bar_d",

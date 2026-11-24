@@ -23,12 +23,12 @@
 **Hardware for the display head and clamp** (any equivalent; Amazon.in, or Nagdevi Street):
 - 4 × M2 × 6 screws (display to carrier);
 - 4 × M3 heat-set inserts (5.7 mm long, 4.2 mm hole) and 4 × M3 × 10 pan-head screws (the cover);
-- **where the stock cluster was (cluster adapter, the default):**
+- **on the handlebar (the cradle, the default):**
+  - 6 × M4 heat-set inserts (8 mm long, 5.6 mm hole): 2 in the cover, 4 in the cradle's clamps;
+  - 2 × M4 × 14 bolts (cover to cradle) and 4 × M4 × 20 bolts (the 2 bar clamps, up from below);
+- **where the stock cluster was (cluster adapter, option):**
   - 2 × M4 heat-set inserts (8 mm long, 5.6 mm hole) and 2 × M4 × 14 bolts (cover to adapter);
   - M6 bolts and nuts, one per hole of your cluster bracket (bolts from below into nuts captive in the adapter; length: your bracket and its grommets + 8 mm, about M6 × 16–20). Keep the bracket's own rubber grommets;
-- **on the bar (cradle):**
-  - 2 × M4 heat-set inserts (8 mm long, 5.6 mm hole) and 2 × M4 × 12 bolts (cover to cradle);
-  - 4 × M4 × 20 bolts and nuts (the 2 bar clamps);
 - **on a stalk:** 1 × M5 × 20 bolt with a nyloc nut (the joint), 2 × M4 × 20 bolts and nuts (the clamp);
 - a 1 mm rubber strip for inside the clamp;
 - 0.8 mm closed-cell foam sheet (or print `lip_gasket` in TPU);
