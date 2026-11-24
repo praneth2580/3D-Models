@@ -14,14 +14,14 @@
 | **GPS** | **u-blox NEO-M8N module with a 25 × 25 mm ceramic active patch antenna** (GPS + GLONASS) | **Yes**: the antenna sits under the housing's top, facing the sky | Amazon.in: Robocraze NEO-M8N with active ceramic antenna (about ₹1,731), or [Techtonics NEO-M8N with ceramic active antenna](https://www.amazon.in/m8n-gps-module/s?k=m8n+gps+module) (₹1,490). Avoid the "for Pixhawk" round-puck versions (drone GPS with compass, different size) | ₹1,490–1,750 |
 | **Light sensor** (auto brightness) | **BH1750 board, GY-302** | **Yes**: a small window in the housing | Amazon.in, search "BH1750 GY-302" | ₹120–250 (est.) |
 | **Dash bus transceiver** | **SN65HVD230 module**, the common blue board (HiLetgo 3-pack: one here, two in the interface box) | **Yes**: a slot in the housing | Amazon.in: [HiLetgo 3 pcs SN65HVD230](https://www.amazon.in/HiLetgo-SN65HVD230-Transceiver-Communication-Protection/dp/B07ZT7LLSK) (about ₹1,502 for 3) | ₹1,500 for 3 |
-| **Tell-tale LEDs** (brow option) | **8 × 5 mm addressable RGB LEDs, WS2812B family**: XINGLIGHT XL-504RGBC-WS2812B or WS2812D-F5, diffused or clear | **Yes**: 5.2 mm holes behind the icons | Amazon.in: "WS2812 5MM LED (5 Pcs) XL-504RGBC-WS2812B" (2 packs) | ₹300–700 (est.) |
+| **Tell-tale LEDs** | **8 × 5 mm addressable RGB LEDs, WS2812B family**: XINGLIGHT XL-504RGBC-WS2812B or WS2812D-F5, diffused or clear | **Yes**: 5.2 mm holes behind the icons | Amazon.in: "WS2812 5MM LED (5 Pcs) XL-504RGBC-WS2812B" (2 packs) | ₹300–700 (est.) |
 | **Cable to the interface box** | 4-core shielded cable, 0.5 mm², about 1 m, and a **GX12 4-pin** plug and panel socket | **Yes** (the GX12 socket's 12 mm hole) | Amazon.in: [GX12 aviation connector sets](https://www.amazon.in/10Sets-Aviation-Connector-Diameter-Circular/dp/B0CPV765NQ); cable: any | ₹300–600 (est.) |
 
-**Tell-tale diffusers:** print `telltale_diffusers` in white or natural PETG, or cut 8 squares (9.2 × 11 mm) from thin white translucent plastic.
+**Tell-tale windows:** fill the 8 icon cut-outs flush with **translucent white UV resin** (a UV resin pen, or clear UV resin with a little white pigment; Amazon.in, about ₹300–600 (est.)). It diffuses the LEDs, seals the face, and leaves the icons flush.
 
 **Hardware for the display head and clamp** (any equivalent; Amazon.in, or Nagdevi Street):
 - 4 × M2 × 6 screws (display to carrier);
-- 4 × M3 heat-set inserts (5.7 mm long, 4.2 mm hole), 2 × M3 × 8 and 2 × M3 × 12 countersunk screws;
+- 4 × M3 heat-set inserts (5.7 mm long, 4.2 mm hole) and 4 × M3 × 10 pan-head screws (the cover);
 - **on the bar (cradle):**
   - 2 × M4 heat-set inserts (8 mm long, 5.6 mm hole) and 2 × M4 × 12 bolts (cover to cradle);
   - 4 × M4 × 20 bolts and nuts (the 2 bar clamps);
@@ -67,7 +67,7 @@ About ₹300–600 (est.).
 | Phase 1 logger | about ₹7,300–9,800 | about ₹5,600–8,100 |
 | The whole dash (phase 1 parts reused) | about ₹20,000–23,000 | about ₹13,000–16,000 |
 
-Plus printing (the two housings, the cradle and the brow), about ₹600–1,500 (est.), and the bike-side plug. All estimates, from listings on 2026-11-23.
+Plus printing (the two housings, the trim ring and the cradle), about ₹600–1,500 (est.), and the bike-side plug. All estimates, from listings on 2026-11-23.
 
 ## Not chosen, and why
 

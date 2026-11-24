@@ -1,11 +1,15 @@
 {
- "generated": "2026-11-23",
+ "generated": "2026-11-24",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
+  "telltale_layout": "bottom",
+  "telltales": "face",
+  "trim": true,
+  "icon_size": 8,
   "bar_d": 22.2,
   "clamp_w": 24,
-  "cradle_span": 110,
-  "head_back": 32,
+  "cradle_span": 135,
+  "head_back": 34,
   "head_up": 20,
   "riser": 30,
   "insert_d": 4.2,
@@ -16,6 +20,19 @@
  },
  "parts": {
   "head_shell": [
+   "telltale_layout",
+   "telltales",
+   "trim",
+   "icon_size",
+   "fit",
+   "led_d"
+  ],
+  "head_shell_plain": [
+   "telltale_layout",
+   "trim",
+   "fit"
+  ],
+  "trim_ring": [
    "fit"
   ],
   "head_carrier": [
@@ -32,14 +49,6 @@
    "fit"
   ],
   "lip_gasket": [],
-  "head_brow": [
-   "fit",
-   "led_d"
-  ],
-  "telltale_diffusers": [],
-  "gps_cap": [
-   "fit"
-  ],
   "cradle": [
    "bar_d",
    "clamp_w",
