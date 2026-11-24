@@ -40,8 +40,15 @@ def read_defaults(proj_dir, sources, names):
     return out
 
 
+TEST_SVG = os.path.join(tempfile.gettempdir(), "param_deps_test_logo.svg")   # a plain shape, for "file" settings
+
+
 def test_values(p, default):
     """Other values to try, in order: the first one OpenSCAD accepts is used."""
+    if p.get("type") == "file":
+        with open(TEST_SVG, "w") as f:
+            f.write('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="20"><path d="M0 0H40V20H0Z"/></svg>')
+        return [TEST_SVG]
     if "choices" in p:
         return [c[0] for c in p["choices"] if c[0] != default]
     if p.get("type") == "text":

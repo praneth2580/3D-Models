@@ -329,3 +329,8 @@ body.lb-open { overflow: hidden; }
   .chip { flex: 1 1 140px; min-width: 0; }
   .b-sum .btn { width: 100%; text-align: center; }
 }
+
+.cz-file { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.cz-file input[type=file] { max-width: 100%; font: inherit; font-size: 13px; color: var(--muted, #9aa3ad); }
+.cz-file-name { font-family: ui-monospace, monospace; font-size: 13px; overflow-wrap: anywhere; }
+.cz-file .btn { padding: 4px 10px; font-size: 13px; }

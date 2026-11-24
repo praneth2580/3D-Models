@@ -1,5 +1,6 @@
 // Runs OpenSCAD (compiled to WebAssembly) in a background thread, so the page stays responsive while a part is made.
-// The page sends {id, base, sources, entry, defines}; the worker fetches the project's .scad files from `base`,
+// The page sends {id, base, sources, entry, defines, uploads}; uploads are [path, text] files the visitor chose in their
+// own browser (a logo SVG), written next to the design: they never leave this computer. The worker fetches the project's .scad files from `base`,
 // runs OpenSCAD on `entry` with the -D settings, and sends back {id, ok, stl (ArrayBuffer), log, error, ms}.
 // It also sends {id, status} lines while it works. A fresh OpenSCAD instance is used for every part (one run each).
 const OPENSCAD_URL = "https://cdn.jsdelivr.net/npm/openscad-wasm@0.0.4/openscad.js";   // OpenSCAD 2025.07.18, GPL-2.0
@@ -23,7 +24,7 @@ function mkdirs(FS, path) {
 }
 
 self.onmessage = async (e) => {
-  const { id, base, fontBase, sources, entry, defines } = e.data;
+  const { id, base, fontBase, sources, entry, defines, uploads = [] } = e.data;
   const say = (status) => self.postMessage({ id, status });
   const t0 = performance.now();
   const log = [];
@@ -37,6 +38,8 @@ self.onmessage = async (e) => {
     const o = await lib.createOpenSCAD({ print: (t) => log.push(t), printErr: (t) => { log.push(t); if (/^(Rendering|Geometries|Total rendering|Compiling)/.test(t)) say(t); } });
     const inst = o.getInstance();
     for (const [rel, text] of files) { mkdirs(inst.FS, "/p/" + rel); inst.FS.writeFile("/p/" + rel, text); }
+    const dir = entry.includes("/") ? entry.replace(/[^/]*$/, "") : "";
+    for (const [rel, text] of uploads) { mkdirs(inst.FS, "/p/" + dir + rel); inst.FS.writeFile("/p/" + dir + rel, text); }
     for (const [f, data] of fonts) { mkdirs(inst.FS, "/fonts/" + f); inst.FS.writeFile("/fonts/" + f, data); }
     const args = ["/p/" + entry, "-o", "/out.stl", "--export-format=binstl", "--backend=Manifold"];
     for (const d of defines) args.push("-D", d);

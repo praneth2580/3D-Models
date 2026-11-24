@@ -87,7 +87,8 @@ It exports every part as CSG (fast, no mesh) with each setting changed in turn, 
       {"name": "phone_w", "label": "Phone width", "unit": "mm", "step": 0.1, "min": 50, "max": 95, "help": "..."},
       {"name": "phone_port", "label": "Charging port", "choices": [["usbc", "USB-C"], ["microusb", "Micro-USB"]]},
       {"name": "tl_code", "label": "Key code", "type": "code", "digits": [0, 2], "length": [4, 6]},
-      {"name": "logo_text", "label": "Logo", "type": "text", "max_length": 12}
+      {"name": "logo_text", "label": "Logo", "type": "text", "max_length": 12},
+      {"name": "logo_file", "label": "Your own logo (SVG)", "type": "file", "accept": ".svg", "max_kb": 1024}
     ]}
   ]
 }
@@ -96,5 +97,6 @@ It exports every part as CSG (fast, no mesh) with each setting changed in turn, 
 - `sources`: every `.scad` file the entry includes (paths in the project). They are published under `scad/` for the browser.
 - Each setting needs a literal default in the sources (`name = 22.2;`), and is passed to OpenSCAD with `-D`, so it overrides the file's value (the last assignment wins).
 - The design's own `assert()`s still apply: a refused size shows the assert's message on the page.
+- Setting types: a number (with `min`, `max`, `step`, `unit`), `choices`, `"type": "code"` (a list of digits), `"type": "text"` (a short word: letters, digits, spaces, dots, dashes) and `"type": "file"` (an SVG the visitor picks, up to `max_kb`). A picked file never leaves the visitor's browser: the worker writes it next to the design as `upload/<name>.svg` and passes that path with `-D`, and the browser remembers it if it fits in localStorage. On the visitor's computer, the shown command expects it in the project's `private/` folder. `param_deps.py` probes a file setting with a small test SVG.
 - `text()` in a model uses the Liberation Sans fonts in `site/fonts/` (SIL Open Font License, `OFL.txt`).
 - Big parts take about 1-5 s in a desktop browser; a phone is slower.

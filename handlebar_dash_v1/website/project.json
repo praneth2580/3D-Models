@@ -230,17 +230,33 @@
         "params": [
           {
             "name": "logo_text",
-            "label": "Logo (above the screen)",
+            "label": "Logo above the screen (a word)",
             "type": "text",
             "max_length": 12,
             "help": "A short word, engraved; fill it with paint."
           },
           {
+            "name": "logo_file",
+            "label": "Or your own logo above the screen (SVG)",
+            "type": "file",
+            "accept": ".svg",
+            "max_kb": 1024,
+            "help": "Filled shapes, one colour (convert text and strokes to paths). It takes the word's place, 4.5 mm high."
+          },
+          {
             "name": "back_logo_text",
-            "label": "Logo on the back cover",
+            "label": "Logo on the back cover (a word)",
             "type": "text",
             "max_length": 12,
             "help": "Seen from in front of the bike, engraved; empty = none."
+          },
+          {
+            "name": "back_logo_file",
+            "label": "Or your own logo on the back (SVG)",
+            "type": "file",
+            "accept": ".svg",
+            "max_kb": 1024,
+            "help": "Filled shapes, one colour. 44 mm wide by default."
           },
           {
             "name": "telltales",

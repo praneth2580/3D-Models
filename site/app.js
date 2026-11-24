@@ -226,13 +226,22 @@ const CUSTOM = (function () {
   const val = (n) => (n in values ? values[n] : defs[n].default);
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   const changed = (names) => names.filter((n) => !same(val(n), defs[n].default));
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(values)); } catch (e) { /* not saved */ } };
+  // A "file" setting's value is {name, text}: a file the visitor picked, kept in this browser only.
+  const isFile = (v) => v && typeof v === "object" && !Array.isArray(v);
+  const save = () => {
+    try { localStorage.setItem(KEY, JSON.stringify(values)); return true; } catch (e) { /* too big for storage, or blocked */ }
+    try { localStorage.setItem(KEY, JSON.stringify(Object.fromEntries(Object.entries(values).filter(([, v]) => !isFile(v))))); } catch (e) { /* not saved */ }
+    return false;
+  };
+  const upPath = (n) => `upload/${n}.svg`;                       // where the worker writes a picked file, next to the design
   const lit = (v) => (typeof v === "string" ? JSON.stringify(v) : Array.isArray(v) ? "[" + v.join(",") + "]" : String(v));
   const stem = (p) => p.file.replace(/\.stl$/i, "");
-  const defines = (p) => [`${C.part_var}=${JSON.stringify(p.make.part)}`]
+  // local: the command for OpenSCAD on your computer (a picked file is then expected in the project's private/ folder)
+  const defines = (p, local) => [`${C.part_var}=${JSON.stringify(p.make.part)}`]
     .concat(Object.entries(p.make.set || {}).map(([k, v]) => `${k}=${lit(v)}`))
-    .concat(p.params.map((n) => `${n}=${lit(val(n))}`));
-  const shown = (v, q) => (q.type === "code" ? v.join(" ") : q.type === "text" ? (v === "" ? "(none)" : `"${v}"`) : String(v));
+    .concat(p.params.map((n) => { const v = val(n); return `${n}=${isFile(v) ? JSON.stringify(local ? "private/" + v.name : upPath(n)) : lit(v)}`; }));
+  const uploads = (p) => p.params.filter((n) => isFile(val(n))).map((n) => [upPath(n), val(n).text]);
+  const shown = (v, q) => (q.type === "code" ? v.join(" ") : q.type === "text" || q.type === "file" ? (isFile(v) ? v.name : v === "" ? "(none)" : `"${v}"`) : String(v));
 
   // ---- the worker (one part at a time)
   let worker = null, seq = 0;
@@ -251,7 +260,7 @@ const CUSTOM = (function () {
     return new Promise((resolve) => {
       waiting[id] = { resolve, onStatus };
       worker.postMessage({ id, base: new URL("scad/", location.href).href, fontBase: new URL("../fonts/", location.href).href,
-                           sources: C.sources, entry: C.entry, defines: defines(p) });
+                           sources: C.sources, entry: C.entry, defines: defines(p), uploads: uploads(p) });
     });
   }
 
@@ -270,11 +279,16 @@ const CUSTOM = (function () {
       input = `<input id="${id}" data-n="${q.name}" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="${esc(v.join(" "))}">`;
     } else if (q.type === "text") {
       input = `<input id="${id}" data-n="${q.name}" type="text" autocomplete="off" maxlength="${q.max_length || 24}" value="${esc(v)}">`;
+    } else if (q.type === "file") {
+      input = `<span class="cz-file"><input id="${id}" data-n="${q.name}" type="file" accept="${esc(q.accept || ".svg")}">` +
+        (isFile(v) ? `<span class="cz-file-name">${esc(v.name)}</span><button class="btn ghost" type="button" data-act="unfile" data-n="${q.name}">Remove</button>` : "") + "</span>";
     } else {
       input = `<span class="cz-num"><input id="${id}" data-n="${q.name}" type="number" step="${q.step ?? "any"}"` +
         `${q.min != null ? ` min="${q.min}"` : ""}${q.max != null ? ` max="${q.max}"` : ""} value="${v}">${q.unit ? `<span class="unit">${esc(q.unit)}</span>` : ""}</span>`;
     }
     const isChanged = !same(v, q.default);
+    if (q.type === "file") return `<div class="cz-field${isChanged ? " changed" : ""}"><label for="${id}">${esc(q.label)}</label>${input}` +
+      `<small>${q.help ? esc(q.help) + " " : ""}It stays in your browser: it is never uploaded.</small><span class="cz-err" hidden></span></div>`;
     return `<div class="cz-field${isChanged ? " changed" : ""}"><label for="${id}">${esc(q.label)}</label>${input}` +
       `<small>${q.help ? esc(q.help) + " " : ""}Default ${esc(q.choices ? (q.choices.find(([cv]) => same(cv, q.default)) || [, dflt])[1] : dflt)}${q.unit && !q.choices && q.type !== "code" ? " " + esc(q.unit) : ""}.</small>` +
       `<span class="cz-err" hidden></span></div>`;
@@ -320,16 +334,30 @@ const CUSTOM = (function () {
       `<button class="btn ghost" type="button" data-act="reset"${ch.length ? "" : " disabled"}>Back to the defaults</button></div>` +
       `<p class="cz-status" aria-live="polite">${ready ? "Your version is ready." : ch.length ? `${ch.length} setting${ch.length > 1 ? "s" : ""} changed from the ready-made file.` : "These are the ready-made file's sizes."}</p>` +
       `<details class="cz-cmd"><summary>Or make it with OpenSCAD on your computer</summary><pre><code>${esc(command(p))}</code></pre>` +
-      `<p class="small-note">Run it in the folder with <code>${esc(C.entry)}</code> (in the project's .zip).</p></details>`;
+      `<p class="small-note">Run it in the folder with <code>${esc(C.entry)}</code> (in the project's .zip)` +
+      `${p.params.some((n) => isFile(val(n))) ? `, with your file in its <code>private/</code> folder` : ""}.</p></details>`;
   }
   function command(p) {
     const q = (s) => "'" + s.replace(/'/g, "'\\''") + "'";
-    return `openscad ${defines(p).filter((d, k) => k < 1 + Object.keys(p.make.set || {}).length || !same(val(d.split("=")[0]), defs[d.split("=")[0]].default))
+    return `openscad ${defines(p, true).filter((d, k) => k < 1 + Object.keys(p.make.set || {}).length || !same(val(d.split("=")[0]), defs[d.split("=")[0]].default))
       .map((d) => "-D " + q(d)).join(" ")} -o ${stem(p)}.stl ${C.entry}`;
   }
 
+  async function pickFile(q, el) {
+    const f = el.files && el.files[0], err = el.closest(".cz-field").querySelector(".cz-err");
+    const fail = (m) => { err.hidden = false; err.textContent = m; el.value = ""; };
+    if (!f) return;
+    if (f.size > (q.max_kb || 1024) * 1024) return fail(`That file is ${Math.round(f.size / 1024)} KB: ${q.max_kb || 1024} KB at most.`);
+    const text = await f.text();
+    if (!/<svg[\s>]/i.test(text)) return fail("That isn't an SVG file.");
+    values[q.name] = { name: f.name.replace(/[^A-Za-z0-9._-]+/g, "_"), text };
+    const kept = save();
+    render(VIEWER.current());
+    if (!kept) box.querySelector(".cz-status").textContent = "Your file is too big to remember for next time; it works until you leave the page.";
+  }
   box.addEventListener("change", (e) => {
     const el = e.target.closest("[data-n]"); if (!el) return;
+    if (defs[el.dataset.n].type === "file") { pickFile(defs[el.dataset.n], el); return; }
     const q = defs[el.dataset.n], r = parse(q, el);
     const err = el.closest(".cz-field").querySelector(".cz-err");
     err.hidden = !r.err; err.textContent = r.err || "";
@@ -342,6 +370,7 @@ const CUSTOM = (function () {
     const b = e.target.closest("[data-act]"); if (!b) return;
     const i = VIEWER.current(), p = P.parts[i];
     if (b.dataset.act === "reset") { p.params.forEach((n) => delete values[n]); save(); render(i); return; }
+    if (b.dataset.act === "unfile") { delete values[b.dataset.n]; save(); render(i); return; }
     if (b.dataset.act === "show") { const m = made[p.file]; VIEWER.showBuffer(i, m.buf, m.url, m.name); return; }
     if (b.dataset.act !== "make" || busy) return;
     if (box.querySelector(".cz-err:not([hidden])")) return;
@@ -361,7 +390,7 @@ const CUSTOM = (function () {
 
   VIEWER.onPart = render;
   render(VIEWER.current());
-  return { run, values: () => values, changed, made, keyOf, defines };
+  return { run, values: () => values, changed, made, keyOf, defines, describe: (v) => (isFile(v) ? `your file ${v.name}` : JSON.stringify(v)) };
 })();
 
 // ---------- build picker: show only the parts for the chosen options; zip them in the browser
@@ -435,7 +464,7 @@ const CUSTOM = (function () {
         if (!res.ok) throw new Error(f);
         folder.file(f, await res.blob());
       }
-      const sizes = mine ? Object.entries(CUSTOM.values()).map(([n, v]) => `  ${n} = ${JSON.stringify(v)}`).join("\n") : "";
+      const sizes = mine ? Object.entries(CUSTOM.values()).map(([n, v]) => `  ${n} = ${CUSTOM.describe(v)}`).join("\n") : "";
       folder.file("BUILD.txt", `${document.title}\nBuild: ${label()}\nParts: ${files.join(", ")}\n` +
         (mine ? `\nMade to your sizes in the browser: ${yours.join(", ") || "(none: no setting changed)"}\nYour settings:\n${sizes}\n` : "") +
         `\nThe source, the guides and the full list are in the project's main .zip.\n`);
