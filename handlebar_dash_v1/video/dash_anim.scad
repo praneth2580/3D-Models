@@ -95,12 +95,16 @@ module tank_frame() {
   color(black) along(on_axis(60) + [0, -20, 0], [0, -540, -255], 60);                           // the backbone
 }
 
-// The dash on its handlebar cradle (mount = "bar"), with the tell-tales lit as LIT says and the screen showing SCREEN.
+// The dash on its 2 bar clamps (mount = "bar"), with the tell-tales lit as LIT says and the screen showing SCREEN.
 // The parts come from ../parts/ (turned back from their print poses).
 module dash() {
-  rotate([-tilt, 0, 0]) color([0.2, 0.21, 0.23]) {
-    rotate([0, -90, 0]) translate([0, 0, -(cradle_span/2 + cradle_clamp_w/2)]) import("../parts/cradle.stl", convexity=4);
-    for (sx = [-1, 1]) translate([sx*cradle_span/2, 0, 0]) rotate([0, -90, 0]) translate([0, 0, -cradle_clamp_w/2]) import("../parts/cradle_cap.stl", convexity=4);
+  rotate([-tilt, 0, 0]) {
+    color([0.2, 0.21, 0.23]) {
+      rotate([0, 90, 0]) translate([0, 0, cradle_span/2 - cradle_clamp_w/2]) import("../parts/bar_mount_right.stl", convexity=4);
+      rotate([0, -90, 0]) translate([0, 0, cradle_span/2 - cradle_clamp_w/2]) import("../parts/bar_mount_left.stl", convexity=4);
+      for (sx = [-1, 1]) translate([sx*cradle_span/2, 0, 0]) rotate([0, -90, 0]) translate([0, 0, -cradle_clamp_w/2]) import("../parts/cradle_cap.stl", convexity=4);
+    }
+    color([0.08, 0.08, 0.08]) for (sx = [-1, 1]) mount_pad(sx);
   }
   head_placed() {
     color([0.16, 0.17, 0.19]) translate([0, 0, -lip_t]) import("../parts/head_shell.stl", convexity=6);

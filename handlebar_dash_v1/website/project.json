@@ -2,7 +2,7 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display in a classic round gauge, with the tell-tales (turn signals, high beam, neutral, ABS, engine, fuel, battery) lit in its own face. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 102.5 mm across, the screen in the centre, the logo and the 8 tell-tales on the display's own black glass border, on the handlebar in a cradle that stays hidden behind it. The interface box comes next.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 102.5 mm across, the screen in the centre, the logo and the 8 tell-tales on the display's own black glass border, on the handlebar: two slim clamps bolted straight to its back, on rubber, hidden behind it. The interface box comes next.",
   "video": "video/dash_demo.mp4",
   "poster": "images/hd_video_poster.png",
   "video_title": "On the bike",
@@ -37,11 +37,11 @@
   ],
   "cover": "images/hd_rider.png",
   "see_title": "The display head (v1)",
-  "see_sub": "A classic round gauge on the handlebar, the screen in the centre. The face ring lies on the display's own black glass border, so the logo and the tell-tales sit on that border: the housing adds only its 3 mm wall. The cradle clamps the bar right beside the bike's own clamp, and the gauge sits where it hides it from the seat. 102.5 mm across, 43 mm deep.",
+  "see_sub": "A classic round gauge on the handlebar, the screen in the centre. The face ring lies on the display's own black glass border, so the logo and the tell-tales sit on that border: the housing adds only its 3 mm wall. Two slim clamps on the bar, right beside the bike's own clamp, bolt straight to its back on rubber pads, and the gauge sits where it hides them from the seat. 102.5 mm across, 43 mm deep.",
   "gallery": [
     {
       "src": "images/hd_rider.png",
-      "caption": "From the rider's seat: the screen in the centre, the logo and the lit tell-tales round the top, a silver trim ring, and no mount in sight: the cradle on the bar hides behind the gauge"
+      "caption": "From the rider's seat: the screen in the centre, the logo and the lit tell-tales round the top, a silver trim ring, and no mount in sight: its clamps hide behind the gauge"
     },
     {
       "src": "images/hd_face.png",
@@ -53,7 +53,7 @@
     },
     {
       "src": "images/hd_side.png",
-      "caption": "From the side: the cradle's slim clamps on the 22.2 mm bar beside the bike's own clamp (grey: a stand-in; measure yours), its arms back to the gauge"
+      "caption": "From the side: a slim clamp on the 22.2 mm bar beside the bike's own clamp (grey: a stand-in; measure yours), bolted straight to the gauge's back on a rubber pad"
     },
     {
       "src": "images/hd_back.png",
@@ -65,7 +65,7 @@
     },
     {
       "src": "images/hd_exploded.png",
-      "caption": "Taken apart: the trim ring, the shell, the carrier (the display screws to it), the back cover, the cradle and its 2 clamp caps"
+      "caption": "Taken apart: the trim ring, the shell, the carrier (the display screws to it), the back cover, the 2 bar clamps with their rubber pads and caps"
     }
   ],
   "viewer_default": [
@@ -82,15 +82,18 @@
         "trim_ring",
         "head_carrier",
         "head_cover",
+        "head_cover_cluster",
         "head_cover_stalk",
         "lip_gasket"
       ]
     },
     {
-      "label": "On the handlebar: the cradle",
+      "label": "On the handlebar: the clamps",
       "parts": [
-        "cradle",
-        "cradle_cap"
+        "bar_mount_right",
+        "bar_mount_left",
+        "cradle_cap",
+        "mount_pad"
       ]
     },
     {
@@ -154,14 +157,26 @@
     },
     "head_cover": {
       "name": "Back cover",
-      "what": "Closes the back, presses the display onto the foam ring, carries the GX12 socket and 2 M4 inserts for the cradle",
+      "what": "The back cover: 4 holes for the bar clamps' bolts (M4 x 14, from inside, into the clamps' feet), the GX12 socket at the top",
       "qty": "1",
       "material": "PETG. Plug edge down",
       "when": {
-        "mount": [
-          "bar",
-          "cluster"
-        ]
+        "mount": "bar"
+      }
+    },
+    "head_cover_cluster": {
+      "name": "Back cover (cluster mount)",
+      "what": "The back cover with 2 M4 inserts for the cluster adapter",
+      "qty": "1",
+      "material": "PETG (ASA for the final part). Plug's front edge on the bed",
+      "when": {
+        "mount": "cluster"
+      },
+      "make": {
+        "part": "head_cover",
+        "set": {
+          "mount": "cluster"
+        }
       }
     },
     "head_cover_stalk": {
@@ -194,20 +209,38 @@
         "mount": "cluster"
       }
     },
-    "cradle": {
-      "name": "Cradle",
-      "what": "Two slim bar clamps right beside your bike's handlebar clamp, two arms and a pad that bolts to the cover's 2 M4 inserts. The gauge sits where it hides all of it from the seat (worked out from your bike's clamp width). M4 inserts from below in the clamps' upper halves",
+    "bar_mount_right": {
+      "name": "Bar clamp, right",
+      "what": "A slim bar clamp's upper half, right beside your bike's handlebar clamp, with a solid block straight back to a foot on the gauge's back cover. 2 M4 inserts from below (the clamp bolts) and 2 in the foot (the cover bolts)",
       "qty": "1",
-      "material": "PETG or ASA, 100% infill round the clamps. Printed on one clamp's face (round clamps); support under the far clamp",
+      "material": "PETG or ASA, 100% infill. On the clamp's inner face; support under the block",
+      "when": {
+        "mount": "bar"
+      }
+    },
+    "bar_mount_left": {
+      "name": "Bar clamp, left",
+      "what": "The same, mirrored, for the left side",
+      "qty": "1",
+      "material": "PETG or ASA, 100% infill. On the clamp's inner face; support under the block",
       "when": {
         "mount": "bar"
       }
     },
     "cradle_cap": {
       "name": "Clamp caps",
-      "what": "The bar clamps' lower halves, with a 1 mm rubber strip: 2 x M4 x 20 bolts each, up from below into the inserts",
+      "what": "The bar clamps' lower halves, with a 1 mm rubber strip in each clamp: 2 x M4 x 20 bolts each, up from below into the inserts",
       "qty": "2",
       "material": "PETG",
+      "when": {
+        "mount": "bar"
+      }
+    },
+    "mount_pad": {
+      "name": "Rubber pads",
+      "what": "2 mm pads between each clamp's foot and the cover, for damping. Cut them from 2 mm rubber sheet (this is the shape), or print in TPU. Mirror the second",
+      "qty": "2",
+      "material": "Rubber sheet, or TPU 85A",
       "when": {
         "mount": "bar"
       }
@@ -240,7 +273,7 @@
     },
     "head_assembled": {
       "name": "Assembled: on the handlebar",
-      "what": "The whole gauge on its cradle, on the bar (the grey block stands in for your bike's handlebar clamp)",
+      "what": "The whole gauge on its 2 bar clamps (the grey block stands in for your bike's handlebar clamp)",
       "qty": "-",
       "view": true,
       "when": {
@@ -355,7 +388,7 @@
             "step": 1,
             "min": 50,
             "max": 90,
-            "help": "Measure it. The cradle's clamps sit right beside it, and the gauge can hide them only up to about 85 mm."
+            "help": "Measure it. The bar clamps sit right beside it; the gauge hides them up to about 85 mm (at 25 degrees of tilt)."
           },
           {
             "name": "bike_clamp_d",

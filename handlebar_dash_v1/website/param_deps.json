@@ -59,6 +59,12 @@
    "back_logo_text",
    "back_logo_file",
    "insert_d",
+   "fit"
+  ],
+  "head_cover_cluster": [
+   "back_logo_text",
+   "back_logo_file",
+   "insert_d",
    "m4_insert_d",
    "fit"
   ],
@@ -79,7 +85,18 @@
    "stock_bolt",
    "fit"
   ],
-  "cradle": [
+  "bar_mount_right": [
+   "telltales",
+   "bike_clamp_w",
+   "bike_clamp_d",
+   "bike_clamp_h",
+   "tilt",
+   "bar_d",
+   "m4_insert_d",
+   "fit",
+   "led_board_t"
+  ],
+  "bar_mount_left": [
    "telltales",
    "bike_clamp_w",
    "bike_clamp_d",
@@ -92,6 +109,14 @@
   ],
   "cradle_cap": [
    "bar_d"
+  ],
+  "mount_pad": [
+   "telltales",
+   "bike_clamp_w",
+   "bike_clamp_d",
+   "bike_clamp_h",
+   "tilt",
+   "led_board_t"
   ],
   "clamp_upper": [
    "bar_d",

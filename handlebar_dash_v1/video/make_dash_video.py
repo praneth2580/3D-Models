@@ -20,11 +20,11 @@ def ease(u): u = max(0.0, min(1.0, u)); return u*u*(3 - 2*u)
 def lerp(a, b, u): return [x + (y - x)*u for x, y in zip(a, b)]
 
 # Camera keys: (time, [cx, cy, cz, rx, ry, rz, dist]) in the bike frame (OpenSCAD gimbal camera); eased between keys.
-FACE = [0, -109, 72]
+FACE = [0, -76, 50]
 KEYS = [(0.0, [0, 80, -280, 80, 0, 200, 2700]),
         (6.0, [0, 30, -150, 72, 0, 320, 2000]),
-        (8.0, [0, -40, 40, 62, 0, 360, 1050]),
-        (16.0, [0, -50, 50, 63, 0, 360, 860]),
+        (8.0, [0, -30, 30, 62, 0, 360, 1000]),
+        (16.0, [0, -40, 35, 63, 0, 360, 820]),
         (18.0, FACE + [65, 0, 360, 345]),
         (21.0, FACE + [65, 0, 360, 315]),
         (24.0, [0, 30, -40, 70, 0, 325, 1500])]
@@ -48,7 +48,7 @@ def state(t):
     return lit, "ride", v, gear
 
 CAPTIONS = [(0.3, 5.6, "A round 2.8\" dash on the handlebar", "On a stand-in of the reference bike's front end (a Meteor 350; sizes estimated)"),
-            (6.3, 8.0, "Its cradle clamps the bar behind the gauge", "Nothing shows round it from the seat"),
+            (6.3, 8.0, "Two slim clamps, bolted straight to its back", "On rubber; nothing shows round it from the seat"),
             (8.1, 10.6, "Ignition on: a lamp check", "Every tell-tale lights, then the screen starts"),
             (11.0, 16.4, "Speed, gear, clock and trip on the screen", "Turn signals, neutral and high beam lit in the face"),
             (17.0, 21.0, "The logo and tell-tales sit on the display's own black border", "102.5 mm across: only 3 mm wider than the glass"),

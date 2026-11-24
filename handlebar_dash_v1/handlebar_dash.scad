@@ -29,7 +29,7 @@
        channel in the face's back and leave past the glass's edge at wire_a). Fill the icons flush with translucent
        white UV resin. The logo: logo_text, or your own SVG/DXF (logo_file). icons: which and in what order;
        with telltales set to "none", no lamps (a thinner face ring).
-    4. MOUNT (mount): "bar", a cradle on the handlebar, hidden behind the gauge (the default); "cluster", an adapter
+    4. MOUNT (mount): "bar", 2 slim bar clamps bolted straight to the cover on rubber, hidden behind the gauge (the default); "cluster", an adapter
        bolted where the stock instrument cluster was; or "stalk", a GoPro-style 3-prong joint on the cover: it fits the printed bar clamp here, or any GoPro handlebar
        mount. One M5 bolt sets the tilt.
 
@@ -41,7 +41,8 @@
 // ------------------------- OUTPUT SELECTION -------------------------
 // "assembly" (head on its clamp), "exploded", "front", "head_shell", "head_carrier", "head_cover",
 // "icons" (2D, the tell-tale icons),
-// "lip_gasket" (TPU, or cut it from 0.8 mm foam), "cluster_adapter", "cradle", "cradle_cap", "clamp_upper", "clamp_lower",
+// "lip_gasket" (TPU, or cut it from 0.8 mm foam), "bar_mount_right", "bar_mount_left", "cradle_cap", "mount_pad",
+// "cluster_adapter", "clamp_upper", "clamp_lower",
 // "display_dummy" (view only);
 // checks "check_*" (see the end of the file).
 PART = "assembly";
@@ -117,8 +118,10 @@ gx12_d = 12.2;              // GX12 panel socket hole (12 mm thread)
 // Fit the adapter to the gauge on the bench, then bolt it on from below. There are NO PUBLISHED SIZES for the bike's
 // bracket (Royal Enfield part 1100515/B on the Meteor 350): the stock_* and cl_* values are placeholders. Measure yours.
 // "bar" (the default): on the handlebar (owner: "on the handlebar not above it, something like the harleys", then,
-// 2026-11-24: "it should be on the handlebar and should not be visible outside the dash"): a cradle of 2 slim bar
-// clamps right against the bike's own handlebar clamp, 2 arms and a pad that bolts to the cover's 2 M4 inserts. The
+// 2026-11-24: "it should be on the handlebar and should not be visible outside the dash", then "remove the arms ...
+// connect the mount directly to the dash, have some rubber for damping only"): 2 slim bar clamps right against the
+// bike's own handlebar clamp, each with a short block back to a foot that bolts straight to the cover (2 M4 into
+// inserts), a rubber pad between foot and cover, a rubber strip in the clamp. Nothing joins the two sides. The
 // gauge is placed (head_back, head_up: worked out, not set) where it hides the whole cradle from the rider's eye
 // (rider_eye): the smallest setback that does, the gauge's centre on the line from the eye to the clamps. That works
 // only if the bike's clamp is narrow enough (about 80 mm or less); an assert says so. Turning the cradle on the bar
@@ -134,15 +137,19 @@ cl_x = 0;                   // the gauge's centre, sideways from the holes' cent
 cl_back = 20;               // MEASURE: the gauge's back face, this far behind the holes' centre (toward the rider)
 cl_up = 62;                 // MEASURE: the gauge's centre, this far above the bracket's top face
 adapter_t = 5;              // the adapter's pad (on the cover)
-foot_t = 8;                 // and its foot (on the bracket)
+cl_foot_t = 8;              // and its foot (on the bracket)
 bike_clamp_w = 80;          // MEASURE: your bike's own handlebar clamp: its width along the bar. The cradle's clamps sit right
                             //   beside it, so this decides whether the gauge can hide them (about 80 or less). The Meteor 350's
                             //   is a one-piece die-cast clamp on 2 risers, with no published size: 80 is a placeholder
 bike_clamp_d = 45;          // MEASURE: its depth (front to back)
 bike_clamp_h = 28;          // MEASURE: its top, above the bar's centre
 bike_clamp = [bike_clamp_w, bike_clamp_d, bike_clamp_h];
-cradle_clamp_w = 12;        // the cradle's 2 slim bar clamps
-clamp_gap = 2;              // between them and the bike's clamp
+cradle_clamp_w = 10;        // the 2 slim bar clamps (each bolted straight to the cover)
+clamp_gap = 1;              // between them and the bike's clamp
+mount_t = 4;                // their wall round the bar (with its rubber strip)
+mount_rubber = 2;           // a rubber pad between each clamp's foot and the cover (damping); a rubber washer under each bolt
+foot_t = 8;                 // each clamp's foot, on the cover (2 M4 inserts in it, 6 mm long)
+bar_bolts = [[34, -8], [34, -20]];   // each foot's 2 M4 x 14 bolts, from inside the cover into inserts in the foot: head-frame [x (mirrored per side), y]
 rider_eye = [650, 450];     // the rider's eye, behind and above the bar's centre (an estimate: it only places the gauge)
 cradle_bolt = [18, -30];    // the cradle's 2 M4 bolts on the cover's back: +-x, y (below the head's centre)
 m4_insert_d = 5.6;          // M4 heat-set inserts (SELECT: check yours)
@@ -208,10 +215,9 @@ assert(!with_logo || (icon_r - logo_size/2 >= win_r + 2 && norm([logo_w/2, icon_
        "The logo's box runs off the face: a smaller logo_w or logo_size.");
 assert(gps_z1 <= shell_len - 3, "The GPS antenna is too long for the housing (it must clear the GX12 socket's nut).");
 assert(gps_y0 >= bore_r - 0.15 - cover_ring - 1, "The GPS antenna is too thick for the top of the housing.");
-assert(mount != "cluster" || (tilt >= 0 && cl_up - shell_r*cos(tilt) >= max(0, -(cl_back + shell_r*sin(tilt))*tan(stock_tilt)) + foot_t + 1),
+assert(mount != "cluster" || (tilt >= 0 && cl_up - shell_r*cos(tilt) >= max(0, -(cl_back + shell_r*sin(tilt))*tan(stock_tilt)) + cl_foot_t + 1),
        "The gauge would sit on the cluster adapter's foot: raise cl_up.");
-assert(mount != "bar" || len(hb_ok) > 0, str("The gauge can't hide the cradle with a ", bike_clamp_w, " mm wide handlebar clamp (it would sit over ",
-       hb_max, " mm behind the bar): check bike_clamp_w, or use the cluster mount."));
+assert(mount != "bar" || len(hb_ok) > 0, str("The gauge can't hide its bar clamps with a ", bike_clamp_w, " mm wide handlebar clamp: check bike_clamp_w (up to about 85 mm hides at 25 degrees of tilt), or use the cluster mount."));
 echo(head = [2*face_r, head_len], bezel = face_r - active_d/2, lip_t = lip_t, icon_angles = icon_angs, glass_z = glass_z, z_carrier = z_carrier, z_cov = z_cov, shell_len = shell_len);
 
 
@@ -363,6 +369,8 @@ module head_carrier() difference() {
 
 // ------------------------- COVER --------------------------------------
 gx12_y = bore_r - 0.15 - cover_ring - 9;             // the GX12 socket, at the top of the cover (its plug clears the bike's clamp)
+// The mount's bolts in the cover: the bar clamps' 4 (2 per foot, from inside), or the cluster adapter's 2 (inserts).
+cover_bolts = mount == "bar" ? [for (sx = [-1, 1], b = bar_bolts) [sx*b[0], b[1]]] : [for (sx = [-1, 1]) [sx*cradle_bolt[0], cradle_bolt[1]]];
 // The back logo's free area: below the GX12 socket, above the mount (the cradle's or the adapter's pad, or the joint).
 back_top = gx12_y - gx12_d/2 - 2;
 back_bot = mount == "stalk" ? -gp_drop + gp_r + 2 : cradle_bolt[1] + 9 + 2;
@@ -389,13 +397,14 @@ module head_cover() difference() {
     if (mount == "stalk")     // GoPro-style 3 fingers
       for (x = gp_fingers3) translate([x - gp_finger_t/2, -gp_drop, shell_len + cover_back]) rotate([0, 90, 0])
         hull() { translate([-gp_reach, 0, 0]) cylinder(r=gp_r, h=gp_finger_t, $fn=48); translate([0, -gp_r - 2, 0]) cube([0.01, 2*gp_r + 4, gp_finger_t]); }
-    else                      // 2 bosses inside, for the cradle's M4 inserts
-      for (sx = [-1, 1]) translate([sx*cradle_bolt[0], cradle_bolt[1], shell_len - m4_insert_l - 1]) cylinder(d=10, h=m4_insert_l + 1.01, $fn=40);
+    else                      // bosses inside: the cluster adapter's M4 inserts, or seats for the bar clamps' bolt heads
+      for (b = cover_bolts) translate([b[0], b[1], shell_len - (mount == "bar" ? 4 : m4_insert_l + 1)]) cylinder(d=10, h=(mount == "bar" ? 4 : m4_insert_l + 1) + 0.01, $fn=40);
   }
   // heat-set inserts for the 4 radial screws
   for (a = screw_ang) rotate(a) translate([bore_r - 0.15 - insert_l, 0, z_screw]) rotate([0, 90, 0]) cylinder(d=insert_d, h=insert_l + 1, $fn=32);
   if (mount == "stalk") translate([-20, -gp_drop, shell_len + cover_back + gp_reach]) rotate([0, 90, 0]) cylinder(d=gp_hole, h=40, $fn=32);
-  else for (sx = [-1, 1]) translate([sx*cradle_bolt[0], cradle_bolt[1], shell_len - m4_insert_l]) cylinder(d=m4_insert_d, h=m4_insert_l + cover_back + 1, $fn=32);
+  else if (mount == "bar") for (b = cover_bolts) translate([b[0], b[1], shell_len - 6]) cylinder(d=4.5, h=cover_back + 7, $fn=24);   // M4 x 14 from inside
+  else for (b = cover_bolts) translate([b[0], b[1], shell_len - m4_insert_l]) cylinder(d=m4_insert_d, h=m4_insert_l + cover_back + 1, $fn=32);
   // GX12 4-pin socket
   translate([0, gx12_y, shell_len - 1]) cylinder(d=gx12_d, h=cover_back + 2, $fn=48);   // its nut (15 mm) inside the ring
   // the back logo, engraved (seen from behind the head, so not mirrored)
@@ -451,67 +460,70 @@ module clamp_body(upper, fingers=true) difference() {
 module clamp_upper() clamp_body(true);
 module clamp_lower() clamp_body(false);
 
-// ------------------------- THE CRADLE (mount = "bar") ------------------
-// In the cradle's frame: the bar along x through the origin, y forward, z up, before the tilt (the whole cradle and
-// the head turn about the bar together). Its 2 slim clamps sit right beside the bike's clamp; the arms run back over
-// them (the clamp bolts come up from below into M4 inserts in the clamps' upper halves) to a pad on the cover's back.
+// ------------------------- THE BAR MOUNT (mount = "bar") ----------------
+// In the mount's frame: the bar along x through the origin, y forward, z up, before the tilt (the clamps and the head
+// turn about the bar together). 2 clamps (left, right), each: an upper half round the bar with a solid block back to
+// a foot that bolts straight to the cover's back (2 M4 from inside the cover, a rubber pad between), and a cap. The clamp
+// bolts come up from below through the cap into M4 inserts in the upper half (the front ear and the block).
 cradle_span = bike_clamp[0] + 2*clamp_gap + cradle_clamp_w;   // centre to centre of the 2 clamps
-cr_ear_t = 9;                                       // the upper halves' bolt ears (an M4 insert from below in each)
-// Placing the gauge to hide the cradle: the eye in the cradle's frame, then the gauge's face plane (y = face_y(hb)).
+crl_r = bar_d/2 + clamp_rubber + mount_t;           // the clamps' outer radius
+cr_bolt_y = crl_r + 2.2;                            // the clamp bolts, either side of the bar
+cr_ear = crl_r + 6.5;                               // the ears reach this far fore and aft
+// The bike's clamp (fixed to the bike) seen in the mount's frame: turned back by the tilt. Its rear corner sets how close
+// the gauge can come: the foot, the rubber and room for the bolt heads go between.
+bc_rear = max([for (z = [-bar_d/2 - 4, bike_clamp[2]]) -(-bike_clamp[1]/2*cos(tilt) - z*sin(tilt))]);
+// Placing the gauge to hide the mount: the eye in the mount's frame, then the gauge's face plane (y = face_y(hb)).
 cr_eye = [0, -rider_eye[0]*cos(tilt) - rider_eye[1]*sin(tilt), -rider_eye[0]*sin(tilt) + rider_eye[1]*cos(tilt)];
 function face_y(hb) = z_front - hb - shell_len - cover_back;
 function up_for(hb) = cr_eye[2]*(1 - (face_y(hb) - cr_eye[1])/(-cr_eye[1]));   // the gauge's centre on the eye-to-clamps line
 // The farthest any corner of the clamps (with their ears and caps) appears from the gauge's centre, seen from the eye,
 // on the face's plane. Under face_r: hidden (the face alone is the smallest outline of the gauge, so this is safe).
-function seen_r(hb) = max([for (x = [cradle_span/2 - cradle_clamp_w/2, cradle_span/2 + cradle_clamp_w/2], y = [-(cl_r + 6), cl_r + 6], z = [-cl_r, cl_r])
+function seen_r(hb) = max([for (x = [cradle_span/2 - cradle_clamp_w/2, cradle_span/2 + cradle_clamp_w/2], y = [-cr_ear, cr_ear], z = [-crl_r, crl_r])
   let(k = (face_y(hb) - cr_eye[1])/(y - cr_eye[1])) norm([k*x, cr_eye[2] + k*(z - cr_eye[2]) - up_for(hb)])]);
-hb_min = bike_clamp[1]/2 + 20;                      // the pad and the arms stay behind the bike's clamp
-hb_max = 140;
-hb_ok = [for (hb = [hb_min:1:hb_max]) if (seen_r(hb) <= face_r - 1.5) hb];
+hb_min = max(bc_rear + mount_rubber + foot_t + 5, cr_ear + 6);   // as close as the bike's clamp allows
+hb_max = hb_min + 25;
+hb_ok = [for (hb = [ceil(hb_min):1:hb_max]) if (seen_r(hb) <= face_r - 0.8) hb];
 head_back = mount == "bar" && len(hb_ok) > 0 ? hb_ok[0] : 34;   // the head's back face, this far behind the bar's centre
 head_up = mount == "bar" ? up_for(head_back) : 20;  // the head's centre, this far above the bar's centre
 module cr_head_frame() translate([0, -head_back - (shell_len + cover_back), head_up]) multmatrix(HEAD_TO_BIKE) children();
-module cr_clamp_upper() difference() {
+// One foot (side sx), in the head's frame: round the 2 bolts, on the rubber pad.
+module foot_2d(sx) hull() for (b = bar_bolts) translate([-sx*b[0], b[1]]) circle(r=7, $fn=32);   // (the head's x is mirrored)
+module bar_mount(sx) difference() {
   union() {
-    intersection() { rotate([0, 90, 0]) cylinder(r=cl_r, h=cradle_clamp_w, center=true); translate([-cradle_clamp_w, -50, 0]) cube([2*cradle_clamp_w, 100, 50]); }
-    translate([-cradle_clamp_w/2, -cl_r - 6, 0]) cube([cradle_clamp_w, 2*cl_r + 12, cr_ear_t]);
-  }
-  rotate([0, 90, 0]) cylinder(d=bar_d + 2*clamp_rubber, h=cradle_clamp_w + 2, center=true);
-  translate([-cradle_clamp_w, -50, -0.4]) cube([2*cradle_clamp_w, 100, 0.8]);
-  for (s = [-1, 1]) translate([0, s*(cl_r + 1.5), -1]) cylinder(d=m4_insert_d, h=1 + m4_insert_l, $fn=24);
-}
-module cradle() difference() {
-  union() {
-    for (sx = [-1, 1]) translate([sx*cradle_span/2, 0, 0]) cr_clamp_upper();
-    cr_head_frame() translate([-pad_gx - 3, cradle_bolt[1] - 9, shell_len + cover_back]) cube([2*pad_gx + 6, 18, adapter_t]);   // the pad
-    for (sx = [-1, 1]) {
-      // the arm: up from the clamp's top, back past the bike's clamp, then in to the pad
-      hull() {
-        translate([sx*cradle_span/2 - cradle_clamp_w/2, -cl_r - 6, cr_ear_t - 0.01]) cube([cradle_clamp_w, cl_r + 6, cl_r - cr_ear_t + 2]);
-        translate([sx*cradle_span/2 - cradle_clamp_w/2, -(bike_clamp[1]/2 + 16), cr_ear_t]) cube([cradle_clamp_w, 6, 10]);
-      }
-      hull() {
-        translate([sx*cradle_span/2 - cradle_clamp_w/2, -(bike_clamp[1]/2 + 16), cr_ear_t]) cube([cradle_clamp_w, 6, 10]);
-        cr_head_frame() translate([-sx*pad_gx - 3, cradle_bolt[1] - 9, shell_len + cover_back]) cube([6, 18, adapter_t]);   // (the head's x is mirrored)
-      }
+    translate([sx*cradle_span/2, 0, 0]) {
+      intersection() { rotate([0, 90, 0]) cylinder(r=crl_r, h=cradle_clamp_w, center=true); translate([-cradle_clamp_w, -50, 0]) cube([2*cradle_clamp_w, 100, 50]); }
+      translate([-cradle_clamp_w/2, 0, 0]) cube([cradle_clamp_w, cr_ear, 9]);                    // the front ear
+    }
+    // the block: from the clamp's back, straight back (and in) to the foot
+    hull() {
+      translate([sx*cradle_span/2 - cradle_clamp_w/2, -cr_ear, 0]) cube([cradle_clamp_w, cr_ear, crl_r]);
+      cr_head_frame() translate([0, 0, shell_len + cover_back + mount_rubber]) linear_extrude(foot_t) foot_2d(sx);
     }
   }
-  rotate([0, 90, 0]) cylinder(d=bar_d + 2*clamp_rubber, h=cradle_span + cradle_clamp_w + 2, center=true);
-  cr_head_frame() {
-    for (sx = [-1, 1]) translate([sx*cradle_bolt[0], cradle_bolt[1], shell_len + cover_back - 1]) cylinder(d=4.5, h=adapter_t + 2, $fn=24);
-    translate([0, 0, -1]) cylinder(r=shell_r + 0.01, h=shell_len + cover_back + 1, $fn=120);   // clear of the gauge
+  translate([sx*cradle_span/2, 0, 0]) {
+    rotate([0, 90, 0]) cylinder(d=bar_d + 2*clamp_rubber, h=cradle_clamp_w + 2, center=true);
+    translate([-cradle_clamp_w, -50, -0.4]) cube([2*cradle_clamp_w, 100, 0.8]);
+    for (s = [-1, 1]) translate([0, s*cr_bolt_y, -1]) cylinder(d=m4_insert_d, h=1 + m4_insert_l, $fn=24);   // inserts from below
+    translate([-cradle_clamp_w/2 - 1, -cr_ear - 1, -50]) cube([cradle_clamp_w + 2, 2*cr_ear + 2, 50 - 0.4]);   // the cap's room below the split
   }
-  rotate([tilt, 0, 0]) translate([-bike_clamp[0]/2 - 1, -bike_clamp[1]/2 - 1, -50]) cube([bike_clamp[0] + 2, bike_clamp[1] + 2, 50 + bike_clamp[2] + 2]);   // clear of the bike's clamp (fixed to the bike: turned back by the tilt)
+  // the foot's 2 M4 inserts (6 mm long), pressed in from the pad's side; the bolts come from inside the cover
+  cr_head_frame() for (b = bar_bolts) translate([-sx*b[0], b[1], shell_len + cover_back + mount_rubber - 0.01]) cylinder(d=m4_insert_d, h=6.5, $fn=24);
+  cr_head_frame() translate([0, 0, -1]) cylinder(r=shell_r + 0.01, h=shell_len + cover_back + mount_rubber + 1, $fn=120);   // clear of the gauge and the pad
+  rotate([tilt, 0, 0]) translate([-bike_clamp[0]/2 - 1, -bike_clamp[1]/2 - 1, -50]) cube([bike_clamp[0] + 2, bike_clamp[1] + 2, 50 + bike_clamp[2] + 2]);   // clear of the bike's clamp
 }
+module cradle() for (sx = [-1, 1]) bar_mount(sx);    // both clamps' upper halves, for the pictures and the checks
+// The rubber pad between a foot and the cover (2 of them): 2 mm rubber sheet, or print it in TPU.
+module mount_pad(sx) cr_head_frame() translate([0, 0, shell_len + cover_back]) linear_extrude(mount_rubber) difference() {
+  foot_2d(sx); for (b = bar_bolts) translate([-sx*b[0], b[1]]) circle(d=4.6, $fn=24); }
 // The clamps' lower halves (2): M4 x 20 bolts up from below into the inserts.
 module cradle_cap() difference() {
   union() {
-    intersection() { rotate([0, 90, 0]) cylinder(r=cl_r, h=cradle_clamp_w, center=true); translate([-cradle_clamp_w, -50, -50]) cube([2*cradle_clamp_w, 100, 50]); }
-    translate([-cradle_clamp_w/2, -cl_r - 6, -6]) cube([cradle_clamp_w, 2*cl_r + 12, 6]);
+    intersection() { rotate([0, 90, 0]) cylinder(r=crl_r, h=cradle_clamp_w, center=true); translate([-cradle_clamp_w, -50, -50]) cube([2*cradle_clamp_w, 100, 50]); }
+    translate([-cradle_clamp_w/2, -cr_ear, -6]) cube([cradle_clamp_w, 2*cr_ear, 6]);
   }
   rotate([0, 90, 0]) cylinder(d=bar_d + 2*clamp_rubber, h=cradle_clamp_w + 2, center=true);
   translate([-cradle_clamp_w, -50, -0.4]) cube([2*cradle_clamp_w, 100, 0.8]);
-  for (s = [-1, 1]) translate([0, s*(cl_r + 1.5), -20]) cylinder(d=4.5, h=40, $fn=24);
+  for (s = [-1, 1]) translate([0, s*cr_bolt_y, -20]) cylinder(d=4.5, h=40, $fn=24);
 }
 module bike_clamp_dummy() translate([-bike_clamp[0]/2, -bike_clamp[1]/2, -bar_d/2 - 4]) cube([bike_clamp[0], bike_clamp[1], bike_clamp[2] + bar_d/2 + 4]);
 
@@ -525,18 +537,18 @@ module cl_head_frame() translate([-cl_x, -cl_back, cl_up]) rotate([-tilt, 0, 0])
 module cluster_adapter() difference() {
   union() {
     cl_head_frame() translate([-pad_gx - 3, cradle_bolt[1] - 9, shell_len + cover_back]) cube([2*pad_gx + 6, 18, adapter_t]);   // the pad
-    stock_frame() translate([-foot_w/2, -foot_d/2, 0]) cube([foot_w, foot_d, foot_t]);                                  // the foot
+    stock_frame() translate([-foot_w/2, -foot_d/2, 0]) cube([foot_w, foot_d, cl_foot_t]);                                  // the foot
     for (sx = [-1, 1]) hull() {                                                                                         // 2 gussets, upright
       cl_head_frame() translate([sx*pad_gx - 3, cradle_bolt[1] - 9, shell_len + cover_back]) cube([6, 18, adapter_t]);
-      stock_frame() translate([-sx*pad_gx - cl_x - 3, -foot_d/2, 0]) cube([6, foot_d, foot_t]);   // (the head's x is mirrored)
+      stock_frame() translate([-sx*pad_gx - cl_x - 3, -foot_d/2, 0]) cube([6, foot_d, cl_foot_t]);   // (the head's x is mirrored)
     }
   }
   // the 2 M4 bolts into the cover's inserts
   cl_head_frame() for (sx = [-1, 1]) translate([sx*cradle_bolt[0], cradle_bolt[1], shell_len + cover_back - 1]) cylinder(d=4.5, h=adapter_t + 2, $fn=24);
   // the stock holes: M6 bolts from below, nuts captive in the foot's top
   stock_frame() for (h = stock_holes) translate([h[0], h[1], -1]) {
-    cylinder(d=stock_bolt, h=foot_t + 2, $fn=32);
-    translate([0, 0, 1 + foot_t - 5.4]) cylinder(d=stock_nut/cos(30) + 0.3, h=10, $fn=6);
+    cylinder(d=stock_bolt, h=cl_foot_t + 2, $fn=32);
+    translate([0, 0, 1 + cl_foot_t - 5.4]) cylinder(d=stock_nut/cos(30) + 0.3, h=10, $fn=6);
   }
   // keep clear of the gauge (it only touches the pad)
   cl_head_frame() translate([0, 0, -1]) cylinder(r=shell_r + 0.01, h=shell_len + cover_back + 1, $fn=120);
@@ -568,6 +580,7 @@ module mount_parts(e=0) {
   else if (mount == "stalk") { color([0.25, 0.26, 0.28]) { clamp_upper(); clamp_lower(); } }
   else rotate([-tilt, 0, 0]) color([0.25, 0.26, 0.28]) {
     translate([0, e*0.6, 0]) cradle();
+    color([0.1, 0.1, 0.1]) translate([0, e*0.3, 0]) for (sx = [-1, 1]) mount_pad(sx);
     for (sx = [-1, 1]) translate([sx*cradle_span/2, 0, -e*0.6]) cradle_cap();
   }
 }
@@ -598,7 +611,9 @@ else if (PART == "icons") for (i = [0:len(icons) - 1]) translate([i*12, 0]) icon
 else if (PART == "lip_gasket") lip_gasket();
 else if (PART == "clamp_upper") clamp_upper();
 else if (PART == "clamp_lower") rotate([180, 0, 0]) clamp_lower();
-else if (PART == "cradle") translate([0, 0, cradle_span/2 + cradle_clamp_w/2]) rotate([0, 90, 0]) cradle();   // on one clamp's face (round clamps; support the far clamp)
+else if (PART == "bar_mount_right") translate([0, 0, -cradle_span/2 + cradle_clamp_w/2]) rotate([0, -90, 0]) bar_mount(1);   // on the clamp's inner face (round clamp; the block above: support under it)
+else if (PART == "bar_mount_left") translate([0, 0, -cradle_span/2 + cradle_clamp_w/2]) rotate([0, 90, 0]) bar_mount(-1);
+else if (PART == "mount_pad") mount_pad(1);         // flat (2 of them; mirror the second, or cut both from 2 mm rubber)
 else if (PART == "cradle_cap") translate([0, 0, cradle_clamp_w/2]) rotate([0, 90, 0]) cradle_cap();   // on its face
 else if (PART == "cluster_adapter") rotate([-stock_tilt, 0, 0]) cluster_adapter();   // the foot on the bed, the nut pockets up
 // Checks: must be empty (or only touch).
