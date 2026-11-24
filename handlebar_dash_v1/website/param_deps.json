@@ -10,6 +10,12 @@
   "icon_size": 5.5,
   "logo_w": 24,
   "trim": true,
+  "cl_back": 20,
+  "cl_up": 62,
+  "cl_x": 0,
+  "stock_tilt": 0,
+  "tilt": 25,
+  "stock_bolt": 6.5,
   "bar_d": 22.2,
   "clamp_w": 24,
   "cradle_span": 135,
@@ -64,6 +70,15 @@
    "fit"
   ],
   "lip_gasket": [],
+  "cluster_adapter": [
+   "cl_back",
+   "cl_up",
+   "cl_x",
+   "stock_tilt",
+   "tilt",
+   "stock_bolt",
+   "fit"
+  ],
   "cradle": [
    "bar_d",
    "clamp_w",

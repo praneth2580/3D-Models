@@ -176,11 +176,21 @@ The firmware shows the tell-tales on the screen too. The LEDs stay readable when
 3. **Back cover:** a plug that presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 × 10 pan-head screws go through the shoulder into heat-set inserts in the cover. There are no screws on the front. It also carries:
    - the GX12 4-pin socket, at the top;
    - the mount's fixings.
-4. **On the bar (cradle):** two bar clamps either side of the bike's own handlebar clamp, joined by a bridge that bolts to the back cover with 2 × M4 bolts into heat-set inserts.
+4. **Where the stock cluster was (the default; owner: the mount hidden behind the gauge):** the dash replaces the stock cluster, so it bolts onto the stock **cluster bracket** (Royal Enfield part 1100515/B on the Meteor 350) with a printed **cluster adapter**, and nothing shows round the gauge from the seat.
+   - Its **foot** sits on the bracket: M6 bolts come up from below, through the bracket's own rubber grommets, into nuts captive in the foot.
+   - Its **pad** screws to the cover's 2 M4 inserts (the same as the cradle's), between two gussets that leave the bolts reachable.
+   - Fit the adapter to the gauge on the bench, then bolt the adapter on from below. The screen's tilt (`tilt`, 25°) is built into the adapter.
+   - **Measure first: no sizes are published for the bracket, so these are placeholders:**
+     - `stock_holes`: the bracket's holes for the cluster, from their centre ([x along the bar, y forward]; 2 holes 40 mm apart now);
+     - `stock_bolt`: their bolt (M6);
+     - `stock_tilt`: the bracket's slope;
+     - `cl_back`, `cl_up`, `cl_x`: where you want the gauge: its back face behind the holes, its centre above the bracket, and sideways (the stock cluster sat off centre; 0 centres the gauge on the holes).
+   - Checked clear of the gauge from 0 to 40° of tilt and across the website's ranges; an assert refuses a gauge set so low it would sit on the foot.
+5. **On the bar (cradle, option):** two bar clamps either side of the bike's own handlebar clamp, joined by a bridge that bolts to the back cover with 2 × M4 bolts into heat-set inserts.
    - Each clamp is a half of the cradle plus a separate cap (`cradle_cap`), with a 1 mm rubber strip and 2 × M4 bolts and nuts.
    - The head sits behind the bar, its centre 20 mm above it, so its lower part drops below the bar line.
    - **Turning the cradle on the bar sets the tilt.**
-5. **On a stalk (option):** the GoPro-style joint, or any GoPro handlebar mount.
+6. **On a stalk (option):** the GoPro-style joint, or any GoPro handlebar mount.
 
 **The Meteor 350's handlebar:**
 - **The bar is 22.2 mm (7/8").** Every riser maker for the Meteor gives this (Hepco & Becker, Voigt MT, xparts), and it's the default `bar_d`.

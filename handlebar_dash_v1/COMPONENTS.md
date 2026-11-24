@@ -23,6 +23,9 @@
 **Hardware for the display head and clamp** (any equivalent; Amazon.in, or Nagdevi Street):
 - 4 × M2 × 6 screws (display to carrier);
 - 4 × M3 heat-set inserts (5.7 mm long, 4.2 mm hole) and 4 × M3 × 10 pan-head screws (the cover);
+- **where the stock cluster was (cluster adapter, the default):**
+  - 2 × M4 heat-set inserts (8 mm long, 5.6 mm hole) and 2 × M4 × 14 bolts (cover to adapter);
+  - M6 bolts and nuts, one per hole of your cluster bracket (bolts from below into nuts captive in the adapter; length: your bracket and its grommets + 8 mm, about M6 × 16–20). Keep the bracket's own rubber grommets;
 - **on the bar (cradle):**
   - 2 × M4 heat-set inserts (8 mm long, 5.6 mm hole) and 2 × M4 × 12 bolts (cover to cradle);
   - 4 × M4 × 20 bolts and nuts (the 2 bar clamps);
@@ -68,7 +71,7 @@ About ₹300–600 (est.).
 | Phase 1 logger | about ₹7,300–9,800 | about ₹5,600–8,100 |
 | The whole dash (phase 1 parts reused) | about ₹20,000–23,000 | about ₹13,000–16,000 |
 
-Plus printing (the two housings, the trim ring and the cradle), about ₹600–1,500 (est.), and the bike-side plug. All estimates, from listings on 2026-11-23.
+Plus printing (the two housings, the trim ring and the adapter or the cradle), about ₹600–1,500 (est.), and the bike-side plug. All estimates, from listings on 2026-11-23.
 
 ## Not chosen, and why
 

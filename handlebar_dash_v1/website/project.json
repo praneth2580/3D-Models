@@ -2,7 +2,7 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display in a classic round gauge, with the tell-tales (turn signals, high beam, neutral, ABS, engine, fuel, battery) lit in its own face. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 102.5 mm across, the screen in the centre, the logo and the 8 tell-tales on the display's own black glass border, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 102.5 mm across, the screen in the centre, the logo and the 8 tell-tales on the display's own black glass border, bolted where the stock cluster was, hidden behind it (or on the handlebar, Harley-style). The interface box comes next.",
   "order": 3,
   "eyebrow": "Open-source &middot; work in progress",
   "sections": [
@@ -30,11 +30,11 @@
   ],
   "cover": "images/hd_rider.png",
   "see_title": "The display head (v1)",
-  "see_sub": "A classic round gauge on the bar, the screen in the centre. The face ring lies on the display's own black glass border, so the logo and the tell-tales sit on that border instead of around it: the housing adds only its 3 mm wall. As on the Indian Scout's, KOSO's and Daytona's round gauges. 102.5 mm across, 43 mm deep.",
+  "see_sub": "A classic round gauge, the screen in the centre, bolted where the stock cluster was so nothing shows round it. The face ring lies on the display's own black glass border, so the logo and the tell-tales sit on that border instead of around it: the housing adds only its 3 mm wall. As on the Indian Scout's, KOSO's and Daytona's round gauges. 102.5 mm across, 43 mm deep.",
   "gallery": [
     {
       "src": "images/hd_rider.png",
-      "caption": "From the rider's seat: a round gauge on the bar, the screen in the centre, the logo and the lit tell-tales round the top, a silver trim ring"
+      "caption": "From the rider's seat: the screen in the centre, the logo and the lit tell-tales round the top, a silver trim ring, and no mount in sight: it bolts where the stock cluster was, behind the gauge"
     },
     {
       "src": "images/hd_face.png",
@@ -46,18 +46,23 @@
     },
     {
       "src": "images/hd_side.png",
-      "caption": "From the side: a straight round body and the cradle on the 22.2 mm bar"
+      "caption": "From the side: the cluster adapter under the gauge, bolted to the stock cluster's bracket (grey: a stand-in; measure yours)"
     },
     {
       "src": "images/hd_back.png",
-      "caption": "Optional: a logo on the back cover, seen from in front of the bike (an example word here; empty by default). Your own SVG works too"
+      "caption": "From in front of the bike: the adapter's 2 gussets and pad behind the gauge, and an optional logo on the back cover (an example word; empty by default)"
+    },
+    {
+      "src": "images/hd_bar.png",
+      "caption": "Option: on the handlebar instead, in a Harley-style cradle either side of the bike's handlebar clamp"
     },
     {
       "src": "images/hd_exploded.png",
-      "caption": "Taken apart: the trim ring, the shell, the carrier (the display screws to it), the back cover and the cradle with its 2 caps"
+      "caption": "Taken apart: the trim ring, the shell, the carrier (the display screws to it), the back cover and the cluster adapter"
     }
   ],
   "viewer_default": [
+    "head_assembled_cluster",
     "head_assembled",
     "head_assembled_stalk"
   ],
@@ -72,6 +77,12 @@
         "head_cover",
         "head_cover_stalk",
         "lip_gasket"
+      ]
+    },
+    {
+      "label": "Where the stock cluster was: the adapter",
+      "parts": [
+        "cluster_adapter"
       ]
     },
     {
@@ -91,6 +102,7 @@
     {
       "label": "Assembled (view only)",
       "parts": [
+        "head_assembled_cluster",
         "head_assembled",
         "head_assembled_stalk"
       ]
@@ -139,7 +151,10 @@
       "qty": "1",
       "material": "PETG. Plug edge down",
       "when": {
-        "mount": "bar"
+        "mount": [
+          "cluster",
+          "bar"
+        ]
       }
     },
     "head_cover_stalk": {
@@ -162,6 +177,15 @@
       "what": "0.8 mm ring between the face ring and the glass's black border. Print in TPU, or cut it from 0.8 mm closed-cell foam",
       "qty": "1",
       "material": "TPU 85A-95A, or foam"
+    },
+    "cluster_adapter": {
+      "name": "Cluster adapter",
+      "what": "Bolts the gauge where the stock instrument cluster was, hidden behind it: its foot to the stock cluster bracket's holes (M6 bolts from below into captive nuts, through the bracket's own rubber grommets), its pad to the cover's 2 M4 inserts. MEASURE your bracket first: its sizes are placeholders",
+      "qty": "1",
+      "material": "PETG or ASA, 100% infill near the holes. Foot on the bed, no supports",
+      "when": {
+        "mount": "cluster"
+      }
     },
     "cradle": {
       "name": "Cradle",
@@ -197,6 +221,14 @@
       "material": "PETG",
       "when": {
         "mount": "stalk"
+      }
+    },
+    "head_assembled_cluster": {
+      "name": "Assembled: where the stock cluster was",
+      "what": "The whole gauge on the cluster adapter (the grey plate stands in for your bike's cluster bracket)",
+      "view": true,
+      "when": {
+        "mount": "cluster"
       }
     },
     "head_assembled": {
@@ -309,6 +341,59 @@
       {
         "label": "Your handlebar and bike",
         "params": [
+          {
+            "name": "cl_back",
+            "label": "Cluster mount: the gauge's back, behind the bracket's holes",
+            "unit": "mm",
+            "step": 1,
+            "min": 0,
+            "max": 60,
+            "help": "Measure on your bike: where the stock cluster's back was, from its bracket's holes."
+          },
+          {
+            "name": "cl_up",
+            "label": "Cluster mount: the gauge's centre, above the bracket",
+            "unit": "mm",
+            "step": 1,
+            "min": 62,
+            "max": 120,
+            "help": "Lower than 62 mm, the gauge would sit on the adapter's foot."
+          },
+          {
+            "name": "cl_x",
+            "label": "Cluster mount: the gauge sideways from the holes",
+            "unit": "mm",
+            "step": 1,
+            "min": -40,
+            "max": 40,
+            "help": "The stock cluster sits off centre; 0 puts the gauge over the holes."
+          },
+          {
+            "name": "stock_tilt",
+            "label": "Cluster mount: the bracket's slope (front up)",
+            "unit": "°",
+            "step": 1,
+            "min": -30,
+            "max": 30
+          },
+          {
+            "name": "tilt",
+            "label": "Cluster mount: screen tilt back from vertical",
+            "unit": "°",
+            "step": 1,
+            "min": 0,
+            "max": 40,
+            "help": "Built into the adapter (on the bar, turning the cradle sets it instead)."
+          },
+          {
+            "name": "stock_bolt",
+            "label": "Cluster mount: bolt holes",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 4.5,
+            "max": 8.5,
+            "help": "M6: 6.5. The hole pattern itself (stock_holes) is set in the CAD file."
+          },
           {
             "name": "bar_d",
             "label": "Handlebar diameter at the clamps",
@@ -430,6 +515,11 @@
       "id": "mount",
       "label": "Mount",
       "choices": [
+        {
+          "id": "cluster",
+          "label": "Where the stock cluster was",
+          "note": "hidden behind the gauge"
+        },
         {
           "id": "bar",
           "label": "On the bar",
