@@ -1,0 +1,39 @@
+{
+ "generated": "2026-11-24",
+ "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
+ "defaults": {
+  "bar_d": 22.2,
+  "face_tilt": 50,
+  "nav_top": 12,
+  "nav_stem_d": 3.5,
+  "tact_top": 6.6
+ },
+ "parts": {
+  "head": [
+   "nav_top",
+   "nav_stem_d"
+  ],
+  "keypad": [
+   "nav_top",
+   "nav_stem_d",
+   "tact_top"
+  ],
+  "joy_cap": [
+   "nav_stem_d"
+  ],
+  "back_lid": [
+   "nav_top"
+  ],
+  "lid_gasket": [
+   "nav_top"
+  ],
+  "arm_clamp": [
+   "bar_d",
+   "face_tilt",
+   "nav_top"
+  ],
+  "clamp_cap": [
+   "bar_d"
+  ]
+ }
+}

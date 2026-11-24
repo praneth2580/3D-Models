@@ -1,0 +1,182 @@
+{
+  "title": "What to buy",
+  "sub": "All the electronics and hardware for the remote, besides the printed parts. Exact items in COMPONENTS.md.",
+  "groups": [
+    {
+      "label": "Electronics",
+      "note": "Buy the items marked \"model fits this\", then measure them: they have no published drawings.",
+      "items": [
+        {
+          "name": "5-way navigation button module (5D rocker joystick module)",
+          "for": "The joystick, and its SET and RST buttons are the 2 buttons",
+          "qty": 1,
+          "price": "₹60–150 (est.)",
+          "fits": true,
+          "buy": [
+            {
+              "store": "ElectronicsComp",
+              "url": "https://electronicscomp.com/5d-rocker-joystick-for-arduino-mcu-avr-game",
+              "note": "(listed 40 x 25 x 12 mm)"
+            }
+          ],
+          "search": "5 way navigation button module",
+          "stores": "modules"
+        },
+        {
+          "name": "ESP32-C3 Super Mini",
+          "for": "Bluetooth (keyboard and media keys) and the dash bus",
+          "qty": 1,
+          "price": "₹250–450 (est.)",
+          "fits": true,
+          "search": "ESP32-C3 Super Mini",
+          "stores": "modules"
+        },
+        {
+          "name": "SN65HVD230 CAN transceiver module",
+          "for": "The dash bus (remove its 120 Ω resistor). The dash's 3-pack has a spare",
+          "qty": 1,
+          "price": "₹150–300 (est.)",
+          "fits": true,
+          "buy": [
+            {
+              "store": "Amazon.in",
+              "url": "https://www.amazon.in/HiLetgo-SN65HVD230-Transceiver-Communication-Protection/dp/B07ZT7LLSK",
+              "price": "about ₹1,502 for 3",
+              "note": "(HiLetgo)"
+            }
+          ],
+          "search": "SN65HVD230 CAN module",
+          "stores": "modules"
+        },
+        {
+          "name": "M8 x 1.5 nylon cable gland (3–6 mm cable)",
+          "for": "The cable into the back lid",
+          "qty": 1,
+          "price": "₹20–60 (est.)",
+          "fits": true,
+          "search": "M8 cable gland",
+          "stores": "hardware",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "4-core cable (shielded is better), 1–1.5 m",
+          "for": "To the dash's expansion slot (or a USB socket)",
+          "qty": 1,
+          "price": "₹50–150 (est.)",
+          "search": "4 core shielded cable",
+          "stores": "general",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "GX12 6-pin aviation plug",
+          "for": "Plugs into one of the dash's expansion slots",
+          "qty": 1,
+          "price": "₹100–200 (est.)",
+          "search": "GX12 6 pin aviation connector",
+          "stores": "modules"
+        },
+        {
+          "name": "USB-A plug, or an old USB cable to cut",
+          "for": "Without the dash: 5 V from the bike's USB socket",
+          "qty": "0–1",
+          "price": "₹50–100 (est.)",
+          "search": "USB A cable",
+          "stores": "general"
+        },
+        {
+          "name": "Foam tape, hook-up wire, heat shrink",
+          "for": "The boards on the lid; wiring",
+          "qty": "a little",
+          "price": "₹100–200 (est.)",
+          "search": "double sided foam tape",
+          "stores": "general",
+          "local": "Lamington Road"
+        }
+      ]
+    },
+    {
+      "label": "Screws, inserts and rubber",
+      "items": [
+        {
+          "name": "M2.5 heat-set inserts (3.6 mm hole) + M2.5 x 8 screws",
+          "for": "The back lid",
+          "qty": "2 + 2",
+          "price": "",
+          "search": "M2.5 heat set insert",
+          "stores": "hardware",
+          "local": "Nagdevi Street"
+        },
+        {
+          "name": "M3 heat-set inserts (4.2 mm hole, 5.7 mm) + M3 x 10 screws",
+          "for": "The arm to the lid",
+          "qty": "2 + 2",
+          "price": "",
+          "search": "M3 heat set insert",
+          "stores": "hardware",
+          "local": "Nagdevi Street"
+        },
+        {
+          "name": "M4 heat-set inserts (5.6 mm hole, 8 mm) + M4 x 20 bolts",
+          "for": "The clamp",
+          "qty": "2 + 2",
+          "price": "",
+          "search": "M4 heat set insert",
+          "stores": "hardware",
+          "local": "Nagdevi Street"
+        },
+        {
+          "name": "1 mm rubber strip",
+          "for": "Inside the clamp",
+          "qty": "a strip",
+          "price": "",
+          "search": "1mm rubber strip",
+          "stores": "hardware"
+        },
+        {
+          "name": "Clear silicone or contact adhesive",
+          "for": "Gluing the keypad's edge to the face",
+          "qty": 1,
+          "price": "₹100–250 (est.) for this group",
+          "search": "clear RTV silicone",
+          "stores": "general"
+        }
+      ]
+    },
+    {
+      "label": "3D printing (by a service)",
+      "items": [
+        {
+          "name": "Printing: about 30 g of ASA or PETG + 3 g of TPU (keypad, gasket)",
+          "for": "Upload the STLs for an exact quote",
+          "qty": "1 set",
+          "price": "₹250–500 (est.)",
+          "buy": [
+            {
+              "store": "Robu (EasyMech)",
+              "url": "https://robu.in/?p=901845"
+            },
+            {
+              "store": "Zbotic",
+              "url": "https://zbotic.in/3d-printing-service/"
+            },
+            {
+              "store": "iamRapid",
+              "url": "https://iamrapid.com/3d-printing-services/"
+            },
+            {
+              "store": "Makenica (Mumbai)",
+              "url": "https://makenica.com/3d-printing-services-in-mumbai"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totals": [
+    [
+      "Everything, with printing",
+      "about ₹900–2,000 (est.); less with the dash's spare transceiver"
+    ]
+  ],
+  "note": "All prices here are estimates (not checked on listings)."
+}
