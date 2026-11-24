@@ -2,7 +2,7 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display in a classic round gauge, with the tell-tales (turn signals, high beam, neutral, ABS, engine, fuel, battery) lit in its own face. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 121 mm across, your logo above the screen and the 8 tell-tales down its sides, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 120.5 mm across, the display set low with your logo on the wide bezel above it and the 8 tell-tales on its upper sides, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
   "order": 3,
   "eyebrow": "Open-source &middot; work in progress",
   "sections": [
@@ -30,15 +30,15 @@
   ],
   "cover": "images/hd_rider.png",
   "see_title": "The display head (v1)",
-  "see_sub": "A classic round gauge on the bar: the logo centred above the screen and the tell-tales in a curve down each side, in the gauge's own face, as on the Indian Scout's, KOSO's and Daytona's round gauges. 121 mm across, 39.6 mm deep.",
+  "see_sub": "A classic round gauge on the bar: the display set low with a slim bezel under it, your logo on the wide bezel above it, and the tell-tales on its upper sides, in the gauge's own face, as on the Indian Scout's, KOSO's and Daytona's round gauges. 120.5 mm across, 39.6 mm deep.",
   "gallery": [
     {
       "src": "images/hd_rider.png",
-      "caption": "From the rider's seat: a round gauge on the bar, the logo above the screen, the lit tell-tales down its sides, a silver trim ring"
+      "caption": "From the rider's seat: a round gauge on the bar, the display set low, the logo above it, the lit tell-tales on its upper sides, a silver trim ring"
     },
     {
       "src": "images/hd_face.png",
-      "caption": "The face: the logo at the top; turn left, high beam, neutral and ABS down the left side; turn right, battery, low fuel and engine down the right. Each icon is filled flush with clear resin over its own 5 mm RGB LED"
+      "caption": "The face: the logo on the wide top bezel; turn left, high beam, neutral and ABS on the upper left; turn right, battery, low fuel and engine on the upper right. Each icon is filled flush with clear resin over its own 5 mm RGB LED"
     },
     {
       "src": "images/hd_variants.png",
@@ -99,7 +99,7 @@
   "parts": {
     "head_shell": {
       "name": "Shell (with tell-tales)",
-      "what": "The round gauge: the display's window, the logo engraved above it, the 8 tell-tale windows down its sides with their light chambers, the GPS antenna's hollow behind the logo",
+      "what": "The round gauge: the display's window set low, the logo engraved above it, the 8 tell-tale windows on its upper sides with their light chambers, the GPS antenna's hollow behind the logo",
       "qty": "1",
       "material": "Black PETG (ASA for the final part). Face down, no supports; 0.2 mm first layers for crisp icons",
       "when": {
@@ -241,7 +241,7 @@
             "type": "file",
             "accept": ".svg",
             "max_kb": 1024,
-            "help": "Filled shapes, one colour (convert text and strokes to paths). It takes the word's place, 4.5 mm high."
+            "help": "Filled shapes, one colour (convert text and strokes to paths). It takes the word's place, 6 mm high."
           },
           {
             "name": "back_logo_text",
@@ -283,12 +283,12 @@
           },
           {
             "name": "bezel",
-            "label": "Bezel round the screen",
+            "label": "Bezel under the screen",
             "unit": "mm",
             "step": 0.5,
-            "min": 11,
-            "max": 15,
-            "help": "Sets the gauge's size (12.4 mm = 121 mm across). It must take the icons."
+            "min": 6,
+            "max": 9,
+            "help": "Sets the gauge's size (6 mm = 120.5 mm across); the top and side bezels grow with it."
           },
           {
             "name": "trim",
