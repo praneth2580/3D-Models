@@ -2,10 +2,11 @@
  "generated": "2026-11-24",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
-  "telltale_layout": "bottom",
+  "logo_text": "DASH",
   "telltales": "face",
+  "icon_size": 5.5,
+  "logo_gap": 21,
   "trim": true,
-  "icon_size": 8,
   "bar_d": 22.2,
   "clamp_w": 24,
   "cradle_span": 135,
@@ -20,15 +21,16 @@
  },
  "parts": {
   "head_shell": [
-   "telltale_layout",
+   "logo_text",
    "telltales",
-   "trim",
    "icon_size",
+   "logo_gap",
+   "trim",
    "fit",
    "led_d"
   ],
   "head_shell_plain": [
-   "telltale_layout",
+   "logo_text",
    "trim",
    "fit"
   ],

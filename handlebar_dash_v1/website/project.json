@@ -2,7 +2,7 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display in a classic round gauge, with the tell-tales (turn signals, high beam, neutral, ABS, engine, fuel, battery) lit in its own face. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 124 mm across, with its 8 tell-tales lit in its own face and a silver trim ring, sitting on the Meteor 350's 22.2 mm handlebar, Harley-style, in a cradle either side of the bike's handlebar clamp. The interface box comes next.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 114.5 mm across, the display set low with a slim 3 mm bezel under it, and your logo above it between the 8 tell-tales, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
   "order": 3,
   "eyebrow": "Open-source &middot; work in progress",
   "sections": [
@@ -30,23 +30,23 @@
   ],
   "cover": "images/hd_rider.png",
   "see_title": "The display head (v1)",
-  "see_sub": "A classic round gauge on the bar: the tell-tales are part of its face, as on the Indian Scout's, KOSO's and Daytona's round gauges. Modelled around Waveshare's published drawing and 3D model of the 2.8\" display: 124 mm across, 39.6 mm deep.",
+  "see_sub": "A classic round gauge on the bar: the display sits low with a slim bezel under it, the logo is centred above it, and the tell-tales sit either side of the logo in the gauge's own face, as on the Indian Scout's, KOSO's and Daytona's round gauges. 114.5 mm across, 39.6 mm deep.",
   "gallery": [
     {
       "src": "images/hd_rider.png",
-      "caption": "From the rider's seat: a round gauge on the bar, the tell-tales lit in its face, a silver trim ring"
+      "caption": "From the rider's seat: a round gauge on the bar, the display set low, the logo and the lit tell-tales above it, a silver trim ring"
     },
     {
       "src": "images/hd_face.png",
-      "caption": "The face: turn left, high beam, neutral, ABS, engine, low fuel, battery, turn right. Each icon is filled flush with clear resin over its own 5 mm RGB LED, so the firmware sets its colour"
+      "caption": "The face: the logo in the middle, turn left, high beam, neutral and ABS on its left, engine, low fuel, battery and turn right on its right. Each icon is filled flush with clear resin over its own 5 mm RGB LED"
     },
     {
-      "src": "images/hd_layouts.png",
-      "caption": "Customise it: the tell-tales along the bottom, along the top or down the sides, your choice of icons and order, an engraved word on the face, the trim ring on or off"
+      "src": "images/hd_variants.png",
+      "caption": "Customise it: your own logo (a word, or an SVG file), which icons and how many, their size, or a plain face with the logo only"
     },
     {
       "src": "images/hd_side.png",
-      "caption": "From the side: the drum, its 45-degree shoulder and the cradle on the 22.2 mm bar; turning the cradle on the bar sets the tilt"
+      "caption": "From the side: the face, its shoulder (only at the top: the bottom runs straight back) and the cradle on the 22.2 mm bar"
     },
     {
       "src": "images/hd_exploded.png",
@@ -95,7 +95,7 @@
   "parts": {
     "head_shell": {
       "name": "Shell (with tell-tales)",
-      "what": "The round gauge: the face with 8 icon windows and their light chambers, the GPS antenna's hollow, the 45-degree shoulder",
+      "what": "The round gauge: the display's window set low, the logo engraved above it, the 8 tell-tale windows either side of the logo with their light chambers, the GPS antenna's hollow behind the logo",
       "qty": "1",
       "material": "Black PETG (ASA for the final part). Face down, no supports; 0.2 mm first layers for crisp icons",
       "when": {
@@ -104,7 +104,7 @@
     },
     "head_shell_plain": {
       "name": "Shell (plain face)",
-      "what": "The same gauge with a plain face (the tell-tales show on the screen)",
+      "what": "The same gauge with the logo only (the tell-tales show on the screen)",
       "qty": "1",
       "material": "Black PETG (ASA for the final part). Face down",
       "when": {
@@ -225,22 +225,11 @@
         "label": "Look and tell-tales",
         "params": [
           {
-            "name": "telltale_layout",
-            "label": "Tell-tales",
-            "choices": [
-              [
-                "bottom",
-                "along the bottom"
-              ],
-              [
-                "top",
-                "along the top"
-              ],
-              [
-                "sides",
-                "down both sides"
-              ]
-            ]
+            "name": "logo_text",
+            "label": "Logo (above the screen)",
+            "type": "text",
+            "max_length": 12,
+            "help": "A short word, engraved; fill it with paint. Longer than about 8 letters: raise the icons' gap."
           },
           {
             "name": "telltales",
@@ -257,6 +246,22 @@
             ]
           },
           {
+            "name": "icon_size",
+            "label": "Icon size",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 4.5,
+            "max": 7
+          },
+          {
+            "name": "logo_gap",
+            "label": "Gap for the logo (each side of the top)",
+            "unit": "°",
+            "step": 1,
+            "min": 15,
+            "max": 35
+          },
+          {
             "name": "trim",
             "label": "Trim ring rebate",
             "choices": [
@@ -269,14 +274,6 @@
                 "no (a plain rounded edge)"
               ]
             ]
-          },
-          {
-            "name": "icon_size",
-            "label": "Icon size",
-            "unit": "mm",
-            "step": 0.5,
-            "min": 6,
-            "max": 9
           }
         ]
       },

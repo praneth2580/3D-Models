@@ -86,7 +86,8 @@ It exports every part as CSG (fast, no mesh) with each setting changed in turn, 
     {"label": "Your phone", "note": "optional text", "params": [
       {"name": "phone_w", "label": "Phone width", "unit": "mm", "step": 0.1, "min": 50, "max": 95, "help": "..."},
       {"name": "phone_port", "label": "Charging port", "choices": [["usbc", "USB-C"], ["microusb", "Micro-USB"]]},
-      {"name": "tl_code", "label": "Key code", "type": "code", "digits": [0, 2], "length": [4, 6]}
+      {"name": "tl_code", "label": "Key code", "type": "code", "digits": [0, 2], "length": [4, 6]},
+      {"name": "logo_text", "label": "Logo", "type": "text", "max_length": 12}
     ]}
   ]
 }

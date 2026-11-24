@@ -44,6 +44,8 @@ def test_values(p, default):
     """Other values to try, in order: the first one OpenSCAD accepts is used."""
     if "choices" in p:
         return [c[0] for c in p["choices"] if c[0] != default]
+    if p.get("type") == "text":
+        return [default + "X" if default else "X"]
     if p.get("type") == "code":          # other digits, and (if allowed) a longer and a shorter code
         lo, hi = p["digits"]; n0, n1 = p["length"]
         vals = [[lo + (x - lo + 1) % (hi - lo + 1) for x in default]]

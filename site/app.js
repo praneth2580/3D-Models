@@ -232,7 +232,7 @@ const CUSTOM = (function () {
   const defines = (p) => [`${C.part_var}=${JSON.stringify(p.make.part)}`]
     .concat(Object.entries(p.make.set || {}).map(([k, v]) => `${k}=${lit(v)}`))
     .concat(p.params.map((n) => `${n}=${lit(val(n))}`));
-  const shown = (v, q) => (q.type === "code" ? v.join(" ") : String(v));
+  const shown = (v, q) => (q.type === "code" ? v.join(" ") : q.type === "text" ? (v === "" ? "(none)" : `"${v}"`) : String(v));
 
   // ---- the worker (one part at a time)
   let worker = null, seq = 0;
@@ -268,6 +268,8 @@ const CUSTOM = (function () {
         `<option value='${esc(JSON.stringify(cv))}'${same(cv, v) ? " selected" : ""}>${esc(lb)}</option>`).join("") + "</select>";
     } else if (q.type === "code") {
       input = `<input id="${id}" data-n="${q.name}" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" value="${esc(v.join(" "))}">`;
+    } else if (q.type === "text") {
+      input = `<input id="${id}" data-n="${q.name}" type="text" autocomplete="off" maxlength="${q.max_length || 24}" value="${esc(v)}">`;
     } else {
       input = `<span class="cz-num"><input id="${id}" data-n="${q.name}" type="number" step="${q.step ?? "any"}"` +
         `${q.min != null ? ` min="${q.min}"` : ""}${q.max != null ? ` max="${q.max}"` : ""} value="${v}">${q.unit ? `<span class="unit">${esc(q.unit)}</span>` : ""}</span>`;
@@ -279,6 +281,11 @@ const CUSTOM = (function () {
   }
   function parse(q, el) {
     if (q.choices) return { v: JSON.parse(el.value) };
+    if (q.type === "text") {
+      const t = el.value.trim();
+      if (!/^[A-Za-z0-9 .\-]*$/.test(t)) return { err: "Letters, digits, spaces, dots and dashes only." };
+      return { v: t };
+    }
     if (q.type === "code") {
       const d = el.value.trim().split(/[\s,]+/).filter(Boolean).map(Number);
       const [lo, hi] = q.digits, [n0, n1] = q.length;

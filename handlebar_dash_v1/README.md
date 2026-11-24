@@ -117,13 +117,14 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 - the board is 9.73 mm deep in all;
 - it has four M2 brass standoffs whose ends are 9.71 mm behind the glass, at (±18.0, −25.56) and (±29.5, +15.14) mm from the glass centre.
 
-**The gauge is 124 mm across and 39.6 mm deep.**
+**The gauge is 114.5 mm across and 39.6 mm deep.** The bezel is 3 mm under the screen and 15 mm above it.
 
 **Owner's direction:**
 - the handlebar sizes from the Meteor 350;
 - the tell-tales "look like they are part of the model too, not an extra addon";
 - they can be customised;
-- "look are a great deal important ... it will be the main thing".
+- "look are a great deal important ... it will be the main thing";
+- then: "reduce icon sizes and try to reduce bezels too, and place the display a bit below so the logo can be placed above it on the display's bezel".
 
 **The look, and what it's based on:** the best round motorcycle gauges carry their warning lamps **in their own face**, not on a separate panel:
 - the Indian Scout's round cluster has its lamps inside the dial;
@@ -132,15 +133,15 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 - Royal Enfield's own Tripper Dash is a round TFT, "suited to the retro appeal" of these bikes.
 
 So the display head is a classic **gauge cup**:
-- **The face:** a wide bezel ring around the glass, with the tell-tales cut into it and lit from behind.
-- **The body:** a deep front drum that narrows slightly toward the back, then a 45° shoulder down to the back cover. All outer edges are rounded.
+- **The face:** the display is set **6 mm below the gauge's centre** (`disp_drop`). The bezel is a slim 3 mm under the screen, and above it there's room for **the logo**, centred, with **the tell-tales either side of it** following the screen's curve, lit from behind.
+- **The body:** the face, then a 45° shoulder back to the cover at the top only. The bottom runs straight back, flush. The outer edge is rounded.
 - **Details:** a fine accent groove around the screen, and a separate **trim ring** in the face's edge. Print the trim ring in silver (or any contrast colour) for a chrome-bezel look.
 - **On the bike:** it sits low on the bar, Harley-style.
 
-![Layouts](images/hd_layouts.png)
+![Variants](images/hd_variants.png)
 
 **The tell-tales:**
-- **What they are:** 8 icons in the face, from the rider's left: **turn left, high beam, neutral, ABS, engine, low fuel, battery, turn right.**
+- **What they are:** 8 icons, 5.5 mm tall, four either side of the logo. From the rider's left: **turn left, high beam, neutral, ABS** | logo | **engine, low fuel, battery, turn right.**
 - **How they're built:**
   - each icon is cut through the face's 0.8 mm front skin and sits in its own light chamber, so no colour bleeds into the next;
   - a 5 mm addressable RGB LED (WS2812B family) at the back of each chamber means one data wire drives all 8, and the firmware sets each icon's colour;
@@ -151,17 +152,20 @@ So the display head is a classic **gauge cup**:
 
 | Setting | Choices |
 |---|---|
-| `telltale_layout` | `"bottom"` (an arc under the screen, as on a Harley or KOSO gauge), `"top"`, or `"sides"` (half each side) |
-| `icons` | which icons and their order, from `left`, `right`, `beam`, `neutral`, `abs`, `engine`, `fuel`, `battery`, `oil` |
-| `icon_size` | icon size, 8 mm by default |
-| `telltales` | `"none"` for a plain face (the tell-tales then show on the screen only) |
+| `logo_text` | the logo above the screen, engraved (`"DASH"` by default; any short word). Fill it with paint |
+| `logo_file` | or your own logo as an SVG or DXF file, scaled to `logo_size` (4.5 mm) high |
+| `icons` | which icons and their order (half go left of the logo, half right), from `left`, `right`, `beam`, `neutral`, `abs`, `engine`, `fuel`, `battery`, `oil`. Fewer icons is fine, for example 6 |
+| `icon_size` | icon size, 5.5 mm by default |
+| `logo_gap` | the room left for the logo, in degrees each side of the top (21); raise it for a longer logo |
+| `telltales` | `"none"` for a face with the logo only (the tell-tales then show on the screen only) |
 | `trim` | the trim ring on or off |
-| `face_text` | a word engraved on the face, on the side away from the tell-tales (empty by default) |
+
+The display's drop (`disp_drop`, 6 mm) is fixed: less leaves no room for the icons, more leaves none for the GPS antenna. Asserts refuse settings that don't fit: an icon running off the face, or the icons running into the GPS antenna behind the logo.
 
 The firmware shows the tell-tales on the screen too. The LEDs stay readable when the screen is washed out by the sun.
 
 **How it goes together:**
-1. **Shell:** the gauge cup with its face and a thin lip that overlaps the glass's black border by 2.2 mm. The glass sits on a 0.8 mm foam ring (`lip_gasket`). The face ring is hollow: the tell-tales' chambers are at the bottom, and the **GPS antenna** lies in the hollow at the top (plastic doesn't block GPS).
+1. **Shell:** the gauge cup with its face and a thin lip that overlaps the glass's black border by 2.2 mm. The glass sits on a 0.8 mm foam ring (`lip_gasket`). The top of the face is hollow: the tell-tales' chambers are either side, and the **GPS antenna** lies behind the logo (plastic doesn't block GPS).
 2. **Carrier:** the display screws to it with 4 × M2 × 6 into its own standoffs. The GPS module and the CAN board stick to its back with foam tape. It slides in from the back; a key on its side stops it going in rotated.
 3. **Back cover:** a plug that presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 × 10 pan-head screws go through the shoulder into heat-set inserts in the cover. There are no screws on the front. It also carries:
    - the GX12 4-pin socket, at the top;
@@ -184,7 +188,7 @@ The firmware shows the tell-tales on the screen too. The LEDs stay readable when
 
 **Checks done (CAD):**
 - every part exports as one watertight body;
-- the parts only touch where they should, with the tell-tales along the bottom, the top or the sides;
+- the parts only touch where they should, with 8 icons and with 6;
 - the foam ring is squeezed;
 - the GPS antenna fits its hollow;
 - **on the bar:** the head and the cradle clear the bar, the clamp caps and the bike's clamp (the estimate) **from 0 to 30° of tilt** (at 33° the head's lower edge reaches the estimated clamp; with your bike's real clamp size this limit moves);
