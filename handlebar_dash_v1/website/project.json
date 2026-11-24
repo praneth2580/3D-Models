@@ -27,6 +27,10 @@
       "file": "COMPONENTS.md"
     },
     {
+      "label": "Electronics: both boxes' circuits, wiring, pins and what to buy",
+      "file": "ELECTRONICS.md"
+    },
+    {
       "label": "Phase 1: the CAN logger, wiring, ride plan and measurements",
       "file": "PHASE1_LOGGER.md"
     },

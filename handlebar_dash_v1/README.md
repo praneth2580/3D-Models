@@ -1,6 +1,6 @@
 # Handlebar Dash (v1): a round digital dash that replaces the stock instruments
 
-**Status: phase 1 ready to build; the display head is modelled (v1).** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md); its firmware compiles. The display head's CAD is [`handlebar_dash.scad`](handlebar_dash.scad), its STLs in [`parts/`](parts/) (checked in CAD, not printed yet). The interface box comes next. This file is the design brief: what we know about the bike, the plan, the display head, and the open questions.
+**Status: phase 1 ready to build; the display head is modelled (v1); the electronics are designed.** Phase 1 (a CAN logger and measurements on the bike) is in [`PHASE1_LOGGER.md`](PHASE1_LOGGER.md); its firmware compiles. The circuits of both boxes, their wiring and what to buy are in [`ELECTRONICS.md`](ELECTRONICS.md). The display head's CAD is [`handlebar_dash.scad`](handlebar_dash.scad), its STLs in [`parts/`](parts/) (checked in CAD, not printed yet). The interface box comes next. This file is the design brief: what we know about the bike, the plan, the display head, and the open questions.
 
 ![The display head on the handlebar, from the rider's seat](images/hd_rider.png)
 
@@ -234,12 +234,12 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 
 **The exact parts, with Amazon.in / Flipkart links and prices: [`COMPONENTS.md`](COMPONENTS.md).** The housings will be modelled around the parts marked "Model fits this" there: the Waveshare 2.8" round display board, the ESP32-C6-DevKitC-1, the SN65HVD230 boards, the NEO-M8N GPS with an 18 mm patch antenna, the GY-521 motion sensor, the Envistia 12 V → 5 V supply, the STAR055 OBD-II socket and the GX12 sockets.
 
-Rough total: about **₹20,000–23,000 buying everything on Amazon.in / Flipkart**, or about **₹13,000–16,000** buying the display and the ESP32-C6 from Indian electronics stores (Robu, Hubtronics, Evelta), which list them for a fraction of the Amazon price. Plus printing, about ₹600–1,500 (est.). All from listings on 2026-11-23, or estimates.
+Rough total: about **₹21,000–24,000 buying everything on Amazon.in / Flipkart**, or about **₹14,000–17,000** buying the display and the ESP32-C6 from Indian electronics stores (Robu, Hubtronics, Evelta), which list them for a fraction of the Amazon price. Plus printing, about ₹600–1,500 (est.). All from listings on 2026-11-23, or estimates; it includes the circuits' small parts in [`ELECTRONICS.md`](ELECTRONICS.md#what-to-buy).
 
 ## Open questions
 
 - **Your bike's service socket:** black or red? Some 6-pin to 16-pin adapters are sold for the black (Euro 4) socket only. The schematic shows two 6-pin sockets ("OBD-2" and "Diagnostic"); check which is fitted and its colour before buying the adapter.
-- **The display head's free pins:** the 2.8" board's spare header pins must carry the dash bus (2 pins to a CAN transceiver). Check on the board.
+- ~~The display head's free pins~~: answered from Waveshare's wiki: GPIO0, GPIO19/20 and GPIO43/44 on its header, plus its I2C connector, which is just enough (see [`ELECTRONICS.md`](ELECTRONICS.md)).
 - **The connector:** the mating part for the bike's 18-pin cluster plug, so the adapter harness doesn't need any cutting. Find its part number, or take one from a used cluster.
 - **Room for the interface box** behind the headlamp, once the stock cluster is gone.
 - **Other bikes:** which ones to support first.

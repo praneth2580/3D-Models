@@ -48,7 +48,7 @@ About ₹300–600 (est.).
 | **OBD+ port** | **STAR055 16-pin OBD-II female connector with shell, terminals and screws** (made in India) | **Yes**: its panel cut-out and screw holes | Amazon.in: [STAR055 OBD2 female connector](https://www.amazon.in/StarAutolink-Female-Connector-Diagnostic-Terminals/dp/B0FN4GV5YL) | ₹300–700 (est.) |
 | **Expansion slots** (3) | **GX12 6-pin panel sockets** (12 mm thread) with **GX12 metal dust caps** | **Yes**: 12 mm holes, nut clearance | Amazon.in: [panel-mount 12 mm 6-pin aviation connectors](https://www.amazon.in/Panel-Mounted-Thread-Aviation-Connectors/dp/B00OK6G6QW), [GX12 dust caps with chain](https://www.amazon.in/Metal-Connector-Protective-Waterproof-Dust-Proof/dp/B0C2M3KDRH) | ₹500–900 (est.) |
 | **Air temperature** | **DS18B20 waterproof probe**, 1 m lead | No: it goes outside the box, in the shade | Amazon.in or Flipkart, search "DS18B20 waterproof" | ₹150–300 (est.) |
-| Self-resetting fuses, 1 A (4), inline blade fuse holder with a 3 A fuse, TVS diode, a few resistors | | No | Amazon.in, or Lamington Road | ₹200–400 (est.) |
+| **The circuits' small parts** (I/O expander, optocouplers, the power latch's MOSFET, fuses, the LED level shifter, perfboard...) | Listed in [`ELECTRONICS.md`](ELECTRONICS.md#what-to-buy) | No | Amazon.in, Robu.in, or Lamington Road | ₹1,400–2,800 (est.) |
 | **Bike-side plug** (adapter harness) | The mating half of the bike's **18-pin cluster connector** | **To find**: its part number isn't known yet. Take one from a used cluster if needed | (phase 1 photos will identify it) | (unknown) |
 
 **About the GX12 sockets:** they keep dust and splashes out when plugged or capped, but they aren't rated for pressure washing. If the box ends up where water hits it directly, M12 IP67 sockets (more expensive) are the upgrade; the model will have a setting for either.
@@ -70,7 +70,7 @@ About ₹300–600 (est.).
 | | Amazon.in / Flipkart only | Using Indian electronics stores for the display and the ESP32-C6 |
 |---|---|---|
 | Phase 1 logger | about ₹7,300–9,800 | about ₹5,600–8,100 |
-| The whole dash (phase 1 parts reused) | about ₹20,000–23,000 | about ₹13,000–16,000 |
+| The whole dash (phase 1 parts reused) | about ₹21,000–24,000 | about ₹14,000–17,000 |
 
 Plus printing (the two housings, the trim ring and the adapter or the cradle), about ₹600–1,500 (est.), and the bike-side plug. All estimates, from listings on 2026-11-23.
 
