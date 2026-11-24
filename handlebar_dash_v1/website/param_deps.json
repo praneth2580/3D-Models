@@ -3,6 +3,7 @@
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
   "logo_text": "DASH",
+  "back_logo_text": "",
   "telltales": "face",
   "icon_size": 5.5,
   "bezel": 12.4,
@@ -43,11 +44,13 @@
    "fit"
   ],
   "head_cover": [
+   "back_logo_text",
    "insert_d",
    "m4_insert_d",
    "fit"
   ],
   "head_cover_stalk": [
+   "back_logo_text",
    "insert_d",
    "gp_hole",
    "fit"

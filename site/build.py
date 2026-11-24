@@ -16,8 +16,8 @@ import fnmatch, html, json, os, re, shutil, subprocess, sys, zipfile
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_SRC = os.path.join(ROOT, "site")
 OUT = os.path.join(ROOT, "_site")
-SKIP_DIRS = {"site", "_site", "archive", "reference", "website", "node_modules", "__pycache__", "frames"}
-NEVER_ZIP = ["*/archive/*", "*/reference/*", "*/website/*", "*/__pycache__/*", "*.csg", "*/CLAUDE.md",
+SKIP_DIRS = {"site", "_site", "archive", "reference", "private", "website", "node_modules", "__pycache__", "frames"}
+NEVER_ZIP = ["*/archive/*", "*/reference/*", "*/private/*", "*/website/*", "*/__pycache__/*", "*.csg", "*/CLAUDE.md",
              "*/AGENTS.md", "*/frames/*", "*/.*"]
 MEDIA_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".mp4", ".webm"}
 DOC_SKIP = {"CLAUDE.md", "AGENTS.md"}

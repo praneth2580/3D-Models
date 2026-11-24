@@ -94,9 +94,15 @@ cell_d = 6.0;               // each icon's light chamber: depth (front to the LE
 led_d = 5.2;                // 5 mm LED hole
 cell_back = 2.0;            // the wall the LEDs sit in
 logo_text = "DASH";         // the logo above the screen, engraved: your own word ("" = none)
-logo_file = "";             // or your own logo as an SVG or DXF file (it takes the place of the text), scaled to logo_size high
+logo_file = "";             // or your own logo as an SVG or DXF file (it takes the place of the text), scaled to logo_size high.
+                            //   Your own artwork goes in private/ (never committed or published), for example private/my_logo.svg
 logo_size = 4.5;            // logo height, mm
 logo_depth = 0.5;           // engraved this deep (fill it with paint, or leave it)
+back_logo_text = "";        // a logo on the back cover (seen from in front of the bike): a word ("" = none)
+back_logo_file = "";        // or your own SVG/DXF (in private/, like logo_file)
+back_logo_size = [44, 0];   // its size, mm [width, height]: 0 = in proportion. It must fit the free area (asserted)
+back_logo_y = 12;           // its centre, above the cover's centre: high, so the bike's handlebar clamp doesn't hide it (GX12 socket above)
+back_logo_depth = 0.6;      // engraved this deep into the 3 mm back plate
 round_r = 2.0;              // the face's outer edge rounded
 trim = true;                // SELECT: a separate trim ring around the face's edge (print it in silver or a contrast colour)
 trim_wh = [2.0, 1.4];       // its width and height (a rebate in the face's edge takes it)
@@ -343,6 +349,17 @@ module head_carrier() difference() {
 
 // ------------------------- COVER --------------------------------------
 gx12_y = bore_r - 0.15 - cover_ring - 9;             // the GX12 socket, at the top of the cover (its plug clears the bike's clamp)
+// The back logo's free area: below the GX12 socket, above the mount (the cradle's bridge or the joint).
+back_top = gx12_y - gx12_d/2 - 2;
+back_bot = mount == "stalk" ? -gp_drop + gp_r + 2 : cradle_bolt[1] + bridge[1]/2 + 2;
+back_ok = back_logo_text == "" && back_logo_file == "" ? true :
+  assert(back_logo_size[0] <= 2*(bore_r - 10) && back_logo_y + back_logo_size[1]/2 <= back_top && back_logo_y - back_logo_size[1]/2 >= back_bot
+         && max(back_logo_size) > 0,
+         str("The back logo doesn't fit: up to ", 2*(bore_r - 10), " mm wide, between y ", back_bot, " and ", back_top, ".")) true;
+module back_logo2d() resize(back_logo_size, auto=true) {
+  if (back_logo_file != "") import(back_logo_file, center=true);
+  else text(back_logo_text, size=10, font="Liberation Sans:style=Bold", halign="center", valign="center", spacing=1.1);
+}
 module head_cover() difference() {
   union() {
     difference() {
@@ -366,6 +383,9 @@ module head_cover() difference() {
   else for (sx = [-1, 1]) translate([sx*cradle_bolt[0], cradle_bolt[1], shell_len - m4_insert_l]) cylinder(d=m4_insert_d, h=m4_insert_l + cover_back + 1, $fn=32);
   // GX12 4-pin socket
   translate([0, gx12_y, shell_len - 1]) cylinder(d=gx12_d, h=cover_back + 2, $fn=48);   // its nut (15 mm) inside the ring
+  // the back logo, engraved (seen from behind the head, so not mirrored)
+  if (back_logo_text != "" || back_logo_file != "")
+    translate([0, back_logo_y, shell_len + cover_back - back_logo_depth]) linear_extrude(back_logo_depth + 0.01) back_logo2d();
 }
 
 // The trim ring: glued into the face's rebate, its outer front edge rounded.
@@ -374,6 +394,8 @@ module trim_ring() translate(hc) rotate_extrude($fn=240) translate([face_r - tri
 // The GPS antenna, in the face ring's hollow, lying on the bore's wall.
 module gps_patch() color([0.85, 0.8, 0.55]) rotate(gps_a - 90) translate([-gps_patch[0]/2, bore_r + iw + 0.2, z_front + ow + 0.3]) cube([gps_patch[0], gps_patch[2], gps_patch[1]]);
 // The lit icons, for the pictures: resin-filled icon windows.
+module back_logo_fill() if (back_logo_text != "" || back_logo_file != "")
+  color([0.8, 0.81, 0.84]) translate([0, back_logo_y, shell_len + cover_back - back_logo_depth + 0.02]) linear_extrude(back_logo_depth) offset(-0.03) back_logo2d();
 module logo_fill() color([0.8, 0.81, 0.84]) translate([0, logo_y, z_front - 0.02]) linear_extrude(logo_depth) offset(-0.03) logo2d();   // painted silver (pictures)
 module icons_lit() if (with_icons) for (i = [0:n_ic - 1]) color(icon_colour(icons[i])) translate([0, 0, z_front - 0.02]) linear_extrude(face_skin) at_icon(i) offset(-0.05) icon2d(icons[i]);
 
@@ -452,7 +474,7 @@ module head_parts(e=0) {
   if (SHOW_DISPLAY) display_dummy();
   color([0.45, 0.47, 0.5]) translate([0, 0, e]) head_carrier();
   color([0.22, 0.23, 0.26]) translate([0, 0, 2*e]) head_cover();
-  if (e == 0) { icons_lit(); logo_fill(); }
+  if (e == 0) { icons_lit(); logo_fill(); back_logo_fill(); }
   if (trim) color([0.78, 0.79, 0.82]) translate([0, 0, -e*0.5]) trim_ring();
   gps_patch();
 }

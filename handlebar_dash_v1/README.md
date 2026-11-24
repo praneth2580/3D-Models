@@ -155,11 +155,14 @@ So the display head is a classic **gauge cup**:
 |---|---|
 | `logo_text` | the logo above the screen, engraved (`"DASH"` by default; any short word). Fill it with paint |
 | `logo_file` | or your own logo as an SVG or DXF file, scaled to `logo_size` (4.5 mm) high |
+| `back_logo_text`, `back_logo_file` | a logo engraved on the **back cover**, seen from in front of the bike (none by default). `back_logo_size` [width, height] (0 = in proportion), `back_logo_y`; an assert keeps it between the GX12 socket and the mount (up to about 76 mm wide, 43 mm tall) |
 | `icons` | which icons and their order (the first half down the left side, the rest up the right side), from `left`, `right`, `beam`, `neutral`, `abs`, `engine`, `fuel`, `battery`, `oil`. Fewer icons is fine, for example 6 |
 | `icon_size` | icon size, 5.5 mm by default (bigger needs a bigger bezel) |
 | `bezel` | the bezel's width round the glass, 12.4 mm (sets the gauge's size: 121 mm) |
 | `telltales` | `"none"` for a face with the logo only (the tell-tales then show on the screen only) |
 | `trim` | the trim ring on or off |
+
+**Your own logo files:** put them in `handlebar_dash_v1/private/`, which git ignores, so they're never committed or published on the website. Then set, for example, `logo_file = "private/front.svg"` and `back_logo_file = "private/back.svg"`. Use this for artwork you have the right to use, such as your own design. A maker's badge on your own bike is your own business, but it must never go into the repository. The SVG must be filled shapes in one colour: convert any text and strokes to paths first (in Inkscape: Path → Object to Path, then Path → Stroke to Path). Check the size in OpenSCAD's preview: the front logo should stay within about 40 mm wide.
 
 Asserts refuse settings that don't fit: icons too big for the bezel, or so many that they run into the GPS antenna (top) or the carrier's key (lower right). The bezel can go up to about 15 mm; beyond that the shoulder leaves no room for the GPS antenna.
 

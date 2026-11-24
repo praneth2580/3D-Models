@@ -49,6 +49,10 @@
       "caption": "From the side: the face, its 45-degree shoulder and the cradle on the 22.2 mm bar"
     },
     {
+      "src": "images/hd_back.png",
+      "caption": "Optional: a logo on the back cover, seen from in front of the bike (an example word here; empty by default). Your own SVG works too"
+    },
+    {
       "src": "images/hd_exploded.png",
       "caption": "Taken apart: the trim ring, the shell, the carrier (the display screws to it), the back cover and the cradle with its 2 caps"
     }
@@ -230,6 +234,13 @@
             "type": "text",
             "max_length": 12,
             "help": "A short word, engraved; fill it with paint."
+          },
+          {
+            "name": "back_logo_text",
+            "label": "Logo on the back cover",
+            "type": "text",
+            "max_length": 12,
+            "help": "Seen from in front of the bike, engraved; empty = none."
           },
           {
             "name": "telltales",

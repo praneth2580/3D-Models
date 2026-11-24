@@ -3,6 +3,7 @@ _site/
 
 # Other people's files (vendor datasheets, drawings, store screenshots): keep them local, never publish
 */reference/
+*/private/
 
 # OpenSCAD and Python scratch files
 *.csg
