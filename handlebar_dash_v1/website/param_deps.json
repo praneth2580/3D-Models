@@ -8,7 +8,7 @@
   "back_logo_file": "",
   "telltales": "face",
   "icon_size": 5.5,
-  "bezel": 6,
+  "logo_w": 30,
   "trim": true,
   "bar_d": 22.2,
   "clamp_w": 24,
@@ -28,7 +28,7 @@
    "logo_file",
    "telltales",
    "icon_size",
-   "bezel",
+   "logo_w",
    "trim",
    "fit",
    "led_d"
@@ -36,12 +36,14 @@
   "head_shell_plain": [
    "logo_text",
    "logo_file",
-   "bezel",
+   "logo_w",
    "trim",
    "fit"
   ],
   "trim_ring": [
-   "bezel",
+   "telltales",
+   "icon_size",
+   "logo_w",
    "fit"
   ],
   "head_carrier": [
