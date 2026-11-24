@@ -117,7 +117,7 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 - the board is 9.73 mm deep in all;
 - it has four M2 brass standoffs whose ends are 9.71 mm behind the glass, at (±18.0, −25.56) and (±29.5, +15.14) mm from the glass centre.
 
-**The gauge is 117.5 mm across and 39.6 mm deep.** Round the display's own black glass border, the housing adds only a 3 mm rim at the bottom, about 10 mm at the sides, and 18 mm above the screen for the tell-tales and the logo.
+**The gauge is 102.5 mm across and 43 mm deep, with the screen in its centre.** The face ring lies on the display's own black glass border (12.9 mm wide), and the tell-tales and the logo sit on it, so the housing adds only its 3 mm wall round the glass.
 
 **Owner's direction:**
 - the handlebar sizes from the Meteor 350;
@@ -125,7 +125,7 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 - they can be customised;
 - "look are a great deal important ... it will be the main thing";
 - then: "reduce icon sizes and try to reduce bezels too, and place the display a bit below so the logo can be placed above it on the display's bezel";
-- then: "how about showing them on the sides". The side bezels of the low-set display were only 7.5 mm, too narrow for the icons, so the owner first chose a centred screen with the icons down the sides; then asked for both together ("what about the part where the display sits below and the logo sits on its bezel"): the display was set low again with the icons on the upper sides; then: "the display should be below with the logos stacked above it ... previously it is display bezel + 3d model bezel, instead this could be display bezel and above it, so overall bezel is reduced". So now the housing hugs the glass, and everything sits stacked above the screen.
+- then: "how about showing them on the sides". The side bezels of the low-set display were only 7.5 mm, too narrow for the icons, so the owner first chose a centred screen with the icons down the sides; then asked for both together ("what about the part where the display sits below and the logo sits on its bezel"): the display was set low again with the icons on the upper sides; then: "the display should be below with the logos stacked above it ... previously it is display bezel + 3d model bezel, instead this could be display bezel and above it, so overall bezel is reduced". That version hugged the glass but set the screen off centre; the owner then said: "the display should be in the centre of the model". So now the screen is centred, and the face ring lies on the display's own black border, with the logo and the tell-tales on top of it: the display's bezel and the housing's bezel are one and the same (102.5 mm across, from 117.5).
 
 **The look, and what it's based on:** the best round motorcycle gauges carry their warning lamps **in their own face**, not on a separate panel:
 - the Indian Scout's round cluster has its lamps inside the dial;
@@ -134,43 +134,45 @@ A module plugged in gets power and joins the dash bus. Examples for later: a tyr
 - Royal Enfield's own Tripper Dash is a round TFT, "suited to the retro appeal" of these bikes.
 
 So the display head is a classic **gauge cup**:
-- **The face:** the display sits **low**, with only a 3 mm rim under its glass, flush with the back. Above the screen, **the tell-tales** sit in an arc and **the logo** above them. The face stays round: its centre sits as far above the display (`disp_drop`, about 7.5 mm) as the icons, the logo's box (`logo_w` × `logo_size`) and the GPS antenna need, so bigger icons or a wider logo make the gauge grow, and fewer make it shrink.
-- **The body:** the face, then a shoulder back to the cover, deepest at the top. The outer edge is rounded.
-- **Details:** a fine accent groove around the screen, and a separate **trim ring** in the face's edge. Print the trim ring in silver (or any contrast colour) for a chrome-bezel look.
+- **The face:** the screen is in the **centre**. The face ring, 5.2 mm thick, lies on the display's black glass border: the **logo** at the top, and **the tell-tales** round the top either side of it, all on the border, so the gauge is only 3 mm wider than the glass all round. The screen sits 5.8 mm behind the face (the LEDs need that depth), with a 45-degree chamfer round the window.
+- **The body:** a straight round body back to the cover. The outer edge is rounded.
+- **Details:** a separate **trim ring** in the face's edge. Print the trim ring in silver (or any contrast colour) for a chrome-bezel look.
 - **On the bike:** it sits low on the bar, Harley-style.
 
 ![Variants](images/hd_variants.png)
 
 **The tell-tales:**
-- **What they are:** 8 icons, 5.5 mm tall, in an arc above the screen. Left side, top to bottom: **turn left, high beam, neutral, ABS**. Right side, top to bottom: **turn right, battery, low fuel, engine.**
+- **What they are:** 8 icons, 5.5 mm tall, on the display's black border round the top of the screen. Left of the logo, from the side up: **turn left, high beam, neutral, ABS**. Right of the logo, from the side up: **turn right, battery, low fuel, engine.**
 - **How they're built:**
   - each icon is cut through the face's 0.8 mm front skin and sits in its own light chamber, so no colour bleeds into the next;
-  - a 5 mm addressable RGB LED (WS2812B family) at the back of each chamber means one data wire drives all 8, and the firmware sets each icon's colour;
+  - behind each chamber, an addressable RGB LED (a WS2812B 5050 on a 10 mm round board, see COMPONENTS.md) sits in its own pocket, lying on the glass's black border, LED forward. One data wire drives all 8, and the firmware sets each icon's colour;
+  - the boards are chained with thin wire (3 wires: 5 V, ground, data) in a channel in the face's back; the wires leave at the top left (as the rider sees it) through a groove in the bore's wall, past the glass's edge, into the housing;
   - **fill each icon flush with translucent white UV resin:** the resin diffuses the light, seals the face, and makes each lamp flush with it;
   - the face prints face down, so the icons come out crisp, and the "A" and "B" in ABS have stencil bridges, so no pieces fall out;
-  - the LEDs go in from inside, through windows in the bore's wall, before the display.
+  - the LED boards go in from the back (a drop of glue each, LED forward against the step in its pocket) before the display; the display's glass then closes the pockets.
 - **Customise them** (settings, and in the website's customizer):
 
 | Setting | Choices |
 |---|---|
-| `logo_text` | the logo above the screen, engraved (`"DASH"` by default; any short word). Fill it with paint |
+| `logo_text` | the logo at the top of the face, engraved (`"DASH"` by default; any short word). Fill it with paint |
 | `logo_file` | or your own logo as an SVG or DXF file, scaled to `logo_size` (4.5 mm) high |
 | `back_logo_text`, `back_logo_file` | a logo engraved on the **back cover**, seen from in front of the bike (none by default). `back_logo_size` [width, height] (0 = in proportion), `back_logo_y`; an assert keeps it between the GX12 socket and the mount (up to about 76 mm wide, 43 mm tall) |
-| `icons` | which icons and their order (the first half down the left side, the rest up the right side), from `left`, `right`, `beam`, `neutral`, `abs`, `engine`, `fuel`, `battery`, `oil`. Fewer icons is fine, for example 6 |
-| `icon_size` | icon size, 5.5 mm by default (bigger needs a bigger bezel) |
-| `logo_w` | the room for the logo's width, 30 mm (the logo is `logo_size` 4.5 mm high; the gauge grows to fit) |
+| `icons` | which icons and their order (the first half left of the logo, the rest right of it, rider's left to right), from `left`, `right`, `beam`, `neutral`, `abs`, `engine`, `fuel`, `battery`, `oil`. Fewer icons is fine, for example 6 |
+| `icon_size` | icon size, 5.5 mm by default (up to 6: it must fit the LED's light chamber) |
+| `logo_w` | the gap for the logo between the tell-tales, 24 mm (the logo is `logo_size` 4.5 mm high); up to 40 |
+| `led_board_d`, `led_board_t` | your LED boards' diameter and thickness (10 and 3 mm): measure yours |
 | `telltales` | `"none"` for a face with the logo only (the tell-tales then show on the screen only) |
 | `trim` | the trim ring on or off |
 
-**Your own logo files:** put them in `handlebar_dash_v1/private/`, which git ignores, so they're never committed or published on the website. Then set, for example, `logo_file = "private/front.svg"` and `back_logo_file = "private/back.svg"`. Use this for artwork you have the right to use, such as your own design. A maker's badge on your own bike is your own business, but it must never go into the repository. The SVG must be filled shapes in one colour: convert any text and strokes to paths first (in Inkscape: Path → Object to Path, then Path → Stroke to Path). Check the size in OpenSCAD's preview: the front logo should stay within about 40 mm wide.
+**Your own logo files:** put them in `handlebar_dash_v1/private/`, which git ignores, so they're never committed or published on the website. Then set, for example, `logo_file = "private/front.svg"` and `back_logo_file = "private/back.svg"`. Use this for artwork you have the right to use, such as your own design. A maker's badge on your own bike is your own business, but it must never go into the repository. The SVG must be filled shapes in one colour: convert any text and strokes to paths first (in Inkscape: Path → Object to Path, then Path → Stroke to Path). Check the size in OpenSCAD's preview: the front logo should stay within `logo_w` (24 mm by default).
 
-Asserts refuse settings that don't fit: icons running off the face or into the carrier's key (lower right), and a hollow whose flat roof would be too long a bridge to print (over 16 mm).
+Asserts refuse settings that don't fit: LED boards too big for the glass's border, icons too big for their light chambers, a logo running off the face, and so many icons that they meet at the bottom.
 
 The firmware shows the tell-tales on the screen too. The LEDs stay readable when the screen is washed out by the sun.
 
 **How it goes together:**
-1. **Shell:** the gauge cup with its face and a thin lip that overlaps the glass's black border by 2.2 mm. The glass sits on a 0.8 mm foam ring (`lip_gasket`). The upper half of the face is hollow: the tell-tales' chambers are above the screen, and the **GPS antenna** (an 18 mm active patch, see COMPONENTS.md) lies at the top behind the logo, beyond the LEDs, facing the sky (plastic doesn't block GPS). Fit the antenna first, through the window in the bore, then the LEDs. The hollow has a flat roof (a 12.7 mm bridge at the top, fine for a print service), so the shoulder outside can be steep and the antenna still fits; the bottom of the face is solid.
-2. **Carrier:** the display screws to it with 4 × M2 × 6 into its own standoffs. The GPS module and the CAN board stick to its back with foam tape. It slides in from the back; a key on its side stops it going in rotated.
+1. **Shell:** a round body with the face ring in front, lying on the glass's whole black border. The glass sits on a 0.8 mm foam ring the size of that border (`lip_gasket`), which also seals the LEDs' pockets. It prints face down without supports: the pockets open upward.
+2. **Carrier:** the display screws to it with 4 × M2 × 6 into its own standoffs. The GPS module and the CAN board stick to its back with foam tape, below the top 8 mm. The **GPS antenna** (an 18 mm active patch, see COMPONENTS.md) lies flat at the very top behind the carrier, facing up through the shell's top wall (plastic doesn't block GPS); the carrier's skirt and the cover have notches for it. It slides in from the back; a key on its side stops it going in rotated.
 3. **Back cover:** a plug that presses the carrier forward, squeezing the foam ring by 0.2 mm. Four M3 × 10 pan-head screws go through the shoulder into heat-set inserts in the cover. There are no screws on the front. It also carries:
    - the GX12 4-pin socket, at the top;
    - the mount's fixings.
@@ -192,9 +194,9 @@ The firmware shows the tell-tales on the screen too. The LEDs stay readable when
 
 **Checks done (CAD):**
 - every part exports as one watertight body;
-- the parts only touch where they should, with 8 icons and with 6;
+- the parts only touch where they should, with 8 icons, 6, 11, none, no logo, and a 40 mm logo gap with 6 mm icons;
 - the foam ring is squeezed;
-- the GPS antenna fits its hollow;
+- the GPS antenna clears the carrier and the cover;
 - **on the bar:** the head and the cradle clear the bar, the clamp caps and the bike's clamp (the estimate) **from 0 to 30° of tilt** (at 33° the head's lower edge reaches the estimated clamp; with your bike's real clamp size this limit moves);
 - **on a stalk:** the head clears from 0 to 45°;
 - **Waveshare's own 3D model** of the board, placed in the housing: every point is inside the 48.23 mm bore (its largest radius is 47.94 mm), in front of the carrier (only the 4 standoff ends touch it), and behind the foam ring.
@@ -226,7 +228,7 @@ Only the Meteor's schematic has been read so far; the Hunter 350's owner's manua
 
 ## Parts and cost
 
-**The exact parts, with Amazon.in / Flipkart links and prices: [`COMPONENTS.md`](COMPONENTS.md).** The housings will be modelled around the parts marked "Model fits this" there: the Waveshare 2.8" round display board, the ESP32-C6-DevKitC-1, the SN65HVD230 boards, the NEO-M8N GPS with its 25 mm patch antenna, the GY-521 motion sensor, the Envistia 12 V → 5 V supply, the STAR055 OBD-II socket and the GX12 sockets.
+**The exact parts, with Amazon.in / Flipkart links and prices: [`COMPONENTS.md`](COMPONENTS.md).** The housings will be modelled around the parts marked "Model fits this" there: the Waveshare 2.8" round display board, the ESP32-C6-DevKitC-1, the SN65HVD230 boards, the NEO-M8N GPS with an 18 mm patch antenna, the GY-521 motion sensor, the Envistia 12 V → 5 V supply, the STAR055 OBD-II socket and the GX12 sockets.
 
 Rough total: about **₹20,000–23,000 buying everything on Amazon.in / Flipkart**, or about **₹13,000–16,000** buying the display and the ESP32-C6 from Indian electronics stores (Robu, Hubtronics, Evelta), which list them for a fraction of the Amazon price. Plus printing, about ₹600–1,500 (est.). All from listings on 2026-11-23, or estimates.
 

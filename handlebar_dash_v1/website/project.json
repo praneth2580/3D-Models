@@ -2,7 +2,7 @@
   "title": "Handlebar Dash",
   "tagline": "A round digital dash on its own handlebar clamp, replacing the stock instruments.",
   "summary": "A 2.8\" round colour display in a classic round gauge, with the tell-tales (turn signals, high beam, neutral, ABS, engine, fuel, battery) lit in its own face. It reads the bike's own signals (speed, fuel, gear, indicators, warning lights) and adds GPS speed and trip, clock, battery voltage, air temperature, lean angle and g-force. A standard OBD-II port and three expansion slots let it grow. First bike: the J-platform 350 with the J1D3 harness (the Meteor 350).",
-  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 117.5 mm across, the display set low with a 3 mm rim under it, the 8 tell-tales in an arc above it and your logo above them, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
+  "status": "Phase 1 (learning the bike's CAN bus) is ready to build, and the display head is modelled (v1, checked in CAD, not printed yet): a round gauge, 102.5 mm across, the screen in the centre, the logo and the 8 tell-tales on the display's own black glass border, on the Meteor 350's 22.2 mm handlebar, Harley-style. The interface box comes next.",
   "order": 3,
   "eyebrow": "Open-source &middot; work in progress",
   "sections": [
@@ -30,23 +30,23 @@
   ],
   "cover": "images/hd_rider.png",
   "see_title": "The display head (v1)",
-  "see_sub": "A classic round gauge on the bar that hugs the display: a 3 mm rim under the screen, and above it the tell-tales in an arc with your logo above them, in the gauge's own face, as on the Indian Scout's, KOSO's and Daytona's round gauges. 117.5 mm across, 39.6 mm deep.",
+  "see_sub": "A classic round gauge on the bar, the screen in the centre. The face ring lies on the display's own black glass border, so the logo and the tell-tales sit on that border instead of around it: the housing adds only its 3 mm wall. As on the Indian Scout's, KOSO's and Daytona's round gauges. 102.5 mm across, 43 mm deep.",
   "gallery": [
     {
       "src": "images/hd_rider.png",
-      "caption": "From the rider's seat: a round gauge on the bar, the display set low, the lit tell-tales in an arc above it, the logo on top, a silver trim ring"
+      "caption": "From the rider's seat: a round gauge on the bar, the screen in the centre, the logo and the lit tell-tales round the top, a silver trim ring"
     },
     {
       "src": "images/hd_face.png",
-      "caption": "The face: turn left, high beam, neutral, ABS, engine, low fuel, battery and turn right in an arc above the screen, the logo above them. Each icon is filled flush with clear resin over its own 5 mm RGB LED"
+      "caption": "The face: the logo at the top; turn left, high beam, neutral and ABS on its left, engine, low fuel, battery and turn right on its right, all on the display's black glass border. Each icon is filled flush with clear resin over its own RGB LED"
     },
     {
       "src": "images/hd_variants.png",
-      "caption": "Customise it: your own logo (a word, or an SVG file), which icons and how many, their size, or the logo only. The gauge grows or shrinks to fit"
+      "caption": "Customise it: your own logo (a word, or an SVG file), which icons and how many, their size, or the logo only"
     },
     {
       "src": "images/hd_side.png",
-      "caption": "From the side: the face, its 45-degree shoulder and the cradle on the 22.2 mm bar"
+      "caption": "From the side: a straight round body and the cradle on the 22.2 mm bar"
     },
     {
       "src": "images/hd_back.png",
@@ -99,7 +99,7 @@
   "parts": {
     "head_shell": {
       "name": "Shell (with tell-tales)",
-      "what": "The round gauge: the display's window set low, the 8 tell-tale windows in an arc above it with their light chambers, the logo engraved above them, the GPS antenna's place at the top",
+      "what": "The round gauge: the screen's window in the centre; on the face ring, the logo engraved at the top and the 8 tell-tale windows either side of it, with pockets behind for their LED boards",
       "qty": "1",
       "material": "Black PETG (ASA for the final part). Face down, no supports; 0.2 mm first layers for crisp icons",
       "when": {
@@ -129,7 +129,7 @@
     },
     "head_carrier": {
       "name": "Carrier",
-      "what": "The display screws to it (4 x M2 x 6 into its own standoffs); the GPS module and the CAN board go on its back",
+      "what": "The display screws to it (4 x M2 x 6 into its own standoffs); the GPS module and the CAN board go on its back, the GPS antenna at the top behind it",
       "qty": "1",
       "material": "PETG. Plate down"
     },
@@ -159,7 +159,7 @@
     },
     "lip_gasket": {
       "name": "Foam ring",
-      "what": "0.8 mm ring between the lip and the glass. Print in TPU, or cut it from 0.8 mm closed-cell foam",
+      "what": "0.8 mm ring between the face ring and the glass's black border. Print in TPU, or cut it from 0.8 mm closed-cell foam",
       "qty": "1",
       "material": "TPU 85A-95A, or foam"
     },
@@ -230,14 +230,14 @@
         "params": [
           {
             "name": "logo_text",
-            "label": "Logo above the screen (a word)",
+            "label": "Logo at the top of the face (a word)",
             "type": "text",
             "max_length": 12,
             "help": "A short word, engraved; fill it with paint."
           },
           {
             "name": "logo_file",
-            "label": "Or your own logo above the screen (SVG)",
+            "label": "Or your own logo at the top (SVG)",
             "type": "file",
             "accept": ".svg",
             "max_kb": 1024,
@@ -278,17 +278,17 @@
             "unit": "mm",
             "step": 0.5,
             "min": 4,
-            "max": 7,
-            "help": "Bigger icons make the gauge bigger."
+            "max": 6,
+            "help": "Up to 6 mm: each icon must fit its LED's light chamber."
           },
           {
             "name": "logo_w",
-            "label": "Room for the logo's width",
+            "label": "Gap for the logo between the tell-tales",
             "unit": "mm",
             "step": 1,
-            "min": 15,
-            "max": 45,
-            "help": "The logo is 4.5 mm high; a long word or a wide logo needs more room (the gauge grows to fit)."
+            "min": 10,
+            "max": 40,
+            "help": "The logo is 4.5 mm high; a long word or a wide logo needs a wider gap."
           },
           {
             "name": "trim",
@@ -405,12 +405,21 @@
             "max": 0.8
           },
           {
-            "name": "led_d",
-            "label": "Tell-tale LED holes (5 mm LEDs)",
+            "name": "led_board_d",
+            "label": "Tell-tale LED boards: diameter",
             "unit": "mm",
-            "step": 0.05,
-            "min": 4.9,
-            "max": 5.6
+            "step": 0.1,
+            "min": 9,
+            "max": 10.4,
+            "help": "Measure yours (10 mm round WS2812B boards)."
+          },
+          {
+            "name": "led_board_t",
+            "label": "Tell-tale LED boards: thickness, LED included",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 4
           }
         ]
       }

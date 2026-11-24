@@ -8,7 +8,7 @@
   "back_logo_file": "",
   "telltales": "face",
   "icon_size": 5.5,
-  "logo_w": 30,
+  "logo_w": 24,
   "trim": true,
   "bar_d": 22.2,
   "clamp_w": 24,
@@ -20,7 +20,8 @@
   "m4_insert_d": 5.6,
   "gp_hole": 5.3,
   "fit": 0.3,
-  "led_d": 5.2
+  "led_board_d": 10.0,
+  "led_board_t": 3.0
  },
  "parts": {
   "head_shell": [
@@ -31,20 +32,19 @@
    "logo_w",
    "trim",
    "fit",
-   "led_d"
+   "led_board_d",
+   "led_board_t"
   ],
   "head_shell_plain": [
    "logo_text",
    "logo_file",
-   "logo_w",
    "trim",
    "fit"
   ],
   "trim_ring": [
    "telltales",
-   "icon_size",
-   "logo_w",
-   "fit"
+   "fit",
+   "led_board_t"
   ],
   "head_carrier": [
    "fit"
