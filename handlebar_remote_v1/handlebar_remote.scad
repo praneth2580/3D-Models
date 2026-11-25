@@ -78,7 +78,7 @@ pillar = 4.2;               // its 4 corner pillars (an M2 insert in each)
 plate_t = 2.0;              // the face plate
 skin = 0.8;                 // the keypad's sheet (it's also the seal)
 squeeze = 0.2;              // how much the face plate squeezes it
-pod_r = 3.5;                // the pod's rounded corners (seen from the face)
+pod_r = 5;                  // the pod's rounded corners (seen from the face)
 dome = [8, 8];              // the 2 button domes
 dome_up = 1.4;              // they stand this far above the plate
 cap_d = 13;                 // the joystick's cap
@@ -93,7 +93,8 @@ m3_insert_d = 4.2;          // M3 heat-set inserts (2) in the collar top's ears:
 // ------------------------- BAY -----------------------------------------
 bay_wall = 1.6;
 bay_gap = 1.5;              // between the two boards
-cap_t = 2.0;                // the bay's cap
+bay_cr = 2;                 // the bay's inside corners rounded
+cap_t = 3.0;                // the bay's cap (a rounded dish)
 cable_d = 4.8;              // the 4-core cable to the dash, through the cap (sealed with silicone)
 
 // ------------------------- DERIVED --------------------------------------
@@ -134,7 +135,7 @@ N_ = [0, D[1] - E[1], D[2] - E[2]];
 N = N_/norm(N_);
 T = [0, N[2], -N[1]];
 SPLIT_M = [[1, 0, 0, 0], [0, T[1], N[1], 0], [0, T[2], N[2], 0], [0, 0, 0, 1]];
-echo(pod_above_ring = pod_R - ring_r, pod_shift = pod_shift, bay_below_axis = bay_r1 + cap_t + 0.6, collar_w = collar_w);
+echo(rear_screw = rear_t + 5, pod_above_ring = pod_R - ring_r, pod_shift = pod_shift, bay_below_axis = bay_r1 + 0.6 + cap_t, collar_w = collar_w);
 
 // ------------------------- CHECKS ------------------------------------
 assert(collar_w >= 18, "The gap is too narrow for the collar: make gap_w at least 19 mm (slide the switch cube inboard).");
@@ -181,16 +182,39 @@ module bay_boards() bay_frame() {
 
 // ------------------------- COLLAR -------------------------------------
 pillar_xy = [for (sx = [-1, 1], sy = [-1, 1]) [sx*(inner[0]/2 - pillar/2 + 0.6), sy*(inner[1]/2 - pillar/2 + 0.6)]];
-ear = [collar_w, 7, 6];      // the ring's 2 ears, at the split: along the bar, out from the ring, across the split
-ear_y = ring_r - 1 + ear[1]/2;   // the screws' distance from the axis, through the ears, square to the split
-module ring() difference() { bar_x(2*ring_r, collar_w); bar_x(2*bore_r, collar_w + 2); }
-module ears(s) multmatrix(SPLIT_M) for (sy = [-1, 1])
-  translate([-ear[0]/2, sy > 0 ? ring_r - 1 : -ring_r + 1 - ear[1], s > 0 ? 0 : -ear[2]]) cube([ear[0], ear[1], ear[2]]);
-// The pod's body: a hull from the face's rim down onto the ring, 45 degrees either side of its direction.
-module pod_body() hull() {
-  pod_frame() translate([0, 0, z_seat - 0.01]) linear_extrude(0.01) rrect([collar_w, pod_l], pod_r);
-  pod_frame() translate([0, 0, z_floor - 1.2]) linear_extrude(0.01) rrect([collar_w, pod_l], pod_r);   // the floor: the shell wraps the whole inside
-  for (s = [-1, 1]) let(f = pod_a + s*45) translate([0, (ring_r - 0.6)*cos(f), (ring_r - 0.6)*sin(f)]) bar_x(1.2, collar_w - 0.2);
+ear_y = ring_r + 2.6;        // the 2 screws joining the halves: their distance from the axis, in the split, square to it
+// Joining the halves: the FRONT screw (M3) comes up from underneath into an insert in the top half. Behind the bar
+// the split runs between the pod and the bay, so a screw square to it there would cross one of them: the REAR screw
+// (M2.5) goes from inside the pod (its head on the pod's floor at its rear end, fitted before the switch board), down
+// square to the split into an insert in the bottom half, behind the bay.
+module front_insert() multmatrix(SPLIT_M) translate([0, ear_y, -0.01]) cylinder(d=m3_insert_d, h=5.5, $fn=24);
+module front_clear() multmatrix(SPLIT_M) translate([0, ear_y, 0]) {
+  translate([0, 0, -6]) cylinder(d=3.4, h=6.1, $fn=20);                        // M3 x 10: 4 mm of the bottom half, 5.5 into the insert
+  translate([0, 0, -40]) cylinder(d=6.2, h=40 - 4, $fn=24);                    // the head's counterbore, from outside
+}
+function pod_point(x, y, z) = O + x*XP + y*YP + z*ZP;
+rear_s = pod_point(0, -(inner[1]/2 - 2.6), z_floor);   // the rear screw's head, on the pod's floor
+rear_t = N*rear_s;                                     // its depth to the split
+REAR_M = [[1, 0, 0, rear_s[0]], [0, -N[2], -N[1], rear_s[1]], [0, N[1], -N[2], rear_s[2]], [0, 0, 0, 1]];   // z down the screw (-N)
+module rear_clear() multmatrix(REAR_M) translate([0, 0, -0.01]) cylinder(d=2.9, h=rear_t + 0.02, $fn=20);      // M2.5, through the top half
+module rear_insert() multmatrix(REAR_M) translate([0, 0, rear_t - 0.01]) cylinder(d=3.6, h=5.5, $fn=20);       // its insert, in the bottom half
+// The body: ONE smooth convex hull (owner, 2026-11-25: "why is it square, make it an organic shape") over the ring
+// (its edges rounded), the pod's rim and floor, the bay's top and floor, and the 2 screws' bosses. The halves, the
+// cavities and the holes are all cut from it.
+ring_round = 2.5;
+module ring_solid() rotate([0, 90, 0]) rotate_extrude($fn=96)
+  offset(r=ring_round) offset(delta=-ring_round) translate([0, -collar_w/2]) square([ring_r, collar_w]);
+module shell() hull() {
+  ring_solid();
+  pod_frame() {
+    translate([0, 0, z_seat - 1.5]) linear_extrude(1.5) rrect([collar_w, pod_l], pod_r);          // the rim (flat: the keypad's seat)
+    translate([0, 0, z_floor - 1.2]) linear_extrude(0.01) rrect([collar_w, pod_l], pod_r);        // the floor: the shell wraps the inside
+  }
+  bay_frame() {
+    translate([0, 0, bay_r0 - 1]) linear_extrude(0.01) hull() bay_outline();
+    translate([0, 0, bay_r1 - 1.5]) linear_extrude(1.5) hull() bay_outline();                      // the floor (flat: the cap's seat)
+  }
+  multmatrix(SPLIT_M) translate([0, ear_y, -6]) cylinder(d=9, h=12, $fn=32);   // the front screw's boss
 }
 // The wires: a slot down from the pod's floor into the bore, a groove in the bore round to the bay, a slot up into it.
 module wire_path() {
@@ -202,7 +226,7 @@ module wire_path() {
 module collar_top() intersection() {
   union() {
     difference() {
-      union() { intersection() { ring(); half(1); } ears(1); intersection() { pod_body(); half(1); } }
+      intersection() { shell(); half(1); }
       bar_x(2*bore_r, 200);
       pod_frame() {
         // the inside, open at the face, its 4 corner pillars left standing (an M2 insert in each)
@@ -213,7 +237,7 @@ module collar_top() intersection() {
         for (p = pillar_xy) translate([p[0], p[1], z_seat - 5]) cylinder(d=m2_insert_d, h=5.1, $fn=20);
       }
       wire_path();
-      multmatrix(SPLIT_M) for (sy = [-1, 1]) translate([0, sy*ear_y, -0.01]) cylinder(d=m3_insert_d, h=ear[2] - 1, $fn=24);   // M3 inserts
+      front_insert(); rear_clear();                                            // the 2 screws joining the halves
       translate([grip_x - 100, 0, 0]) bar_x(grip_d + 2, 200);   // where the pod overhangs the grip's end, it stays 1 mm clear of the grip
     }
     // steps at the pillars' feet: the switch board's corners rest on them
@@ -224,27 +248,23 @@ module collar_top() intersection() {
   }
   translate([-100 - 0*collar_w, 0, 0]) slab(200 + collar_w);   // keeps it off the switch cube's side (x <= collar_w/2)
 }
-// The bay's body (bay frame): as wide as the collar, round lobes at its ends for the cap's screws.
-module bay_body() bay_frame() {
-  translate([-collar_w/2, -bay_in[1]/2 - bay_wall, 0]) cube([collar_w, bay_in[1] + 2*bay_wall, bay_r1]);
-  for (s = [-1, 1]) translate([0, s*bay_boss_y, bay_r1 - 10]) cylinder(d=6.6, h=10, $fn=32);
-}
 module collar_bottom() difference() {
-  union() { intersection() { ring(); half(-1); } ears(-1); intersection() { bay_body(); half(-1); } }
+  intersection() { shell(); half(-1); translate([-100, 0, 0]) slab(200 + collar_w); }   // off the switch cube's side
+  translate([grip_x - 100, 0, 0]) bar_x(grip_d + 2, 200);                       // and 1 mm clear of the grip
   bar_x(2*bore_r, 200);
   bay_frame() {
-    translate([-bay_in[0]/2, -bay_in[1]/2, bay_r0]) cube([bay_in[0], bay_in[1], bay_in[2] + 1]);   // open at the bottom
+    translate([0, 0, bay_r0]) linear_extrude(bay_in[2] + 1) rrect([bay_in[0], bay_in[1]], bay_cr);   // open at the bottom, corners rounded
     for (s = [-1, 1]) translate([0, s*bay_boss_y, bay_r1 - 5]) cylinder(d=m2_insert_d, h=5.1, $fn=20);   // M2 inserts
   }
   wire_path();
-  multmatrix(SPLIT_M) for (sy = [-1, 1]) translate([0, sy*ear_y, -ear[2] - 1]) { cylinder(d=3.4, h=ear[2] + 2, $fn=20); cylinder(d=6, h=3, $fn=24); }   // M3
+  front_clear(); rear_insert();
 }
 
 // ------------------------- FACE PLATE, KEYPAD, CAP --------------------
 module face_plate() pod_frame() difference() {
-  translate([0, 0, -plate_t]) hull() {
-    linear_extrude(plate_t - 0.8) rrect([collar_w, pod_l], pod_r);
-    linear_extrude(plate_t) offset(-0.8) rrect([collar_w, pod_l], pod_r);                    // a softened top edge
+  hull() {                                                                                  // its top edge rolled
+    translate([0, 0, -plate_t]) linear_extrude(0.01) rrect([collar_w, pod_l], pod_r);
+    translate([0, 0, -plate_rr]) minkowski() { linear_extrude(0.01) offset(-plate_rr) rrect([collar_w, pod_l], pod_r); half_sphere(plate_rr, 1); }
   }
   translate([0, 0, -plate_t - 1]) cylinder(d=sw_hole_d, h=plate_t + 2);
   for (s = [-1, 1]) translate([0, s*btn_y, -plate_t - 1]) linear_extrude(plate_t + 2) rrect(dome + [0.6, 0.6], 2);
@@ -276,18 +296,26 @@ module joy_cap() pod_frame() difference() {
 
 // ------------------------- BAY CAP AND GASKET -------------------------
 module bay_outline() union() {
-  translate([-collar_w/2, -bay_in[1]/2 - bay_wall]) square([collar_w, bay_in[1] + 2*bay_wall]);
+  rrect([collar_w, bay_in[1] + 2*bay_wall], 4);
   for (s = [-1, 1]) translate([0, s*bay_boss_y]) circle(d=6.6, $fn=32);
 }
+plate_rr = 1.4;             // the face plate's rolled edge
+cap_rr = 2.0;               // the bay cap's rounded edge
+module half_sphere(r, up) intersection() { sphere(r, $fn=20); translate([-r, -r, up > 0 ? 0 : -r]) cube(2*r); }
+cap_z0 = bay_r1 + 0.6;      // the cap: on the gasket (squeezed 0.2) ...
+cap_z1 = cap_z0 + cap_t;    // ... to its outside
 module bay_gasket() bay_frame() translate([0, 0, bay_r1]) linear_extrude(0.8) difference() {
   offset(-0.3) bay_outline();
-  difference() { square([bay_in[0] + 0.6, bay_in[1] + 0.6], center=true); for (s = [-1, 1]) translate([0, s*bay_boss_y]) circle(d=7, $fn=32); }
+  difference() { rrect([bay_in[0] + 0.6, bay_in[1] + 0.6], bay_cr + 0.3); for (s = [-1, 1]) translate([0, s*bay_boss_y]) circle(d=7, $fn=32); }
   for (s = [-1, 1]) translate([0, s*bay_boss_y]) circle(d=2.4, $fn=16);
 }
-module bay_cap() bay_frame() translate([0, 0, bay_r1 + 0.6]) difference() {
-  linear_extrude(cap_t) offset(-0.01) bay_outline();
-  for (s = [-1, 1]) translate([0, s*bay_boss_y, -1]) { cylinder(d=2.3, h=cap_t + 2, $fn=16); translate([0, 0, 1 + cap_t - 1.2]) cylinder(d1=2.3, d2=4.2, h=1.21, $fn=16); }
-  translate([can_x + can_pcb[2]/2, 0, -1]) cylinder(d=cable_d, h=cap_t + 2, $fn=24);   // the cable to the dash
+module bay_cap() bay_frame() difference() {
+  hull() {                                                                                  // a rounded dish
+    translate([0, 0, cap_z0]) linear_extrude(0.01) hull() bay_outline();
+    translate([0, 0, cap_z1 - cap_rr]) minkowski() { linear_extrude(0.01) offset(-cap_rr) hull() bay_outline(); half_sphere(cap_rr, 1); }
+  }
+  for (s = [-1, 1]) translate([0, s*bay_boss_y, cap_z0 - 1]) { cylinder(d=2.3, h=cap_t + 2, $fn=16); translate([0, 0, 1 + cap_t - 1.2]) cylinder(d1=2.3, d2=4.2, h=1.21, $fn=16); }
+  translate([can_x + can_pcb[2]/2, 0, cap_z0 - 1]) cylinder(d=cable_d, h=cap_t + 2, $fn=24);   // the cable to the dash
 }
 
 // ------------------------- ASSEMBLY -----------------------------------
@@ -318,7 +346,7 @@ else if (PART == "collar_bottom") translate([0, 0, collar_w/2]) rotate([0, 90, 0
 else if (PART == "face_plate") rotate([180, 0, 0]) multmatrix(invert(POD_M)) face_plate();         // its top on the bed
 else if (PART == "keypad") translate([0, 0, dome_top]) rotate([180, 0, 0]) multmatrix(invert(POD_M)) keypad();   // TPU, domes down
 else if (PART == "joy_cap") rotate([180, 0, 0]) translate([0, 0, -0.4 - cap_h]) multmatrix(invert(POD_M)) joy_cap();   // flat top down
-else if (PART == "bay_cap") translate([0, 0, bay_r1 + 0.6 + cap_t]) rotate([180, 0, 0]) multmatrix(invert(BAY_M)) bay_cap();   // its outside down
+else if (PART == "bay_cap") translate([0, 0, cap_z1]) rotate([180, 0, 0]) multmatrix(invert(BAY_M)) bay_cap();   // its outside down
 else if (PART == "bay_gasket") translate([0, 0, -bay_r1]) multmatrix(invert(BAY_M)) bay_gasket();
 // Checks: must be empty (or only touch), unless marked "must collide".
 else if (PART == "check_switches") intersection() { switches(false); union() { collar_top(); keypad(); face_plate(); joy_cap(); } }
@@ -335,6 +363,11 @@ else if (PART == "check_parts") {
   intersection() { face_plate(); joy_cap(); }
   intersection() { collar_bottom(); bay_cap(); }
   intersection() { collar_bottom(); bay_gasket(); }
+}
+else if (PART == "check_screws") intersection() {            // the halves' screws and counterbores vs the insides: must be empty
+  front_clear(); front_insert(); rear_insert();
+  union() { pod_frame() translate([0, 0, z_floor]) linear_extrude(-z_floor + 1) rrect(inner, 1);
+            bay_frame() translate([0, 0, bay_r0]) linear_extrude(bay_in[2]) rrect([bay_in[0], bay_in[1]], bay_cr); wire_path(); bar_x(2*bore_r, 100); }
 }
 else if (PART == "check_bike") intersection() { union() { collar_top(); collar_bottom(); face_plate(); joy_cap(); bay_cap(); }
   union() { translate([grip_x - 65, 0, 0]) bar_x(grip_d, 130); translate([cube_x, -cube[1]/2, -cube[3]]) cube([cube[0], cube[1], cube[2] + cube[3]]); } }

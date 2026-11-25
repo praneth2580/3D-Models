@@ -140,9 +140,9 @@
           "local": "Nagdevi Street"
         },
         {
-          "name": "M3 heat-set inserts (4.2 mm hole) + M3 x 8 screws",
-          "for": "The collar's two halves",
-          "qty": "2 + 2",
+          "name": "M3 insert + M3 x 10 screw, M2.5 insert + M2.5 x 14 screw",
+          "for": "Joining the collar's halves (the front from underneath, the rear from inside the pod)",
+          "qty": "1 + 1 each",
           "price": "",
           "search": "M3 heat set insert",
           "stores": "hardware",

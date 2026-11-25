@@ -1,13 +1,13 @@
 {
   "title": "Handlebar Remote",
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
-  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with a button either side of it on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. Sealed with a printed TPU keypad. General purpose: the bar size, the gap and the angles are settings.",
+  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with a button either side of it on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body, sealed with a printed TPU keypad. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hr_rider.png",
   "see_title": "Pictures",
-  "see_sub": "A 19 mm collar in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on top, tilted 20 degrees toward the grip; the ESP32-C3 and the CAN transceiver in a bay underneath, as wide as the collar.",
+  "see_sub": "One smooth pebble-shaped collar, 19 mm wide, in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on top, tilted 20 degrees toward the grip; the ESP32-C3 and the CAN transceiver in the bay underneath.",
   "gallery": [
     {
       "src": "images/hr_rider.png",
@@ -64,13 +64,13 @@
   "parts": {
     "collar_top": {
       "name": "Collar top",
-      "what": "The ring's upper half and the pod (tilted toward the grip) that holds the switch board on steps at its corners; 4 M2 inserts for the face plate, 2 M3 inserts for the collar's screws; the wires' slot down into the ring's groove",
+      "what": "The smooth body's upper half: the ring's top and the pod (tilted toward the grip) that holds the switch board; 4 M2 inserts for the face plate, the front M3 insert; the rear M2.5 screw goes down from inside the pod",
       "qty": "1",
       "material": "ASA (PETG for a first try), 100% infill round the ring. On its flat switch-cube side"
     },
     "collar_bottom": {
       "name": "Collar bottom (with the bay)",
-      "what": "The ring's lower half and the electronics bay under the bar: the ESP32-C3 and the CAN transceiver stand on edge inside; 2 M2 inserts for its cap; 2 M3 x 8 screws up into the top's inserts; a 1 mm rubber strip inside the ring",
+      "what": "The smooth body's lower half: the ring's bottom and the electronics bay (the ESP32-C3 and the CAN transceiver on edge inside); 2 M2 inserts for its cap, the rear M2.5 insert; the front M3 x 10 comes up through it",
       "qty": "1",
       "material": "ASA / PETG, 100% infill round the ring. On its flat switch-cube side"
     },
@@ -94,7 +94,7 @@
     },
     "bay_cap": {
       "name": "Bay cap",
-      "what": "Closes the bay from below (2 M2 x 6 countersunk); the dash's 4-core cable comes in through it",
+      "what": "A rounded dish that closes the bay from below (2 M2 x 6 countersunk); the dash's 4-core cable comes in through it",
       "qty": "1",
       "material": "ASA / PETG. Its outside down"
     },

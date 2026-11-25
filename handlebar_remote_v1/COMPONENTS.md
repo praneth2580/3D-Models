@@ -27,7 +27,7 @@
 
 - 6 × M2 heat-set inserts (3.2 mm hole): 4 for the face plate, 2 for the bay's cap;
 - 6 × M2 × 6 countersunk screws;
-- 2 × M3 heat-set inserts (4.2 mm hole) + 2 × M3 × 8 screws (the collar's halves);
+- the collar's halves: 1 × M3 heat-set insert (4.2 mm hole) + 1 × M3 × 10 screw (the front), 1 × M2.5 heat-set insert (3.6 mm hole) + 1 × M2.5 × 14 screw (the rear, from inside the pod);
 - a 1 mm rubber strip (inside the ring);
 - clear silicone (the wire holes and the cable hole).
 
