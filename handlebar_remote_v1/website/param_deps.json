@@ -2,6 +2,7 @@
  "generated": "2026-11-25",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
+  "buttons": 4,
   "bar_d": 22.2,
   "gap_w": 20,
   "pod_a": 125,
@@ -11,18 +12,21 @@
  },
  "parts": {
   "collar_top": [
+   "buttons",
    "bar_d",
    "gap_w",
    "pod_a",
    "pod_tilt"
   ],
   "collar_bottom": [
+   "buttons",
    "bar_d",
    "gap_w",
    "pod_a",
    "pod_tilt"
   ],
   "pod_cover": [
+   "buttons",
    "bar_d",
    "gap_w",
    "pod_a",
@@ -30,6 +34,7 @@
    "nav_top"
   ],
   "keypad": [
+   "buttons",
    "bar_d",
    "gap_w",
    "pod_a",

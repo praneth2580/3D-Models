@@ -15,12 +15,14 @@
           joystick in the middle, a button either side of it round the bar;
         - underneath, a slim BAY (as wide as the collar) with the ESP32-C3 and the CAN transceiver standing on edge,
           side by side, closed by a cap from below; the cable to the dash comes out of the cap.
-      The switches' 8 wires run from the pod to the bay in a groove inside the ring, against the bar.
+      The switches' wires (10 with 4 buttons) run from the pod to the bay in a groove inside the ring, against the bar.
+    - 2026-11-25: "could we add more buttons": 4 buttons (buttons, SELECT: 2 or 4), all in one row round the bar with
+      the joystick in the middle (the collar is too narrow for two rows); the pod grows from 45 to 66 mm long.
 
   Built around (COMPONENTS.md; MEASURE yours: none has a published drawing):
     - a 5-way navigation switch, 10 x 10 mm, about 7 mm tall (the one on the "5-way navigation button module": buy the
       module and take its switch off, or buy the switch), on a small piece of perfboard;
-    - 2 low tactile switches, 6 x 6 x 3.5 mm;
+    - 2 or 4 tactile switches, 6 x 6 x 7 mm (the actuator reaches up into the keypad's dome);
     - an ESP32-C3 Super Mini (22.52 x 18 mm: Bluetooth LE, and one CAN controller for the dash bus);
     - an SN65HVD230 CAN transceiver module (as in the dash).
 
@@ -28,15 +30,15 @@
   and have the door on the back side, on the handle side: it will help it be more airtight"):
     1. COLLAR TOP: the ring's upper half and the pod's lower part, open at the SEAM (low on the pod's sides, at the
        switch board's top). The switch board rests on 4 corner steps inside.
-    2. KEYPAD (TPU): a liner inside the cover: the sheet under the face (its 2 hollow domes are the buttons, it hugs the
+    2. KEYPAD (TPU): a liner inside the cover: the sheet under the face (its hollow domes are the buttons, it hugs the
        joystick cap's sleeve), a skirt down the cover's inside, and a flange that is the seam's gasket. The skirt's foot
        holds the switch board down.
     3. POD COVER: the face and the pod's upper sides in ONE smooth domed part (no plate, no screws on the face). It's
-       held by the 2 screws that also join the collar's halves:
+       held by 2 screws (the front one also joins the collar's halves):
          - FRONT: an M2.5 socket screw from UNDERNEATH (its head hidden in the bottom half's front boss), up through
            both halves into an insert in the cover's front end;
-         - REAR: an M2.5 countersunk screw at the cover's BACK end, down through the top half into an insert in the
-           bottom half behind the bay.
+         - BACK: an M2.5 countersunk screw at the cover's BACK end, into an insert in the top half;
+       and a third M2.5 from inside the pod (under the switch board) joins the halves behind the bar.
        So the only seam on the controls is low down, round the pod's sides, sealed by the keypad's flange.
     4. JOYSTICK CAP: pushes onto the switch's stem through the cover.
     5. COLLAR BOTTOM: the ring's lower half and the bay, a 1 mm rubber strip inside the ring. The boards slide into the
@@ -61,7 +63,7 @@ gap_w = 20;                 // MEASURE: the room on the bar between the grip and
 cube = [55, 45, 30, 22];    // MEASURE: the switch cube: width along the bar, depth, top above and bottom below the bar's
                             //   centre (only for the fit check and the pictures)
 grip_d = 32;                // MEASURE: the grip's diameter (the fit check)
-pod_a = 125;                // SELECT: where the controls face, round the bar (90 = straight up, 125 = up and back)
+pod_a = 125;                // SELECT: where the controls face, round the bar (90 = straight up, 125 = up and back; 95-150, up to 135 with 4 buttons)
 pod_tilt = 20;              // SELECT: the face tilted toward the grip (degrees), so the thumb reaches it from the grip
 bay_a = 270;                // SELECT: where the electronics bay hangs (270 = straight down)
 
@@ -69,10 +71,11 @@ bay_a = 270;                // SELECT: where the electronics bay hangs (270 = st
 nav_sw = [10, 10, 4.0];     // MEASURE: the 5-way switch's body (width, length, height above its board)
 nav_top = 7.0;              // MEASURE: its stem's top above the board's top
 nav_stem_d = 3.5;           // MEASURE: the stem (the cap pushes on and grips it)
-tact = [6, 6, 7.0];         // MEASURE: the 2 tactile switches, 6 x 6 x 7 mm (actuator top above the board; pins at +-3.25 x +-2.25):
+tact = [6, 6, 7.0];         // MEASURE: the tactile switches (the buttons), 6 x 6 x 7 mm (actuator top above the board; pins at +-3.25 x +-2.25):
 tact_body = 3.5;            //   their body's height; the round actuator (3.5 mm) rises into the keypad's hollow dome
-sw_len = 30;                // the switch board (perfboard): its length round the bar (its width follows the collar)
-btn_y = 11;                 // the 2 buttons, either side of the joystick round the bar (pod-frame y)
+buttons = 4;                // SELECT: 2 or 4 buttons, in one row round the bar with the joystick in the middle
+btn_y = 11;                 // the inner 2, either side of the joystick (pod-frame y)
+btn_pitch = 10.5;           // the outer 2 (with 4 buttons), this much further out
 
 // ------------------------- THE BOARDS IN THE BAY (MEASURE) -------------
 mcu = [22.52, 18, 4.5];     // ESP32-C3 Super Mini: length, width (nologo.tech), thickness with its parts (MEASURE)
@@ -91,7 +94,7 @@ pod_r = 5;                  // the pod's rounded corners (seen from the face)
 top_r = [4, 2];             // the cover's top edge rounded: sideways (along the bar), at the ends
 top_h = 5;                  //   over this height
 screw_lens = [6, 8, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50];   // the M2.5 lengths to choose from (the model picks; see the echo)
-dome = [8, 8];              // the 2 button domes
+dome = [8, 8];              // the buttons' domes
 dome_up = 1.4;              // they stand this far above the plate
 cap_d = 13;                 // the joystick's cap
 cap_h = 4.5;
@@ -113,7 +116,10 @@ cable_d = 4.8;              // the 4-core cable to the dash, through the cap (se
 $fn = 64;
 ring_r = bar_d/2 + rubber + ring_t;          // the ring's outside
 bore_r = bar_d/2 + rubber;
-inner = [collar_w - 2*pod_wall, ceil(max(sw_len + 1, 2*(btn_y + dome[1]/2 + 1.6)))];   // the pod's inside
+btn_ys = buttons == 4 ? [-btn_y - btn_pitch, -btn_y, btn_y, btn_y + btn_pitch] : [-btn_y, btn_y];   // the buttons (pod-frame y)
+btn_out = max(btn_ys);
+sw_len = max(30, 2*(btn_out + tact[1]/2 + 1));   // the switch board (perfboard): its length round the bar (its width follows the collar)
+inner = [collar_w - 2*pod_wall, ceil(max(sw_len + 1, 2*(btn_out + dome[1]/2 + 1.6)))];   // the pod's inside
 pod_l = inner[1] + 2*pod_end;                // its length round the bar
 sw_board = [min(14, inner[0] - 0.6), sw_len, 1.6];
 z_seat = -plate_t - skin;                    // the keypad's sheet, under the cover's face (pod frame)
@@ -145,12 +151,21 @@ bay_in = [collar_w - 2*bay_wall, max(mcu[1], can_pcb[0]) + 1, max(mcu[0], can_pc
 bay_r0 = bore_r + 1.0;                       // the bay's inside starts here (below the bore)
 bay_r1 = bay_r0 + bay_in[2];                 // its bottom (the cap's seat)
 bay_boss_y = bay_in[1]/2 + 3.3;              // the cap's 2 screws, in lobes at the bay's ends
-// The split between the collar's halves: through the axis, square to N (between the pod and the bay).
-N_ = [0, D[1] - E[1], D[2] - E[2]];
-N = N_/norm(N_);
+// The split between the collar's halves: a plane through the axis, between the pod and the bay. Behind the bar it runs
+// at split_a round the bar: halfway between where the pod and the bay face, or turned further down so the pod's back
+// end (its steps, the cover's lower edge, the back screw's insert) stays 3 degrees above it (a long pod facing back).
+function ang_of(p) = let(a = atan2(p[2], p[1])) a < 0 ? a + 360 : a;   // round the bar (0 = forward, 90 = up)
+pod_back_a = max([for (sx = [-1, 1]) each [
+  ang_of(pod_point(sx*(inner[0]/2 + 0.6), -(inner[1]/2 + 0.6), z_floor - 0.5)),          // the steps' bottoms
+  ang_of(pod_point(sx*(collar_w/2 - pod_r), -pod_l/2, z_c0)),                            // the cover's lower edge
+  ang_of(pod_point(sx*collar_w/2, -(pod_l/2 - pod_r), z_c0)),
+  ang_of(pod_point(sx*m25_insert_d/2, -(inner[1]/2 + pod_end/2), z_seam - 6))]]);       // the back screw's insert
+bay_back_a = ang_of(BAY_M*[0, bay_in[1]/2, bay_r0, 1]) ;                              // the bay's inside, top back edge
+split_a = max(ang_of([0, D[1] - E[1], D[2] - E[2]]) + 90, pod_back_a + 3);
+N = [0, sin(split_a), -cos(split_a)];
 T = [0, N[2], -N[1]];
 SPLIT_M = [[1, 0, 0, 0], [0, T[1], N[1], 0], [0, T[2], N[2], 0], [0, 0, 0, 1]];
-echo(front_screw = str("M2.5 x ", front_len, " socket cap"), back_screw = str("M2.5 x ", rear_len, " countersunk"), join_screw = str("M2.5 x ", join_len, " pan or socket"), join_sink = join_sink, pod_l = pod_l, pod_above_ring = pod_R - ring_r, pod_shift = pod_shift, bay_below_axis = bay_r1 + 0.6 + cap_t, collar_w = collar_w);
+echo(front_screw = str("M2.5 x ", front_len, " socket cap"), back_screw = str("M2.5 x ", rear_len, " countersunk"), join_screw = str("M2.5 x ", join_len, " pan or socket"), join_sink = join_sink, buttons = buttons, pod_l = pod_l, pod_above_ring = pod_R - ring_r, pod_shift = pod_shift, bay_below_axis = bay_r1 + 0.6 + cap_t, split_a = split_a, collar_w = collar_w);
 
 // ------------------------- CHECKS ------------------------------------
 assert(collar_w >= 18, "The gap is too narrow for the collar: make gap_w at least 19 mm (slide the switch cube inboard).");
@@ -159,12 +174,16 @@ assert(z_btop + tact_body <= z_seat - 0.3, "The tactile switches' bodies are too
 assert(z_btop + tact[2] >= z_seat + skin && z_btop + tact[2] <= dome_top - 0.8 - 0.3, "The tactile switches' height doesn't suit the domes: 6 x 6 x 7 mm ones (tact).");
 assert(nav_sw[0]/2 + 0.3 <= inner[0]/2 - skin - 0.1, "The joystick's switch doesn't fit inside the keypad's skirt.");
 assert(stem_top - 0.3 - (z_seat + 0.1) >= 2, "The joystick's stem is too short for its cap to grip it (nav_top).");
-assert(btn_y + dome[1]/2 + 0.8 <= inner[1]/2 - skin && btn_y - dome[1]/2 - 0.6 >= sw_hole_d/2, "The buttons don't fit either side of the joystick.");
+assert(buttons == 2 || buttons == 4, "buttons: 2 or 4.");
+assert(btn_out + dome[1]/2 + 0.8 <= inner[1]/2 - skin && btn_y - dome[1]/2 - 0.6 >= sw_hole_d/2, "The buttons don't fit either side of the joystick.");
+assert(buttons == 2 || btn_pitch - dome[1] - 0.6 >= 1.6, "The buttons are too close together (btn_pitch): the cover needs a web between their holes.");
 assert(cap_d < collar_w - 1, "The joystick's cap is wider than the collar.");
 assert(front_seat >= 2.5 && rear_engage >= 4 && join_sink >= 1.5, "No screw length in screw_lens suits.");
 assert(mcu[2] + bay_gap + can_pcb[2] + 0.6 <= bay_in[0], "The two boards don't fit side by side in the bay: a wider gap.");
 assert(abs(slot_x) + groove[0]/2 <= collar_w/2 - 1, "The wires' groove runs off the collar: less pod_tilt.");
 assert(pod_tilt >= 0 && pod_tilt <= 30, "pod_tilt: 0 to 30 degrees.");
+assert(buttons == 2 || pod_a <= 135, "With 4 buttons the pod is long: pod_a up to 135 (further back, its back end and the joining screw run into the bay).");
+assert(split_a <= bay_back_a - 3, "The pod's back end comes too close to the bay: less pod_a (or 2 buttons).");
 
 // ------------------------- HELPERS ------------------------------------
 module rrect(s, r) offset(r) square([s[0] - 2*r, s[1] - 2*r], center=true);
@@ -181,7 +200,7 @@ module switches(stem=true) pod_frame() {
   color([0.1, 0.45, 0.2]) translate([0, 0, z_bbot]) linear_extrude(sw_board[2]) board_2d();
   color([0.2, 0.2, 0.22]) translate([0, 0, z_btop]) linear_extrude(nav_sw[2]) square([nav_sw[0], nav_sw[1]], center=true);
   if (stem) color([0.7, 0.7, 0.72]) translate([0, 0, z_btop]) cylinder(d=nav_stem_d, h=nav_top, $fn=24);
-  for (s = [-1, 1]) translate([0, s*btn_y, z_btop]) {
+  for (y = btn_ys) translate([0, y, z_btop]) {
     color([0.15, 0.15, 0.16]) linear_extrude(tact_body) square([tact[0], tact[1]], center=true);
     color([0.3, 0.3, 0.32]) cylinder(d=3.5, h=tact[2], $fn=24);                      // the actuator
   }
@@ -198,7 +217,6 @@ module bay_boards() bay_frame() {
 
 // ------------------------- COLLAR -------------------------------------
 step_xy = [for (sx = [-1, 1], sy = [-1, 1]) [sx*(inner[0]/2 - 1.8), sy*(inner[1]/2 - 1.8)]];   // the board's 4 corner steps
-ear_y = ring_r + 2.6;       // the front screw crosses the split this far in front of the axis
 function unit(v) = v/norm(v);
 function pod_point(x, y, z) = O + x*XP + y*YP + z*ZP;
 function pod_of(p) = [(p - O)*XP, (p - O)*YP, (p - O)*ZP];
@@ -209,8 +227,12 @@ function axis_m(p, u) = let(x0 = unit([1, 0, 0] - u[0]*u), y0 = cross(u, x0))
 screw_y = inner[1]/2 + pod_end/2;
 // FRONT: M2.5 socket cap from underneath: its head in a counterbore in the bottom half's front boss, up through both
 // halves (clear of the ring) into an insert in the cover's front end.
-F_A = ear_y*T;                                  // where it crosses the split
 F_B = pod_point(0, screw_y, z_c0);              // where it enters the cover (its underside)
+// It crosses the split this far in front of the axis: clear of the ring, and leaning at most about 2.8 mm toward the
+// front end compared with square to the face (with a longer pod it would otherwise cut through the pod's inside).
+ear_sq = let(t = (N*F_B)/(N*ZP)) (F_B - t*ZP)*T;   // where a screw square to the face would cross
+ear_y = max(ring_r + 2.6, ear_sq - 2.8);
+F_A = ear_y*T;                                  // where it crosses the split
 F_u = unit(F_B - F_A);
 F_M = axis_m(F_A, F_u);
 front_ab = norm(F_B - F_A);
@@ -238,7 +260,9 @@ module rear_insert() multmatrix(R_M) translate([0, 0, rear_st - 0.01]) cylinder(
 // JOINING THE HALVES AT THE BACK: behind the bar the split runs between the pod and the bay, so a screw there from
 // outside would cross one of them: an M2.5 from INSIDE the pod (its head on the pod floor's rear end, under the switch
 // board), down square to the split into an insert in the bottom half, behind the bay. Fitted before the switch board.
-join_s0 = pod_point(0, -(inner[1]/2 - 2.6), z_floor);
+// No further back than 14.4 mm from the pod's centre: in a longer pod (4 buttons) the floor's far end comes too close
+// to the split (at pod_a 150).
+join_s0 = pod_point(0, -min(inner[1]/2 - 2.6, 14.4), z_floor);
 join_len = max([for (x = screw_lens) if (x <= N*join_s0 + 4 - 1.5) x]);   // the longest with its head sunk 1.5+ into the floor
 join_sink = N*join_s0 + 4 - join_len;           // how deep its head sits (below the floor): exactly 4 mm of thread in the insert
 join_s = join_s0 - join_sink*N;                 // its head's seat
@@ -315,7 +339,7 @@ module pod_cover() difference() {
   inside(z_c0 - 1, -plate_t);                                                 // the inside, up to the face's underside
   pod_frame() {
     translate([0, 0, -plate_t - 1]) cylinder(d=sw_hole_d, h=plate_t + 2);    // the joystick's sleeve
-    for (s = [-1, 1]) translate([0, s*btn_y, -plate_t - 1]) linear_extrude(plate_t + 2) rrect(dome + [0.6, 0.6], 3.5);   // the domes
+    for (y = btn_ys) translate([0, y, -plate_t - 1]) linear_extrude(plate_t + 2) rrect(dome + [0.6, 0.6], 3.5);   // the domes
   }
   front_insert(); rear_clear();
 }
@@ -332,11 +356,11 @@ module keypad() difference() {
       rrect(inner - [0.2, 0.2], kp_r); rrect(inner - [0.2 + 2*skin, 0.2 + 2*skin], max(0.5, kp_r - skin)); }
     translate([0, 0, z_seam]) linear_extrude(skin) difference() {                                   // the flange: the seam's gasket
       offset(-0.4) seam_2d(); rrect(inner - [0.2 + 2*skin, 0.2 + 2*skin], max(0.5, kp_r - skin)); }
-    for (s = [-1, 1]) translate([0, s*btn_y, z_seat]) linear_extrude(dome_top - z_seat) offset(-0.3) rrect(dome, 3.2);   // the domes (round-cornered)
+    for (y = btn_ys) translate([0, y, z_seat]) linear_extrude(dome_top - z_seat) offset(-0.3) rrect(dome, 3.2);   // the domes (round-cornered)
   }
   pod_frame() {
     translate([0, 0, z_seat - 1]) cylinder(d=sleeve_d - 0.6, h=skin + 2, $fn=32);                    // hugs the cap's sleeve
-    for (s = [-1, 1]) translate([0, s*btn_y, z_seat - 0.01]) linear_extrude(dome_top - 0.8 - z_seat) offset(-1.3) rrect(dome, 2.2);   // hollow domes
+    for (y = btn_ys) translate([0, y, z_seat - 0.01]) linear_extrude(dome_top - 0.8 - z_seat) offset(-1.3) rrect(dome, 2.2);   // hollow domes
     for (c = [cross_seam(F_A, F_u), cross_seam(R_S, R_u)]) translate([c[0], c[1], z_seam - 1]) cylinder(d=3.4, h=skin + 2, $fn=20);   // the screws
   }
 }
