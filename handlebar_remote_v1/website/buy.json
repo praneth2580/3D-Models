@@ -23,17 +23,17 @@
           "stores": "modules"
         },
         {
-          "name": "Tactile switches, 6 x 6 x 7 mm (round actuator)",
-          "for": "The 4 buttons (the 7 mm height matters: the actuator reaches up into the keypad's dome)",
+          "name": "Tactile switches, 6 x 6 mm (round actuator): 2 x 7 mm tall, 2 x 8 mm tall",
+          "for": "The 4 buttons (the heights matter: each actuator reaches up into its dome; the outer 2 are taller because the face curves)",
           "qty": 4,
           "price": "₹20–50 (est.)",
           "fits": true,
-          "search": "tactile switch 6x6x7",
+          "search": "tactile switch 6x6 7mm 8mm",
           "stores": "components",
           "local": "Lamington Road"
         },
         {
-          "name": "Perfboard (a 14 x 51 mm piece)",
+          "name": "Perfboard (a 14 x 53 mm piece)",
           "for": "The switch board",
           "qty": 1,
           "price": "₹50–100 (est.)",
@@ -140,7 +140,7 @@
           "local": "Nagdevi Street"
         },
         {
-          "name": "M2.5 heat-set inserts (3.6 mm hole, 4 mm) + M2.5 screws: 40 socket cap, 12 countersunk, 12 pan head",
+          "name": "M2.5 heat-set inserts (3.6 mm hole, 4 mm) + M2.5 screws: 40 socket cap, 14 countersunk, 12 pan head",
           "for": "The cover and the collar's halves (lengths at the defaults; the model prints yours)",
           "qty": "3 + 3",
           "price": "",

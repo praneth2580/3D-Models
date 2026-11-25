@@ -18,6 +18,9 @@
       The switches' wires (10 with 4 buttons) run from the pod to the bay in a groove inside the ring, against the bar.
     - 2026-11-25: "could we add more buttons": 4 buttons (buttons, SELECT: 2 or 4), all in one row round the bar with
       the joystick in the middle (the collar is too narrow for two rows); the pod grows from 45 to 66 mm long.
+    - 2026-11-25: "it still not ergonomic ... the buttons are just like a box, not a control unit": a THUMB CRADLE
+      (sweep_r: curved along the thumb's sweep), each button in a cup tilted with the curve, ridges between them, round
+      inner and pill outer buttons, the joystick standing up in the middle; tactile heights picked per button.
 
   Built around (COMPONENTS.md; MEASURE yours: none has a published drawing):
     - a 5-way navigation switch, 10 x 10 mm, about 7 mm tall (the one on the "5-way navigation button module": buy the
@@ -71,10 +74,12 @@ bay_a = 270;                // SELECT: where the electronics bay hangs (270 = st
 nav_sw = [10, 10, 4.0];     // MEASURE: the 5-way switch's body (width, length, height above its board)
 nav_top = 7.0;              // MEASURE: its stem's top above the board's top
 nav_stem_d = 3.5;           // MEASURE: the stem (the cap pushes on and grips it)
-tact = [6, 6, 7.0];         // MEASURE: the tactile switches (the buttons), 6 x 6 x 7 mm (actuator top above the board; pins at +-3.25 x +-2.25):
+tact = [6, 6];              // MEASURE: the tactile switches (the buttons), 6 x 6 mm (pins at +-3.25 x +-2.25)
+tact_heights = [5, 6, 7, 8, 9, 9.5, 10, 11, 12, 13];   // their heights sold (actuator top above the board): the model picks
+                            //   one per button to suit the curved face (see the echo: 7 mm inside, 8 mm outside)
 tact_body = 3.5;            //   their body's height; the round actuator (3.5 mm) rises into the keypad's hollow dome
 buttons = 4;                // SELECT: 2 or 4 buttons, in one row round the bar with the joystick in the middle
-btn_y = 11;                 // the inner 2, either side of the joystick (pod-frame y)
+btn_y = 12;                 // the inner 2, either side of the joystick (pod-frame y)
 btn_pitch = 10.5;           // the outer 2 (with 4 buttons), this much further out
 
 // ------------------------- THE BOARDS IN THE BAY (MEASURE) -------------
@@ -91,11 +96,18 @@ plate_t = 2.0;              // the cover's face
 skin = 0.8;                 // the keypad's sheet, skirt and flange (TPU)
 squeeze = 0.2;              // how much the cover squeezes the keypad's flange (the seam's seal)
 pod_r = 5;                  // the pod's rounded corners (seen from the face)
-top_r = [4, 2];             // the cover's top edge rounded: sideways (along the bar), at the ends
-top_h = 5;                  //   over this height
+// The face: a THUMB CRADLE (owner, 2026-11-25: "it still not ergonomic ... the buttons are just like a box, not a
+// control unit"): curved along the thumb's sweep, each button in its own cup, ridges between them.
+sweep_r = 110;              // SELECT: the face's concave curve along the thumb's sweep (smaller = a deeper cradle)
+side_r = 4.5;               // its sides rounded (across the bar)
+end_r = 5;                  // its ends rolled over
+proud = 0.7;                // each button's top stands this far above the face round it
+cup = [0.8, 1.3];           // each button's cup: its depth at the button, and how far it reaches round it at the face
+rib_d = 1.8;                // the ridges between the inner and the outer buttons (to feel with gloves)
+cap_lift = 2.4;             // the joystick's cap floats this far above the cradle's bottom (room to tilt over the face)
 screw_lens = [6, 8, 10, 12, 14, 16, 18, 20, 25, 30, 35, 40, 45, 50];   // the M2.5 lengths to choose from (the model picks; see the echo)
-dome = [8, 8];              // the buttons' domes
-dome_up = 1.4;              // they stand this far above the plate
+dome_in = [8, 8];           // the inner 2 buttons: round
+dome_out = [10, 7];         // the outer 2: pills, wider across the bar (so they feel different)
 cap_d = 13;                 // the joystick's cap
 cap_h = 4.5;
 sleeve_d = 6.5;             // its sleeve, down through the plate and the keypad onto the stem
@@ -119,9 +131,14 @@ bore_r = bar_d/2 + rubber;
 btn_ys = buttons == 4 ? [-btn_y - btn_pitch, -btn_y, btn_y, btn_y + btn_pitch] : [-btn_y, btn_y];   // the buttons (pod-frame y)
 btn_out = max(btn_ys);
 sw_len = max(30, 2*(btn_out + tact[1]/2 + 1));   // the switch board (perfboard): its length round the bar (its width follows the collar)
-inner = [collar_w - 2*pod_wall, ceil(max(sw_len + 1, 2*(btn_out + dome[1]/2 + 1.6)))];   // the pod's inside
+function btn_dome(y) = abs(y) > btn_y + 0.1 ? dome_out : dome_in;
+// The pod's inside: long enough for the buttons, and for the switch board's square corners in its rounded corners.
+inner0 = collar_w - 2*pod_wall;
+cav_r = max(0.5, pod_r - pod_wall);
+board_dx = max(0, min(14, inner0 - 0.6)/2 - (inner0/2 - cav_r));
+inner = [inner0, ceil(max(sw_len + 2*(cav_r - sqrt(cav_r*cav_r - board_dx*board_dx)) + 0.3, 2*(btn_out + btn_dome(btn_out)[1]/2 + 1.6)))];
 pod_l = inner[1] + 2*pod_end;                // its length round the bar
-sw_board = [min(14, inner[0] - 0.6), sw_len, 1.6];
+sw_board = [min(14, inner0 - 0.6), sw_len, 1.6];
 z_seat = -plate_t - skin;                    // the keypad's sheet, under the cover's face (pod frame)
 z_btop = z_seat - 0.3 - nav_sw[2];           // the switch board's top: the joystick's body stays under the keypad
 z_bbot = z_btop - sw_board[2];
@@ -130,19 +147,35 @@ z_seam = z_btop;                             // the seam between the cover and t
 z_c0 = z_seam + skin - squeeze;              // the cover's underside
 stem_top = z_btop + nav_top;
 sw_hole_d = sleeve_d + 2*(plate_t + max(stem_top, 0))*tan(cap_travel) + 0.8;
-dome_top = z_seat + skin + plate_t + dome_up;   // the domes' tops (pod frame)
+// The face's shape (pod frame z, along its middle): concave along the thumb's sweep, its ends rolled over.
+function sag(y) = sweep_r - sqrt(sweep_r*sweep_r - y*y);
+function slope(y) = y/sqrt(sweep_r*sweep_r - y*y);
+function endroll(y) = let(d = 0.9*(abs(y) - (pod_l/2 - end_r))) d > 0 ? end_r - sqrt(max(0, end_r*end_r - d*d)) : 0;   // (stops short of vertical)
+function surf(y) = sag(y) - endroll(y);
+function plan_w(y) = let(d = abs(y) - (pod_l/2 - pod_r)) d > 0 ? collar_w - 2*(pod_r - sqrt(max(0, pod_r*pod_r - d*d))) : collar_w;
+// The buttons: each dome's top follows the face (proud of it, tilted with its slope); the model picks each tactile
+// switch's height so its actuator stops 0.3 under the dome's roof (roof at least 0.8 thick).
+btn_n = len(btn_ys);
+btn_top = [for (y = btn_ys) sag(y) + proud];
+btn_low = [for (i = [0:btn_n - 1]) btn_top[i] - abs(slope(btn_ys[i]))*(btn_dome(btn_ys[i])[1]/2 - 1.3)];   // its top's lowest point over the hollow
+tact_hs = [for (i = [0:btn_n - 1]) let(ok = [for (h = tact_heights) if (z_btop + h + 0.3 <= btn_low[i] - 0.8) h]) len(ok) > 0 ? max(ok) : undef];
+btn_roof = [for (i = [0:btn_n - 1]) z_btop + tact_hs[i] + 0.3];   // the hollow dome's roof (underside)
+joy_z0 = surf(0) + cap_lift;                 // the joystick cap's underside
+pivot = [0, 0, z_btop + nav_sw[2]];          // MEASURE: where the 5-way switch's stem pivots (taken at its body's top)
+rib_y = (btn_y + dome_in[1]/2 + btn_y + btn_pitch - dome_out[1]/2)/2;   // the ridges between the inner and outer buttons
 // The pod: facing D round the bar, tilted toward the grip about its own y axis. Its distance from the axis keeps the
 // lowest corner of its floor 1.2 above the rubber; its shift along the bar keeps its inside within the collar's width
 // on the switch cube's side (its top may overhang the grip's end, well above the grip).
 D = [0, cos(pod_a), sin(pod_a)];
 YP = [0, sin(pod_a), -cos(pod_a)];
-XP = [cos(pod_tilt), sin(pod_tilt)*D[1], sin(pod_tilt)*D[2]];
-ZP = [-sin(pod_tilt), cos(pod_tilt)*D[1], cos(pod_tilt)*D[2]];
-pod_R = bore_r + 1.2 + (inner[0]/2)*sin(pod_tilt) - z_floor*cos(pod_tilt);
-pod_shift = collar_w/2 - 1.6 - (inner[0]/2)*cos(pod_tilt) + z_floor*sin(pod_tilt);
+tilt_ = max(pod_tilt, 0.01);                 // (exactly 0 lines the cradle's cut up with the ring's faces: CGAL fails)
+XP = [cos(tilt_), sin(tilt_)*D[1], sin(tilt_)*D[2]];
+ZP = [-sin(tilt_), cos(tilt_)*D[1], cos(tilt_)*D[2]];
+pod_R = bore_r + 1.2 + (inner[0]/2)*sin(tilt_) - z_floor*cos(tilt_);
+pod_shift = collar_w/2 - 1.6 - (inner[0]/2)*cos(tilt_) + z_floor*sin(tilt_);
 O = [pod_shift, pod_R*D[1], pod_R*D[2]];
 POD_M = [[XP[0], YP[0], ZP[0], O[0]], [XP[1], YP[1], ZP[1], O[1]], [XP[2], YP[2], ZP[2], O[2]], [0, 0, 0, 1]];
-slot_x = pod_shift - z_floor*sin(pod_tilt);  // where the wires leave the pod's floor, along the bar (they go straight down)
+slot_x = pod_shift - z_floor*sin(tilt_);  // where the wires leave the pod's floor, along the bar (they go straight down)
 // The bay: down bay_a, as wide as the collar, the 2 boards on edge side by side.
 E = [0, cos(bay_a), sin(bay_a)];
 YB = [0, sin(bay_a), -cos(bay_a)];
@@ -165,18 +198,21 @@ split_a = max(ang_of([0, D[1] - E[1], D[2] - E[2]]) + 90, pod_back_a + 3);
 N = [0, sin(split_a), -cos(split_a)];
 T = [0, N[2], -N[1]];
 SPLIT_M = [[1, 0, 0, 0], [0, T[1], N[1], 0], [0, T[2], N[2], 0], [0, 0, 0, 1]];
+echo(tactile_switches = [for (i = [0:btn_n - 1]) str("6 x 6 x ", tact_hs[i])], face_ends_rise = surf(pod_l/2 - end_r));
 echo(front_screw = str("M2.5 x ", front_len, " socket cap"), back_screw = str("M2.5 x ", rear_len, " countersunk"), join_screw = str("M2.5 x ", join_len, " pan or socket"), join_sink = join_sink, buttons = buttons, pod_l = pod_l, pod_above_ring = pod_R - ring_r, pod_shift = pod_shift, bay_below_axis = bay_r1 + 0.6 + cap_t, split_a = split_a, collar_w = collar_w);
 
 // ------------------------- CHECKS ------------------------------------
 assert(collar_w >= 18, "The gap is too narrow for the collar: make gap_w at least 19 mm (slide the switch cube inboard).");
 assert(sw_board[0] <= inner[0] - 0.4 && sw_board[1] <= inner[1] - 0.4, "The switch board doesn't fit the pod.");
 assert(z_btop + tact_body <= z_seat - 0.3, "The tactile switches' bodies are too tall for the keypad.");
-assert(z_btop + tact[2] >= z_seat + skin && z_btop + tact[2] <= dome_top - 0.8 - 0.3, "The tactile switches' height doesn't suit the domes: 6 x 6 x 7 mm ones (tact).");
+assert(len([for (h = tact_hs) if (h == undef || z_btop + h < z_seat + skin) 1]) == 0, "No tactile switch height in tact_heights suits a button's dome (proud, sweep_r).");
 assert(nav_sw[0]/2 + 0.3 <= inner[0]/2 - skin - 0.1, "The joystick's switch doesn't fit inside the keypad's skirt.");
 assert(stem_top - 0.3 - (z_seat + 0.1) >= 2, "The joystick's stem is too short for its cap to grip it (nav_top).");
 assert(buttons == 2 || buttons == 4, "buttons: 2 or 4.");
-assert(btn_out + dome[1]/2 + 0.8 <= inner[1]/2 - skin && btn_y - dome[1]/2 - 0.6 >= sw_hole_d/2, "The buttons don't fit either side of the joystick.");
-assert(buttons == 2 || btn_pitch - dome[1] - 0.6 >= 1.6, "The buttons are too close together (btn_pitch): the cover needs a web between their holes.");
+assert(btn_out + btn_dome(btn_out)[1]/2 + 0.8 <= inner[1]/2 - skin && btn_y - dome_in[1]/2 - 0.6 >= sw_hole_d/2, "The buttons don't fit either side of the joystick.");
+assert(max(dome_in[0], dome_out[0])/2 + 0.3 <= inner[0]/2 - skin, "The buttons are too wide for the keypad's skirt.");
+assert(buttons == 2 || btn_pitch - (dome_in[1] + dome_out[1])/2 - 0.6 >= 2.0, "The buttons are too close together (btn_pitch): no room for the ridge between them.");
+assert(btn_out + btn_dome(btn_out)[1]/2 + 0.3 + cup[1] <= pod_l/2 - end_r, "The outer buttons' cups run into the face's rolled ends.");
 assert(cap_d < collar_w - 1, "The joystick's cap is wider than the collar.");
 assert(front_seat >= 2.5 && rear_engage >= 4 && join_sink >= 1.5, "No screw length in screw_lens suits.");
 assert(mcu[2] + bay_gap + can_pcb[2] + 0.6 <= bay_in[0], "The two boards don't fit side by side in the bay: a wider gap.");
@@ -200,9 +236,9 @@ module switches(stem=true) pod_frame() {
   color([0.1, 0.45, 0.2]) translate([0, 0, z_bbot]) linear_extrude(sw_board[2]) board_2d();
   color([0.2, 0.2, 0.22]) translate([0, 0, z_btop]) linear_extrude(nav_sw[2]) square([nav_sw[0], nav_sw[1]], center=true);
   if (stem) color([0.7, 0.7, 0.72]) translate([0, 0, z_btop]) cylinder(d=nav_stem_d, h=nav_top, $fn=24);
-  for (y = btn_ys) translate([0, y, z_btop]) {
+  for (i = [0:btn_n - 1]) translate([0, btn_ys[i], z_btop]) {
     color([0.15, 0.15, 0.16]) linear_extrude(tact_body) square([tact[0], tact[1]], center=true);
-    color([0.3, 0.3, 0.32]) cylinder(d=3.5, h=tact[2], $fn=24);                      // the actuator
+    color([0.3, 0.3, 0.32]) cylinder(d=3.5, h=tact_hs[i], $fn=24);                   // the actuator
   }
 }
 module board_2d() square([sw_board[0], sw_board[1]], center=true);
@@ -231,7 +267,7 @@ F_B = pod_point(0, screw_y, z_c0);              // where it enters the cover (it
 // It crosses the split this far in front of the axis: clear of the ring, and leaning at most about 2.8 mm toward the
 // front end compared with square to the face (with a longer pod it would otherwise cut through the pod's inside).
 ear_sq = let(t = (N*F_B)/(N*ZP)) (F_B - t*ZP)*T;   // where a screw square to the face would cross
-ear_y = max(ring_r + 2.6, ear_sq - 2.8);
+ear_y = max(ring_r + 7.1, ear_sq - 2.8);   // (at least 7.1 in front of the ring: else, with a short pod facing up, the head's way in passes the bay)
 F_A = ear_y*T;                                  // where it crosses the split
 F_u = unit(F_B - F_A);
 F_M = axis_m(F_A, F_u);
@@ -241,15 +277,16 @@ front_len = pick_len(front_ab + 4 + 2.5);       // the shortest that leaves 2.5 
 front_seat = front_len - 4 - front_ab;          // its head's seat below the split
 module front_clear(cb=true) multmatrix(F_M) {
   translate([0, 0, -front_seat]) cylinder(d=2.9, h=front_seat + front_ab + 0.01, $fn=20);
-  if (cb) translate([0, 0, -front_seat - 40]) cylinder(d=5, h=40, $fn=24);      // the head (4.5) goes in from below
+  if (cb) translate([0, 0, -front_seat - front_tunnel]) cylinder(d=5, h=front_tunnel, $fn=24);   // the head (4.5) goes in from below
 }
+front_tunnel = 40;          // the head's way in from below, out of the body (check_front_access: it must not pass the bay)
 module front_insert() multmatrix(F_M) translate([0, 0, front_ab - 0.01]) cylinder(d=m25_insert_d, h=4.6, $fn=20);
 // BACK: an M2.5 countersunk at the cover's back end, straight down through it into an insert in the top half's end
 // wall, below the seam.
-R_S = pod_point(0, -screw_y, 0);                // its head, flush on the cover's top at the back end
+R_S = pod_point(0, -screw_y, min([for (d = [-2.5:0.5:2.5]) surf(screw_y + d)]) - 0.2);   // its head, at or below the curved face
 R_u = -ZP;
 R_M = axis_m(R_S, R_u);
-rear_st = -z_seam;                              // its depth to the seam
+rear_st = pod_of(R_S)[2] - z_seam;              // its depth to the seam
 rear_len = pick_len(rear_st + 4);               // the shortest with 4 mm in the insert
 rear_engage = rear_len - rear_st;
 module rear_clear(cs=true) multmatrix(R_M) {
@@ -281,12 +318,23 @@ function cross_seam(P0, u) = let(q = pod_of(P0), w = [u*XP, u*YP, u*ZP], t = (z_
 ring_round = 2.5;
 module ring_solid() rotate([0, 90, 0]) rotate_extrude($fn=96)
   offset(r=ring_round) offset(delta=-ring_round) translate([0, -collar_w/2]) square([ring_r, collar_w]);
+// The pod's top (pod frame): the thumb cradle, swept along y: at each station a section rounded at its sides (side_r),
+// its top on the face's curve (surf), its width following the pod's rounded corners (plan_w).
+face_n = ceil(pod_l/1.5);
+function face_prof(y, g=0) = let(w = plan_w(y) + 2*g, sr = min(side_r, w/2 - 0.05), t = surf(y) + g, zl = z_c0 - 0.5)
+  concat([[-w/2, zl]], [for (a = [180:-15:90]) [-w/2 + sr + sr*cos(a), t - sr + sr*sin(a)]],
+         [for (a = [90:-15:0]) [w/2 - sr + sr*cos(a), t - sr + sr*sin(a)]], [[w/2, zl]]);
+face_m = len(face_prof(0));
+module face_poly(g=0) polyhedron(           // g: grown this much (the hull's, so its surface never coincides with the cut)
+  points = [for (i = [0:face_n]) let(y = -pod_l/2 + i*pod_l/face_n) for (p = face_prof(y, g)) [p[0], y*(pod_l/2 + g)/(pod_l/2), p[1]]],
+  faces = concat(
+    [for (i = [0:face_n - 1], j = [0:face_m - 1], t = [0, 1]) t == 0 ? [i*face_m + j, (i + 1)*face_m + j, (i + 1)*face_m + (j + 1)%face_m]
+                                                                       : [i*face_m + j, (i + 1)*face_m + (j + 1)%face_m, i*face_m + (j + 1)%face_m]],   // (triangles: quads here aren't flat)
+    [[for (j = [0:face_m - 1]) j]], [[for (j = [face_m - 1:-1:0]) face_n*face_m + j]]), convexity=4);
 module shell() hull() {
   ring_solid();
   pod_frame() {
-    for (a = [0:15:90]) let(k = 1 - cos(a))                                                   // the top: a flat face, its edges
-      translate([0, 0, -top_h + top_h*sin(a)]) linear_extrude(0.01)                           //   rolled over (top_r, top_h)
-        rrect([collar_w - 2*top_r[0]*k, pod_l - 2*top_r[1]*k], max(1, pod_r - top_r[0]*k));
+    face_poly(0.2);                                                                             // the top (its convex hull here)
     translate([0, 0, z_floor - 1.2]) linear_extrude(0.01) rrect([collar_w, pod_l], pod_r);        // the floor: the shell wraps the inside
   }
   bay_frame() {
@@ -295,6 +343,20 @@ module shell() hull() {
   }
   multmatrix(F_M) translate([0, 0, -front_seat - 2]) cylinder(d=9, h=front_seat + 8, $fn=32);   // the front screw's boss
 }
+// The body: the hull (which can't be concave) minus the AIR over the cradle: above the face and its rounded sides, and
+// beside them a 45-degree flank down, so the hull beside the pod blends into the rounded sides.
+function air_prof(y) = let(w = plan_w(y), sr = min(side_r, w/2 - 0.05), t = surf(y), e = 12)
+  concat([[-w/2 - e, t + 20], [w/2 + e, t + 20], [w/2 + e, t - sr - e]], [for (a = [0:15:90]) [w/2 - sr + sr*cos(a), t - sr + sr*sin(a)]],
+         [for (a = [90:15:180]) [-w/2 + sr + sr*cos(a), t - sr + sr*sin(a)]], [[-w/2 - e, t - sr - e]]);
+air_m = len(air_prof(0));
+module air_poly() polyhedron(
+  points = [for (i = [-1:face_n + 1]) let(y = -pod_l/2 + min(max(i, 0), face_n)*pod_l/face_n, ye = y + (i < 0 ? -3 : i > face_n ? 3 : 0))
+             for (p = air_prof(y)) [p[0], ye, p[1]]],                     // (on 3 mm past the ends, over the grown hull's ends)
+  faces = concat(
+    [for (i = [0:face_n + 1], j = [0:air_m - 1], t = [0, 1]) t == 0 ? [i*air_m + j, (i + 1)*air_m + j, (i + 1)*air_m + (j + 1)%air_m]
+                                                                     : [i*air_m + j, (i + 1)*air_m + (j + 1)%air_m, i*air_m + (j + 1)%air_m]],
+    [[for (j = [0:air_m - 1]) j]], [[for (j = [air_m - 1:-1:0]) (face_n + 2)*air_m + j]]), convexity=4);
+module body() difference() { shell(); pod_frame() air_poly(); }
 // The wires: a slot down from the pod's floor into the bore, a groove in the bore round to the bay, a slot up into it.
 module wire_path() {
   pod_frame() translate([0, 0, z_floor - 6]) cylinder(d=groove[0], h=6.1, $fn=20);
@@ -333,13 +395,28 @@ module collar_bottom() difference() {
   front_clear(); join_insert();
 }
 // The pod's cover: the face and the pod's upper sides, one smooth part.
+// Each button's local frame: origin at its dome's top centre, z sheared along the face's slope there.
+module btn_frame(i) multmatrix([[1, 0, 0, 0], [0, 1, 0, btn_ys[i]], [0, slope(btn_ys[i]), 1, btn_top[i]], [0, 0, 0, 1]]) children();
+module btn_2d(i, o=0) let(d = btn_dome(btn_ys[i])) offset(o) rrect(d, min(d)/2 - 0.01);
+module cup_cut(i) btn_frame(i) translate([0, 0, -proud]) hull() {      // a shallow cup round the button, tilted with the face
+  translate([0, 0, -cup[0]]) linear_extrude(0.01) btn_2d(i, 0.3);
+  translate([0, 0, 2.4]) linear_extrude(0.01) btn_2d(i, 0.3 + cup[1]*(2.4 + cup[0])/cup[0]);
+}
+module ribs() pod_frame() for (s = [-1, 1]) if (buttons == 4)            // the ridges between the inner and outer buttons
+  hull() for (x = [-1, 1]) translate([x*4, s*rib_y, sag(rib_y) + 0.3]) sphere(d=rib_d, $fn=16);
 module pod_cover() difference() {
-  intersection() { shell(); above_seam(z_c0); translate([-100, 0, 0]) slab(200 + collar_w); }
+  union() {
+    difference() {
+      intersection() { body(); above_seam(z_c0); translate([-100, 0, 0]) slab(200 + collar_w); }
+      pod_frame() for (i = [0:btn_n - 1]) cup_cut(i);
+    }
+    ribs();
+  }
   translate([grip_x - 100, 0, 0]) bar_x(grip_d + 2, 200);
   inside(z_c0 - 1, -plate_t);                                                 // the inside, up to the face's underside
   pod_frame() {
-    translate([0, 0, -plate_t - 1]) cylinder(d=sw_hole_d, h=plate_t + 2);    // the joystick's sleeve
-    for (y = btn_ys) translate([0, y, -plate_t - 1]) linear_extrude(plate_t + 2) rrect(dome + [0.6, 0.6], 3.5);   // the domes
+    translate([0, 0, -plate_t - 1]) cylinder(d=sw_hole_d, h=plate_t + 12);   // the joystick's sleeve
+    for (i = [0:btn_n - 1]) translate([0, btn_ys[i], -plate_t - 1]) linear_extrude(plate_t + 12) btn_2d(i, 0.3);   // the domes
   }
   front_insert(); rear_clear();
 }
@@ -356,25 +433,30 @@ module keypad() difference() {
       rrect(inner - [0.2, 0.2], kp_r); rrect(inner - [0.2 + 2*skin, 0.2 + 2*skin], max(0.5, kp_r - skin)); }
     translate([0, 0, z_seam]) linear_extrude(skin) difference() {                                   // the flange: the seam's gasket
       offset(-0.4) seam_2d(); rrect(inner - [0.2 + 2*skin, 0.2 + 2*skin], max(0.5, kp_r - skin)); }
-    for (y = btn_ys) translate([0, y, z_seat]) linear_extrude(dome_top - z_seat) offset(-0.3) rrect(dome, 3.2);   // the domes (round-cornered)
+    for (i = [0:btn_n - 1]) hull() {                                                                // the domes: tops follow the face
+      translate([0, btn_ys[i], z_seat]) linear_extrude(0.01) btn_2d(i, -0.3);
+      btn_frame(i) { translate([0, 0, -1.0]) linear_extrude(0.01) btn_2d(i, -0.3); linear_extrude(0.01) btn_2d(i, -1.1); }
+    }
   }
   pod_frame() {
     translate([0, 0, z_seat - 1]) cylinder(d=sleeve_d - 0.6, h=skin + 2, $fn=32);                    // hugs the cap's sleeve
-    for (y = btn_ys) translate([0, y, z_seat - 0.01]) linear_extrude(dome_top - 0.8 - z_seat) offset(-1.3) rrect(dome, 2.2);   // hollow domes
+    for (i = [0:btn_n - 1]) translate([0, btn_ys[i], z_seat - 0.01]) linear_extrude(btn_roof[i] - z_seat + 0.01) btn_2d(i, -1.3);   // hollow
     for (c = [cross_seam(F_A, F_u), cross_seam(R_S, R_u)]) translate([c[0], c[1], z_seam - 1]) cylinder(d=3.4, h=skin + 2, $fn=20);   // the screws
   }
 }
-module joy_cap() pod_frame() difference() {
+// The joystick's cap (pod frame): k = 0 all, 1 the head only, 2 the sleeve only (for the tilt check).
+module joy_cap_local(k=0) difference() {
   union() {
-    translate([0, 0, 0.4]) intersection() {
+    if (k != 2) translate([0, 0, joy_z0]) intersection() {
       hull() { cylinder(d=cap_d, h=1.2); translate([0, 0, cap_h - 1.6]) scale([1, 1, 0.35]) sphere(d=cap_d - 2.5, $fn=48); }
       cylinder(d=cap_d + 1, h=cap_h);
     }
-    translate([0, 0, z_seat + 0.1]) cylinder(d=sleeve_d, h=0.4 - z_seat - 0.1 + 0.01);
+    if (k != 1) translate([0, 0, z_seat + 0.1]) cylinder(d=sleeve_d, h=joy_z0 - z_seat - 0.1 + 0.01);
   }
   translate([0, 0, z_seat]) cylinder(d=nav_stem_d - 0.15, h=stem_top - 0.3 - z_seat, $fn=24);        // pushes onto the stem
-  for (a = [0:45:315]) rotate(a) translate([cap_d/2 - 2.4, 0, 0.4 + 1.0]) rotate([0, 90, 0]) cylinder(d=1.0, h=4, $fn=8);   // grip grooves
+  for (a = [0:45:315]) rotate(a) translate([cap_d/2 - 2.4, 0, joy_z0 + 1.0]) rotate([0, 90, 0]) cylinder(d=1.0, h=4, $fn=8);   // grip grooves
 }
+module joy_cap() pod_frame() joy_cap_local();
 
 // ------------------------- BAY CAP AND GASKET -------------------------
 module bay_outline() union() {
@@ -426,7 +508,7 @@ else if (PART == "collar_top") translate([0, 0, collar_w/2]) rotate([0, 90, 0]) 
 else if (PART == "collar_bottom") translate([0, 0, collar_w/2]) rotate([0, 90, 0]) collar_bottom();
 else if (PART == "pod_cover") translate([0, 0, -z_c0]) multmatrix(invert(POD_M)) pod_cover();       // its flat underside on the bed
 else if (PART == "keypad") translate([0, 0, -z_seam]) multmatrix(invert(POD_M)) keypad();          // TPU, its flange on the bed
-else if (PART == "joy_cap") rotate([180, 0, 0]) translate([0, 0, -0.4 - cap_h]) multmatrix(invert(POD_M)) joy_cap();   // flat top down
+else if (PART == "joy_cap") rotate([180, 0, 0]) translate([0, 0, -joy_z0 - cap_h]) multmatrix(invert(POD_M)) joy_cap();   // flat top down
 else if (PART == "bay_cap") translate([0, 0, cap_z1]) rotate([180, 0, 0]) multmatrix(invert(BAY_M)) bay_cap();   // its outside down
 else if (PART == "bay_gasket") translate([0, 0, -bay_r1]) multmatrix(invert(BAY_M)) bay_gasket();
 // Checks: must be empty (or only touch), unless marked "must collide".
@@ -451,7 +533,21 @@ else if (PART == "check_screws") intersection() {            // the halves' scre
   union() { inside(z_floor, -plate_t);
             bay_frame() translate([0, 0, bay_r0]) linear_extrude(bay_in[2]) rrect([bay_in[0], bay_in[1]], bay_cr); wire_path(); bar_x(2*bore_r, 100); }
 }
-else if (PART == "check_screws_in") difference() { union() { front_clear(false); front_insert(); rear_clear(false); rear_insert(); join_clear(); join_insert(); } shell(); }   // must be empty
+else if (PART == "check_screws_in") difference() { union() { front_clear(false); front_insert(); rear_clear(false); rear_insert(); join_clear(); join_insert(); } body(); }   // must be empty
 else if (PART == "check_bike") intersection() { union() { collar_top(); collar_bottom(); pod_cover(); joy_cap(); bay_cap(); }
   union() { translate([grip_x - 65, 0, 0]) bar_x(grip_d, 130); translate([cube_x, -cube[1]/2, -cube[3]]) cube([cube[0], cube[1], cube[2] + cube[3]]); } }
+// the joystick's cap tilted cap_travel each way about its pivot: its head clear of the cover and the keypad's domes,
+// its sleeve clear of the cover (must be empty)
+else if (PART == "check_tilt") for (a = [0:90:270]) intersection() {
+  pod_frame() translate(pivot) rotate(a=cap_travel, v=[cos(a), sin(a), 0]) translate(-pivot) joy_cap_local(1);
+  union() { pod_cover(); keypad(); }
+}
+else if (PART == "check_tilt_sleeve") for (a = [0:90:270]) intersection() {
+  pod_frame() translate(pivot) rotate(a=cap_travel, v=[cos(a), sin(a), 0]) translate(-pivot) joy_cap_local(2);
+  pod_cover();
+}
+else if (PART == "check_front_access") intersection() {      // must be empty: the head's way in doesn't pass through the bay
+  multmatrix(F_M) translate([0, 0, -front_seat - front_tunnel]) cylinder(d=5, h=front_tunnel, $fn=24);
+  bay_frame() translate([0, 0, bay_r0 - 1]) linear_extrude(bay_r1 - bay_r0 + 1 + 0.6 + cap_t) offset(0.5) hull() bay_outline();
+}
 else if (PART == "none") { }

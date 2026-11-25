@@ -1,7 +1,7 @@
 {
   "title": "Handlebar Remote",
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
-  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with 2 buttons either side of it in a row on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body: the controls' top is a single domed cover with no screws on the face, sealed by a printed TPU keypad that is also the gasket of its one low seam. General purpose: the bar size, the gap and the angles are settings.",
+  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with 2 buttons either side of it in a row on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body. The controls' top is a thumb cradle (curved along the thumb's sweep, each button in its own cup, ridges between them, the joystick standing up in the middle), a single cover with no screws on the face, sealed by a printed TPU keypad that is also the gasket of its one low seam. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
@@ -15,7 +15,11 @@
     },
     {
       "src": "images/hr_face.png",
-      "caption": "The face, square-on from the grip side: the joystick in the middle, 2 buttons either side in one row, in one smooth domed cover tilted toward your thumb; the only screw is a small flush one at its back end"
+      "caption": "The face, square-on from the grip side: the joystick in the middle, 2 buttons either side, each in its own cup with ridges between them (round inner buttons, pill-shaped outer ones); the only screw is a small one at its back end"
+    },
+    {
+      "src": "images/hr_side.png",
+      "caption": "Along the bar: the face is a cradle curved along your thumb's sweep, the joystick standing up in the middle"
     },
     {
       "src": "images/hr_top.png",
@@ -27,7 +31,7 @@
     },
     {
       "src": "images/hr_exploded.png",
-      "caption": "Taken apart: the cap, the domed cover, the keypad (also the seam's gasket), the switch board, the collar's two halves and the bay's cap"
+      "caption": "Taken apart: the cap, the cover, the keypad (also the seam's gasket), the switch board, the collar's two halves and the bay's cap"
     }
   ],
   "docs": [
@@ -76,13 +80,13 @@
     },
     "pod_cover": {
       "name": "Pod cover",
-      "what": "The face and the pod's upper sides in one smooth domed part (no screws on the face): the joystick's hole and the buttons' holes. Held by an M2.5 from underneath at the front (into its insert) and a small countersunk M2.5 at its back end",
+      "what": "The face and the pod's upper sides in one smooth part (no screws on the face): a thumb cradle curved along the thumb's sweep, a cup round each button and ridges between them. Held by an M2.5 from underneath at the front (into its insert) and a small countersunk M2.5 at its back end",
       "qty": "1",
       "material": "ASA / PETG. Its flat underside down"
     },
     "keypad": {
       "name": "Keypad",
-      "what": "A TPU liner inside the cover, in one piece: the sheet under the face (its hollow domes are the buttons, it hugs the joystick cap's sleeve), a skirt that holds the switch board down, and a flange that is the seam's gasket",
+      "what": "A TPU liner inside the cover, in one piece: the sheet under the face (its hollow domes are the buttons (round inside, pills outside, their tops following the face's curve), it hugs the joystick cap's sleeve), a skirt that holds the switch board down, and a flange that is the seam's gasket",
       "qty": "1",
       "material": "TPU 85A-95A. On its flange (open side down)"
     },
