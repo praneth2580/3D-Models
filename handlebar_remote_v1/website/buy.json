@@ -23,12 +23,12 @@
           "stores": "modules"
         },
         {
-          "name": "Low tactile switches, 6 x 6 x 3.5 mm",
-          "for": "The 2 buttons",
+          "name": "Tactile switches, 6 x 6 x 7 mm (round actuator)",
+          "for": "The 2 buttons (the 7 mm height matters: the actuator reaches up into the keypad's dome)",
           "qty": 2,
           "price": "₹20–50 (est.)",
           "fits": true,
-          "search": "tactile switch 6x6x3.5",
+          "search": "tactile switch 6x6x7",
           "stores": "components",
           "local": "Lamington Road"
         },
@@ -123,8 +123,8 @@
       "items": [
         {
           "name": "M2 heat-set inserts (3.2 mm hole)",
-          "for": "The face plate (4) and the bay's cap (2)",
-          "qty": 6,
+          "for": "The bay's cap",
+          "qty": 2,
           "price": "",
           "search": "M2 heat set insert",
           "stores": "hardware",
@@ -132,19 +132,19 @@
         },
         {
           "name": "M2 x 6 countersunk screws",
-          "for": "The face plate and the bay's cap",
-          "qty": 6,
+          "for": "The bay's cap",
+          "qty": 2,
           "price": "",
           "search": "M2 screw stainless",
           "stores": "hardware",
           "local": "Nagdevi Street"
         },
         {
-          "name": "M3 insert + M3 x 10 screw, M2.5 insert + M2.5 x 14 screw",
-          "for": "Joining the collar's halves (the front from underneath, the rear from inside the pod)",
-          "qty": "1 + 1 each",
+          "name": "M2.5 heat-set inserts (3.6 mm hole, 4 mm) + M2.5 screws: 35 socket cap, 12 countersunk, 12 pan head",
+          "for": "The cover and the collar's halves (lengths at the defaults; the model prints yours)",
+          "qty": "3 + 3",
           "price": "",
-          "search": "M3 heat set insert",
+          "search": "M2.5 heat set insert",
           "stores": "hardware",
           "local": "Nagdevi Street"
         },

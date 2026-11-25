@@ -10,7 +10,8 @@ One slim collar on the **left handlebar, between the grip and the bike's switch 
 - 2026-11-24: a 5-way joystick (up, down, left, right, press) and 2 buttons, glove-friendly and used without looking; wired to the dash (one of its expansion slots: power and the dash bus) **and** Bluetooth for a phone.
 - 2026-11-25: "between the grips and the control panel, a slim control unit".
 - 2026-11-25: "the electronic box is too big, make it more compact and attached to the buttons; make the buttons more ergonomic, tilt it to the grip side". So the separate box became a bay in the collar itself, and the controls tilt 20° toward the grip.
-- 2026-11-25: "why is it square, make it an organic shape". So the collar is now one smooth pebble: a single rounded body flowing from the controls on top round the bar into the bay underneath, with no flat-sided boxes or square ears. (The earlier versions are in git history.)
+- 2026-11-25: "why is it square, make it an organic shape". So the collar is now one smooth pebble: a single rounded body flowing from the controls on top round the bar into the bay underneath, with no flat-sided boxes or square ears.
+- 2026-11-25: "make the button faceplate more rounded and organic rather than a box, and have the door on the back side, on the handle side: it will help it be more airtight". So the face plate and its 4 screws are gone: the controls' whole top is **one smooth domed cover** with the buttons in it, its only seam low down round the pod's sides, sealed by the keypad, and its screws hidden underneath and at the back. (The earlier versions are in git history.)
 
 ## What it does
 
@@ -29,16 +30,25 @@ One slim collar on the **left handlebar, between the grip and the bike's switch 
 
 ## How it's built: one smooth collar
 
-The whole collar is **one smooth, rounded body** (a convex "pebble"): the ring's edges are rounded, the body flows from the face down round the bar into the bay, the face plate's edge is rolled, and the bay's cap is a rounded dish. The halves, the insides and the holes are all cut from it.
+The whole collar is **one smooth, rounded body** (a convex "pebble"): the ring's edges are rounded, the body flows from the face down round the bar into the bay, the controls' top is a domed cover with well-rounded edges, and the bay's cap is a rounded dish. The halves, the insides and the holes are all cut from it.
 
 ![Seen from above: 19 mm wide, between the grip and the switch cube](images/hr_top.png)
 
 **Where it goes:** a **19 mm** collar in a 20 mm gap on the bar (`gap_w`). On most bikes the switch cube sits against the grip: slide it about 20 mm inboard (if it has a locating pin, the bar needs a new 4–5 mm hole for it, or file the pin off).
 
 **On top: the controls.** A low pod on the collar's upper rear side, facing up and back toward your thumb (`pod_a` 125° round the bar) and **tilted 20° toward the grip** (`pod_tilt`), so your thumb reaches it straight from the grip. Its face, 19 × 41 mm, has **the joystick in the middle and a button either side of it round the bar**, so your thumb rolls from one to the next. The pod sits a little toward the grip (its top edge overhangs the grip's end by about 2 mm, well clear above the grip), so that its inside stays within the collar on the switch cube's side.
-- **Inside:** a small perfboard (14 × 30 mm) with a 10 mm 5-way switch and 2 low tactile switches, resting on steps at the pod's 4 corners.
-- **The keypad (TPU)** lies on the pod's rim under the face plate: it's the seal, its 2 hollow domes are the buttons (a nub under each presses its switch), and it hugs the joystick cap's sleeve. The **face plate** screws down on it with 4 M2 screws, squeezing it 0.2 mm.
-- **The joystick cap** (13 mm) pushes onto the switch's stem through the plate and the keypad.
+- **Inside:** a small perfboard (14 × 30 mm) with a 10 mm 5-way switch and 2 tactile switches (6 × 6 × 7 mm), resting on steps at the pod's 4 corners.
+- **The cover:** the face and the pod's upper sides are **one smooth domed part**, with no plate and no screws on the face. Its only seam runs low round the pod's sides, at the switch board's level, about 7 mm below the face.
+- **The keypad (TPU)** is a liner inside the cover, in one piece:
+  - a sheet under the face: its 2 hollow domes stand through the cover as the buttons (each switch's round actuator rises into its dome), and it hugs the joystick cap's sleeve;
+  - a skirt down the cover's inside, whose foot holds the switch board down;
+  - a flange that is the seam's gasket, squeezed 0.2 mm by the cover.
+
+  So water on the face meets one continuous rubber sheet, and the only joint is low down on the sides.
+- **The cover's screws** are out of sight:
+  - **at the front, an M2.5 from underneath** (its head hidden in the bottom half's front boss), up through both halves of the collar into an insert in the cover's front end;
+  - **at the back end, one small M2.5 countersunk**, flush, into an insert in the top half.
+- **The joystick cap** (13 mm) pushes onto the switch's stem through the cover and the keypad.
 
 ![The face, square-on from the grip side: tilted toward your thumb](images/hr_face.png)
 
@@ -46,7 +56,18 @@ The whole collar is **one smooth, rounded body** (a convex "pebble"): the ring's
 
 ![The bay, opened from below](images/hr_bay.png)
 
-**The collar's two halves** split at an angle so the controls are all in the top half and the bay all in the bottom half, with a 1 mm rubber strip inside the ring. Two screws join them, hidden in the body: **at the front, an M3 × 10** up from underneath into an insert in the top half; **at the back, an M2.5 × 14 from inside the pod** (its head on the pod's floor at its rear end), down into an insert in the bottom half behind the bay. Behind the bar the split runs between the pod and the bay, so a screw there from outside would cross one of them. Order on the bike: both halves round the bar, the front screw, the rear screw (before the switch board goes in), then the switch board, the keypad and the face plate. **The switches' 8 wires** (thin 30 AWG wire-wrap wire) go down from the pod's floor into a groove inside the ring, round the back of the bar, and up into the bay. Seal the two holes where they pass with a dab of silicone.
+**The collar's two halves** split at an angle so the controls are all in the top half and the bay all in the bottom half, with a 1 mm rubber strip inside the ring. Two screws join them, hidden in the body:
+- **at the front**, the cover's front screw: it comes up from underneath through both halves;
+- **at the back, an M2.5 from inside the pod**: its head is sunk in the pod's floor at its rear end, under the switch board, and it goes down into an insert in the bottom half behind the bay. Behind the bar the split runs between the pod and the bay, so a screw there from outside would cross one of them.
+
+**Screw lengths:** the model picks each length for your settings and prints it when you open the file (at the defaults: front M2.5 × 35 socket cap, back M2.5 × 12 countersunk, inside M2.5 × 12).
+
+**Order on the bike:**
+1. Both halves round the bar.
+2. The inside screw.
+3. The switch board.
+4. The keypad, then the cover; hold it on with the back screw.
+5. The front screw from underneath, which also clamps the collar's front. **The switches' 8 wires** (thin 30 AWG wire-wrap wire) go down from the pod's floor into a groove inside the ring, round the back of the bar, and up into the bay. Seal the two holes where they pass with a dab of silicone.
 
 ![Taken apart](images/hr_exploded.png)
 
@@ -55,7 +76,7 @@ The whole collar is **one smooth, rounded body** (a convex "pebble"): the ring's
 | Part | Job |
 |---|---|
 | **5-way navigation switch**, 10 × 10 mm, about 7 mm tall | the joystick. It's the switch on the common "5-way navigation button module": buy the module and take the switch off (or buy the switch on its own) |
-| **2 low tactile switches**, 6 × 6 × 3.5 mm | the 2 buttons |
+| **2 tactile switches**, 6 × 6 × 7 mm | the 2 buttons |
 | **ESP32-C3 Super Mini** (22.5 × 18 mm) | reads the switches; Bluetooth LE (keyboard + media keys); its own CAN controller for the dash bus |
 | **SN65HVD230 CAN transceiver module** | the dash bus (remove its 120 Ω resistor: see below) |
 
@@ -92,17 +113,17 @@ The remote's messages, so the dash (or anything else on the dash bus) can use th
 
 None of these parts has a published drawing, so the sizes in `handlebar_remote.scad` are placeholders (marked MEASURE):
 - **Your bike:** the bar's diameter (`bar_d`, 22.2 mm); the gap you can make between the grip and the switch cube (`gap_w`, 20 mm); the switch cube's size and the grip's diameter (only for the fit check). And, to suit your thumb: `pod_a` (where the controls face round the bar, 125°: up and back) and `pod_tilt` (how far they tilt toward the grip, 20°, up to 30°). Check the bay (straight down, about 29 mm below the bar) clears your clutch lever's travel and cables.
-- **The switches:** the 5-way switch's body (10 × 10 × 4 mm) and its stem (7 mm above the board, 3.5 mm across); the tactile switches' height (3.5 mm).
+- **The switches:** the 5-way switch's body (10 × 10 × 4 mm) and its stem (7 mm above the board, 3.5 mm across); the tactile switches' height (7 mm, actuator included).
 - **The boards in the bay:** the ESP32-C3 Super Mini's thickness with its parts (4.5 mm); the SN65HVD230 module's size (26 × 16 × 6 mm).
 
-The model adapts and refuses what doesn't fit: a gap under 19 mm, tactile switches too tall for the joystick, a stem too short for its cap to grip, boards too thick to stand side by side in the bay, a tilt over 30°.
+The model adapts and refuses what doesn't fit: a gap under 19 mm, tactile switches the wrong height for the domes, a stem too short for its cap to grip, boards too thick to stand side by side in the bay, a tilt over 30°.
 
 ## Checks done (CAD)
 
 - every part exports as one watertight body;
 - the switches fit the pod (the board only touches its steps); the boards fit the bay;
-- the joystick's stem grips the cap, the keypad hugs the cap's sleeve and is squeezed by the face plate, the bay's gasket is squeezed by its cap (all deliberate);
-- the collar's halves, the face plate, the keypad, the cap and the bay's cap only touch where they should; the two screws that join the halves stay clear of the pod, the bay, the wires and the bar;
+- the joystick's stem grips the cap, the keypad hugs the cap's sleeve and its flange is squeezed by the cover, the bay's gasket is squeezed by its cap (all deliberate);
+- the collar's halves, the cover, the keypad, the cap and the bay's cap only touch where they should; all 3 screws stay inside the body and clear of the pod, the bay, the wires and the bar, also at the settings' extremes below;
 - the collar clears the grip and the switch cube, also with no tilt or 30° of tilt, a 19 mm gap, a 32 mm bar, and the controls facing from 95° to 150°.
 
 **Not yet:** printed and tried on a bike; the firmware; the real parts measured.
@@ -112,9 +133,9 @@ The model adapts and refuses what doesn't fit: a gap under 19 mm, tactile switch
 | Part | Material | How |
 |---|---|---|
 | `collar_top`, `collar_bottom` | ASA (PETG for a first try), 100 % infill round the ring | on their flat switch-cube side (the rings print round) |
-| `face_plate` | ASA / PETG | its top down |
+| `pod_cover` | ASA / PETG | its flat underside down (the face's underside bridges 15 mm) |
 | `joy_cap` | ASA / PETG (or TPU for grip) | flat top down |
-| `keypad`, `bay_gasket` | TPU 85A–95A | domes down; flat |
+| `keypad`, `bay_gasket` | TPU 85A–95A | the keypad on its flange (open side down; its top bridges 13 mm); the gasket flat |
 | `bay_cap` | ASA / PETG | its outside down |
 
 Parts and where to buy them: [`COMPONENTS.md`](COMPONENTS.md), and the project's page on the website.

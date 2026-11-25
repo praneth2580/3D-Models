@@ -1,7 +1,7 @@
 {
   "title": "Handlebar Remote",
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
-  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with a button either side of it on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body, sealed with a printed TPU keypad. General purpose: the bar size, the gap and the angles are settings.",
+  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with a button either side of it on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body: the controls' top is a single domed cover with no screws on the face, sealed by a printed TPU keypad that is also the gasket of its one low seam. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
@@ -15,7 +15,7 @@
     },
     {
       "src": "images/hr_face.png",
-      "caption": "The face, square-on from the grip side: the joystick in the middle, a button either side, tilted toward your thumb and sealed under a printed TPU keypad"
+      "caption": "The face, square-on from the grip side: the joystick in the middle, a button either side, in one smooth domed cover tilted toward your thumb; the only screw is a small flush one at its back end"
     },
     {
       "src": "images/hr_top.png",
@@ -27,7 +27,7 @@
     },
     {
       "src": "images/hr_exploded.png",
-      "caption": "Taken apart: the cap, the face plate, the keypad, the switch board, the collar's two halves and the bay's cap"
+      "caption": "Taken apart: the cap, the domed cover, the keypad (also the seam's gasket), the switch board, the collar's two halves and the bay's cap"
     }
   ],
   "docs": [
@@ -47,7 +47,7 @@
       "parts": [
         "collar_top",
         "collar_bottom",
-        "face_plate",
+        "pod_cover",
         "keypad",
         "joy_cap",
         "bay_cap",
@@ -64,27 +64,27 @@
   "parts": {
     "collar_top": {
       "name": "Collar top",
-      "what": "The smooth body's upper half: the ring's top and the pod (tilted toward the grip) that holds the switch board; 4 M2 inserts for the face plate, the front M3 insert; the rear M2.5 screw goes down from inside the pod",
+      "what": "The smooth body's upper half: the ring's top and the pod's lower part (tilted toward the grip) that holds the switch board, open at the low seam; the back screw's insert; the inside M2.5 joins it to the bottom half from the pod's floor",
       "qty": "1",
       "material": "ASA (PETG for a first try), 100% infill round the ring. On its flat switch-cube side"
     },
     "collar_bottom": {
       "name": "Collar bottom (with the bay)",
-      "what": "The smooth body's lower half: the ring's bottom and the electronics bay (the ESP32-C3 and the CAN transceiver on edge inside); 2 M2 inserts for its cap, the rear M2.5 insert; the front M3 x 10 comes up through it",
+      "what": "The smooth body's lower half: the ring's bottom and the electronics bay (the ESP32-C3 and the CAN transceiver on edge inside); 2 M2 inserts for its cap, the inside screw's M2.5 insert; the front screw comes up through it into the cover",
       "qty": "1",
       "material": "ASA / PETG, 100% infill round the ring. On its flat switch-cube side"
     },
-    "face_plate": {
-      "name": "Face plate",
-      "what": "Screws down on the keypad (4 M2 x 6 countersunk), squeezing it 0.2 mm: the joystick's hole and the 2 buttons' holes",
+    "pod_cover": {
+      "name": "Pod cover",
+      "what": "The face and the pod's upper sides in one smooth domed part (no screws on the face): the joystick's hole and the 2 buttons' holes. Held by an M2.5 from underneath at the front (into its insert) and a small countersunk M2.5 at its back end",
       "qty": "1",
-      "material": "ASA / PETG. Its top down"
+      "material": "ASA / PETG. Its flat underside down"
     },
     "keypad": {
       "name": "Keypad",
-      "what": "One TPU sheet on the pod's rim: the seal, the 2 hollow button domes (a nub under each presses its switch), and it hugs the joystick cap's sleeve",
+      "what": "A TPU liner inside the cover, in one piece: the sheet under the face (its 2 hollow domes are the buttons, it hugs the joystick cap's sleeve), a skirt that holds the switch board down, and a flange that is the seam's gasket",
       "qty": "1",
-      "material": "TPU 85A-95A. Domes down"
+      "material": "TPU 85A-95A. On its flange (open side down)"
     },
     "joy_cap": {
       "name": "Joystick cap",

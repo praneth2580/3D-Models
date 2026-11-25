@@ -9,7 +9,7 @@
 | Part | Exact item | Model fits this? | Price |
 |---|---|---|---|
 | **Joystick** | **5-way navigation switch, 10 × 10 mm, about 7 mm tall** (up, down, left, right, press). The easiest source is the common "5-way navigation button module" (5D rocker joystick module): take its switch off. Or buy the switch alone ("5-way tactile switch 10x10") | **Yes** (MEASURE) | ₹60–150 (est.) |
-| **Buttons** | **2 low tactile switches, 6 × 6 × 3.5 mm** (through-hole) | **Yes** (MEASURE) | ₹20–50 (est.) |
+| **Buttons** | **2 tactile switches, 6 × 6 × 7 mm** (through-hole, round actuator; the height matters: it reaches up into the keypad's domes) | **Yes** (MEASURE) | ₹20–50 (est.) |
 | **Switch board** | a piece of perfboard, 14 × 30 mm | **Yes** | (from a ₹50–100 sheet) |
 | **Wires to the bay** | 30 AWG wire-wrap wire (8 short lengths, in the ring's groove) | No | ₹100–200 (est.) |
 
@@ -25,9 +25,11 @@
 
 ## Hardware
 
-- 6 × M2 heat-set inserts (3.2 mm hole): 4 for the face plate, 2 for the bay's cap;
-- 6 × M2 × 6 countersunk screws;
-- the collar's halves: 1 × M3 heat-set insert (4.2 mm hole) + 1 × M3 × 10 screw (the front), 1 × M2.5 heat-set insert (3.6 mm hole) + 1 × M2.5 × 14 screw (the rear, from inside the pod);
+- 2 × M2 heat-set inserts (3.2 mm hole) + 2 × M2 × 6 countersunk screws: the bay's cap;
+- 3 × M2.5 heat-set inserts (3.6 mm hole, 4 mm long) and 3 M2.5 screws for the cover and the collar's halves. The model prints the lengths for your settings; at the defaults:
+  - **front:** M2.5 × 35 socket cap, from underneath into the cover;
+  - **back:** M2.5 × 12 countersunk, at the cover's back end;
+  - **inside:** M2.5 × 12 pan or socket head, inside the pod, joining the halves;
 - a 1 mm rubber strip (inside the ring);
 - clear silicone (the wire holes and the cable hole).
 
