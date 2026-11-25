@@ -1,9 +1,9 @@
 {
   "title": "What to buy",
-  "sub": "All the electronics and hardware for the remote (the control collar and the electronics box), besides the printed parts. Exact items in COMPONENTS.md.",
+  "sub": "All the electronics and hardware for the remote (one collar: the controls on top, the electronics in a bay underneath), besides the printed parts. Exact items in COMPONENTS.md.",
   "groups": [
     {
-      "label": "The control collar",
+      "label": "The controls (in the collar's pod)",
       "note": "Buy the items marked \"model fits this\", then measure them: they have no published drawings.",
       "items": [
         {
@@ -43,19 +43,18 @@
           "local": "Lamington Road"
         },
         {
-          "name": "8-core cable, 26 AWG, about 1 m (4.5–5 mm across)",
-          "for": "The switches to the box",
-          "qty": 1,
-          "price": "₹50–150 (est.)",
-          "fits": true,
-          "search": "8 core cable 26 AWG",
+          "name": "30 AWG wire-wrap wire",
+          "for": "The switches' 8 wires, through the ring's groove to the bay",
+          "qty": "a reel",
+          "price": "₹100–200 (est.)",
+          "search": "30 AWG wire wrap wire",
           "stores": "general",
           "local": "Lamington Road"
         }
       ]
     },
     {
-      "label": "The electronics box",
+      "label": "The electronics (in the collar's bay)",
       "items": [
         {
           "name": "ESP32-C3 Super Mini",
@@ -109,10 +108,10 @@
           "stores": "general"
         },
         {
-          "name": "Foam tape, hook-up wire, heat shrink, zip ties",
-          "for": "The boards in the box; wiring; fixing the box",
+          "name": "Foam tape, heat shrink",
+          "for": "The boards in the bay; wiring",
           "qty": "a little",
-          "price": "₹100–200 (est.)",
+          "price": "₹50–100 (est.)",
           "search": "double sided foam tape",
           "stores": "general",
           "local": "Lamington Road"
@@ -124,17 +123,17 @@
       "items": [
         {
           "name": "M2 heat-set inserts (3.2 mm hole)",
-          "for": "The face plate (4) and the box's lid (4)",
-          "qty": 8,
+          "for": "The face plate (4) and the bay's cap (2)",
+          "qty": 6,
           "price": "",
           "search": "M2 heat set insert",
           "stores": "hardware",
           "local": "Nagdevi Street"
         },
         {
-          "name": "M2 x 6 countersunk screws + M2 x 8 screws",
-          "for": "The face plate; the box's lid",
-          "qty": "4 + 4",
+          "name": "M2 x 6 countersunk screws",
+          "for": "The face plate and the bay's cap",
+          "qty": 6,
           "price": "",
           "search": "M2 screw stainless",
           "stores": "hardware",
@@ -159,7 +158,7 @@
         },
         {
           "name": "Clear silicone",
-          "for": "Sealing the cable holes",
+          "for": "Sealing the wire holes and the cable hole",
           "qty": 1,
           "price": "₹100–250 (est.) for this group",
           "search": "clear RTV silicone",
@@ -171,10 +170,10 @@
       "label": "3D printing (by a service)",
       "items": [
         {
-          "name": "Printing: about 25 g of ASA or PETG + 2 g of TPU (keypad, gasket)",
+          "name": "Printing: about 20 g of ASA or PETG + 1 g of TPU (keypad, gasket)",
           "for": "Upload the STLs for an exact quote",
           "qty": "1 set",
-          "price": "₹200–450 (est.)",
+          "price": "₹150–400 (est.)",
           "buy": [
             {
               "store": "Robu (EasyMech)",
@@ -200,7 +199,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹900–1,900 (est.); less with the dash's spare transceiver"
+      "about ₹800–1,800 (est.); less with the dash's spare transceiver"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

@@ -5,6 +5,7 @@
   "bar_d": 22.2,
   "gap_w": 20,
   "pod_a": 125,
+  "pod_tilt": 20,
   "nav_top": 7.0,
   "nav_stem_d": 3.5
  },
@@ -12,32 +13,43 @@
   "collar_top": [
    "bar_d",
    "gap_w",
-   "pod_a"
+   "pod_a",
+   "pod_tilt"
   ],
   "collar_bottom": [
    "bar_d",
    "gap_w",
-   "pod_a"
+   "pod_a",
+   "pod_tilt"
   ],
   "face_plate": [
    "bar_d",
    "gap_w",
    "pod_a",
+   "pod_tilt",
    "nav_top"
   ],
   "keypad": [
    "bar_d",
    "gap_w",
-   "pod_a"
+   "pod_a",
+   "pod_tilt"
   ],
   "joy_cap": [
    "bar_d",
+   "gap_w",
    "pod_a",
+   "pod_tilt",
    "nav_top",
    "nav_stem_d"
   ],
-  "box": [],
-  "box_lid": [],
-  "box_gasket": []
+  "bay_cap": [
+   "bar_d",
+   "gap_w"
+  ],
+  "bay_gasket": [
+   "bar_d",
+   "gap_w"
+  ]
  }
 }

@@ -1,33 +1,33 @@
 {
   "title": "Handlebar Remote",
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
-  "summary": "A slim control collar on the left handlebar, between the grip and the bike's switch cube, under your thumb: a 5-way joystick with a button either side of it. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. The collar holds only the switches, sealed under a printed TPU keypad; a small box nearby holds the electronics. General purpose: the bar size, the gap and the angle are settings.",
+  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick with a button either side of it on top, tilted toward the grip under your thumb, and the electronics in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. Sealed with a printed TPU keypad. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hr_rider.png",
   "see_title": "Pictures",
-  "see_sub": "A 19 mm collar in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it), its low pod facing your thumb; a small sealed box nearby for the electronics.",
+  "see_sub": "A 19 mm collar in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on top, tilted 20 degrees toward the grip; the ESP32-C3 and the CAN transceiver in a bay underneath, as wide as the collar.",
   "gallery": [
     {
       "src": "images/hr_rider.png",
-      "caption": "From the rider's seat: the slim collar between the grip and the switch cube (grey: a stand-in; measure yours), the joystick under the thumb"
+      "caption": "From the rider's seat: the slim collar between the grip and the switch cube (grey: a stand-in; measure yours), the joystick under the thumb, the electronics bay underneath"
     },
     {
       "src": "images/hr_face.png",
-      "caption": "The face: the joystick in the middle, a button either side of it round the bar, sealed under a printed TPU keypad"
+      "caption": "The face, square-on from the grip side: the joystick in the middle, a button either side, tilted toward your thumb and sealed under a printed TPU keypad"
     },
     {
       "src": "images/hr_top.png",
       "caption": "From above: 19 mm wide along the bar, in the gap between the grip and the switch cube"
     },
     {
-      "src": "images/hr_exploded.png",
-      "caption": "Taken apart: the cap, the face plate, the keypad, the switch board, the collar's two halves; the electronics box under the bar"
+      "src": "images/hr_bay.png",
+      "caption": "The bay under the bar, opened: the ESP32-C3 and the CAN transceiver on edge side by side, its cap and gasket below"
     },
     {
-      "src": "images/hr_box.png",
-      "caption": "The electronics box: the ESP32-C3 and the CAN transceiver, a lid on a TPU gasket, zip-tie slots underneath"
+      "src": "images/hr_exploded.png",
+      "caption": "Taken apart: the cap, the face plate, the keypad, the switch board, the collar's two halves and the bay's cap"
     }
   ],
   "docs": [
@@ -43,21 +43,15 @@
   "viewer_default": "remote_assembled",
   "part_groups": [
     {
-      "label": "The control collar (on the bar)",
+      "label": "The collar",
       "parts": [
         "collar_top",
         "collar_bottom",
         "face_plate",
         "keypad",
-        "joy_cap"
-      ]
-    },
-    {
-      "label": "The electronics box",
-      "parts": [
-        "box",
-        "box_lid",
-        "box_gasket"
+        "joy_cap",
+        "bay_cap",
+        "bay_gasket"
       ]
     },
     {
@@ -70,15 +64,15 @@
   "parts": {
     "collar_top": {
       "name": "Collar top",
-      "what": "The ring's upper half and the pod that holds the switch board (it rests on steps at the corners); 4 M2 inserts for the face plate, 2 M3 inserts for the collar's screws, the cable's hole on its inboard side",
+      "what": "The ring's upper half and the pod (tilted toward the grip) that holds the switch board on steps at its corners; 4 M2 inserts for the face plate, 2 M3 inserts for the collar's screws; the wires' slot down into the ring's groove",
       "qty": "1",
-      "material": "ASA (PETG for a first try), 100% infill round the ring. On its side"
+      "material": "ASA (PETG for a first try), 100% infill round the ring. On its flat switch-cube side"
     },
     "collar_bottom": {
-      "name": "Collar bottom",
-      "what": "The ring's lower half: 2 M3 x 8 screws up into the top's inserts, a 1 mm rubber strip inside",
+      "name": "Collar bottom (with the bay)",
+      "what": "The ring's lower half and the electronics bay under the bar: the ESP32-C3 and the CAN transceiver stand on edge inside; 2 M2 inserts for its cap; 2 M3 x 8 screws up into the top's inserts; a 1 mm rubber strip inside the ring",
       "qty": "1",
-      "material": "ASA / PETG, 100% infill. On its side"
+      "material": "ASA / PETG, 100% infill round the ring. On its flat switch-cube side"
     },
     "face_plate": {
       "name": "Face plate",
@@ -98,27 +92,21 @@
       "qty": "1",
       "material": "ASA / PETG, or TPU for grip. Flat top down"
     },
-    "box": {
-      "name": "Electronics box",
-      "what": "The ESP32-C3 Super Mini and the CAN transceiver side by side; 2 cable holes at one end; 2 zip-tie slots underneath; 4 M2 inserts for the lid",
+    "bay_cap": {
+      "name": "Bay cap",
+      "what": "Closes the bay from below (2 M2 x 6 countersunk); the dash's 4-core cable comes in through it",
       "qty": "1",
-      "material": "ASA / PETG. Flat"
+      "material": "ASA / PETG. Its outside down"
     },
-    "box_lid": {
-      "name": "Box lid",
-      "what": "4 M2 x 8 screws through the gasket into the box's corners",
-      "qty": "1",
-      "material": "ASA / PETG. Flat"
-    },
-    "box_gasket": {
-      "name": "Box gasket",
-      "what": "The walls' top and the 4 corner bosses, squeezed 0.2 mm by the lid",
+    "bay_gasket": {
+      "name": "Bay gasket",
+      "what": "Between the bay and its cap, squeezed 0.2 mm",
       "qty": "1",
       "material": "TPU 85A-95A. Flat"
     },
     "remote_assembled": {
       "name": "Assembled",
-      "what": "The collar and the box on the bar, with stand-ins for the grip, the switch cube and the boards",
+      "what": "The collar on the bar, with stand-ins for the grip, the switch cube and the boards",
       "view": true
     }
   },
@@ -158,6 +146,15 @@
             "min": 95,
             "max": 150,
             "help": "From straight forward: 90 = straight up, 125 = up and back toward your thumb."
+          },
+          {
+            "name": "pod_tilt",
+            "label": "Controls tilted toward the grip",
+            "unit": "°",
+            "step": 1,
+            "min": 0,
+            "max": 30,
+            "help": "So your thumb reaches them straight from the grip."
           }
         ]
       },
