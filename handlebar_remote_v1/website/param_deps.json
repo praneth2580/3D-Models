@@ -1,39 +1,43 @@
 {
- "generated": "2026-11-24",
+ "generated": "2026-11-25",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
   "bar_d": 22.2,
-  "face_tilt": 50,
-  "nav_top": 12,
-  "nav_stem_d": 3.5,
-  "tact_top": 6.6
+  "gap_w": 20,
+  "pod_a": 125,
+  "nav_top": 7.0,
+  "nav_stem_d": 3.5
  },
  "parts": {
-  "head": [
-   "nav_top",
-   "nav_stem_d"
+  "collar_top": [
+   "bar_d",
+   "gap_w",
+   "pod_a"
+  ],
+  "collar_bottom": [
+   "bar_d",
+   "gap_w",
+   "pod_a"
+  ],
+  "face_plate": [
+   "bar_d",
+   "gap_w",
+   "pod_a",
+   "nav_top"
   ],
   "keypad": [
-   "nav_top",
-   "nav_stem_d",
-   "tact_top"
+   "bar_d",
+   "gap_w",
+   "pod_a"
   ],
   "joy_cap": [
+   "bar_d",
+   "pod_a",
+   "nav_top",
    "nav_stem_d"
   ],
-  "back_lid": [
-   "nav_top"
-  ],
-  "lid_gasket": [
-   "nav_top"
-  ],
-  "arm_clamp": [
-   "bar_d",
-   "face_tilt",
-   "nav_top"
-  ],
-  "clamp_cap": [
-   "bar_d"
-  ]
+  "box": [],
+  "box_lid": [],
+  "box_gasket": []
  }
 }

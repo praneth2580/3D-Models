@@ -16,7 +16,7 @@ Open-source, parametric, 3D-printable designs. Every project has its own page on
 | **Handlebar Phone Dock** | Turn an old phone into a permanent motorcycle navigation screen. | [page](https://praneth2580.github.io/3D-Models/phone_dock_v0.5/) | [`phone_dock_v0.5/`](phone_dock_v0.5/) |
 | **Round Display Pod** | A round, minimal-bezel instrument pod for a 1.28" ESP32 display. | [page](https://praneth2580.github.io/3D-Models/display_pod_v4/) | [`display_pod_v4/`](display_pod_v4/) |
 | **Handlebar Dash** | A round digital dash on its own handlebar clamp, replacing the stock instruments. | [page](https://praneth2580.github.io/3D-Models/handlebar_dash_v1/) | [`handlebar_dash_v1/`](handlebar_dash_v1/) |
-| **Handlebar Remote** | A thumb controller for the left handlebar, for the dash and your phone | [page](https://praneth2580.github.io/3D-Models/handlebar_remote_v1/) | [`handlebar_remote_v1/`](handlebar_remote_v1/) |
+| **Handlebar Remote** | A slim thumb controller between the grip and the switch cube, for the dash and your phone | [page](https://praneth2580.github.io/3D-Models/handlebar_remote_v1/) | [`handlebar_remote_v1/`](handlebar_remote_v1/) |
 <!-- projects:end -->
 
 License: [CC BY-NC-SA 4.0](LICENSE.md) unless a project says otherwise. Free to download, print and remix with credit, but not for selling.

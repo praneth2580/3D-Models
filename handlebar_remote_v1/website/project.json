@@ -1,33 +1,33 @@
 {
   "title": "Handlebar Remote",
-  "tagline": "A thumb controller for the left handlebar, for the dash and your phone",
-  "summary": "A small controller under your left thumb: a 5-way joystick and 2 buttons, glove-friendly and used without looking. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots), and a phone or anything else over Bluetooth, as a keyboard with media keys. On its own slim clamp just inside the bike's left switch cube, sealed with a printed TPU keypad. General purpose: the bar size, the switch cube and the position are settings.",
-  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The joystick module and the boards have no published drawings: measure yours first. The firmware comes next.",
+  "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
+  "summary": "A slim control collar on the left handlebar, between the grip and the bike's switch cube, under your thumb: a 5-way joystick with a button either side of it. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. The collar holds only the switches, sealed under a printed TPU keypad; a small box nearby holds the electronics. General purpose: the bar size, the gap and the angle are settings.",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hr_rider.png",
   "see_title": "Pictures",
-  "see_sub": "A 48 x 33 x 27 mm head over the left switch cube, the joystick under the thumb and 2 buttons beside it, on an arm from a slim clamp on the bar.",
+  "see_sub": "A 19 mm collar in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it), its low pod facing your thumb; a small sealed box nearby for the electronics.",
   "gallery": [
     {
       "src": "images/hr_rider.png",
-      "caption": "From the rider's seat: the head over the left switch cube (grey: a stand-in; measure yours), the joystick where the thumb falls"
+      "caption": "From the rider's seat: the slim collar between the grip and the switch cube (grey: a stand-in; measure yours), the joystick under the thumb"
     },
     {
       "src": "images/hr_face.png",
-      "caption": "The face: the joystick's cap and the 2 buttons, sealed under a printed TPU keypad"
+      "caption": "The face: the joystick in the middle, a button either side of it round the bar, sealed under a printed TPU keypad"
     },
     {
-      "src": "images/hr_side.png",
-      "caption": "From the side: the arm from the slim bar clamp up to the head, tilted back toward the thumb"
-    },
-    {
-      "src": "images/hr_front.png",
-      "caption": "From in front of the bike: the clamp just inside the switch cube"
+      "src": "images/hr_top.png",
+      "caption": "From above: 19 mm wide along the bar, in the gap between the grip and the switch cube"
     },
     {
       "src": "images/hr_exploded.png",
-      "caption": "Taken apart: the cap, the head (with the keypad and the joystick module inside), the back lid with the ESP32-C3 and the CAN transceiver, the clamp and its cap"
+      "caption": "Taken apart: the cap, the face plate, the keypad, the switch board, the collar's two halves; the electronics box under the bar"
+    },
+    {
+      "src": "images/hr_box.png",
+      "caption": "The electronics box: the ESP32-C3 and the CAN transceiver, a lid on a TPU gasket, zip-tie slots underneath"
     }
   ],
   "docs": [
@@ -43,20 +43,21 @@
   "viewer_default": "remote_assembled",
   "part_groups": [
     {
-      "label": "The head",
+      "label": "The control collar (on the bar)",
       "parts": [
-        "head",
+        "collar_top",
+        "collar_bottom",
+        "face_plate",
         "keypad",
-        "joy_cap",
-        "back_lid",
-        "lid_gasket"
+        "joy_cap"
       ]
     },
     {
-      "label": "The mount",
+      "label": "The electronics box",
       "parts": [
-        "arm_clamp",
-        "clamp_cap"
+        "box",
+        "box_lid",
+        "box_gasket"
       ]
     },
     {
@@ -67,51 +68,57 @@
     }
   ],
   "parts": {
-    "head": {
-      "name": "Head",
-      "what": "The housing: the face with the joystick's and the 2 buttons' holes, the posts that hold the joystick module, the ears for the lid's screws (2 M2.5 inserts)",
+    "collar_top": {
+      "name": "Collar top",
+      "what": "The ring's upper half and the pod that holds the switch board (it rests on steps at the corners); 4 M2 inserts for the face plate, 2 M3 inserts for the collar's screws, the cable's hole on its inboard side",
       "qty": "1",
-      "material": "ASA (PETG for a first try). Face down"
+      "material": "ASA (PETG for a first try), 100% infill round the ring. On its side"
+    },
+    "collar_bottom": {
+      "name": "Collar bottom",
+      "what": "The ring's lower half: 2 M3 x 8 screws up into the top's inserts, a 1 mm rubber strip inside",
+      "qty": "1",
+      "material": "ASA / PETG, 100% infill. On its side"
+    },
+    "face_plate": {
+      "name": "Face plate",
+      "what": "Screws down on the keypad (4 M2 x 6 countersunk), squeezing it 0.2 mm: the joystick's hole and the 2 buttons' holes",
+      "qty": "1",
+      "material": "ASA / PETG. Its top down"
     },
     "keypad": {
       "name": "Keypad",
-      "what": "One TPU sheet under the face: the 2 button domes come up through it, the joystick's stem pierces it. Glue its edge to the face's underside: it seals the holes",
+      "what": "One TPU sheet on the pod's rim: the seal, the 2 hollow button domes (a nub under each presses its switch), and it hugs the joystick cap's sleeve",
       "qty": "1",
       "material": "TPU 85A-95A. Domes down"
     },
     "joy_cap": {
       "name": "Joystick cap",
-      "what": "A low mushroom cap that pushes onto the joystick's stem",
+      "what": "A low 13 mm mushroom cap that pushes onto the 5-way switch's stem",
       "qty": "1",
       "material": "ASA / PETG, or TPU for grip. Flat top down"
     },
-    "back_lid": {
-      "name": "Back lid",
-      "what": "Closes the head (2 M2.5 screws); the ESP32-C3 and the CAN transceiver stick to it; the cable gland; the arm's boss (2 M3 inserts)",
+    "box": {
+      "name": "Electronics box",
+      "what": "The ESP32-C3 Super Mini and the CAN transceiver side by side; 2 cable holes at one end; 2 zip-tie slots underneath; 4 M2 inserts for the lid",
       "qty": "1",
-      "material": "ASA / PETG. Boss down"
+      "material": "ASA / PETG. Flat"
     },
-    "lid_gasket": {
-      "name": "Lid gasket",
-      "what": "A TPU ring in the lid's groove, squeezed 0.2 mm by the 2 screws",
+    "box_lid": {
+      "name": "Box lid",
+      "what": "4 M2 x 8 screws through the gasket into the box's corners",
+      "qty": "1",
+      "material": "ASA / PETG. Flat"
+    },
+    "box_gasket": {
+      "name": "Box gasket",
+      "what": "The walls' top and the 4 corner bosses, squeezed 0.2 mm by the lid",
       "qty": "1",
       "material": "TPU 85A-95A. Flat"
     },
-    "arm_clamp": {
-      "name": "Arm and clamp",
-      "what": "The slim bar clamp's upper half and the arm up to the back lid (2 M3 screws); 2 M4 inserts from below",
-      "qty": "1",
-      "material": "ASA / PETG, 100% infill round the clamp. The split face down"
-    },
-    "clamp_cap": {
-      "name": "Clamp cap",
-      "what": "The clamp's lower half: 2 M4 x 20 bolts up from below, a 1 mm rubber strip inside",
-      "qty": "1",
-      "material": "ASA / PETG, 100% infill. The split face down"
-    },
     "remote_assembled": {
       "name": "Assembled",
-      "what": "The whole remote on the bar, with stand-ins for the boards",
+      "what": "The collar and the box on the bar, with stand-ins for the grip, the switch cube and the boards",
       "view": true
     }
   },
@@ -127,7 +134,7 @@
         "params": [
           {
             "name": "bar_d",
-            "label": "Handlebar diameter at the clamp",
+            "label": "Handlebar diameter",
             "unit": "mm",
             "step": 0.1,
             "min": 20,
@@ -135,26 +142,36 @@
             "help": "22.2 (7/8\"), 25.4 (1\") or 28.6 (1-1/8\")."
           },
           {
-            "name": "face_tilt",
-            "label": "Face tilted back toward your thumb",
+            "name": "gap_w",
+            "label": "Gap between the grip and the switch cube",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 19,
+            "max": 30,
+            "help": "The collar is 1 mm narrower. Slide the switch cube inboard to make room."
+          },
+          {
+            "name": "pod_a",
+            "label": "Where the controls face, round the bar",
             "unit": "°",
             "step": 1,
-            "min": 20,
-            "max": 75
+            "min": 95,
+            "max": 150,
+            "help": "From straight forward: 90 = straight up, 125 = up and back toward your thumb."
           }
         ]
       },
       {
-        "label": "Your modules (measure them)",
+        "label": "Your switches (measure them)",
         "params": [
           {
             "name": "nav_top",
-            "label": "Joystick: the stem's top above the board's underside",
+            "label": "Joystick: the stem's top above its board",
             "unit": "mm",
             "step": 0.1,
-            "min": 10.5,
-            "max": 13,
-            "help": "Under about 10.5 mm the stem can't reach its cap (the model says so)."
+            "min": 6.7,
+            "max": 10,
+            "help": "Too short and its cap can't grip it (the model says so)."
           },
           {
             "name": "nav_stem_d",
@@ -163,14 +180,6 @@
             "step": 0.1,
             "min": 2.5,
             "max": 5
-          },
-          {
-            "name": "tact_top",
-            "label": "SET / RST buttons: their tops above the board's underside",
-            "unit": "mm",
-            "step": 0.1,
-            "min": 4.5,
-            "max": 7
           }
         ]
       }
