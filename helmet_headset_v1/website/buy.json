@@ -4,11 +4,11 @@
   "groups": [
     {
       "label": "The neckband: everything electronic and everything you hear",
-      "note": "Pair it and try it before you open it. The pod is a universal size by default (room for a board up to 50 × 15 mm and a battery up to 50 × 28 × 7 mm), so most neckbands fit; measure yours on \"Make it your size\" for a slimmer pod.",
+      "note": "Pair it and try it before you open it. By default the pod has room for a board up to 38 × 12 mm and a battery up to 35 × 20 × 5 mm (most neckbands, not all); if yours is bigger, enter its sizes on \"Make it your size\" and the pod grows.",
       "items": [
         {
           "name": "boAt Rockerz 255 Pro+ Bluetooth neckband",
-          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Most other neckbands fit the universal pod too",
+          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Most other neckbands fit the pod too (check the battery: boAt lists 300 mAh for this model; if it's bigger than the room, enter its size)",
           "qty": 1,
           "price": "₹1,100–1,300 (est.)",
           "fits": true,
@@ -31,7 +31,7 @@
           "local": "Lamington Road"
         },
         {
-          "name": "Perfboard (a 50 × 32 mm piece)",
+          "name": "Perfboard (a piece about 27 × 30 mm)",
           "for": "The switch board",
           "qty": 1,
           "price": "₹50–100 (est.)",
@@ -61,7 +61,7 @@
         },
         {
           "name": "Thin double-sided foam tape and a scrap of soft foam",
-          "for": "Packing the board and the battery in the universal pod, and shimming the board so its USB-C lines up with the hole",
+          "for": "Packing the battery and the board in the pod, and shimming the board so its USB-C lines up with the hole",
           "qty": 1,
           "price": "₹50–150 (est.)",
           "search": "double sided foam tape thin",
@@ -143,12 +143,12 @@
           "local": "Lamington Road"
         },
         {
-          "name": "502540 LiPo battery, 3.7 V about 500 mAh, with protection board",
-          "for": "Only if the neckband's own battery is a long curved cell that can't fit the pod (room: 50 × 28 × 7 mm)",
+          "name": "502035 LiPo battery, 3.7 V about 250 mAh, with protection board",
+          "for": "Only if the neckband's own battery is a long curved cell that can't fit the pod (or set the pod to its size)",
           "qty": 1,
           "price": "₹150–300 (est.)",
           "fits": true,
-          "search": "502540 lipo battery",
+          "search": "502035 lipo battery",
           "stores": "modules"
         },
         {
@@ -177,9 +177,9 @@
       "items": [
         {
           "name": "3D printing service",
-          "for": "About 40 g of PETG / ASA and 12 g of TPU (universal size)",
+          "for": "About 25 g of PETG / ASA and 8 g of TPU",
           "qty": "",
-          "price": "₹250–550 (est.)",
+          "price": "₹200–400 (est.)",
           "buy": [
             {
               "store": "Robu (EasyMech)",
@@ -205,7 +205,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹1,900–3,400 (est.), most of it the neckband"
+      "about ₹1,850–3,250 (est.), most of it the neckband"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

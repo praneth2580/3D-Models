@@ -98,11 +98,15 @@ def main():
     if missing: sys.exit(f"Settings not found in the sources: {missing}")
     parts = {s: m for s, m in pj.get("parts", {}).items() if not m.get("view")}
 
-    tests, kind = {}, {p["name"]: p.get("type", "") for p in params}
+    tests, kind, extremes = {}, {p["name"]: p.get("type", "") for p in params}, {}
     for p in params:
         d = defaults[p["name"]]
         if d is None: sys.exit(f"{p['name']}: its default is an expression; give it a literal value in the CAD")
         tests[p["name"]] = test_values(p, d)
+        # numbers: also the range's ends, each tried on its own (a setting can matter only past a threshold,
+        # e.g. when another part stops being the larger one inside a max())
+        plain = "choices" not in p and p.get("type") not in ("file", "text", "code")
+        extremes[p["name"]] = [v for v in (p.get("max"), p.get("min")) if plain and v is not None and v != d]
 
     def probe(job):
         stem, name, base = job
@@ -113,6 +117,10 @@ def main():
             if h is not None:          # codes: every test value (the digits and the length can matter separately)
                 hashes.append(h)
                 if kind[name] != "code": break
+        if hashes:
+            for v in extremes[name]:   # numbers: the range's ends too (refused ones are skipped)
+                h, _ = csg_hash(proj_dir, cfg["entry"], base + ["-D", f"{name}={scad_literal(v)}"])
+                if h is not None: hashes.append(h)
         return (hashes, None) if hashes else (None, err or ["no test value in range"])
 
     jobs = [(stem, name, make_args(cfg, stem, meta)) for stem, meta in parts.items() for name in [None] + [p["name"] for p in params]]
