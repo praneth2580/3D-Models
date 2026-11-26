@@ -26,8 +26,12 @@
       CHANNEL stuck to the shell from the pod down to the shell's lower edge (run_l, MEASURE), then go in under the
       edge trim.
       Then (owner, 2026-11-26: "how about the cable go on the back part and have groves too will help in water proofing
-      too", choosing "out of the pod's back end"): the notches are in the pod's BACK END wall, under the USB-C, facing
-      away from rain and the wind; the channel leaves backward, curves round (ch_rb) and runs down to the edge.
+      too", choosing "out of the pod's back end"): the notches were in the pod's BACK END wall, under the USB-C, facing
+      away from rain and the wind; the channel left backward and curved round and down to the edge.
+      Then (owner, 2026-11-26: "as the mounting will be on the side with the long side laying horizontally on the
+      helmet i feel the holes groves should open on the long side which means it will exit on the bottom side"): the
+      notches are in the pod's BOTTOM long side (-y), under the neckband's board, facing DOWN (water drains away from
+      them); the channel runs straight down from there to the shell's lower edge, no turn.
 
   Frames: the POD frame has its origin on the pod's underside at its centre, x along the pod toward the helmet's
   BACK, y up, z out of the shell. The HELMET frame (the stand-in, for pictures only) has x forward, y to the
@@ -78,7 +82,7 @@ spk = [spk_d, spk_t];
 mic = [6, 2.7];          // MEASURE: the neckband's own mic: diameter, length (a 6 x 2.7 mm electret capsule is typical)
 boom_d = 5;              // MEASURE: the boom: 2 mm aluminium wire + the mic cable in heat-shrink
 cable_d = [4.2, 3.4];    // MEASURE: the 2 cables out of the pod: speakers (4-core), mic (shielded 2-core)
-run_l = 90;              // MEASURE: the cable channel: from the pod's bottom edge to the shell's lower edge, along the shell
+run_l = 90;              // MEASURE: the cable channel: from the pod's bottom (long) side to the shell's lower edge, along the shell
 
 // ------------------------- FIXED SIZES -------------------------
 wall = 2.4;      // pod wall at the seam (thicker lower down: the sides curve in toward the top)
@@ -125,9 +129,10 @@ pil = [for (sx = [-1, 1], sy = [-1, 1]) [sx * (Li/2 - pil_o), sy * (Wi/2 - pil_o
 function side_d(z) = side_in * pow(max(0, z - z_low) / (z_seam - z_low), 2);   // the sides' inward curve
 usb_hole = [12.6, 6.6];                       // room for a USB-C plug's moulding
 cab_s = max(7, (cable_d[0] + cable_d[1])/2 + 0.4 + 2.4);   // the 2 cables' spacing
-cab_y = [-cab_s/2, cab_s/2];                                 // the cables leave the back end here (speakers, mic)
 rib_x = [bat_x0 + 3, (bat_x0 + bat_x1)/2, bat_x1 - 2, pcb_x0 + 3, (pcb_x0 + pcb_x1)/2] + [1, 1, 1, 1, 1] * 0.137;   // (off the shell's facet corners)
-usb_tab = 5;                                                 // the plug's pull tab points UP (the cable channel is below it)
+cab_xc = (rib_x[3] + rib_x[4])/2;                            // the cables leave the BOTTOM long side here, under the board, between 2 ribs
+cab_x = [cab_xc - cab_s/2, cab_xc + cab_s/2];                // speakers (toward the front), mic
+usb_tab = 5;                                                 // the plug's pull tab points up
 plug_x = L/2 - side_d(usb_zc - usb_hole[1]/2 - 1.2) + 0.2;   // the plug's flange: clear of the wall at its lowest point
 function zb_at(x, y) = -(x*x/(2*shell_rl) + y*y/(2*shell_rw)); // the shell under the pod (near enough: a parabola)
 
@@ -197,9 +202,9 @@ module pod_body() difference() {
   for (p = pil) translate([p[0], p[1], z_seam - 4.5]) cylinder(d = 3.2, h = 5);    // M2 inserts
   translate([Li/2 - 0.5, 0, usb_zc]) rotate([0, 90, 0]) linear_extrude(wall0 + 2)    // USB-C plug
     rotate(90) rrect(usb_hole, 2.5);
-  for (i = [0:1]) let(c = cable_d[i] + 0.4, zb = zb_at(L/2, cab_y[i]))
-    hull() for (z = [zb - 3, zb + c/2])                       // cables: notches at shell level in the back end, into the channel
-      translate([Li/2 - 2.5, cab_y[i], z]) rotate([0, 90, 0]) cylinder(d = c, h = wall0 + 4);   // (from 2.5 inside: through the curved floor)
+  for (i = [0:1]) let(c = cable_d[i] + 0.4, zb = zb_at(cab_x[i], W/2))
+    hull() for (z = [zb - 3, zb + c/2])                       // cables: notches at shell level in the bottom side, facing down, into the channel
+      translate([cab_x[i], -Wi/2 + 2.5, z]) rotate([90, 0, 0]) cylinder(d = c, h = wall0 + 4);   // (from 2.5 inside: through the curved floor)
 }
 
 module pod_lid() difference() {
@@ -263,22 +268,20 @@ module insides() { board(); battery(); switches(); }
 
 // ------------------------- CABLE CHANNEL (TPU) -------------------------
 // Its cross-section: u across it, w out of the shell. Its 2 grooves are open toward the shell: the cables lie in them,
-// held against the shell. Modelled flat in the POD frame (as printed): out of the pod's back end along +x, a quarter
-// turn (ch_rb) toward -y (down), then straight down run_l. Flexible TPU, so it bends to follow the shell.
-ch_u = cab_y;                                                 // the grooves line up with the pod's notches
+// held against the shell. Modelled flat in the POD frame (as printed): straight down (-y) from the pod's bottom side
+// for run_l. Flexible TPU, so it bends to follow the shell.
+ch_u = [-cab_s/2, cab_s/2];                                   // the grooves line up with the pod's notches (x = cab_xc + u)
 ch_c = [for (d = cable_d) d + 0.4];
 ch_u0 = ch_u[0] - ch_c[0]/2 - 1.2;
 ch_u1 = ch_u[1] + ch_c[1]/2 - (-1.2);
 ch_h = max(ch_c) + 1.0;
 ch_wing = 4;                                                  // thin flanges either side, for the tape
 ch_taper = 8;                                                 // the lower end slopes down to the flanges
-ch_rb = 16;                                                   // the turn's radius (centre line)
-ch_xa = L/2 - 3;                                              // starts inside the pod's end (cut to its outline)
-ch_xb = L/2 + 3;                                              // the turn starts here
+ch_in = 3;                                                    // starts this far inside the pod's side (cut to its outline)
 assert(ch_u[1] - ch_c[1]/2 - (ch_u[0] + ch_c[0]/2) >= 1.2, "the cables are too thick for the pod's notches' spacing");
-assert(cab_s/2 + max(cable_d)/2 + 0.2 <= Wi/2 - pil_o - pil_d/2, "the cable notches run into the lid's back pillars");
-assert(zb_at(L/2, 0) + max(cable_d) + 0.4 <= usb_zc - usb_hole[1]/2 - 1, "the cable notches run into the USB-C opening");
-assert(ch_rb - (ch_u1 - ch_u0)/2 - ch_wing >= 2, "the cable channel's turn is too tight for its width");
+assert(cab_x[1] + (cable_d[1] + 0.4)/2 + ch_wing <= Li/2 - rc_in, "the cable notches (and the channel) run into the pod's rounded back end");
+assert(cab_x[0] - (cable_d[0] + 0.4)/2 >= bat_x1, "the cable notches run into the battery's place");
+assert(run_l > ch_taper + 2, "the cable channel is too short");
 module run_dome_2d() hull() {
   translate([ch_u0, 0]) square([ch_u1 - ch_u0, 0.01]);
   for (u = [ch_u0 + 2.5, ch_u1 - 2.5]) translate([u, ch_h - 2.5]) circle(2.5, $fn = 24);
@@ -289,21 +292,17 @@ module run_grooves_2d() for (i = [0:1]) hull() {
   translate([ch_u[i], ch_c[i]/2]) circle(d = ch_c[i], $fn = 24);
 }
 module run_2d() difference() { union() { run_dome_2d(); run_wing_2d(); } run_grooves_2d(); }
-M_A = [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]];                       // (u, w, e) -> (e, u, w): along +x
-M_B = [[1, 0, 0, ch_xb + ch_rb], [0, 0, -1, -ch_rb], [0, 1, 0, 0], [0, 0, 0, 1]];     // (u, w, e) -> along -y
+M_A = [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]];                         // (u, w, e) -> (e, u, w): along +x
+M_C = [[1, 0, 0, cab_xc], [0, 0, -1, -W/2 + ch_in], [0, 1, 0, 0], [0, 0, 0, 1]];       // (u, w, e) -> down (-y) from the pod's side
 module cable_channel() difference() {                         // flat, in the pod frame, as printed (flanges on the bed)
-  union() {
-    multmatrix(M_A) translate([0, 0, ch_xa]) linear_extrude(ch_xb - ch_xa + 0.01) run_2d();
-    translate([ch_xb, -ch_rb, 0]) rotate_extrude(angle = 90, $fn = 64) translate([ch_rb, 0]) run_2d();
-    intersection() {
-      multmatrix(M_B) translate([0, 0, -0.01]) linear_extrude(run_l) run_2d();
-      hull() {                                                // the lower end slopes down to the flanges
-        translate([ch_xb + ch_rb + ch_u0 - ch_wing - 1, -ch_rb - (run_l - ch_taper), -1]) cube([ch_u1 - ch_u0 + 2*ch_wing + 2, run_l - ch_taper, ch_h + 2]);
-        translate([ch_xb + ch_rb + ch_u0 - ch_wing - 1, -ch_rb - run_l, -1]) cube([ch_u1 - ch_u0 + 2*ch_wing + 2, 0.01, 2.2]);   // (not 1.8: coplanar with the flanges)
-      }
+  multmatrix(M_C) intersection() {
+    linear_extrude(ch_in + run_l) run_2d();
+    hull() {                                                  // the lower end slopes down to the flanges
+      translate([ch_u0 - ch_wing - 1, -1, -1]) cube([ch_u1 - ch_u0 + 2*ch_wing + 2, ch_h + 2, ch_in + run_l - ch_taper + 1]);
+      translate([ch_u0 - ch_wing - 1, -1, ch_in + run_l]) cube([ch_u1 - ch_u0 + 2*ch_wing + 2, 2.2, 0.01]);   // (not 1.8: coplanar with the flanges)
     }
   }
-  translate([0, 0, -1]) linear_extrude(ch_h + 2) offset(r = 0.3) pod_2d(0);   // its top end fits round the pod's end
+  translate([0, 0, -1]) linear_extrude(ch_h + 2) offset(r = 0.3) pod_2d(0);   // its top end fits against the pod's side
 }
 
 C_POD = "#454a52"; C_TPU = "#1a1a1a"; C_HELMET = "#e9e9e6"; C_EPS = "#bdbdb5";
@@ -380,9 +379,7 @@ MIC_P = [104, 14, -76];                                       // in front of the
 
 module ellipsoid(a) scale(a) sphere(1, $fn = 160);
 // The channel on the stand-in: its centre line (pod frame), each point pushed out radially onto the stand-in's shell.
-CH_2D = concat([[L/2 - 2, 0], [ch_xb, 0]],
-               [for (a = [80:-10:0]) [ch_xb + ch_rb * cos(a), -ch_rb + ch_rb * sin(a)]],
-               [for (d = [6:6:200]) [ch_xb + ch_rb, -ch_rb - d]]);
+CH_2D = [for (d = [-2:6:200]) [cab_xc, -W/2 - d]];
 function to_shell(p) = let(q = POD_M * [p[0], p[1], 0, 1], k = sqrt(pow(q[0]/H[0], 2) + pow(q[1]/H[1], 2) + pow(q[2]/H[2], 2)))
   [q[0], q[1], q[2]] / k;
 CH_ALL = [for (p = CH_2D) to_shell(p)];
@@ -440,8 +437,9 @@ module boom_mic() {
 
 // ------------------------- OUTPUT -------------------------
 if (PART == "assembly") { helmet_shell(); helmet_details(); multmatrix(POD_M) pod_assembled(); channel_on_helmet(); }
-else if (PART == "channel_part") color("#5a6068") cable_channel();                               // view: the channel, straight as printed
+else if (PART == "channel_part") color("#5a6068") rotate([0, 180, 0]) translate([-cab_xc, W/2, 0]) render() cable_channel();   // view: the channel turned over, its grooves up
 else if (PART == "pod") pod_assembled();
+else if (PART == "pod_cables") { pod_assembled(); color(C_TPU) translate([0, -12, 0]) render() cable_channel(); }   // view: the bottom side, the channel pulled away
 else if (PART == "exploded") { pod_assembled(5); translate([0, 0, 6]) insides(); }
 else if (PART == "inside") { helmet_shell(true); liner(true); speakers(false); boom_mic(); multmatrix(POD_M) pod_assembled(); }
 else if (PART == "headset_assembled") { pod_body(); translate([0, 0, -0.02]) keypad(); pod_lid(); usb_plug(); }   // view only (merged)
@@ -458,7 +456,7 @@ else if (PART == "usb_plug") rotate([0, -90, 0]) translate([-plug_x - 1.2, 0, -u
 else if (PART == "speaker_puck") translate([0, 0, puck_t]) rotate([180, 0, 0]) speaker_puck();   // front down
 else if (PART == "mic_cup") mic_cup();
 else if (PART == "boom_mount") boom_mount();
-else if (PART == "cable_channel") translate([-L/2, 0, 0]) cable_channel();                     // TPU, flanges down
+else if (PART == "cable_channel") translate([-cab_xc, W/2, 0]) cable_channel();                     // TPU, flanges down
 // checks
 else if (PART == "check_insides") intersection() { insides(); union() { pod_body(); pod_lid(); keypad(); } }   // touch only (the switch board on its ledges)
 else if (PART == "check_parts") intersection() { pod_body(); pod_lid(); }                    // empty
@@ -468,8 +466,8 @@ else if (PART == "check_press") intersection() { switches(0.5); keypad(); }     
 else if (PART == "check_rest") intersection() { switches(0); keypad(); }                    // empty: the switches aren't held down
 else if (PART == "check_shell") intersection() { pod_body(); shell_cut(-vhb_t); }           // empty: the tape's room
 else if (PART == "check_notches") intersection() {                                          // empty: the cables pass the pod's notches
-  for (i = [0:1]) let(zb = zb_at(L/2, cab_y[i]))
-    translate([Li/2 - 2, cab_y[i], zb + cable_d[i]/2 + 0.2]) rotate([0, 90, 0]) cylinder(d = cable_d[i], h = wall0 + 4);
+  for (i = [0:1]) let(zb = zb_at(cab_x[i], W/2))
+    translate([cab_x[i], -Wi/2 + 2, zb + cable_d[i]/2 + 0.2]) rotate([90, 0, 0]) cylinder(d = cable_d[i], h = wall0 + 4);
   pod_body();
 }
 else if (PART == "none") { }
