@@ -1,0 +1,271 @@
+{
+  "title": "Helmet Headset",
+  "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹2,000–4,000 instead of a ₹5,000+ communicator. A cheap Bluetooth neckband already has the hard parts (Bluetooth, the amplifier, the mic circuit, charging, the battery): this project moves them to better places. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); 40 mm speakers in printed pucks go in the liner's ear pockets; the mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet. General purpose: the helmet's curve, the neckband's parts and the speakers are settings.",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. The neckband (boAt Rockerz 255 Pro+) has no published teardown: open yours and measure its board and battery first.",
+  "order": 5,
+  "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
+  "cover": "images/hh_helmet.png",
+  "see_title": "Pictures",
+  "see_sub": "The pod on the left, behind the chin bar's pivot (the helmet is a plain stand-in); inside, the speakers in the ear pockets and the boom mic.",
+  "gallery": [
+    {
+      "src": "images/hh_helmet.png",
+      "caption": "The pod on the left of a modular helmet (a white stand-in), behind the chin bar's pivot: stuck on with VHB tape, no holes"
+    },
+    {
+      "src": "images/hh_pod.png",
+      "caption": "The pod: 102 × 37 mm and 16.5 mm proud of the shell at its middle, 3 rubber domes in a screwed lid, the USB-C plug at its back end, the cables out of its bottom"
+    },
+    {
+      "src": "images/hh_exploded.png",
+      "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board, the neckband's board and the battery"
+    },
+    {
+      "src": "images/hh_inside.png",
+      "caption": "Inside (the stand-in cut open): a speaker puck in the left ear pocket, the boom mic held low on the fixed shell, reaching into the chin bar"
+    },
+    {
+      "src": "images/hh_small.png",
+      "caption": "The parts that go inside: a speaker puck with a 40 mm speaker, the boom mount and the mic cup"
+    }
+  ],
+  "docs": [
+    {
+      "label": "README: what goes where, the neckband, the pod, wiring, build order",
+      "file": "README.md"
+    },
+    {
+      "label": "Components: the exact parts",
+      "file": "COMPONENTS.md"
+    }
+  ],
+  "viewer_default": "headset_assembled",
+  "part_groups": [
+    {
+      "label": "The pod (outside)",
+      "parts": [
+        "pod_body",
+        "pod_lid",
+        "keypad",
+        "usb_plug"
+      ]
+    },
+    {
+      "label": "Inside the helmet",
+      "parts": [
+        "speaker_puck",
+        "mic_cup",
+        "boom_mount"
+      ]
+    },
+    {
+      "label": "Assembled (view only)",
+      "parts": [
+        "headset_assembled"
+      ]
+    }
+  ],
+  "parts": {
+    "pod_body": {
+      "name": "Pod body",
+      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable holes in its bottom wall; 4 pillars for M2 heat-set inserts",
+      "qty": "1",
+      "material": "PETG or ASA, a light colour if you can. Open side down"
+    },
+    "pod_lid": {
+      "name": "Pod lid",
+      "what": "Rolled edges, 3 holes for the keypad's domes, ridges between them; 4 M2 × 6 countersunk screws",
+      "qty": "1",
+      "material": "PETG / ASA. Flat underside down"
+    },
+    "keypad": {
+      "name": "Keypad",
+      "what": "One TPU sheet: its 3 hollow domes are the buttons (the big middle one is play/pause and calls) and its edge is the seam's gasket, squeezed 0.2 mm by the lid",
+      "qty": "1",
+      "material": "TPU 85A-95A. Flat, domes up"
+    },
+    "usb_plug": {
+      "name": "USB-C plug",
+      "what": "Seals the USB-C socket when you ride; pull it out by its tab to charge",
+      "qty": "1",
+      "material": "TPU 85A-95A. On its flange"
+    },
+    "speaker_puck": {
+      "name": "Speaker puck",
+      "what": "Holds a 40 mm speaker (closed back) in the liner's ear pocket, on a Velcro dot",
+      "qty": "2",
+      "material": "PETG. Back down"
+    },
+    "mic_cup": {
+      "name": "Mic cup",
+      "what": "Holds the mic capsule on the end of the boom; a foam windscreen goes over it",
+      "qty": "1",
+      "material": "PETG. Back down"
+    },
+    "boom_mount": {
+      "name": "Boom mount",
+      "what": "A thin plate that slides between the shell and the liner (or sticks to the shell) low on the left, behind the chin bar; the boom pushes into its socket",
+      "qty": "1",
+      "material": "PETG. Plate flat"
+    },
+    "headset_assembled": {
+      "name": "Pod, assembled",
+      "what": "The pod with its keypad, lid and plug",
+      "view": true
+    }
+  },
+  "customize": {
+    "entry": "helmet_headset.scad",
+    "sources": [
+      "helmet_headset.scad"
+    ],
+    "part_var": "PART",
+    "groups": [
+      {
+        "label": "Your helmet",
+        "params": [
+          {
+            "name": "shell_rl",
+            "label": "Shell's radius along the pod (front to back)",
+            "unit": "mm",
+            "step": 1,
+            "min": 100,
+            "max": 400,
+            "help": "Lay a ruler across the spot: radius = L × L / (8 × gap) + gap / 2."
+          },
+          {
+            "name": "shell_rw",
+            "label": "Shell's radius across the pod (up and down)",
+            "unit": "mm",
+            "step": 1,
+            "min": 100,
+            "max": 400
+          }
+        ]
+      },
+      {
+        "label": "Your neckband (measure it after opening)",
+        "params": [
+          {
+            "name": "nb_len",
+            "label": "Board length (along the USB-C)",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 20,
+            "max": 70
+          },
+          {
+            "name": "nb_w",
+            "label": "Board width",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 6,
+            "max": 30
+          },
+          {
+            "name": "nb_t",
+            "label": "Board thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0.4,
+            "max": 2
+          },
+          {
+            "name": "nb_under",
+            "label": "Tallest part under the board",
+            "unit": "mm",
+            "step": 0.2,
+            "min": 0,
+            "max": 5
+          },
+          {
+            "name": "nb_over",
+            "label": "Tallest part on the board (not the USB-C)",
+            "unit": "mm",
+            "step": 0.2,
+            "min": 0,
+            "max": 5
+          },
+          {
+            "name": "usb_out",
+            "label": "USB-C socket past the board's end",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 0,
+            "max": 3
+          },
+          {
+            "name": "batt_l",
+            "label": "Battery length",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 20,
+            "max": 60,
+            "help": "The neckband's own battery, or a 502540 LiPo (40 × 25 × 5)."
+          },
+          {
+            "name": "batt_w",
+            "label": "Battery width",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 8,
+            "max": 35
+          },
+          {
+            "name": "batt_t",
+            "label": "Battery thickness",
+            "unit": "mm",
+            "step": 0.2,
+            "min": 2,
+            "max": 8
+          }
+        ]
+      },
+      {
+        "label": "Parts you buy",
+        "params": [
+          {
+            "name": "spk_d",
+            "label": "Speaker diameter",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 10,
+            "max": 50,
+            "help": "40 mm helmet speakers; the earbuds' own drivers are about 13 × 4 (quiet)."
+          },
+          {
+            "name": "spk_t",
+            "label": "Speaker thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 2,
+            "max": 10
+          },
+          {
+            "name": "tact_h",
+            "label": "Tactile switch height (6 × 6 mm)",
+            "choices": [
+              [
+                7,
+                "7 mm"
+              ],
+              [
+                8,
+                "8 mm (the buttons stand 1 mm higher)"
+              ]
+            ]
+          },
+          {
+            "name": "boom_d",
+            "label": "Boom thickness",
+            "unit": "mm",
+            "step": 0.1,
+            "min": 3,
+            "max": 8
+          }
+        ]
+      }
+    ]
+  }
+}

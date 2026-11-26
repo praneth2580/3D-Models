@@ -1,0 +1,201 @@
+{
+  "title": "What to buy",
+  "sub": "Everything for the headset besides the printed parts: the neckband (its board, battery and mic are reused), speakers, the pod's switches and hardware, cables and the boom. Exact items in COMPONENTS.md.",
+  "groups": [
+    {
+      "label": "The neckband (the electronics)",
+      "note": "Pair it and try it before you open it. It has no published teardown: measure its board and battery and set them on \"Make it your size\" before printing.",
+      "items": [
+        {
+          "name": "boAt Rockerz 255 Pro+ Bluetooth neckband",
+          "for": "Its board (Bluetooth, amplifier, charging, USB-C), battery, mic and buttons. Any neckband works once measured",
+          "qty": 1,
+          "price": "₹1,100–1,300 (est.)",
+          "fits": true,
+          "search": "boAt Rockerz 255 Pro Plus",
+          "stores": "general"
+        },
+        {
+          "name": "502540 LiPo battery, 3.7 V about 500 mAh, with protection board",
+          "for": "Only if the neckband's own battery doesn't fit the pod (40 × 25 × 5 mm)",
+          "qty": 1,
+          "price": "₹150–300 (est.)",
+          "fits": true,
+          "search": "502540 lipo battery",
+          "stores": "modules"
+        },
+        {
+          "name": "6 mm electret mic capsule + 2.2 kΩ resistor",
+          "for": "Only if the neckband's mic is an analog MEMS mic (see the README)",
+          "qty": 1,
+          "price": "₹10–40 (est.)",
+          "search": "electret condenser microphone 6mm",
+          "stores": "components",
+          "local": "Lamington Road"
+        }
+      ]
+    },
+    {
+      "label": "Sound",
+      "items": [
+        {
+          "name": "40 mm 32 Ω speakers (helmet speakers, or bare 40 mm 32 ohm mylar speakers), about 5.5 mm thick",
+          "for": "Left and right, in the printed pucks. Not 8 Ω (too much for the neckband's amplifier)",
+          "qty": 2,
+          "price": "₹100–600 the pair (est.)",
+          "fits": true,
+          "search": "40mm 32 ohm speaker",
+          "stores": "modules",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "Self-adhesive hook-and-loop (Velcro) coins, about 40 mm",
+          "for": "The pucks in the ear pockets",
+          "qty": 2,
+          "price": "₹50–150 (est.)",
+          "search": "velcro dots self adhesive 40mm",
+          "stores": "general"
+        },
+        {
+          "name": "Foam windscreen for a lapel mic",
+          "for": "Over the mic cup",
+          "qty": 1,
+          "price": "₹50–150 for a pack (est.)",
+          "search": "lapel mic foam windscreen",
+          "stores": "general"
+        }
+      ]
+    },
+    {
+      "label": "The pod",
+      "items": [
+        {
+          "name": "Tactile switches, 6 × 6 × 7 mm (through-hole, round actuator)",
+          "for": "The 3 buttons (the height matters: each actuator reaches up into its dome)",
+          "qty": 3,
+          "price": "₹10–30 (est.)",
+          "fits": true,
+          "search": "tactile switch 6x6x7",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "Perfboard (a 50 × 28 mm piece)",
+          "for": "The switch board",
+          "qty": 1,
+          "price": "₹50–100 (est.)",
+          "fits": true,
+          "search": "perfboard",
+          "stores": "modules",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "M2 heat-set inserts (3.2 mm hole, 4 mm long) and M2 × 6 countersunk screws",
+          "for": "The lid",
+          "qty": 4,
+          "price": "₹50–150 (est.)",
+          "fits": true,
+          "search": "M2 heat set insert",
+          "stores": "hardware",
+          "local": "Nagdevi Street (screws)"
+        },
+        {
+          "name": "3M VHB tape 4910 or 5952, about 1.1 mm",
+          "for": "Sticks the pod to the shell",
+          "qty": 1,
+          "price": "₹150–400 (est.)",
+          "fits": true,
+          "search": "3M VHB 4910",
+          "stores": "hardware"
+        },
+        {
+          "name": "Neutral-cure clear silicone",
+          "for": "The cable holes, and dabs to hold the cables on the shell",
+          "qty": 1,
+          "price": "₹100–200 (est.)",
+          "search": "neutral cure silicone clear",
+          "stores": "hardware"
+        }
+      ]
+    },
+    {
+      "label": "Cables and boom",
+      "items": [
+        {
+          "name": "Thin 4-core cable, about 4 mm (an old USB cable works)",
+          "for": "The speakers, about 1 m",
+          "qty": 1,
+          "price": "₹0–100 (est.)",
+          "fits": true,
+          "search": "4 core shielded cable thin",
+          "stores": "general",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "Thin shielded cable, about 3 mm (an old 3.5 mm audio cable works)",
+          "for": "The mic, about 60 cm",
+          "qty": 1,
+          "price": "₹0–100 (est.)",
+          "fits": true,
+          "search": "shielded audio cable",
+          "stores": "general",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "2 mm aluminium craft (armature) wire and 5 mm heat-shrink",
+          "for": "The boom",
+          "qty": 1,
+          "price": "₹50–150 (est.)",
+          "fits": true,
+          "search": "2mm aluminium armature wire",
+          "stores": "general"
+        },
+        {
+          "name": "28–30 AWG wire",
+          "for": "The switches' wires",
+          "qty": 1,
+          "price": "₹50–150 (est.)",
+          "search": "30 AWG wire wrap wire",
+          "stores": "general",
+          "local": "Lamington Road"
+        }
+      ]
+    },
+    {
+      "label": "Printing (if you have no printer)",
+      "items": [
+        {
+          "name": "3D printing service",
+          "for": "About 30–35 g of PETG / ASA and 5 g of TPU",
+          "qty": "",
+          "price": "₹200–450 (est.)",
+          "buy": [
+            {
+              "store": "Robu (EasyMech)",
+              "url": "https://robu.in/?p=901845"
+            },
+            {
+              "store": "Zbotic",
+              "url": "https://zbotic.in/3d-printing-service/"
+            },
+            {
+              "store": "iamRapid",
+              "url": "https://iamrapid.com/3d-printing-services/"
+            },
+            {
+              "store": "Makenica (Mumbai)",
+              "url": "https://makenica.com/3d-printing-services-in-mumbai"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totals": [
+    [
+      "Everything, with printing",
+      "about ₹2,000–4,000 (est.), most of it the neckband"
+    ]
+  ],
+  "note": "All prices here are estimates (not checked on listings)."
+}

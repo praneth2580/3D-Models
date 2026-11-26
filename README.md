@@ -17,6 +17,7 @@ Open-source, parametric, 3D-printable designs. Every project has its own page on
 | **Round Display Pod** | A round, minimal-bezel instrument pod for a 1.28" ESP32 display. | [page](https://praneth2580.github.io/3D-Models/display_pod_v4/) | [`display_pod_v4/`](display_pod_v4/) |
 | **Handlebar Dash** | A round digital dash on its own handlebar clamp, replacing the stock instruments. | [page](https://praneth2580.github.io/3D-Models/handlebar_dash_v1/) | [`handlebar_dash_v1/`](handlebar_dash_v1/) |
 | **Handlebar Remote** | A slim thumb controller between the grip and the switch cube, for the dash and your phone | [page](https://praneth2580.github.io/3D-Models/handlebar_remote_v1/) | [`handlebar_remote_v1/`](handlebar_remote_v1/) |
+| **Helmet Headset** | A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset | [page](https://praneth2580.github.io/3D-Models/helmet_headset_v1/) | [`helmet_headset_v1/`](helmet_headset_v1/) |
 <!-- projects:end -->
 
 License: [CC BY-NC-SA 4.0](LICENSE.md) unless a project says otherwise. Free to download, print and remix with credit, but not for selling.

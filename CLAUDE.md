@@ -27,6 +27,9 @@ CLAUDE.md              this file
 site/                  website generator (build.py, style.css, app.js, site.json, README.md)
 phone_dock_v0.5/       Handlebar Phone Dock (main project)
 display_pod_v4/        Round Display Pod (has its own CLAUDE.md design brief: follow it there)
+handlebar_dash_v1/     Handlebar Dash
+handlebar_remote_v1/   Handlebar Remote
+helmet_headset_v1/     Helmet Headset (a neckband rebuilt into a helmet)
 _site/                 built website (gitignored)
 ```
 
@@ -159,6 +162,15 @@ A thumb controller on the LEFT handlebar for the dash and any display (owner: "a
 - **Dash-bus messages (defined here):** 0x340 keys (bytes 0-1 held bits, low byte first: up, down, left, right, press, button 1, 2, 3, 4; byte 2 event: 1 pressed, 2 released, 3 held 1 s, 4 repeat; byte 3 key; byte 4 counter; on change, every 100 ms held, 1 s heartbeat); 0x341 status (byte 0 target dash/phone, byte 1 BLE off/pairing/connected). Button 2 held 1 s switches between dash and phone. Phone mapping: arrows + Enter, button 1 Escape, button 2 play/pause, buttons 3/4 volume up/down.
 - **Scratchpad helpers** (meshcheck.py, bbox.py, stl2bin.py, stlread.py, hr_batch.py) were lost once when the scratchpad was cleared; they are small and were rewritten.
 - **Next:** the firmware (BLE HID + TWAI), measuring the real parts, the bike's gap and the clutch lever's clearance from the bay.
+
+## Helmet headset (helmet_headset_v1/), started 2026-11-26
+
+A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset (owner: "using a cheap neckband and then dismantle this and use this as a helmet headset"). **Owner's choices:** designed first for a **modular (flip-up) helmet**; the neckband picked for them: **boAt Rockerz 255 Pro+** (~₹1,100–1,300 est.; boAt's manual: BT 5.0, IPX7, one mic, −42 dB; no published teardown, so its board and battery are MEASURE placeholders; any neckband fits once measured); the board, battery and buttons in an **outside pod on the left, stuck on with VHB** (no holes in the shell, nothing cut from the liner).
+- **CAD `helmet_headset.scad`** (OpenSCAD 2021.01, asserts, `PART=`). Pod frame: x toward the helmet's BACK, y up, z out of the shell. The pod (102 x 37 mm, 16.5 mm proud at its middle; rounded ends `rc` 16, sides curving in `side_in` 1.8 by the seam, lid rolled `rr` 4) grows from what's measured: `nb_len/nb_w/nb_t`, `nb_under`, `nb_over`, `usb_out`, `batt_l/w/t` (default a 502540 LiPo), `Wi` also widens so the board passes between the back pillars. Battery at the front, board at the back (its USB-C in the back wall, `usb_gap` 0.5; TPU `usb_plug` with a pull tab). Underside cut to the shell: an ellipsoid with radii `shell_rl` 175 along / `shell_rw` 160 across (MEASURE: radius = L^2/(8h) + h/2), raised by `vhb_t` 1.1. The floor follows the shell (`shell_cut(fl - 0.25)`: exactly fl was tangent to the flat floor = non-manifold) with cross ribs (`rib_x`, nudged 0.137 off the ellipsoid's facet corners: else degenerate edges) for a flat seat. Switch perfboard 50 x 28 on chamfered ledges, 3 tactiles 6x6x7 wired in parallel with the board's own buttons (so the board's button positions don't matter). TPU `keypad` = flat sheet: 3 hollow domes (middle bigger) + the seam gasket (lid squeezes the rim only, 0.2; sheet thinned to 0.6 round each dome as a hinge). Lid: 4 M2 x 6 countersunk into inserts in corner pillars; ridges between the domes. `dome_top` rises with taller switches. Inside: `speaker_puck` (40 mm 32 ohm speaker, closed back, 44 x 8.2; earbud drivers fit with `spk_d` 13), `mic_cup` + `boom_mount` (plate between shell and liner on the FIXED part behind the chin bar, so the chin bar flips over the boom; no wire across the hinge).
+- **Checks:** `check_insides` (touch only), `check_parts`, `check_plug`, `check_shell`, `check_rest` EMPTY; must collide: `check_squeeze`, `check_press` (0.5 mm press reaches a switch). Asserts: domes' roofs, buttons on the flat top, pillars vs board/battery/switch board, board/USB/battery corners vs the rounded ends, switches reach the domes, puck vs `ear_d`/`ear_depth`. `headset_assembled` (view only) has ~20 sliver edges from coincident faces; the printed parts are clean.
+- **Stand-in helmet** (pictures only): hull of a dome ellipsoid `H` [150,125,140] and a chin ellipsoid `CHIN`, eye port, visor, pivot discs; liner only above z -55; pod placed by `POD_M` (tangent frame at `pod_at`). Images rendered with `openscad --camera=eye,centre` (5 views, `hh_*.png`).
+- **Website:** customize has no vector settings, so vectors are split into scalars (`nb_len` ... `spk_t`); `batt_t`/`nb_over`/`nb_under` use step 0.2 so param_deps' probe (default + 5 steps) gets past the `max()` thresholds. `vhb_t`, `ear_d`, `ear_depth` aren't in customize (they change no part).
+- **Next:** buy and open the neckband, measure it (and check for a magnetic power sensor and the mic type: README), measure the helmet's curve and ear pockets, print, fit.
 
 ## How to verify CAD changes (do this every time)
 

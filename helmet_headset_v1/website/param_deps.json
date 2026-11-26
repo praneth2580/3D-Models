@@ -1,0 +1,82 @@
+{
+ "generated": "2026-11-26",
+ "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
+ "defaults": {
+  "shell_rl": 175,
+  "shell_rw": 160,
+  "nb_len": 42,
+  "nb_w": 11,
+  "nb_t": 1.0,
+  "nb_under": 1.5,
+  "nb_over": 2.5,
+  "usb_out": 0.6,
+  "batt_l": 40,
+  "batt_w": 25,
+  "batt_t": 5.2,
+  "spk_d": 40,
+  "spk_t": 5.5,
+  "tact_h": 7,
+  "boom_d": 5
+ },
+ "parts": {
+  "pod_body": [
+   "shell_rl",
+   "shell_rw",
+   "nb_len",
+   "nb_w",
+   "nb_t",
+   "nb_under",
+   "nb_over",
+   "usb_out",
+   "batt_l",
+   "batt_w",
+   "batt_t"
+  ],
+  "pod_lid": [
+   "nb_len",
+   "nb_w",
+   "nb_t",
+   "nb_under",
+   "nb_over",
+   "usb_out",
+   "batt_l",
+   "batt_w",
+   "batt_t"
+  ],
+  "keypad": [
+   "nb_len",
+   "nb_w",
+   "nb_t",
+   "nb_under",
+   "nb_over",
+   "usb_out",
+   "batt_l",
+   "batt_w",
+   "batt_t",
+   "tact_h"
+  ],
+  "usb_plug": [
+   "shell_rl",
+   "shell_rw",
+   "nb_len",
+   "nb_w",
+   "nb_t",
+   "nb_under",
+   "nb_over",
+   "usb_out",
+   "batt_l",
+   "batt_w",
+   "batt_t"
+  ],
+  "speaker_puck": [
+   "spk_d",
+   "spk_t"
+  ],
+  "mic_cup": [
+   "boom_d"
+  ],
+  "boom_mount": [
+   "boom_d"
+  ]
+ }
+}
