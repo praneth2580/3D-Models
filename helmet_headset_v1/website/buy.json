@@ -4,11 +4,11 @@
   "groups": [
     {
       "label": "The neckband: everything electronic and everything you hear",
-      "note": "Pair it and try it before you open it. It has no published teardown: measure its board, battery and speakers and set them on \"Make it your size\" before printing.",
+      "note": "Pair it and try it before you open it. The pod is a universal size by default (room for a board up to 50 × 15 mm and a battery up to 50 × 28 × 7 mm), so most neckbands fit; measure yours on \"Make it your size\" for a slimmer pod.",
       "items": [
         {
           "name": "boAt Rockerz 255 Pro+ Bluetooth neckband",
-          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Any neckband works once measured",
+          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Most other neckbands fit the universal pod too",
           "qty": 1,
           "price": "₹1,100–1,300 (est.)",
           "fits": true,
@@ -22,7 +22,7 @@
       "items": [
         {
           "name": "Tactile switches, 6 × 6 × 7 mm (through-hole, round actuator)",
-          "for": "The 3 buttons (the height matters: each actuator reaches up into its dome)",
+          "for": "The play/call button and the 2 ends of the volume rocker (the height matters: each actuator reaches up into its key)",
           "qty": 3,
           "price": "₹10–30 (est.)",
           "fits": true,
@@ -31,7 +31,7 @@
           "local": "Lamington Road"
         },
         {
-          "name": "Perfboard (a 50 × 28 mm piece)",
+          "name": "Perfboard (a 50 × 32 mm piece)",
           "for": "The switch board",
           "qty": 1,
           "price": "₹50–100 (est.)",
@@ -58,6 +58,14 @@
           "fits": true,
           "search": "3M VHB 4910",
           "stores": "hardware"
+        },
+        {
+          "name": "Thin double-sided foam tape and a scrap of soft foam",
+          "for": "Packing the board and the battery in the universal pod, and shimming the board so its USB-C lines up with the hole",
+          "qty": 1,
+          "price": "₹50–150 (est.)",
+          "search": "double sided foam tape thin",
+          "stores": "general"
         },
         {
           "name": "Neutral-cure clear silicone",
@@ -136,12 +144,22 @@
         },
         {
           "name": "502540 LiPo battery, 3.7 V about 500 mAh, with protection board",
-          "for": "Only if the neckband's own battery doesn't fit the pod (40 × 25 × 5 mm)",
+          "for": "Only if the neckband's own battery is a long curved cell that can't fit the pod (room: 50 × 28 × 7 mm)",
           "qty": 1,
           "price": "₹150–300 (est.)",
           "fits": true,
           "search": "502540 lipo battery",
           "stores": "modules"
+        },
+        {
+          "name": "USB-C charging breakout board (6-pin, with 5.1 kΩ CC resistors)",
+          "for": "Only if the neckband's charging socket is on the side of its board, or is micro-USB, so it can't line up with the pod's USB-C hole: glue it in the hole and wire it to the board's +5 V and ground pads",
+          "qty": 1,
+          "price": "₹20–60 (est.)",
+          "fits": true,
+          "search": "USB type C 6 pin breakout board",
+          "stores": "components",
+          "local": "Lamington Road"
         },
         {
           "name": "6 mm electret mic capsule + 2.2 kΩ resistor",
@@ -159,9 +177,9 @@
       "items": [
         {
           "name": "3D printing service",
-          "for": "About 30–35 g of PETG / ASA and 5 g of TPU",
+          "for": "About 40 g of PETG / ASA and 12 g of TPU (universal size)",
           "qty": "",
-          "price": "₹200–450 (est.)",
+          "price": "₹250–550 (est.)",
           "buy": [
             {
               "store": "Robu (EasyMech)",
@@ -187,7 +205,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹1,800–3,200 (est.), most of it the neckband"
+      "about ₹1,900–3,400 (est.), most of it the neckband"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

@@ -9,9 +9,14 @@
 
   What goes where:
     - POD (outside, left, behind the chin bar's pivot): the neckband's own board (Bluetooth, amplifier, charging,
-      its USB-C socket at the pod's rear end), its battery (or a flat 502540 LiPo), and a small perfboard with 3 big
-      tactile switches wired in parallel with the board's own buttons (volume +, multi-function, volume -). A TPU
-      keypad (also the seam's gasket) under a screwed lid gives 3 glove-friendly domes. Its underside is curved to
+      its USB-C socket at the pod's rear end), its battery (or a flat 502540 LiPo), and a small perfboard with 3
+      tactile switches wired in parallel with the board's own buttons (multi-function, volume +, volume -). A TPU
+      keypad (also the seam's gasket) under a screwed lid gives a round multi-function button and a dedicated VOLUME
+      ROCKER across the pod (owner, 2026-11-26: "have a dedicated volumen button", chose a rocker): press its top for
+      louder, its bottom for quieter; it rocks on a small printed post glued to the switch board.
+    - UNIVERSAL SIZE (owner, 2026-11-26: "make the 3d pod fit most of the headsets", chose "universal size by
+      default"): the neckband settings default to room for the boards and batteries of most cheap neckbands (board
+      up to 50 x 15, battery up to 50 x 28 x 7), packed with foam; enter your own neckband's sizes for a slimmer pod. Its underside is curved to
       the shell (shell_rl, shell_rw: MEASURE) and stuck on with 1.1 mm VHB tape. A TPU plug seals the USB-C.
     - SPEAKERS (inside): the neckband's OWN speakers (owner, 2026-11-26: "why can i use its own speaker and mic ??
       that the reason i am using it on the first place"): each earbud's 10 mm driver (boAt's spec) taken out of its
@@ -41,7 +46,7 @@
 // ------------------------- OUTPUT SELECTION -------------------------
 // Views: "assembly" (the stand-in helmet with the pod), "pod" (the pod assembled), "exploded", "inside" (the
 // stand-in cut open: speakers, boom, mic). Parts: "pod_body", "pod_lid", "keypad" (TPU), "usb_plug" (TPU),
-// "speaker_puck" (x2), "mic_cup", "boom_mount", "headset_assembled" (view only). Checks: "check_*" (see the end).
+// "rocker_post" (the volume rocker's pivot), "speaker_puck" (x2), "mic_cup", "boom_mount", "headset_assembled" (view only). Checks: "check_*" (see the end).
 PART = "assembly";
 
 // ------------------------- YOUR HELMET (MEASURE) -------------------------
@@ -54,26 +59,33 @@ ear_d = 52;         // MEASURE: the liner's ear pocket: diameter
 ear_depth = 10;     // MEASURE: ... and depth
 ear_pocket = [ear_d, ear_depth];
 
-// ------------------------- THE NECKBAND'S PARTS (MEASURE after opening it) -------------------------
-nb_len = 42;             // MEASURE: the main board: length (along the USB-C)
-nb_w = 11;               // MEASURE: ... width
-nb_t = 1.0;              // MEASURE: ... PCB thickness
+// ------------------------- THE NECKBAND'S PARTS -------------------------
+// The defaults are UNIVERSAL: room for the board and battery of most cheap neckbands (estimates from common
+// neckband and LiPo pouch sizes: no neckband publishes its insides). Smaller parts are packed with foam. To make
+// the pod slimmer, or if yours is bigger, open your neckband and enter its own sizes (MEASURE).
+nb_len = 50;             // MEASURE: the main board: length (along the USB-C); universal room: 50
+nb_w = 15;               // MEASURE: ... width; universal 15
+nb_t = 1.2;              // MEASURE: ... PCB thickness; universal 1.2
 nb_pcb = [nb_len, nb_w, nb_t];
-nb_under = 1.5;          // MEASURE: the tallest part under the board
-nb_over = 2.5;           // MEASURE: the tallest part on top of the board, besides the USB-C socket
+nb_under = 2.0;          // MEASURE: the tallest part under the board (or the foam pad it sits on); universal 2
+nb_over = 3.0;           // MEASURE: the tallest part on top of the board, besides the USB-C socket; universal 3
 usb = [8.94, 3.26];      // the USB-C socket's shell: width, height (standard; top-mounted on the board)
-usb_out = 0.6;           // MEASURE: how far the socket sticks out past the board's end
-batt_l = 40;             // MEASURE: the neckband's own battery: length (if it doesn't fit, a 502540 LiPo: 40 x 25 x 5)
-batt_w = 25;             // MEASURE: ... width
-batt_t = 5.2;            // MEASURE: ... thickness
+usb_out = 1.0;           // MEASURE: how far the socket sticks out past the board's end; universal 1
+batt_l = 50;             // MEASURE: the neckband's own battery: length; universal room: 50 (fits a 502540, 602535, 702030 ...)
+batt_w = 28;             // MEASURE: ... width; universal 28
+batt_t = 7;              // MEASURE: ... thickness; universal 7
 batt = [batt_l, batt_w, batt_t];
 
 // ------------------------- CONTROLS -------------------------
 tact_h = 7;              // SELECT: tactile switch height, 6 x 6 mm (7 mm: the actuator reaches up into the dome)
 tact_body = 3.5;         // the switch's body height
-btn_x = [-16, 0, 16];    // the 3 buttons along the pod (front to back: volume +, multi-function, volume -)
-btn_d = [10, 12.5, 10];  // the domes' diameters (the middle one is bigger, to find it with gloves on)
-proud = [1.2, 1.8, 1.2]; // how far each dome stands above the lid (at least: taller switches raise them)
+key_x = [-14, 14];       // along the pod (front to back): the multi-function button, the volume rocker
+main_d = 13;             // the multi-function button: a round dome (play/pause, calls, voice assistant, power)
+rock_w = 11;             // the VOLUME ROCKER: a long key across the pod (up and down): width ...
+rock_l = 24;             // ... and length. Press its top end for louder, its bottom end for quieter
+rock_s = 7.5;            // its 2 switches sit this far above and below its middle; a post under its middle is the pivot
+proud = [1.8, 1.4];      // how far each key stands above the lid (at least: taller switches raise them)
+post = 4;                // the rocker's pivot post (printed, glued to the switch board): square
 
 // ------------------------- SPEAKERS AND MIC -------------------------
 spk_d = 10;              // MEASURE: the earbud's own driver: diameter (10 mm per boAt; a 40 mm helmet speaker: 40)
@@ -104,7 +116,8 @@ $fn = 40;
 wall0 = wall + side_in;                       // the wall at the bottom
 rc_in = rc - wall0;                           // the cavity's corner radius
 pil_o = rc_in - (rc_in - 2.8) / sqrt(2);      // the pillars sit in the cavity's rounded corners
-Wi = max(batt[1] + 2 * 1.8, nb_pcb[1] + 2 * (pil_o + pil_d/2 + 0.35));   // inside width (the board passes between the back pillars)
+Wi = max(batt[1] + 2 * 1.8, nb_pcb[1] + 2 * (pil_o + pil_d/2 + 0.35),     // inside width: the battery, the board between the back pillars,
+         2 * (rock_l/2 + hinge + 1 + rr + side_in + 0.1) - 2 * wall0);      // and the volume rocker on the lid's flat top
 Li = usb_gap + usb_out + nb_pcb[0] + 1.5 + batt[0] + pil_o + pil_d/2 + 0.3;   // inside length (front: room for the pillars)
 L = Li + 2 * wall0;
 W = Wi + 2 * wall0;
@@ -123,7 +136,11 @@ z_lid0 = z_seam + kp_t - squeeze;
 z_top = z_lid0 + lid_t;
 act_top = z_sw1 + tact_h;
 roof_in = act_top + 0.3;                      // the domes' hollow (0.3 over the actuator)
-function dome_top(i) = max(z_top + proud[i], roof_in + 0.8 + (proud[i] - proud[0]));   // taller switches: taller domes
+function dome_top(i) = max(z_top + proud[i], roof_in + 0.8 + (proud[i] - min(proud)));   // taller switches: taller domes
+KEY = [[key_x[0], main_d, main_d], [key_x[1], rock_w, rock_l]];   // the keys: x, size along the pod, size across it
+SW = [[key_x[0], 0], [key_x[1], rock_s], [key_x[1], -rock_s]];    // the switches: multi-function, volume +, volume -
+SW_KEY = [0, 1, 1];
+pocket_d = [main_d - 2*dome_w, rock_w - 2*dome_w - 2];          // the hollows over the switches (the rocker's are smaller: a solid middle)
 z_low = -(pow(L/2, 2)/(2*shell_rl) + pow(W/2, 2)/(2*shell_rw)) - 1;
 pil = [for (sx = [-1, 1], sy = [-1, 1]) [sx * (Li/2 - pil_o), sy * (Wi/2 - pil_o)]];
 function side_d(z) = side_in * pow(max(0, z - z_low) / (z_seam - z_low), 2);   // the sides' inward curve
@@ -143,16 +160,20 @@ echo(str("POD: ", L, " x ", W, " mm, ", z_top, " mm above the tape at its middle
          "lid screws 4 x M2 x 6 countersunk; speaker pucks ", puck_d, " x ", puck_t, " mm"));
 
 // ------------------------- CHECKS ON THE SETTINGS -------------------------
-for (i = [0:2]) {
-  assert(dome_top(i) - roof_in >= 0.8, str("button ", i + 1, ": the dome's roof is too thin; use taller tactile switches (tact_h)"));
-  assert(abs(btn_x[i]) + btn_d[i]/2 + hinge < L/2 - side_in - rr - 1, "the buttons don't fit on the lid");
-  assert(btn_d[i]/2 + hinge < W/2 - side_in - rr - 1, "a button is too wide for the lid's flat top");
+for (i = [0:1]) {
+  assert(dome_top(i) - roof_in >= 0.8, str("key ", i + 1, ": its roof is too thin; use taller tactile switches (tact_h)"));
+  assert(abs(KEY[i][0]) + KEY[i][1]/2 + hinge < L/2 - side_in - rr - 1, "the keys don't fit on the lid");
+  assert(KEY[i][2]/2 + hinge < W/2 - side_in - rr - 1, "a key is too long for the lid's flat top");
 }
-assert(btn_x[1] - btn_x[0] - (btn_d[0] + btn_d[1])/2 - 2*hinge >= 1.6, "buttons too close for the ridges between them");
+assert(key_x[1] - key_x[0] - (main_d + rock_w)/2 - 2*hinge >= 1.6, "the keys are too close for the ridge between them");
+assert(rock_s + pocket_d[1]/2 <= rock_l/2 - dome_w, "the rocker's switches are too far apart for its length");
+assert(rock_s - 3 >= post/2 + 0.5, "the rocker's switches hit its pivot post");
+assert(rock_s - pocket_d[1]/2 >= post/2, "the rocker's pivot post is under a switch's hollow: no solid middle to rock on");
+assert(rock_s + 3 <= (Wi - 0.6)/2 - 0.5, "the rocker's switches are off the switch board");
 assert(sw_l/2 < Li/2 - pil_o - pil_d/2 - 0.3, "the switch board hits the lid's pillars");
 assert(sw_l/2 <= Li/2 - rc_in, "the switch board's corners are in the cavity's rounded ends");
 assert(Wi/2 - pil_o - pil_d/2 >= nb_pcb[1]/2 + 0.3, "the lid's pillars hit the neckband's board");
-assert(max([for (i = [0:2]) abs(btn_x[i])]) + 3 < sw_l/2, "a switch is off the end of the switch board");
+assert(max([for (p = SW) abs(p[0])]) + 3 < sw_l/2, "a switch is off the end of the switch board");
 assert(z_sw1 + tact_body < z_seam, "the switches' bodies hit the keypad");
 assert(act_top >= z_seam + 0.8, "the tactile switches are too short to reach up into the domes (tact_h)");
 assert(bat_x0 >= -Li/2 + pil_o + pil_d/2 + 0.2, "the battery runs into the front pillars");
@@ -211,33 +232,47 @@ module pod_lid() difference() {
   union() {
     hull() for (i = [0:8]) let(a = 90 * i/8)                 // a quarter-ellipse roll from the seam to the top
       slab(z_lid0 + lid_t * sin(a) - (i == 8 ? 0.01 : 0), side_in + rr * (1 - cos(a)));
-    for (i = [0:1]) hull() for (s = [-1, 1])               // ridges between the buttons
-      translate([(btn_x[i] + btn_x[i+1])/2, s * 5.5, z_top - 0.2]) sphere(r = 0.9, $fn = 16);
+    hull() for (s = [-1, 1])                                  // a ridge between the keys (to find them with gloves)
+      translate([(key_x[0] + main_d/2 + key_x[1] - rock_w/2)/2, s * 6, z_top - 0.2]) sphere(r = 0.9, $fn = 16);
   }
   translate([0, 0, z_lid0 - 0.01]) linear_extrude(squeeze + 0.1) pod_2d(wall0 + 0.6);  // squeeze only at the rim
-  for (i = [0:2]) translate([btn_x[i], 0, z_lid0 - 1]) cylinder(d = btn_d[i] + 2*hinge, h = lid_t + 3);
+  for (i = [0:1]) translate([KEY[i][0], 0, z_lid0 - 1]) linear_extrude(lid_t + 3) offset(r = hinge) key_2d(i);
   for (p = pil) translate([p[0], p[1], z_lid0 - 1]) {
     cylinder(d = 2.3, h = lid_t + 3);
     translate([0, 0, 1 + lid_t - 1.1]) cylinder(d1 = 1.9, d2 = 4.1, h = 1.11);       // M2 countersunk
   }
 }
 
-module dome(i) hull() {
-  cylinder(d = btn_d[i], h = dome_top(i) - z_seam - 1);
-  translate([0, 0, dome_top(i) - z_seam - 1]) rotate_extrude() translate([btn_d[i]/2 - 1, 0]) circle(1, $fn = 16);
+function key_ends(i) = let(d = KEY[i][1], e = (KEY[i][2] - d)/2) [[0, -e], [0, e]];   // a round key: both ends at the middle
+module key_2d(i) hull() for (p = key_ends(i)) translate(p) circle(d = KEY[i][1], $fn = 48);
+module dome(i) hull() {                                       // a key: round (the multi-function) or a long pill (the rocker)
+  linear_extrude(dome_top(i) - z_seam - 1) key_2d(i);
+  for (p = key_ends(i)) translate([p[0], p[1], dome_top(i) - z_seam - 1])
+    rotate_extrude($fn = 48) translate([KEY[i][1]/2 - 1, 0]) circle(1, $fn = 16);
 }
+module rocker_marks()                                         // raised + (top end) and - (bottom end), to feel with gloves
+  translate([key_x[1], 0, dome_top(1) - 0.01]) linear_extrude(0.6) {
+    translate([0, rock_s]) { square([5, 1.2], center = true); square([1.2, 5], center = true); }
+    translate([0, -rock_s]) square([5, 1.2], center = true);
+  }
 
-module keypad() difference() {                               // TPU: the buttons and the seam's gasket
+module keypad() difference() {                               // TPU: the keys and the seam's gasket
   union() {
     translate([0, 0, z_seam]) linear_extrude(kp_t) pod_2d(side_in + 0.4);
-    for (i = [0:2]) translate([btn_x[i], 0, z_seam]) dome(i);
+    for (i = [0:1]) translate([KEY[i][0], 0, z_seam]) dome(i);
+    rocker_marks();
   }
-  for (i = [0:2]) translate([btn_x[i], 0, z_seam - 0.01]) {
-    cylinder(d = btn_d[i] - 2*dome_w, h = roof_in - z_seam + 0.01);
-    difference() { cylinder(d = btn_d[i] + 2*hinge, h = 0.41); cylinder(d = btn_d[i], h = 1); }   // thin hinge
+  for (j = [0:2]) translate([SW[j][0], SW[j][1], z_seam - 0.01])           // the hollows: an actuator reaches up into each
+    cylinder(d = pocket_d[SW_KEY[j]], h = roof_in - z_seam + 0.01, $fn = 40);
+  for (i = [0:1]) translate([KEY[i][0], 0, z_seam - 0.01]) linear_extrude(0.42) difference() {   // thin hinge round each key
+    offset(r = hinge) key_2d(i); key_2d(i);
   }
   for (p = pil) translate([p[0], p[1], z_seam - 1]) cylinder(d = 2.6, h = 3);
 }
+
+module post_shape() linear_extrude(tact_body + 0.6) rrect([post, post], 0.8);   // = z_seam - z_sw1
+module rocker_post() translate([key_x[1], 0, z_sw1]) post_shape();   // PETG: glued to the switch board under the rocker's
+                                                                     // solid middle (its top touches the rocker: the pivot)
 
 module usb_plug() {                                          // TPU: seals the USB-C socket
   xo = plug_x;
@@ -259,12 +294,12 @@ module board() {
 module battery() color("#3d5f9e") translate([bat_x0, -batt[1]/2, fl]) cube(batt);
 module switches(pressed = 0) {
   color("#c9a36b") translate([-sw_l/2, -(Wi - 0.6)/2, z_sw]) cube([sw_l, Wi - 0.6, 1.6]);
-  for (x = btn_x) translate([x, 0, z_sw1]) {
+  for (p = SW) translate([p[0], p[1], z_sw1]) {
     color("#222") translate([-3, -3, 0]) cube([6, 6, tact_body]);
     color("#444") cylinder(d = 3.5, h = tact_h + pressed);
   }
 }
-module insides() { board(); battery(); switches(); }
+module insides() { board(); battery(); switches(); color("#5a6068") rocker_post(); }
 
 // ------------------------- CABLE CHANNEL (TPU) -------------------------
 // Its cross-section: u across it, w out of the shell. Its 2 grooves are open toward the shell: the cables lie in them,
@@ -305,6 +340,7 @@ module cable_channel() difference() {                         // flat, in the po
   translate([0, 0, -1]) linear_extrude(ch_h + 2) offset(r = 0.3) pod_2d(0);   // its top end fits against the pod's side
 }
 
+module half_x() render() intersection() { children(); translate([key_x[1], -60, -30]) cube([200, 120, 80]); }
 C_POD = "#454a52"; C_TPU = "#1a1a1a"; C_HELMET = "#e9e9e6"; C_EPS = "#bdbdb5";
 module pod_assembled(ex = 0) {
   color(C_POD) pod_body();
@@ -439,6 +475,13 @@ module boom_mic() {
 if (PART == "assembly") { helmet_shell(); helmet_details(); multmatrix(POD_M) pod_assembled(); channel_on_helmet(); }
 else if (PART == "channel_part") color("#5a6068") rotate([0, 180, 0]) translate([-cab_xc, W/2, 0]) render() cable_channel();   // view: the channel turned over, its grooves up
 else if (PART == "pod") pod_assembled();
+else if (PART == "rocker_section") {                                                 // view: cut through the volume rocker
+  color(C_POD) half_x() pod_body(); color(C_TPU) half_x() keypad(); color(C_POD) half_x() pod_lid();
+  color("#c9a36b") half_x() translate([-sw_l/2, -(Wi - 0.6)/2, z_sw]) cube([sw_l, Wi - 0.6, 1.6]);
+  color("#222") half_x() for (p = SW) translate([p[0] - 3, p[1] - 3, z_sw1]) cube([6, 6, tact_body]);
+  color("#999") half_x() for (p = SW) translate([p[0], p[1], z_sw1]) cylinder(d = 3.5, h = tact_h);
+  color("#5a8fd0") half_x() rocker_post(); color("#1f6f3a") half_x() board();
+}
 else if (PART == "pod_cables") { pod_assembled(); color(C_TPU) translate([0, -12, 0]) render() cable_channel(); }   // view: the bottom side, the channel pulled away
 else if (PART == "exploded") { pod_assembled(5); translate([0, 0, 6]) insides(); }
 else if (PART == "inside") { helmet_shell(true); liner(true); speakers(false); boom_mic(); multmatrix(POD_M) pod_assembled(); }
@@ -452,6 +495,7 @@ else if (PART == "small_parts") {                                               
 else if (PART == "pod_body") rotate([180, 0, 0]) translate([0, 0, -z_seam]) pod_body();     // open side down
 else if (PART == "pod_lid") translate([0, 0, -z_lid0]) pod_lid();
 else if (PART == "keypad") translate([0, 0, -z_seam]) keypad();
+else if (PART == "rocker_post") post_shape();
 else if (PART == "usb_plug") rotate([0, -90, 0]) translate([-plug_x - 1.2, 0, -usb_zc]) usb_plug();                        // flange down
 else if (PART == "speaker_puck") translate([0, 0, puck_t]) rotate([180, 0, 0]) speaker_puck();   // front down
 else if (PART == "mic_cup") mic_cup();
@@ -463,6 +507,7 @@ else if (PART == "check_parts") intersection() { pod_body(); pod_lid(); }       
 else if (PART == "check_plug") intersection() { usb_plug(); pod_body(); }                  // empty
 else if (PART == "check_squeeze") intersection() { keypad(); pod_lid(); }                   // must collide: the seal
 else if (PART == "check_press") intersection() { switches(0.5); keypad(); }                 // must collide: a press reaches the switch
+else if (PART == "check_pivot") intersection() { translate([0, 0, 0.05]) rocker_post(); keypad(); }   // must collide: the post touches the rocker
 else if (PART == "check_rest") intersection() { switches(0); keypad(); }                    // empty: the switches aren't held down
 else if (PART == "check_shell") intersection() { pod_body(); shell_cut(-vhb_t); }           // empty: the tape's room
 else if (PART == "check_notches") intersection() {                                          // empty: the cables pass the pod's notches

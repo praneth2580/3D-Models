@@ -1,8 +1,8 @@
 {
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
-  "summary": "Music, calls and navigation voice in your helmet for about ₹1,800–3,200 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of a flexible cable channel stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve and the neckband's parts are settings.",
-  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. The neckband (boAt Rockerz 255 Pro+) has no published teardown: open yours and measure its board and battery first.",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹1,900–3,400 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a pod stuck to the outside of the shell on the left with VHB tape (a universal size that fits most neckbands; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of a flexible cable channel stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve is a setting, and the neckband's parts are too, for a slimmer pod.",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. The pod is a universal size by default (room for a board up to 50 × 15 mm and a battery up to 50 × 28 × 7 mm), so most neckbands fit without measuring; enter your neckband's sizes for a slimmer pod.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hh_helmet.png",
@@ -15,7 +15,11 @@
     },
     {
       "src": "images/hh_pod.png",
-      "caption": "The pod: 102 × 37 mm and 16.5 mm proud of the shell at its middle, 3 rubber domes in a screwed lid, the USB-C plug at its back end"
+      "caption": "The pod at its universal size: 120 × 41 mm and 17.7 mm proud of the shell at its middle; a round play/call button and the volume rocker (raised + and −) in a screwed lid, the USB-C plug at its back end"
+    },
+    {
+      "src": "images/hh_rocker.png",
+      "caption": "Cut through the volume rocker: one rubber key over 2 switches; its solid middle rests on a small printed post, so pressing the top end gives louder and the bottom end quieter"
     },
     {
       "src": "images/hh_bottom.png",
@@ -60,6 +64,7 @@
         "pod_body",
         "pod_lid",
         "keypad",
+        "rocker_post",
         "usb_plug",
         "cable_channel"
       ]
@@ -88,15 +93,21 @@
     },
     "pod_lid": {
       "name": "Pod lid",
-      "what": "Rolled edges, 3 holes for the keypad's domes, ridges between them; 4 M2 × 6 countersunk screws",
+      "what": "Rolled edges, holes for the play/call button and the volume rocker, a ridge between them; 4 M2 × 6 countersunk screws",
       "qty": "1",
       "material": "PETG / ASA. Flat underside down"
     },
+    "rocker_post": {
+      "name": "Rocker pivot post",
+      "what": "A tiny 4 × 4 mm post glued to the switch board between the volume rocker's 2 switches: the rocker's solid middle rests on it and tips either way",
+      "qty": "1",
+      "material": "PETG. On its end"
+    },
     "keypad": {
       "name": "Keypad",
-      "what": "One TPU sheet: its 3 hollow domes are the buttons (the big middle one is play/pause and calls) and its edge is the seam's gasket, squeezed 0.2 mm by the lid",
+      "what": "One TPU sheet with 2 keys: a round play/call button and a long volume rocker across the pod (raised + on its top end, − on its bottom end); its edge is the seam's gasket, squeezed 0.2 mm by the lid",
       "qty": "1",
-      "material": "TPU 85A-95A. Flat, domes up"
+      "material": "TPU 85A-95A. Flat, keys up"
     },
     "usb_plug": {
       "name": "USB-C plug",
@@ -173,7 +184,7 @@
         ]
       },
       {
-        "label": "Your neckband (measure it after opening)",
+        "label": "Your neckband (the defaults fit most neckbands; enter yours for a slimmer pod)",
         "params": [
           {
             "name": "nb_len",
@@ -181,7 +192,8 @@
             "unit": "mm",
             "step": 0.1,
             "min": 20,
-            "max": 70
+            "max": 70,
+            "help": "The defaults (board 50 × 15, battery 50 × 28 × 7) are a universal size: room for most neckbands, packed with foam. Measure your own for a slimmer pod."
           },
           {
             "name": "nb_w",
@@ -195,9 +207,9 @@
             "name": "nb_t",
             "label": "Board thickness",
             "unit": "mm",
-            "step": 0.1,
+            "step": 0.2,
             "min": 0.4,
-            "max": 2
+            "max": 2.4
           },
           {
             "name": "nb_under",
@@ -230,7 +242,7 @@
             "step": 0.5,
             "min": 20,
             "max": 60,
-            "help": "The neckband's own battery (a 502540 LiPo, 40 × 25 × 5, only if it can't fit)."
+            "help": "The neckband's own battery (universal room: 50 × 28 × 7)."
           },
           {
             "name": "batt_w",
@@ -246,7 +258,7 @@
             "unit": "mm",
             "step": 0.2,
             "min": 2,
-            "max": 8
+            "max": 10
           },
           {
             "name": "spk_d",

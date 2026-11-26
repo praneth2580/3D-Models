@@ -1,8 +1,8 @@
 # Helmet Headset (v1): a cheap Bluetooth neckband rebuilt as a helmet headset
 
-**Status: designed and modelled (v1, checked in CAD, not printed or built yet).** The neckband is picked but not opened yet, so its board and battery sizes are placeholders (MEASURE).
+**Status: designed and modelled (v1, checked in CAD, not printed or built yet).** By default the pod is a **universal size**: room for the board and battery of most cheap neckbands, so you can print it before opening yours. Enter your neckband's own sizes for a slimmer pod.
 
-Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet: music, calls and navigation voice for about ₹1,800–3,200 (est.) instead of a ₹5,000+ helmet communicator. **Everything that makes sound or picks it up is the neckband's own:** its board (Bluetooth, amplifier, charging), its battery, its two speakers and its mic. This project only moves them to the right places in the helmet and adds printed housings; the only things you buy besides the neckband are small hardware bits (tape, screws, 3 switches, wire). It's general purpose: the helmet's curve and the neckband's parts are settings.
+Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet: music, calls and navigation voice for about ₹1,900–3,400 (est.) instead of a ₹5,000+ helmet communicator. **Everything that makes sound or picks it up is the neckband's own:** its board (Bluetooth, amplifier, charging), its battery, its two speakers and its mic. This project only moves them to the right places in the helmet and adds printed housings; the only things you buy besides the neckband are small hardware bits (tape, screws, 3 switches, foam, wire). It's general purpose: the helmet's curve and the neckband's parts are settings.
 
 ![A slim pod on the left of a modular helmet (white stand-in), behind the chin bar's pivot](images/hh_helmet.png)
 
@@ -13,13 +13,14 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
 - the board, battery and buttons in a **slim pod stuck to the outside on the left** (no holes in the helmet);
 - **the neckband's own speakers and mic** ("that the reason i am using it on the first place"). Bigger 40 mm speakers are only an optional upgrade;
 - **wires in from below, no hole in the helmet, in grooves** ("routed not using some hole in the helmet instead from below the helmet so have some grooves to route those wires"): a flexible cable channel from the pod down to the shell's lower edge;
+- **a pod that fits most neckbands** ("make the 3d pod fit most of the headsets"), a universal size by default, and **a dedicated volume rocker** ("have a dedicated volumen button"), separate from the play/call button;
 - **the cables out of the pod's bottom long side** ("as the mounting will be on the side with the long side laying horizontally on the helmet i feel the holes groves should open on the long side which means it will exit on the bottom side of the helmet"): the openings face down, and the channel runs straight down to the edge. (Before that they left through the pod's back end, with a turn in the channel.)
 
 ## What goes where
 
 | Where | What | Why there |
 |---|---|---|
-| **Pod, outside, left side, behind the chin bar's pivot** | the neckband's board (Bluetooth, amplifier, charging, its USB-C socket), its battery, 3 big buttons | buttons you can find and press with gloves on; charging without taking anything out; the battery isn't against your head |
+| **Pod, outside, left side, behind the chin bar's pivot** | the neckband's board (Bluetooth, amplifier, charging, its USB-C socket), its battery, a play/call button and a volume rocker | buttons you can find and press with gloves on; charging without taking anything out; the battery isn't against your head |
 | **Ear pockets in the liner** | the earbuds' own speakers (10 mm), each in a printed puck | the liner already has these pockets: nothing is cut |
 | **On a boom in front of your mouth** | the neckband's own mic, on longer wires | a mic needs to be close to the mouth to beat wind noise |
 | **Out of the pod's bottom side, straight down the outside of the shell, then in under its lower edge** | 2 thin cables from the pod to the speakers and the mic, in the grooves of a flexible **cable channel** | no holes in the shell; the openings face down, so water runs away from them |
@@ -32,9 +33,16 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
 
 ## The neckband: boAt Rockerz 255 Pro+
 
-**Picked: the boAt Rockerz 255 Pro+**, about ₹1,100–1,300 (est.) on Amazon.in and Flipkart (Smartprix showed ₹1,199 in November 2025). It's the commonest neckband in India, so it's easy to buy and there are plenty of repair videos to learn from. boAt's manual lists **Bluetooth 5.0, IPX7, one built-in mic (−42 dB sensitivity)**. Retailers disagree on the battery (Blinkit says 300 mAh). Nobody has published a teardown with sizes, so the board and the battery are **placeholders until you open it**.
+**Picked: the boAt Rockerz 255 Pro+**, about ₹1,100–1,300 (est.) on Amazon.in and Flipkart (Smartprix showed ₹1,199 in November 2025). It's the commonest neckband in India, so it's easy to buy and there are plenty of repair videos to learn from. boAt's manual lists **Bluetooth 5.0, IPX7, one built-in mic (−42 dB sensitivity)**. Retailers disagree on the battery (Blinkit says 300 mAh). Nobody has published a teardown with sizes.
 
-**Any neckband works.** The pod is made around the sizes you measure (`nb_len`, `nb_w`, `nb_t`, `nb_under`, `nb_over`, `usb_out`, `batt_l`, `batt_w`, `batt_t`). The buttons are wired, so where the board's own buttons sit doesn't matter. Things to check on whichever one you get:
+**Most neckbands fit the universal pod.** Its default room (estimated from common neckband and LiPo sizes, since no maker publishes the insides):
+
+| Part | Room in the universal pod | Fits, for example |
+|---|---|---|
+| The main board | up to **50 × 15 mm**, 1.2 mm thick, parts up to 2 mm under and 3 mm on top; its USB-C socket on its end | most neckband boards (they're long and narrow, to fit the neckband's end) |
+| The battery | up to **50 × 28 × 7 mm** | pouch cells such as 401230, 502030, 502540, 602535, 702030 (roughly 100–500 mAh) |
+
+Smaller parts are packed with foam (thin double-sided foam tape under the board and the battery, a scrap of foam in the gaps), so nothing rattles. If yours is bigger, or you want the pod slimmer (about 102 × 40 mm instead of 120 × 41 mm for a small neckband), enter its own sizes (`nb_len`, `nb_w`, `nb_t`, `nb_under`, `nb_over`, `usb_out`, `batt_l`, `batt_w`, `batt_t`) in `helmet_headset.scad` or on the website's "Make it your size". The buttons are wired, so where the board's own buttons sit doesn't matter. Things to check on whichever neckband you get:
 
 1. **The power switch.** Some neckbands turn on and off when their magnetic earbuds are pulled apart or clicked together: a small magnet sensor (hall sensor or reed switch) inside. Once the earbuds are gone, such a board can stay on or stay off. Find the sensor (near where the earbuds click together) and work out which state means "on": you may have to glue a small magnet next to it, or bridge it. The power button must still turn it off, or the battery drains.
 2. **The mic.** It goes to the boom on longer wires. How depends on what it is:
@@ -42,23 +50,30 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
    - **a tiny MEMS mic soldered on the board** (a small metal box with 3–6 pads): move it on a small piece of perfboard on thin wires, one per pad (keep them short, about 30 cm at most, twisted). Only if that doesn't work (a pad lifts, or it's too noisy) fall back on an optional 6 mm electret capsule (₹10–40): capsule + to the board's output pad, − to ground, a 2.2 kΩ resistor from the supply pad to the output pad. This works only for an analog MEMS mic (3–4 pads), not a digital one (5–6 pads, with CLK and DATA).
    - **Two mics** (some "ENx" noise-cancelling models): the main one goes to the boom; leave the second one in the pod. If calls sound worse, disconnect the second one.
 3. **The speakers.** Each earbud's speaker is a 10 mm driver (boAt's spec) glued in a small shell. Prise the shell open (it's usually glued in two halves; a craft knife round the seam), take the driver out with its two wires, and note which wire went where. Some boards have 4 separate speaker pads (L+, L−, R+, R−), some share a ground. **Keep the speakers wired exactly as they were. Don't join grounds that weren't joined**: some amplifiers drive both wires, and joining them would short the amplifier. The earbuds' own thin wires are usually too short to reach round the helmet: extend them with ordinary wire (below).
-4. **The battery.** Measure it and set its size: the pod is made around it. Only if it's a long curved cell that doesn't fit at all, use a flat **502540 LiPo** (about 500 mAh, with its protection board, optional, ₹150–300 est.). Match + and −; the board's charger works with it.
+4. **The battery.** Check that it fits the room above, or measure it and set its size. Only if it's a long curved cell that doesn't fit at all, use a flat **502540 LiPo** (about 500 mAh, with its protection board, optional, ₹150–300 est.). Match + and −; the board's charger works with it.
+5. **The charging socket.** The pod's back end has a hole for a USB-C socket on the end of the board. Shim the board with foam so its socket lines up with the hole. If your board's socket is on its side, or it's micro-USB, there's an optional fallback: a small **USB-C charging breakout** (6-pin, with its 5.1 kΩ resistors, ₹20–60 est.) glued in the hole and wired to the board's charging pads (+5 V and ground).
 
 ## The pod
 
-![The pod: 102 × 37 mm and 16.5 mm tall at its middle, 3 rubber domes in a screwed lid](images/hh_pod.png)
+![The pod: 120 × 41 mm and 17.7 mm tall at its middle (the universal size); a round play/call button and the volume rocker in a screwed lid](images/hh_pod.png)
 
-A slim pod with rounded ends, **102 × 37 mm and 16.5 mm proud of the shell at its middle** (a commercial helmet communicator is about 20 mm). Its underside is curved to fit the shell, so it hugs the helmet along its length. Inside, from the shell outward:
+A pod with rounded ends, **120 × 41 mm and 17.7 mm proud of the shell at its middle** at the universal size (about 102 × 40 × 16.5 mm when made for a small neckband's measured parts; a commercial helmet communicator is about 20 mm proud). Its underside is curved to fit the shell, so it hugs the helmet along its length. Inside, from the shell outward:
 
 1. **The body**, stuck on with **1.1 mm VHB tape** (3M 4910 or 5952). Its floor follows the shell; ribs give the battery and the board a flat seat.
 2. **The battery** at the front end and **the neckband's board** at the back end, its USB-C socket at the back wall.
-3. **The switch board:** a 50 × 28 mm piece of perfboard with **3 tactile switches, 6 × 6 × 7 mm**, resting on ledges along the walls. Each switch is wired across one of the board's own buttons (in parallel), so pressing it is the same as pressing that button. This way the board's buttons can be anywhere, and you get big glove-friendly buttons in the right place. (These 3 switches, ₹10–30, are the one electronic part not taken from the neckband: its own buttons are tiny, often on the board's edge, and in places nobody knows until it's open. If yours happen to sit in a row on the board's top, they could be pressed through the domes directly instead; tell me their positions after you open it.)
-4. **The keypad (TPU):** one flat rubber sheet. Its 3 hollow domes are the buttons (a big round one in the middle for play/pause and calls, smaller ones either side for volume), and its edge is the **gasket**: the lid squeezes it 0.2 mm onto the body's rim. The sheet is thinner round each dome, so the dome moves easily when pressed.
-5. **The lid**, with a rolled edge, 4 countersunk M2 × 6 screws into heat-set inserts, and small ridges between the buttons so you can count them with gloves.
+3. **The switch board:** a 50 × 32 mm piece of perfboard (its width is the pod's inside width less 0.6 mm) with **3 tactile switches, 6 × 6 × 7 mm**, resting on ledges along the walls, and the volume rocker's small printed **pivot post** glued between its two switches. Each switch is wired across one of the board's own buttons (in parallel), so pressing it is the same as pressing that button. This way the board's buttons can be anywhere, and you get big glove-friendly keys in the right place. (These 3 switches, ₹10–30, are the one electronic part not taken from the neckband: its own buttons are tiny, often on the board's edge, and in places nobody knows until it's open. If yours happen to sit in a row on the board's top, they could be pressed through the keys directly instead; tell me their positions after you open it.)
+4. **The keypad (TPU):** one flat rubber sheet with 2 keys, and its edge is the **gasket**: the lid squeezes it 0.2 mm onto the body's rim. The sheet is thinner round each key, so the key moves easily when pressed.
+   - **The multi-function button** (front): a round dome, 13 mm across: play/pause, answer/end calls, voice assistant, power.
+   - **The volume rocker** (behind it): a long key, 11 × 24 mm, lying **across** the pod (up and down on the helmet). **Press its top end for louder, its bottom end for quieter.** A raised **+** on the top end and **−** on the bottom end let you feel which is which with gloves.
+5. **The lid**, with a rolled edge, 4 countersunk M2 × 6 screws into heat-set inserts, and a small ridge between the two keys.
+
+**How the rocker works.** It's one rubber key over 2 switches, 15 mm apart. Its middle is solid and rests on a small printed post (4 × 4 mm, `rocker_post`) glued to the switch board between them. Press one end and the key tips over the post, pressing only that end's switch. The two switches are wired across the neckband's own volume + and volume − buttons, so it's the neckband that changes the volume. As on the neckband, holding an end for about 2 seconds may skip a track (that's in the neckband's own software).
+
+![Cut through the volume rocker: its 2 switches under the hollow ends, the pivot post under its solid middle](images/hh_rocker.png)
 
 ![Opened up: the lid, the keypad, the switch board, the neckband's board and the battery](images/hh_exploded.png)
 
-- **Buttons** (front to back, as on the neckband): volume + (and next track, if the neckband does that on a long press), **multi-function** (play/pause, answer/end call, voice assistant, power), volume −.
+- **Keys:** the round **multi-function** button at the front (play/pause, answer/end call, voice assistant, power), then the **volume rocker** (top end louder, bottom end quieter).
 - **USB-C:** in the back end, sealed by a small **TPU plug** with a pull tab (pointing up). Charge with the plug out; put it back before riding.
 - **Cables:** 2 notches in the pod's **bottom long side**, right at the shell, under the neckband's board (between two of the floor's ribs): 4.2 mm for the speakers' 4-core cable (the one nearer the front), 3.4 mm for the mic's shielded cable (old USB and audio cables work). The cables come out flat against the shell, pointing straight down, into the cable channel. Seal the notches with neutral-cure silicone.
 
@@ -89,9 +104,9 @@ The 1.1 mm VHB tape takes up small differences. Clean the spot with isopropyl al
 | Left speaker pads (where the left earbud was) | the left earbud's speaker | speakers' 4-core cable (an old USB cable works) |
 | Right speaker pads | the right earbud's speaker, round the back inside the neck roll | same cable, split at the pod |
 | Mic pads | the neckband's mic, on the boom | thin shielded cable (an old audio cable: one core and the shield) |
-| Volume + button's 2 pads | switch 1 (front) | short wires inside the pod |
-| Multi-function button's 2 pads | switch 2 (middle) | " |
-| Volume − button's 2 pads | switch 3 (back) | " |
+| Multi-function button's 2 pads | the round button's switch (front) | short wires inside the pod |
+| Volume + button's 2 pads | the rocker's top switch | " |
+| Volume − button's 2 pads | the rocker's bottom switch | " |
 | Battery pads | the battery (red +, black −) | as it was |
 
 ### Routing the cables: the cable channel
@@ -109,10 +124,10 @@ No hole in the helmet: the cables go in **from below**.
 ## Build order
 
 1. Buy the neckband, charge it, **pair it and try it as it is** (so you know it works before you open it).
-2. Open it. Find the board, the battery, the mic and any magnet sensor; take the speakers out of the earbuds. **Measure** the board, the battery and the speakers (below), and set them in `helmet_headset.scad`, or on the website's "Make it your size". Measure your helmet's curve and ear pockets.
+2. Open it. Find the board, the battery, the mic and any magnet sensor; take the speakers out of the earbuds. Check that the board and the battery fit the universal pod's room (above), or **measure** them for a slimmer pod and set them in `helmet_headset.scad` or on the website's "Make it your size". Measure the speakers, your helmet's curve and its ear pockets.
 3. Print the parts, fit 4 M2 heat-set inserts in the pod's pillars.
-4. Wire the switch board and the cables; test everything on the bench (pairing, music on both sides, a call, all 3 buttons, charging).
-5. Fit it all in the pod, lay the keypad on, screw the lid down evenly.
+4. Wire the switch board and the cables; test everything on the bench (pairing, music on both sides, a call, the button and both ends of the rocker, charging).
+5. Fit it all in the pod, packing the gaps with foam so nothing rattles and the USB-C socket lines up with its hole; glue the rocker's post on the switch board; lay the keypad on, screw the lid down evenly.
 6. Stick the pod on the helmet, fit the speakers and the boom, lay the cables down the shell, press the cable channel over them and tuck them in under the edge trim.
 7. Test on the bike at low speed; bend the boom until callers hear you clearly.
 
@@ -120,18 +135,19 @@ No hole in the helmet: the cables go in **from below**.
 
 All in `helmet_headset.scad` (MEASURE lines), or on the website ("Make it your size"):
 - **Your helmet:** the shell's 2 radii at the pod's spot (`shell_rl`, `shell_rw`); the ear pockets' diameter and depth (`ear_d`, `ear_depth`).
-- **The neckband (after opening it):** the board's length, width and thickness (`nb_len`, `nb_w`, `nb_t`: 42 × 11 × 1.0); the tallest parts under and on it (`nb_under` 1.5, `nb_over` 2.5); how far its USB-C socket sticks out past its end (`usb_out` 0.6); the battery (`batt_l`, `batt_w`, `batt_t`: 40 × 25 × 5.2); the earbuds' speakers (`spk_d`, `spk_t`: 10 × 4); the mic (`mic`, 6 × 2.7).
+- **The neckband (only to make the pod slimmer, or if its parts are bigger than the universal room):** the board's length, width and thickness (`nb_len`, `nb_w`, `nb_t`: universal 50 × 15 × 1.2); the tallest parts under and on it (`nb_under` 2, `nb_over` 3); how far its USB-C socket sticks out past its end (`usb_out` 1); the battery (`batt_l`, `batt_w`, `batt_t`: universal 50 × 28 × 7). Always measure the earbuds' speakers (`spk_d`, `spk_t`: 10 × 4); the mic (`mic`, 6 × 2.7).
 - **The bits you buy:** the tactile switches' height (`tact_h`, 7); the boom's thickness (`boom_d`, 5); the cables (`cable_d`).
 - **The cable channel's length** (`run_l`, 90): along the shell, from the pod's bottom edge straight down to the shell's lower edge.
 
-The pod grows to fit what you enter. The model refuses what doesn't fit: switches too short to reach the domes, a battery or board that would hit the pillars or the rounded ends, a puck bigger than the ear pocket.
+The pod grows to fit what you enter. The model refuses what doesn't fit: switches too short to reach the keys, a battery or board that would hit the pillars or the rounded ends, a puck bigger than the ear pocket.
 
 ## Checks done (CAD)
 
 - every printed part exports as one watertight body;
 - the battery, the neckband's board, the switch board and the switches fit inside the pod: they only touch the floor, the ribs and the ledges;
 - the body and the lid don't touch (the keypad is between them); the lid squeezes the keypad's edge 0.2 mm (deliberate);
-- the switches aren't pressed at rest, and pressing a dome 0.5 mm reaches its switch;
+- the switches aren't pressed at rest, and pressing a key 0.5 mm reaches its switch (each end of the rocker too); the rocker's middle rests on its pivot post;
+- a small neckband's measured parts (42 × 11 mm board, 40 × 25 × 5.2 mm battery) still pass every check;
 - the USB plug fits its hole without touching the wall;
 - the pod's underside stays clear of the shell by the tape's thickness;
 - each cable, lying on the shell, passes through its notch in the pod's bottom side without touching it; the notches stay on the straight part of the side, clear of the rounded back end and the battery (asserts).
@@ -144,12 +160,13 @@ The pod grows to fit what you enter. The model refuses what doesn't fit: switche
 |---|---|---|
 | `pod_body` | PETG or ASA (light colour) | open side down (the floor prints as a bridge across the inside) |
 | `pod_lid` | PETG / ASA | flat underside down |
-| `keypad`, `usb_plug` | TPU 85A–95A | the keypad flat, domes up; the plug on its flange |
+| `keypad`, `usb_plug` | TPU 85A–95A | the keypad flat, keys up; the plug on its flange |
+| `rocker_post` | PETG | on its end (tiny: print it with another part) |
 | `cable_channel` | TPU 85A–95A | flanges down (the grooves bridge 4.6 mm) |
 | `speaker_puck` × 2 | PETG | front down (the hollowed back up) |
 | `mic_cup`, `boom_mount` | PETG | back down; the plate flat |
 
-About 30 g of PETG and 10 g of TPU. Parts and where to buy them: [`COMPONENTS.md`](COMPONENTS.md), and the project's page on the website.
+About 40 g of PETG and 12 g of TPU at the universal size. Parts and where to buy them: [`COMPONENTS.md`](COMPONENTS.md), and the project's page on the website.
 
 ## Safety
 
