@@ -15,11 +15,15 @@
     },
     {
       "src": "images/hh_pod.png",
-      "caption": "The pod: 102 × 37 mm and 16.5 mm proud of the shell at its middle, 3 rubber domes in a screwed lid, the USB-C plug at its back end, the cables out of its bottom"
+      "caption": "The pod: 102 × 37 mm and 16.5 mm proud of the shell at its middle, 3 rubber domes in a screwed lid, the USB-C plug at its back end"
+    },
+    {
+      "src": "images/hh_back.png",
+      "caption": "The pod's back end: the USB-C plug (its tab points up) and, at the bottom against the shell, the 2 cable notches; the cable channel's top end covers them"
     },
     {
       "src": "images/hh_channel.png",
-      "caption": "The cable channel: a flexible TPU strip from the pod's lower edge down to the shell's lower edge; the cables lie in its grooves and go in under the edge trim (no hole in the helmet)"
+      "caption": "The cable channel: the cables leave the pod's back end (away from rain and wind), a flexible TPU strip curves them round and down to the shell's lower edge, then in under the edge trim (no hole in the helmet)"
     },
     {
       "src": "images/hh_exploded.png",
@@ -35,7 +39,7 @@
     },
     {
       "src": "images/hh_grooves.png",
-      "caption": "The cable channel as printed, from underneath: a groove for each cable, thin flanges for the tape"
+      "caption": "The cable channel as printed, from underneath: a groove for each cable following the turn, thin flanges for the tape, its top end shaped to the pod's end"
     }
   ],
   "docs": [
@@ -78,7 +82,7 @@
   "parts": {
     "pod_body": {
       "name": "Pod body",
-      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable notches at the bottom of its lower wall, right at the shell, lined up with the cable channel; 4 pillars for M2 heat-set inserts",
+      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable notches at the bottom of its back end, right at the shell, lined up with the cable channel; 4 pillars for M2 heat-set inserts",
       "qty": "1",
       "material": "PETG or ASA, a light colour if you can. Open side down"
     },
@@ -96,7 +100,7 @@
     },
     "usb_plug": {
       "name": "USB-C plug",
-      "what": "Seals the USB-C socket when you ride; pull it out by its tab to charge",
+      "what": "Seals the USB-C socket when you ride; pull it out by its tab (pointing up) to charge",
       "qty": "1",
       "material": "TPU 85A-95A. On its flange"
     },
@@ -125,7 +129,7 @@
     },
     "cable_channel": {
       "name": "Cable channel",
-      "what": "A flexible strip stuck to the shell from the pod's lower edge down to the shell's lower edge: the 2 cables lie in the grooves on its underside, held flat against the shell, then go in under the edge trim. No hole in the helmet",
+      "what": "A flexible strip stuck to the shell: it leaves the pod's back end (covering its cable notches), curves round a quarter turn and runs down to the shell's lower edge. The 2 cables lie in the grooves on its underside, held flat against the shell, then go in under the edge trim. No hole in the helmet",
       "qty": "1",
       "material": "TPU 85A-95A. Flanges down"
     }
@@ -164,7 +168,7 @@
             "step": 1,
             "min": 30,
             "max": 200,
-            "help": "Along the shell, from the pod's lower edge to the shell's lower edge."
+            "help": "Along the shell, from where the channel's turn ends (about 20 mm behind the pod) down to the shell's lower edge."
           }
         ]
       },

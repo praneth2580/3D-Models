@@ -80,7 +80,12 @@
    "boom_d"
   ],
   "cable_channel": [
-   "run_l"
+   "run_l",
+   "nb_len",
+   "nb_w",
+   "usb_out",
+   "batt_l",
+   "batt_w"
   ]
  }
 }

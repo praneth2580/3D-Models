@@ -12,7 +12,8 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
 - the neckband picked for the owner (below);
 - the board, battery and buttons in a **slim pod stuck to the outside on the left** (no holes in the helmet);
 - **the neckband's own speakers and mic** ("that the reason i am using it on the first place"). Bigger 40 mm speakers are only an optional upgrade;
-- **wires in from below, no hole in the helmet, in grooves** ("routed not using some hole in the helmet instead from below the helmet so have some grooves to route those wires"): a flexible cable channel from the pod down to the shell's lower edge.
+- **wires in from below, no hole in the helmet, in grooves** ("routed not using some hole in the helmet instead from below the helmet so have some grooves to route those wires"): a flexible cable channel from the pod down to the shell's lower edge;
+- **the cables out of the pod's back end** ("the cable go on the back part and have groves too will help in water proofing too"): facing away from rain and the wind, under the USB-C.
 
 ## What goes where
 
@@ -21,7 +22,7 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
 | **Pod, outside, left side, behind the chin bar's pivot** | the neckband's board (Bluetooth, amplifier, charging, its USB-C socket), its battery, 3 big buttons | buttons you can find and press with gloves on; charging without taking anything out; the battery isn't against your head |
 | **Ear pockets in the liner** | the earbuds' own speakers (10 mm), each in a printed puck | the liner already has these pockets: nothing is cut |
 | **On a boom in front of your mouth** | the neckband's own mic, on longer wires | a mic needs to be close to the mouth to beat wind noise |
-| **Down the outside of the shell, then in under its lower edge** | 2 thin cables from the pod to the speakers and the mic, in the grooves of a flexible **cable channel** | no holes in the shell |
+| **Out of the pod's back end, down the outside of the shell, then in under its lower edge** | 2 thin cables from the pod to the speakers and the mic, in the grooves of a flexible **cable channel** | no holes in the shell; the exit faces away from rain and wind |
 
 ![Inside (the stand-in cut open): the speaker in the left ear pocket, the boom mic held at the shell's lower edge, reaching into the chin bar](images/hh_inside.png)
 
@@ -58,8 +59,12 @@ A slim pod with rounded ends, **102 × 37 mm and 16.5 mm proud of the shell at i
 ![Opened up: the lid, the keypad, the switch board, the neckband's board and the battery](images/hh_exploded.png)
 
 - **Buttons** (front to back, as on the neckband): volume + (and next track, if the neckband does that on a long press), **multi-function** (play/pause, answer/end call, voice assistant, power), volume −.
-- **USB-C:** in the back end, sealed by a small **TPU plug** with a pull tab. Charge with the plug out; put it back before riding.
-- **Cables:** 2 notches at the bottom of the pod's lower wall, right at the shell (4.2 mm for the speakers' 4-core cable, 3.4 mm for the mic's shielded cable: old USB and audio cables work). The cables come out flat against the shell, straight into the cable channel. Seal the notches with neutral-cure silicone.
+- **USB-C:** in the back end, sealed by a small **TPU plug** with a pull tab (pointing up, clear of the cable channel). Charge with the plug out; put it back before riding.
+- **Cables:** 2 notches at the bottom of the pod's **back end**, under the USB-C, right at the shell (4.2 mm for the speakers' 4-core cable, 3.4 mm for the mic's shielded cable: old USB and audio cables work). The cables come out flat against the shell, straight into the cable channel. Seal the notches with neutral-cure silicone.
+
+  **Why the back end, for water:** riding, rain and spray hit the helmet from the front; the back end faces away from them and sits in the shell's wind shadow. The notches open at the very bottom, against the shell, and the channel's top end covers them, so water would have to run backward and climb up to get in.
+
+  ![The pod's back end: the USB-C plug (tab up) and the 2 cable notches at the bottom, against the shell](images/hh_back.png)
 - **Sun:** a LiPo in a dark box on a helmet in the Mumbai sun gets hot. Print the pod in a light colour if you can, and don't leave the helmet in direct sun.
 
 **Fitting it to your helmet's curve.** The pod's underside is cut to the shell's curve where it goes, which has two radii: along the pod (front to back, `shell_rl`, 175 mm) and across it (up and down, `shell_rw`, 160 mm). To measure each one, lay a straight ruler across the spot, measure its length L where it touches and the gap h under its middle:
@@ -91,15 +96,15 @@ The 1.1 mm VHB tape takes up small differences. Clean the spot with isopropyl al
 
 ### Routing the cables: the cable channel
 
-![The pod and the cable channel on the helmet: the channel runs from the pod's lower edge down to the shell's lower edge](images/hh_channel.png)
+![The pod and the cable channel on the helmet: out of the pod's back end, a quarter turn, then down to the shell's lower edge](images/hh_channel.png)
 
 No hole in the helmet: the cables go in **from below**.
-1. **Out of the pod:** through the 2 notches in its lower wall, flat against the shell.
-2. **Down the shell:** in the **cable channel**, a flexible TPU strip (21.6 mm wide, 5.6 mm tall, `run_l` 90 mm long: measure from the pod's lower edge to the shell's lower edge along the shell). It has **2 grooves on its underside**, one per cable, lined up with the pod's notches. Lay the cables on the shell, press the channel over them, and it holds them flat against the shell. It's TPU, so it bends to follow the shell's curve. Thin flanges either side take strips of VHB tape (or a thin line of silicone). Its lower end slopes down so the cables come out flat at the edge.
+1. **Out of the pod:** through the 2 notches at the bottom of its back end, flat against the shell.
+2. **Down the shell:** in the **cable channel**, a flexible TPU strip, 21.6 mm wide and 5.6 mm tall. It leaves the pod's back end backward, curves round a quarter turn (16 mm radius) and runs straight down for `run_l` (90 mm: measure from where the turn ends to the shell's lower edge, along the shell). Its top end is shaped to fit round the pod's rounded end and covers the notches. It has **2 grooves on its underside**, one per cable, lined up with the notches. Lay the cables on the shell, press the channel over them, and it holds them flat against the shell. It's TPU, so it bends to follow the shell's curve. Thin flanges either side take strips of VHB tape (or a thin line of silicone). Its lower end slopes down so the cables come out flat at the edge.
 3. **In under the edge:** at the shell's lower edge, gently lift the rubber edge trim, lay the cables over the edge and press the trim back over them. Many helmets also have a gap between the shell and the liner there; the cables slide up into it.
 4. **Inside:** between the foam liner and the comfort padding: the speaker cable to the left ear pocket, and on round the back inside the neck roll to the right one; the mic cable to the boom mount next to it.
 
-![The cable channel as printed, from underneath: the 2 grooves for the cables and the thin flanges for the tape](images/hh_grooves.png)
+![The cable channel as printed, from underneath: the 2 grooves follow the turn; the top end (upper right) is shaped to the pod's end](images/hh_grooves.png)
 
 ## Build order
 
@@ -117,7 +122,7 @@ All in `helmet_headset.scad` (MEASURE lines), or on the website ("Make it your s
 - **Your helmet:** the shell's 2 radii at the pod's spot (`shell_rl`, `shell_rw`); the ear pockets' diameter and depth (`ear_d`, `ear_depth`).
 - **The neckband (after opening it):** the board's length, width and thickness (`nb_len`, `nb_w`, `nb_t`: 42 × 11 × 1.0); the tallest parts under and on it (`nb_under` 1.5, `nb_over` 2.5); how far its USB-C socket sticks out past its end (`usb_out` 0.6); the battery (`batt_l`, `batt_w`, `batt_t`: 40 × 25 × 5.2); the earbuds' speakers (`spk_d`, `spk_t`: 10 × 4); the mic (`mic`, 6 × 2.7).
 - **The bits you buy:** the tactile switches' height (`tact_h`, 7); the boom's thickness (`boom_d`, 5); the cables (`cable_d`).
-- **The cable channel's length** (`run_l`, 90): along the shell, from where the pod's lower edge will be to the shell's lower edge.
+- **The cable channel's length** (`run_l`, 90): along the shell, from about 20 mm behind the pod's back end (where the channel's turn ends) down to the shell's lower edge.
 
 The pod grows to fit what you enter. The model refuses what doesn't fit: switches too short to reach the domes, a battery or board that would hit the pillars or the rounded ends, a puck bigger than the ear pocket.
 
@@ -129,7 +134,7 @@ The pod grows to fit what you enter. The model refuses what doesn't fit: switche
 - the switches aren't pressed at rest, and pressing a dome 0.5 mm reaches its switch;
 - the USB plug fits its hole without touching the wall;
 - the pod's underside stays clear of the shell by the tape's thickness;
-- each cable, lying on the shell, passes through its notch in the pod without touching it.
+- each cable, lying on the shell, passes through its notch in the pod's back end without touching it; the notches clear the lid's pillars and the USB-C opening (asserts).
 
 **Not yet:** the neckband opened and measured; printed and fitted to a real helmet; the shell's curve measured.
 
