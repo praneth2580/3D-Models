@@ -1,6 +1,6 @@
 # Helmet Headset (v1): a cheap Bluetooth neckband rebuilt as a helmet headset
 
-**Status: designed and modelled (v1, checked in CAD, not printed or built yet).** By default the pod has room for the board and battery of **most** cheap neckbands (not all: the biggest won't fit), with the board stacked on the battery to keep it small: **about 60 × 37 mm and 22 mm proud of the shell**. A bigger neckband: enter its sizes and the pod grows.
+**Status: designed and modelled (v1, checked in CAD, not printed or built yet).** By default the pod has room for the board and battery of **most** cheap neckbands (not all: the biggest won't fit), with the board stacked on the battery to keep it small: **about 60 × 37 mm and 23 mm proud of the shell**. A bigger neckband: enter its sizes and the pod grows.
 
 Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet: music, calls and navigation voice for about ₹1,850–3,250 (est.) instead of a ₹5,000+ helmet communicator. **Everything that makes sound or picks it up is the neckband's own:** its board (Bluetooth, amplifier, charging), its battery, its two speakers and its mic. This project only moves them to the right places in the helmet and adds printed housings; the only things you buy besides the neckband are small hardware bits (tape, screws, 3 switches, foam, wire). It's general purpose: the helmet's curve and the neckband's parts are settings.
 
@@ -39,10 +39,25 @@ Take a cheap Bluetooth neckband apart and rebuild it inside a motorcycle helmet:
 
 | Part | Room in the default pod | Fits, for example |
 |---|---|---|
-| The main board | up to **38 × 12 mm**, 1 mm thick, parts up to 1.5 mm under and 2.5 mm on top; its USB-C socket on its end | most neckband boards (they're long and narrow, to fit the neckband's end) |
-| The battery | up to **35 × 20 × 5 mm** | pouch cells such as 401230, 402030, 502030, 502035 (roughly 100–250 mAh) |
+| The main board | up to **50 × 12 mm**, 1 mm thick, parts up to 1.5 mm under and 2.5 mm on top; its USB-C socket on its end | most neckband boards (they're long and narrow, to fit the neckband's end) |
+| The battery | up to **35 × 20 × 6 mm**, or a long thin one up to **12 × 50 mm** (it slides between the lid's screw posts) | pouch cells such as 401230, 402030, 502030, 602030 (roughly 100–300 mAh), and long thin ones such as 501245 |
 
-Smaller parts are packed with foam (thin double-sided foam tape under the battery and between it and the board, a scrap of foam in the gaps), so nothing rattles. **If yours is bigger, enter its sizes** (`nb_len`, `nb_w`, `nb_t`, `nb_under`, `nb_over`, `usb_out`, `batt_l`, `batt_w`, `batt_t`) in `helmet_headset.scad` or on the website's "Make it your size", and the pod grows to fit. For example, a 300 mAh-class cell (boAt lists 300 mAh for the 255 Pro+), say 35 × 25 × 6 mm, makes it about 60 × 41 mm and 23 mm proud; a big neckband (a 50 mm board, a 50 × 28 × 7 mm battery) about 75 × 44 × 24.5 mm. The buttons are wired, so where the board's own buttons sit doesn't matter. Things to check on whichever neckband you get:
+Smaller parts are packed with foam (thin double-sided foam tape under the battery and between it and the board, a scrap of foam in the gaps), so nothing rattles. **If yours is bigger, enter its sizes** (`nb_len`, `nb_w`, `nb_t`, `nb_under`, `nb_over`, `usb_out`, `batt_l`, `batt_w`, `batt_t`) in `helmet_headset.scad` or on the website's "Make it your size", and the pod grows to fit. For example, a wider 300 mAh cell, 35 × 25 × 6 mm, makes it about 60 × 41 mm; a big neckband (a 50 × 15 mm board, a 50 × 28 × 7 mm battery) about 75 × 44 × 24.5 mm.
+
+**Which neckbands it fits.** No maker publishes its board or battery size, so this goes by the battery capacity each one lists and the usual cell for that capacity. Likely, not checked: open yours and compare it with the room above.
+
+| Neckband | Listed battery | Usual cell | Fits the default pod? |
+|---|---|---|---|
+| boAt Rockerz 255 | [110 mAh](https://support.boat-lifestyle.com/articles/rockerz-wireless/rockerz-255/6214ce6a34563f6c3d77d5b4) | 401230 | likely |
+| boAt Rockerz 275 V2 | [150 mAh](https://www.boat-lifestyle.com/en-kw/products/rockerz-275-v2) | about 30–35 × 12–20 × 4–5 mm | likely |
+| DIZO Wireless Power (realme TechLife) | [150 mAh](https://www.flipkart.com/dizo-wireless-power-environmental-noise-cancellation-enc-by-realme-techlife-bluetooth-headset/p/itmfcb13a175f17f) | the same | likely |
+| boAt 102 Wireless | [160 mAh](https://www.boat-lifestyle.com/en-kw/products/boat-102-wireless) | the same | likely |
+| boAt Rockerz Uno | [200 mAh](https://www.boat-lifestyle.com/products/boat-rockerz-uno) | 402030 | likely |
+| boAt Rockerz Apex | [220 mAh](https://croma.com/boat-rockerz-apex-neckband-with-environmental-noise-cancellation-ipx4-water-resistant-asap-charge-lime-/p/269220) | 502030 | likely |
+| OnePlus Bullets Wireless Z3 | about 220 mAh (store listings) | 502030 | likely |
+| boAt Rockerz 255 Pro+ (the pick) | [300 mAh](https://www.boat-lifestyle.com/en-sg/products/boat-rockerz-255-pro-plus) (one listing) | 602030 | likely |
+
+What most often won't fit: a board wider than 12 mm, or a cell over 6 mm thick or over 20 mm wide (unless it's 12 mm wide or less). Then enter its size: the pod grows. The buttons are wired, so where the board's own buttons sit doesn't matter. Things to check on whichever neckband you get:
 
 1. **The power switch.** Some neckbands turn on and off when their magnetic earbuds are pulled apart or clicked together: a small magnet sensor (hall sensor or reed switch) inside. Once the earbuds are gone, such a board can stay on or stay off. Find the sensor (near where the earbuds click together) and work out which state means "on": you may have to glue a small magnet next to it, or bridge it. The power button must still turn it off, or the battery drains.
 2. **The mic.** It goes to the boom on longer wires. How depends on what it is:
@@ -50,14 +65,14 @@ Smaller parts are packed with foam (thin double-sided foam tape under the batter
    - **a tiny MEMS mic soldered on the board** (a small metal box with 3–6 pads): move it on a small piece of perfboard on thin wires, one per pad (keep them short, about 30 cm at most, twisted). Only if that doesn't work (a pad lifts, or it's too noisy) fall back on an optional 6 mm electret capsule (₹10–40): capsule + to the board's output pad, − to ground, a 2.2 kΩ resistor from the supply pad to the output pad. This works only for an analog MEMS mic (3–4 pads), not a digital one (5–6 pads, with CLK and DATA).
    - **Two mics** (some "ENx" noise-cancelling models): the main one goes to the boom; leave the second one in the pod. If calls sound worse, disconnect the second one.
 3. **The speakers.** Each earbud's speaker is a 10 mm driver (boAt's spec) glued in a small shell. Prise the shell open (it's usually glued in two halves; a craft knife round the seam), take the driver out with its two wires, and note which wire went where. Some boards have 4 separate speaker pads (L+, L−, R+, R−), some share a ground. **Keep the speakers wired exactly as they were. Don't join grounds that weren't joined**: some amplifiers drive both wires, and joining them would short the amplifier. The earbuds' own thin wires are usually too short to reach round the helmet: extend them with ordinary wire (below).
-4. **The battery.** Check that it fits the room above, or measure it and set its size (the pod grows). Only if it's a long curved cell that doesn't fit at all, use a flat **502035 LiPo** (35 × 20 × 5 mm, about 250 mAh, the default room; with its protection board, optional, ₹150–300 est.). Match + and −; the board's charger works with it.
+4. **The battery.** Check that it fits the room above, or measure it and set its size (the pod grows). Only if it's a long curved cell that doesn't fit at all, use a flat **602030 LiPo** (30 × 20 × 6 mm, about 300 mAh, fits the default room; with its protection board, optional, ₹150–300 est.). Match + and −; the board's charger works with it.
 5. **The charging socket.** The pod's back end has a hole for a USB-C socket on the end of the board. Shim the board with foam so its socket lines up with the hole. If your board's socket is on its side, or it's micro-USB, there's an optional fallback: a small **USB-C charging breakout** (6-pin, with its 5.1 kΩ resistors, ₹20–60 est.) glued in the hole and wired to the board's charging pads (+5 V and ground).
 
 ## The pod
 
-![The pod: about 60 × 37 mm and 22 mm proud at its middle; a round play/call button and the volume rocker in a screwed lid](images/hh_pod.png)
+![The pod: about 60 × 37 mm and 23 mm proud at its middle; a round play/call button and the volume rocker in a screwed lid](images/hh_pod.png)
 
-A small pod with rounded ends, **about 60 × 37 mm and 22 mm proud of the shell at its middle** (59.7 × 36.8 × 21.8 mm). To keep it short, the board lies **on top of** the battery instead of beside it (a flat pod with them end to end would be about 90 mm long and 16.5 mm proud). Its underside is curved to fit the shell. Inside, from the shell outward:
+A small pod with rounded ends, **about 60 × 37 mm and 23 mm proud of the shell at its middle** (59.7 × 36.8 × 22.8 mm). To keep it short, the board lies **on top of** the battery instead of beside it (a flat pod with them end to end would be about 90 mm long and 16.5 mm proud). Its underside is curved to fit the shell. Inside, from the shell outward:
 
 1. **The body**, stuck on with **1.1 mm VHB tape** (3M 4910 or 5952). Its floor follows the shell; ribs give the battery and the board a flat seat.
 2. **The battery** on the floor, in the middle, on a strip of foam tape.
@@ -136,7 +151,7 @@ No hole in the helmet: the cables go in **from below**.
 
 All in `helmet_headset.scad` (MEASURE lines), or on the website ("Make it your size"):
 - **Your helmet:** the shell's 2 radii at the pod's spot (`shell_rl`, `shell_rw`); the ear pockets' diameter and depth (`ear_d`, `ear_depth`).
-- **The neckband (only if its parts are bigger than the default room, or to shrink the pod further):** the board's length, width and thickness (`nb_len`, `nb_w`, `nb_t`: default 38 × 12 × 1.0); the tallest parts under and on it (`nb_under` 1.5, `nb_over` 2.5); how far its USB-C socket sticks out past its end (`usb_out` 0.5); the battery (`batt_l`, `batt_w`, `batt_t`: default 35 × 20 × 5). Always measure the earbuds' speakers (`spk_d`, `spk_t`: 10 × 4); the mic (`mic`, 6 × 2.7).
+- **The neckband (only if its parts are bigger than the default room, or to shrink the pod further):** the board's length, width and thickness (`nb_len`, `nb_w`, `nb_t`: default 50 × 12 × 1.0); the tallest parts under and on it (`nb_under` 1.5, `nb_over` 2.5); how far its USB-C socket sticks out past its end (`usb_out` 0.5); the battery (`batt_l`, `batt_w`, `batt_t`: default 35 × 20 × 6; a cell 12 mm wide or less can be up to about 50 long with no change). Always measure the earbuds' speakers (`spk_d`, `spk_t`: 10 × 4); the mic (`mic`, 6 × 2.7).
 - **The bits you buy:** the tactile switches' height (`tact_h`, 7); the boom's thickness (`boom_d`, 5); the cables (`cable_d`).
 - **The cable channel's length** (`run_l`, 90): along the shell, from the pod's bottom edge straight down to the shell's lower edge.
 

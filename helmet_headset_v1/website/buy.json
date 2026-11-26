@@ -4,11 +4,11 @@
   "groups": [
     {
       "label": "The neckband: everything electronic and everything you hear",
-      "note": "Pair it and try it before you open it. By default the pod has room for a board up to 38 × 12 mm and a battery up to 35 × 20 × 5 mm (most neckbands, not all); if yours is bigger, enter its sizes on \"Make it your size\" and the pod grows.",
+      "note": "Pair it and try it before you open it. By default the pod has room for a board up to 50 × 12 mm and a battery up to 35 × 20 × 6 mm (300 mAh class) or a long thin one up to 12 × 50 mm (most neckbands, not all); if yours is bigger, enter its sizes on \"Make it your size\" and the pod grows.",
       "items": [
         {
           "name": "boAt Rockerz 255 Pro+ Bluetooth neckband",
-          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Most other neckbands fit the pod too (check the battery: boAt lists 300 mAh for this model; if it's bigger than the room, enter its size)",
+          "for": "Everything electronic and everything you hear: its board and battery (in the pod), its 2 speakers (in the ear pockets) and its mic (on the boom). Most other neckbands fit the pod too (boAt lists 300 mAh for this model: likely a 602030-size cell, which fits)",
           "qty": 1,
           "price": "₹1,100–1,300 (est.)",
           "fits": true,
@@ -143,12 +143,12 @@
           "local": "Lamington Road"
         },
         {
-          "name": "502035 LiPo battery, 3.7 V about 250 mAh, with protection board",
+          "name": "602030 LiPo battery, 3.7 V about 300 mAh, with protection board",
           "for": "Only if the neckband's own battery is a long curved cell that can't fit the pod (or set the pod to its size)",
           "qty": 1,
           "price": "₹150–300 (est.)",
           "fits": true,
-          "search": "502035 lipo battery",
+          "search": "602030 lipo battery",
           "stores": "modules"
         },
         {

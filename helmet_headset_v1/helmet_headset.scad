@@ -9,7 +9,7 @@
 
   What goes where:
     - POD (outside, left, behind the chin bar's pivot): the neckband's own board (Bluetooth, amplifier, charging,
-      its USB-C socket at the pod's rear end), its battery (or a flat 502035 LiPo), and a small perfboard with 3
+      its USB-C socket at the pod's rear end), its battery (or a flat 602030 LiPo), and a small perfboard with 3
       tactile switches wired in parallel with the board's own buttons (multi-function, volume +, volume -). A TPU
       keypad (also the seam's gasket) under a screwed lid gives a round multi-function button and a dedicated VOLUME
       ROCKER across the pod (owner, 2026-11-26: "have a dedicated volumen button", chose a rocker): press its top for
@@ -17,9 +17,9 @@
       curved to the shell (shell_rl, shell_rw: MEASURE) and stuck on with 1.1 mm VHB tape. A TPU plug seals the USB-C.
     - SIZE: the neckband settings default to room for MOST cheap neckbands, not all (owner, 2026-11-26: "make the 3d
       pod fit most of the headsets", then "its too big ... it fine if some neckbands dont fit ... a lot smaller"):
-      a board up to 38 x 12 and a battery up to 35 x 20 x 5, packed with foam. The board is STACKED on the battery
-      (owner chose "stacked: short"): the pod is short (about 59 x 37 mm) and 22 mm proud. A bigger neckband: enter
-      its sizes and the pod grows.
+      a board up to 50 x 12 and a battery up to 35 x 20 x 6 (300 mAh class), or a long thin one up to about 12 x 50,
+      packed with foam. The board is STACKED on the battery (owner chose "stacked: short"): the pod is short (about
+      60 x 37 mm) and 23 mm proud. A bigger neckband: enter its sizes and the pod grows.
     - SPEAKERS (inside): the neckband's OWN speakers (owner, 2026-11-26: "why can i use its own speaker and mic ??
       that the reason i am using it on the first place"): each earbud's 10 mm driver (boAt's spec) taken out of its
       shell and set in a printed puck that fills the liner's ear pocket. Optional upgrade: 40 mm 32 ohm helmet
@@ -65,7 +65,7 @@ ear_pocket = [ear_d, ear_depth];
 // The defaults are room for MOST cheap neckbands (estimates from common neckband and LiPo pouch sizes: no neckband
 // publishes its insides); the biggest won't fit. Smaller parts are packed with foam. If yours is bigger, or to make
 // the pod as small as it can be, open your neckband and enter its own sizes (MEASURE). The board lies on the battery.
-nb_len = 38;             // MEASURE: the main board: length (along the USB-C); default room: 38
+nb_len = 50;             // MEASURE: the main board: length (along the USB-C); default room: 50 (the battery sets the pod's length)
 nb_w = 12;               // MEASURE: ... width; default 12
 nb_t = 1.0;              // MEASURE: ... PCB thickness; default 1.0
 nb_pcb = [nb_len, nb_w, nb_t];
@@ -73,9 +73,9 @@ nb_under = 1.5;          // MEASURE: the tallest part under the board (it rests 
 nb_over = 2.5;           // MEASURE: the tallest part on top of the board, besides the USB-C socket
 usb = [8.94, 3.26];      // the USB-C socket's shell: width, height (standard; top-mounted on the board)
 usb_out = 0.5;           // MEASURE: how far the socket sticks out past the board's end
-batt_l = 35;             // MEASURE: the neckband's own battery: length; default room: 35 (fits a 401230, 402030, 502030, 502035 ...)
-batt_w = 20;             // MEASURE: ... width; default 20
-batt_t = 5;              // MEASURE: ... thickness; default 5
+batt_l = 35;             // MEASURE: the neckband's own battery: length; default room: 35 (fits a 401230, 402030, 502030, 602030 ...)
+batt_w = 20;             // MEASURE: ... width; default 20 (a cell up to 12 wide passes between the lid's posts: up to about 50 long)
+batt_t = 6;              // MEASURE: ... thickness; default 6 (300 mAh cells such as 602030)
 batt = [batt_l, batt_w, batt_t];
 
 // ------------------------- CONTROLS -------------------------
@@ -121,8 +121,11 @@ Wi = max(batt[1] + 2 * (max(cable_d) + 0.4),                          // inside 
          nb_pcb[1] + 2 * (pil_o + pil_d/2 + 0.35),                         // the board between the pillars,
          usb[0] + 2 * (rc_in - sqrt(pow(rc_in - 0.15, 2) - pow(rc_in - usb_gap, 2))) + 0.1,   // the USB-C socket clear of the rounded back end,
          2 * (rock_l/2 + hinge + 1 + rr + side_in + 0.1) - 2 * wall0);      // and the volume rocker on the lid's flat top
-room_end = pil_o + pil_d/2 + 0.3;             // at each end: the battery stays between the pillars
-Li = max(usb_gap + usb_out + nb_pcb[0] + 1.5, batt[0] + 2 * room_end,   // inside length: the board (from the back wall), the battery,
+room_end = pil_o + pil_d/2 + 0.3;             // at each end: a wide battery stays between the pillars
+batt_narrow = batt[1]/2 + 0.3 <= Wi/2 - pil_o - pil_d/2;   // a narrow battery passes between them: only the rounded ends limit it
+batt_dy = max(0, batt[1]/2 - (Wi/2 - rc_in));
+batt_end = batt_narrow ? rc_in - sqrt(pow(rc_in - 0.3, 2) - pow(batt_dy, 2)) + 0.05 : room_end;
+Li = max(usb_gap + usb_out + nb_pcb[0] + 1.5, batt[0] + 2 * batt_end,   // inside length: the board (from the back wall), the battery,
          2 * (max([for (x = key_x) abs(x)]) + 3 + 0.4 + max(room_end, rc_in)));   // and the switch board under the keys
 sw_l = 2 * min(Li/2 - room_end, Li/2 - rc_in) - 0.4;   // the switch perfboard's length: between the pillars, on the straight sides
 L = Li + 2 * wall0;
@@ -183,7 +186,7 @@ assert(Wi/2 - pil_o - pil_d/2 >= nb_pcb[1]/2 + 0.3, "the lid's pillars hit the n
 assert(max([for (p = SW) abs(p[0])]) + 3 < sw_l/2, "a switch is off the end of the switch board");
 assert(z_sw1 + tact_body < z_seam, "the switches' bodies hit the keypad");
 assert(act_top >= z_seam + 0.8, "the tactile switches are too short to reach up into the domes (tact_h)");
-assert(bat_x1 <= Li/2 - room_end + 0.01, "the battery runs into the pillars");
+assert(batt_narrow || bat_x1 <= Li/2 - room_end + 0.01, "the battery runs into the pillars");
 assert(norm([max(0, bat_x1 - (Li/2 - rc_in)), max(0, batt[1]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.3, "the battery's corners hit the pod's rounded ends");
 assert(norm([max(0, -pcb_x0 - (Li/2 - rc_in)), max(0, nb_pcb[1]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.3, "the board's corners hit the pod's rounded front end");
 assert(norm([max(0, pcb_x1 + usb_out - (Li/2 - rc_in)), max(0, usb[0]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.15, "the USB-C socket's corners hit the pod's rounded back end");

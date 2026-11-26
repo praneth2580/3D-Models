@@ -1,6 +1,6 @@
 # Components: what the headset is built (and modelled) around
 
-**The neckband gives all the electronics and sound parts: its board, battery, both speakers and its mic.** Besides it you only buy small hardware bits. The printed parts are modelled around the items marked "Model fits this". By default the pod has room for a board up to 38 × 12 mm and a battery up to 35 × 20 × 5 mm, stacked: that fits most cheap neckbands, not all (no maker publishes the insides, so these are estimates). If yours is bigger, open it, measure its board and battery and set them in `helmet_headset.scad` (the MEASURE lines): the pod grows. Always measure the speakers.
+**The neckband gives all the electronics and sound parts: its board, battery, both speakers and its mic.** Besides it you only buy small hardware bits. The printed parts are modelled around the items marked "Model fits this". By default the pod has room for a board up to 50 × 12 mm and a battery up to 35 × 20 × 6 mm (300 mAh class) or a long thin one up to 12 × 50 mm, stacked: that fits most cheap neckbands, not all (no maker publishes the insides, so these are estimates). If yours is bigger, open it, measure its board and battery and set them in `helmet_headset.scad` (the MEASURE lines): the pod grows. Always measure the speakers.
 
 **Prices:** estimates (not checked on a listing), marked (est.). Where to buy each item, with search links at the Indian stores: the project's page on the website ("What to buy").
 
@@ -8,7 +8,7 @@
 
 | Part | Exact item | Model fits this? | Price |
 |---|---|---|---|
-| **Neckband** | **boAt Rockerz 255 Pro+** (Bluetooth 5.0, IPX7, one mic, 10 mm drivers, per boAt). Used whole: its board (in the pod), its battery (in the pod), its 2 speakers (in the ear pockets), its mic (on the boom). Most other neckbands fit the pod too | **Yes** (check its battery: boAt lists 300 mAh for this model, which may be bigger than the default room; then enter its size. Measure its speakers and mic) | ₹1,100–1,300 (est.; Smartprix showed ₹1,199 in Nov 2025) |
+| **Neckband** | **boAt Rockerz 255 Pro+** (Bluetooth 5.0, IPX7, one mic, 10 mm drivers, per boAt). Used whole: its board (in the pod), its battery (in the pod), its 2 speakers (in the ear pockets), its mic (on the boom). Most other neckbands fit the pod too | **Yes** (check its battery: boAt lists 300 mAh for this model, likely a 602030-size cell, which fits the default room; check it. Measure its speakers and mic) | ₹1,100–1,300 (est.; Smartprix showed ₹1,199 in Nov 2025) |
 
 ## Small bits to buy
 
@@ -30,7 +30,7 @@
 | Part | When | Model fits this? | Price |
 |---|---|---|---|
 | 2 × **40 mm, 32 Ω speakers**, about 5.5 mm thick | only if the earbuds' speakers are too quiet at speed (try them first). Not 8 Ω | **Yes** (`spk_d` 40, `spk_t` 5.5) | ₹100–600 the pair (est.) |
-| **502035 LiPo**, 3.7 V about 250 mAh, with a protection board | only if the neckband's own battery is a long curved cell that can't fit the pod | **Yes** (35 × 20 × 5, the default room) | ₹150–300 (est.) |
+| **602030 LiPo**, 3.7 V about 300 mAh, with a protection board | only if the neckband's own battery is a long curved cell that can't fit the pod | **Yes** (30 × 20 × 6) | ₹150–300 (est.) |
 | **USB-C charging breakout** (6-pin, with 5.1 kΩ CC resistors) | only if the board's charging socket is on its side or is micro-USB, so it can't line up with the pod's hole: glue it in the hole, wire it to the board's +5 V and ground pads | **Yes** (the USB-C hole) | ₹20–60 (est.) |
 | **6 mm electret capsule** + 2.2 kΩ resistor | only if the neckband's MEMS mic can't be moved (see the README) | **Yes** (the mic cup) | ₹10–40 (est.) |
 

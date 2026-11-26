@@ -2,7 +2,7 @@
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
   "summary": "Music, calls and navigation voice in your helmet for about ₹1,850–3,250 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a pod stuck to the outside of the shell on the left with VHB tape (small, about 60 × 37 mm, with room for most neckbands' parts, the board stacked on the battery; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of a flexible cable channel stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve is a setting, and the neckband's parts are too (a bigger neckband makes the pod grow).",
-  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. By default the pod has room for a board up to 38 × 12 mm and a battery up to 35 × 20 × 5 mm (most neckbands, not all); enter a bigger neckband's sizes and the pod grows.",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. By default the pod has room for a board up to 50 × 12 mm and a battery up to 35 × 20 × 6 mm (300 mAh class) or a long thin one up to 12 × 50 mm (most neckbands, not all); enter a bigger neckband's sizes and the pod grows.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hh_helmet.png",
@@ -15,7 +15,7 @@
     },
     {
       "src": "images/hh_pod.png",
-      "caption": "The pod: about 60 × 37 mm and 22 mm proud of the shell at its middle (the board stacked on the battery); a round play/call button and the volume rocker (raised + and −) in a screwed lid, the USB-C plug at its back end"
+      "caption": "The pod: about 60 × 37 mm and 23 mm proud of the shell at its middle (the board stacked on the battery); a round play/call button and the volume rocker (raised + and −) in a screwed lid, the USB-C plug at its back end"
     },
     {
       "src": "images/hh_rocker.png",
@@ -193,7 +193,7 @@
             "step": 0.1,
             "min": 20,
             "max": 70,
-            "help": "The defaults (board 38 × 12, battery 35 × 20 × 5) are room for most neckbands, packed with foam. If yours is bigger, enter its sizes: the pod grows. If the USB-C socket sticks out past the board's end by more than 0.5 mm, add the extra here."
+            "help": "The defaults (board 50 × 12, battery 35 × 20 × 6, or a long thin one up to 12 × 50) are room for most neckbands, packed with foam. If yours is bigger, enter its sizes: the pod grows. If the USB-C socket sticks out past the board's end by more than 0.5 mm, add the extra here."
           },
           {
             "name": "nb_w",
@@ -234,7 +234,7 @@
             "step": 0.5,
             "min": 20,
             "max": 60,
-            "help": "The neckband's own battery (default room: 35 × 20 × 5). The board lies on top of it."
+            "help": "The neckband's own battery (default room: 35 × 20 × 6, or up to about 50 long if 12 wide or less). The board lies on top of it."
           },
           {
             "name": "batt_w",
