@@ -13,11 +13,13 @@
       tactile switches wired in parallel with the board's own buttons (volume +, multi-function, volume -). A TPU
       keypad (also the seam's gasket) under a screwed lid gives 3 glove-friendly domes. Its underside is curved to
       the shell (shell_rl, shell_rw: MEASURE) and stuck on with 1.1 mm VHB tape. A TPU plug seals the USB-C.
-    - SPEAKERS (inside): 2 x 40 mm 32 ohm speakers in printed pucks, in the liner's ear pockets (Velcro). The
-      earbuds' own drivers also fit (spk = [13, 4]) but are much quieter.
-    - MIC (inside): on a bendable boom, held by a thin plate between the shell and the liner on the left, BEHIND
-      the chin bar, so the chin bar flips up over it and no wire crosses the hinge. The neckband's own mic moved to
-      the boom's end (or a 6 mm electret capsule, see README).
+    - SPEAKERS (inside): the neckband's OWN speakers (owner, 2026-11-26: "why can i use its own speaker and mic ??
+      that the reason i am using it on the first place"): each earbud's 10 mm driver (boAt's spec) taken out of its
+      shell and set in a printed puck that fills the liner's ear pocket. Optional upgrade: 40 mm 32 ohm helmet
+      speakers fit the same puck (spk_d = 40, spk_t = 5.5): louder at speed.
+    - MIC (inside): the neckband's OWN mic, on longer wires, on a bendable boom held by a thin plate between the
+      shell and the liner on the left, BEHIND the chin bar, so the chin bar flips up over it and no wire crosses
+      the hinge.
     - Wires from the pod run down outside the shell and in under the shell's edge trim.
 
   Frames: the POD frame has its origin on the pod's underside at its centre, x along the pod toward the helmet's
@@ -50,9 +52,9 @@ nb_under = 1.5;          // MEASURE: the tallest part under the board
 nb_over = 2.5;           // MEASURE: the tallest part on top of the board, besides the USB-C socket
 usb = [8.94, 3.26];      // the USB-C socket's shell: width, height (standard; top-mounted on the board)
 usb_out = 0.6;           // MEASURE: how far the socket sticks out past the board's end
-batt_l = 40;             // MEASURE / SELECT: the battery: length (a 502540 LiPo; or the neckband's own)
-batt_w = 25;             // MEASURE / SELECT: ... width
-batt_t = 5.2;            // MEASURE / SELECT: ... thickness
+batt_l = 40;             // MEASURE: the neckband's own battery: length (if it doesn't fit, a 502540 LiPo: 40 x 25 x 5)
+batt_w = 25;             // MEASURE: ... width
+batt_t = 5.2;            // MEASURE: ... thickness
 batt = [batt_l, batt_w, batt_t];
 
 // ------------------------- CONTROLS -------------------------
@@ -63,10 +65,10 @@ btn_d = [10, 12.5, 10];  // the domes' diameters (the middle one is bigger, to f
 proud = [1.2, 1.8, 1.2]; // how far each dome stands above the lid (at least: taller switches raise them)
 
 // ------------------------- SPEAKERS AND MIC -------------------------
-spk_d = 40;              // MEASURE: speaker diameter (40 mm helmet speaker; an earbud driver: 13)
-spk_t = 5.5;             // MEASURE: speaker thickness (an earbud driver: 4)
+spk_d = 10;              // MEASURE: the earbud's own driver: diameter (10 mm per boAt; a 40 mm helmet speaker: 40)
+spk_t = 4;               // MEASURE: ... thickness (a 40 mm helmet speaker: 5.5)
 spk = [spk_d, spk_t];
-mic = [6, 2.7];          // the mic capsule: diameter, length (6 x 2.7 mm electret; or the board's mic on its wires)
+mic = [6, 2.7];          // MEASURE: the neckband's own mic: diameter, length (a 6 x 2.7 mm electret capsule is typical)
 boom_d = 5;              // MEASURE: the boom: 2 mm aluminium wire + the mic cable in heat-shrink
 cable_d = [4.2, 3.4];    // MEASURE: the 2 cables out of the pod: speakers (4-core), mic (shielded 2-core)
 
@@ -257,7 +259,7 @@ module pod_assembled(ex = 0) {
 }
 
 // ------------------------- SPEAKER PUCK, MIC, BOOM MOUNT -------------------------
-module speaker_puck() difference() {                         // back on the bed; the speaker drops in from the front
+module speaker_puck() difference() {                         // the speaker drops in from the front (printed front down)
   rotate_extrude($fn = 96) hull() {
     square([0.01, puck_t]);
     translate([puck_d/2 - 1.2, 1.2]) circle(1.2, $fn = 20);
@@ -266,6 +268,11 @@ module speaker_puck() difference() {                         // back on the bed;
   translate([0, 0, puck_t - spk[1]]) cylinder(d = spk[0] + 0.3, h = spk[1] + 1, $fn = 96);
   translate([0, 0, 1.2]) cylinder(d = max(spk[0] - 4, 8), h = puck_t, $fn = 96);     // behind the speaker: its tabs
   translate([0, 0, 1.2 + 0.75]) rotate([0, 90, 0]) cylinder(d = 2.4, h = puck_d);    // the wires out
+  if (puck_d - spk[0] > 12)                                   // a small speaker: hollow the back round it (the rim and the hub take the Velcro)
+    translate([0, 0, -0.01]) difference() {
+      cylinder(d = puck_d - 3.2, h = puck_t - 1.2 + 0.01, $fn = 96);
+      cylinder(d = spk[0] + 4, h = puck_t, $fn = 64);
+    }
 }
 
 module mic_cup() difference() {                              // back on the bed: the boom in the back, the capsule in the front
@@ -379,7 +386,7 @@ else if (PART == "pod_body") rotate([180, 0, 0]) translate([0, 0, -z_seam]) pod_
 else if (PART == "pod_lid") translate([0, 0, -z_lid0]) pod_lid();
 else if (PART == "keypad") translate([0, 0, -z_seam]) keypad();
 else if (PART == "usb_plug") rotate([0, -90, 0]) translate([-plug_x - 1.2, 0, -usb_zc]) usb_plug();                        // flange down
-else if (PART == "speaker_puck") speaker_puck();
+else if (PART == "speaker_puck") translate([0, 0, puck_t]) rotate([180, 0, 0]) speaker_puck();   // front down
 else if (PART == "mic_cup") mic_cup();
 else if (PART == "boom_mount") boom_mount();
 // checks

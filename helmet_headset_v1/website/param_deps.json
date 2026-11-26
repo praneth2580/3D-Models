@@ -13,8 +13,8 @@
   "batt_l": 40,
   "batt_w": 25,
   "batt_t": 5.2,
-  "spk_d": 40,
-  "spk_t": 5.5,
+  "spk_d": 10,
+  "spk_t": 4,
   "tact_h": 7,
   "boom_d": 5
  },

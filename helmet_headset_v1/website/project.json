@@ -1,13 +1,13 @@
 {
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
-  "summary": "Music, calls and navigation voice in your helmet for about ₹2,000–4,000 instead of a ₹5,000+ communicator. A cheap Bluetooth neckband already has the hard parts (Bluetooth, the amplifier, the mic circuit, charging, the battery): this project moves them to better places. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); 40 mm speakers in printed pucks go in the liner's ear pockets; the mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet. General purpose: the helmet's curve, the neckband's parts and the speakers are settings.",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹1,800–3,200 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet; besides the neckband, only small hardware bits. General purpose: the helmet's curve and the neckband's parts are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. The neckband (boAt Rockerz 255 Pro+) has no published teardown: open yours and measure its board and battery first.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hh_helmet.png",
   "see_title": "Pictures",
-  "see_sub": "The pod on the left, behind the chin bar's pivot (the helmet is a plain stand-in); inside, the speakers in the ear pockets and the boom mic.",
+  "see_sub": "The pod on the left, behind the chin bar's pivot (the helmet is a plain stand-in); inside, the earbuds' speakers in the ear pockets and the neckband's mic on a boom.",
   "gallery": [
     {
       "src": "images/hh_helmet.png",
@@ -23,11 +23,11 @@
     },
     {
       "src": "images/hh_inside.png",
-      "caption": "Inside (the stand-in cut open): a speaker puck in the left ear pocket, the boom mic held low on the fixed shell, reaching into the chin bar"
+      "caption": "Inside (the stand-in cut open): the left earbud's speaker in its puck in the ear pocket, the neckband's mic on a boom held low on the fixed shell, reaching into the chin bar"
     },
     {
       "src": "images/hh_small.png",
-      "caption": "The parts that go inside: a speaker puck with a 40 mm speaker, the boom mount and the mic cup"
+      "caption": "The parts that go inside: a speaker puck holding the earbud's own 10 mm speaker, the boom mount and the mic cup"
     }
   ],
   "docs": [
@@ -93,13 +93,13 @@
     },
     "speaker_puck": {
       "name": "Speaker puck",
-      "what": "Holds a 40 mm speaker (closed back) in the liner's ear pocket, on a Velcro dot",
+      "what": "Holds the earbud's own 10 mm speaker (taken out of its shell) at the middle of the liner's ear pocket, with a small closed space behind it; the back is hollowed. Optional 40 mm helmet speakers fit it too (set the speaker size)",
       "qty": "2",
-      "material": "PETG. Back down"
+      "material": "PETG. Front down"
     },
     "mic_cup": {
       "name": "Mic cup",
-      "what": "Holds the mic capsule on the end of the boom; a foam windscreen goes over it",
+      "what": "Holds the neckband's own mic on the end of the boom; a foam windscreen goes over it",
       "qty": "1",
       "material": "PETG. Back down"
     },
@@ -202,7 +202,7 @@
             "step": 0.5,
             "min": 20,
             "max": 60,
-            "help": "The neckband's own battery, or a 502540 LiPo (40 × 25 × 5)."
+            "help": "The neckband's own battery (a 502540 LiPo, 40 × 25 × 5, only if it can't fit)."
           },
           {
             "name": "batt_w",
@@ -219,20 +219,15 @@
             "step": 0.2,
             "min": 2,
             "max": 8
-          }
-        ]
-      },
-      {
-        "label": "Parts you buy",
-        "params": [
+          },
           {
             "name": "spk_d",
-            "label": "Speaker diameter",
+            "label": "Speaker diameter (the earbud's own driver)",
             "unit": "mm",
             "step": 0.5,
             "min": 10,
             "max": 50,
-            "help": "40 mm helmet speakers; the earbuds' own drivers are about 13 × 4 (quiet)."
+            "help": "The earbuds' own drivers: 10 mm on the Rockerz 255 Pro+. Optional 40 mm helmet speakers: 40 × 5.5."
           },
           {
             "name": "spk_t",
@@ -241,7 +236,12 @@
             "step": 0.1,
             "min": 2,
             "max": 10
-          },
+          }
+        ]
+      },
+      {
+        "label": "Switches and boom",
+        "params": [
           {
             "name": "tact_h",
             "label": "Tactile switch height (6 × 6 mm)",
