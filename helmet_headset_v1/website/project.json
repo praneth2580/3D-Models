@@ -1,7 +1,7 @@
 {
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
-  "summary": "Music, calls and navigation voice in your helmet for about ₹1,800–3,200 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet; besides the neckband, only small hardware bits. General purpose: the helmet's curve and the neckband's parts are settings.",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹1,800–3,200 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (3 big rubber buttons for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of a flexible cable channel stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve and the neckband's parts are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. The neckband (boAt Rockerz 255 Pro+) has no published teardown: open yours and measure its board and battery first.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
@@ -18,6 +18,10 @@
       "caption": "The pod: 102 × 37 mm and 16.5 mm proud of the shell at its middle, 3 rubber domes in a screwed lid, the USB-C plug at its back end, the cables out of its bottom"
     },
     {
+      "src": "images/hh_channel.png",
+      "caption": "The cable channel: a flexible TPU strip from the pod's lower edge down to the shell's lower edge; the cables lie in its grooves and go in under the edge trim (no hole in the helmet)"
+    },
+    {
       "src": "images/hh_exploded.png",
       "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board, the neckband's board and the battery"
     },
@@ -28,6 +32,10 @@
     {
       "src": "images/hh_small.png",
       "caption": "The parts that go inside: a speaker puck holding the earbud's own 10 mm speaker, the boom mount and the mic cup"
+    },
+    {
+      "src": "images/hh_grooves.png",
+      "caption": "The cable channel as printed, from underneath: a groove for each cable, thin flanges for the tape"
     }
   ],
   "docs": [
@@ -43,12 +51,13 @@
   "viewer_default": "headset_assembled",
   "part_groups": [
     {
-      "label": "The pod (outside)",
+      "label": "The pod and its cable channel (outside)",
       "parts": [
         "pod_body",
         "pod_lid",
         "keypad",
-        "usb_plug"
+        "usb_plug",
+        "cable_channel"
       ]
     },
     {
@@ -69,7 +78,7 @@
   "parts": {
     "pod_body": {
       "name": "Pod body",
-      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable holes in its bottom wall; 4 pillars for M2 heat-set inserts",
+      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable notches at the bottom of its lower wall, right at the shell, lined up with the cable channel; 4 pillars for M2 heat-set inserts",
       "qty": "1",
       "material": "PETG or ASA, a light colour if you can. Open side down"
     },
@@ -113,6 +122,12 @@
       "name": "Pod, assembled",
       "what": "The pod with its keypad, lid and plug",
       "view": true
+    },
+    "cable_channel": {
+      "name": "Cable channel",
+      "what": "A flexible strip stuck to the shell from the pod's lower edge down to the shell's lower edge: the 2 cables lie in the grooves on its underside, held flat against the shell, then go in under the edge trim. No hole in the helmet",
+      "qty": "1",
+      "material": "TPU 85A-95A. Flanges down"
     }
   },
   "customize": {
@@ -141,6 +156,15 @@
             "step": 1,
             "min": 100,
             "max": 400
+          },
+          {
+            "name": "run_l",
+            "label": "Cable channel length",
+            "unit": "mm",
+            "step": 1,
+            "min": 30,
+            "max": 200,
+            "help": "Along the shell, from the pod's lower edge to the shell's lower edge."
           }
         ]
       },

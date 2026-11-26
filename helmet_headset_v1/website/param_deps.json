@@ -4,6 +4,7 @@
  "defaults": {
   "shell_rl": 175,
   "shell_rw": 160,
+  "run_l": 90,
   "nb_len": 42,
   "nb_w": 11,
   "nb_t": 1.0,
@@ -77,6 +78,9 @@
   ],
   "boom_mount": [
    "boom_d"
+  ],
+  "cable_channel": [
+   "run_l"
   ]
  }
 }

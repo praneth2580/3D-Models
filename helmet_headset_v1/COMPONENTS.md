@@ -17,7 +17,7 @@
 | **Switches** | **3 tactile switches, 6 × 6 × 7 mm** (through-hole, round actuator; the height matters), wired across the neckband's own buttons | **Yes** | ₹10–30 (est.) |
 | **Switch board** | perfboard, a 50 × 28 mm piece | **Yes** | (from a ₹50–100 sheet) |
 | **Inserts and screws** | 4 × M2 heat-set inserts (3.2 mm hole, 4 mm long) + 4 × M2 × 6 countersunk screws | **Yes** | ₹50–150 (est.) |
-| **VHB tape** | **3M VHB 4910 or 5952, 1.1 mm** (a short length, 25 mm wide or wider) | **Yes** (`vhb_t`) | ₹150–400 (est.) |
+| **VHB tape** | **3M VHB 4910 or 5952, 1.1 mm** (about 30 cm, 25 mm wide or wider: the pod, and thin strips under the cable channel's flanges) | **Yes** (`vhb_t`) | ₹150–400 (est.) |
 | **Silicone** | neutral-cure clear silicone (the cable holes; dabs on the shell) | No | ₹100–200 (est.) |
 | **Boom** | 2 mm aluminium craft (armature) wire (or a stiff copper wire), 15 cm, and 5 mm heat-shrink | **Yes** (`boom_d`) | ₹50–150 (est.) |
 | **Foam windscreen** | a lapel-mic foam cover (or a scrap of open-cell foam) | No | ₹0–150 (est.) |
@@ -34,7 +34,7 @@
 
 ## Printing
 
-About 30 g of PETG or ASA and 5 g of TPU (the keypad and the USB plug): about ₹200–450 (est.) from a print service.
+About 30 g of PETG or ASA and 10 g of TPU (the keypad, the USB plug and the cable channel): about ₹200–450 (est.) from a print service.
 
 ## Total
 
