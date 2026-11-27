@@ -1,11 +1,11 @@
 {
- "generated": "2026-11-25",
+ "generated": "2026-11-27",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
   "buttons": 4,
   "bar_d": 22.2,
   "gap_w": 20,
-  "pod_a": 125,
+  "joy_a": 195,
   "pod_tilt": 20,
   "nav_top": 7.0,
   "nav_stem_d": 3.5
@@ -15,35 +15,43 @@
    "buttons",
    "bar_d",
    "gap_w",
-   "pod_a",
-   "pod_tilt"
+   "joy_a",
+   "pod_tilt",
+   "nav_top",
+   "nav_stem_d"
   ],
   "collar_bottom": [
    "buttons",
    "bar_d",
    "gap_w",
-   "pod_a",
+   "joy_a",
    "pod_tilt"
   ],
-  "pod_cover": [
+  "carrier_joy": [
    "buttons",
    "bar_d",
    "gap_w",
-   "pod_a",
-   "pod_tilt",
-   "nav_top"
+   "joy_a",
+   "pod_tilt"
+  ],
+  "carrier_btn": [
+   "buttons",
+   "bar_d",
+   "gap_w",
+   "joy_a",
+   "pod_tilt"
   ],
   "keypad": [
    "buttons",
    "bar_d",
    "gap_w",
-   "pod_a",
+   "joy_a",
    "pod_tilt"
   ],
   "joy_cap": [
    "bar_d",
    "gap_w",
-   "pod_a",
+   "joy_a",
    "pod_tilt",
    "nav_top",
    "nav_stem_d"

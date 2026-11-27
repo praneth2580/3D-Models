@@ -4,14 +4,15 @@
 
 **Prices:** estimates (not checked on a listing), marked (est.). Where to buy each item, with search links at the Indian stores: the project's page on the website ("What to buy").
 
-## The controls (in the collar's pod)
+## The controls (in the collar's curved face)
 
 | Part | Exact item | Model fits this? | Price |
 |---|---|---|---|
 | **Joystick** | **5-way navigation switch, 10 × 10 mm, about 7 mm tall** (up, down, left, right, press). The easiest source is the common "5-way navigation button module" (5D rocker joystick module): take its switch off. Or buy the switch alone ("5-way tactile switch 10x10") | **Yes** (MEASURE) | ₹60–150 (est.) |
-| **Buttons** | **4 tactile switches, 6 × 6 mm: 2 × 7 mm tall and 2 × 8 mm tall** (the face curves, so the outer ones are taller; 2 × 7 mm with `buttons` = 2) (through-hole, round actuator; the height matters: it reaches up into the keypad's domes) | **Yes** (MEASURE) | ₹20–50 (est.) |
-| **Switch board** | a piece of perfboard, 14 × 53 mm (14 × 32 with 2 buttons) | **Yes** | (from a ₹50–100 sheet) |
-| **Wires to the bay** | 30 AWG wire-wrap wire (10 short lengths, in the ring's groove) | No | ₹100–200 (est.) |
+| **Buttons** | **4 tactile switches, 6 × 6 × 6 mm** (2 with `buttons` = 2) (through-hole, round actuator; the height matters: it reaches just up into the keypad's dome. The model picks the height and prints it) | **Yes** (MEASURE) | ₹20–50 (est.) |
+| **Wires to the bay** | 30 AWG wire-wrap wire (10 short lengths: soldered to the switches' legs under their printed carriers, then along the ring's groove) | No | ₹100–200 (est.) |
+
+No switch board: the face curves round the bar, so the switches sit in **2 printed carriers** (their legs through the carrier, the wires soldered underneath).
 
 ## The electronics (in the collar's bay)
 
@@ -26,18 +27,16 @@
 ## Hardware
 
 - 2 × M2 heat-set inserts (3.2 mm hole) + 2 × M2 × 6 countersunk screws: the bay's cap;
-- 3 × M2.5 heat-set inserts (3.6 mm hole, 4 mm long) and 3 M2.5 screws for the cover and the collar's halves. The model prints the lengths for your settings; at the defaults:
-  - **front:** M2.5 × 40 socket cap, from underneath into the cover (× 35 with 2 buttons);
-  - **back:** M2.5 × 14 countersunk, at the cover's back end (× 12 with 2 buttons);
-  - **inside:** M2.5 × 12 pan or socket head, inside the pod, joining the halves;
-- a 1 mm rubber strip (inside the ring);
-- clear silicone (the wire holes and the cable hole).
+- 1 × M2.5 heat-set insert (3.6 mm hole, 4 mm long) + 1 × **M2.5 × 8 socket cap**: the front screw that closes the collar, from underneath;
+- a **2 mm steel pin, 19 mm long** (or an M2 × 20 screw): the hinge at the back;
+- a 1 mm self-adhesive rubber strip, inside both halves of the ring (in the top half it also holds the switch carriers in);
+- clear silicone (the wire slot into the bay and the cable hole).
 
 About ₹100–250 (est.).
 
 ## Printing
 
-About 20 g of ASA or PETG and 1 g of TPU (the keypad and the bay's gasket): about ₹150–400 (est.) from a print service.
+About 25 g of ASA or PETG and 2 g of TPU (the keypad and the bay's gasket): about ₹150–400 (est.) from a print service.
 
 ## Rough total
 
