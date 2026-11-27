@@ -125,6 +125,15 @@
           "search": "shielded audio cable",
           "stores": "general",
           "local": "Lamington Road"
+        },
+        {
+          "name": "Thin 2-core cable, about 50 cm (26 AWG), and a JST-PH 2-pin plug and socket",
+          "for": "The battery's lead from the back box to the pod (the plug lets the box come off)",
+          "qty": "1 + 1 pair",
+          "price": "₹20–60 (est.)",
+          "search": "JST PH 2 pin connector",
+          "stores": "components",
+          "local": "Lamington Road"
         }
       ]
     },
@@ -205,7 +214,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹1,850–3,250 (est.), most of it the neckband"
+      "about ₹1,900–3,350 (est.), most of it the neckband"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

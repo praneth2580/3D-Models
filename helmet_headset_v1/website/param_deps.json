@@ -1,10 +1,12 @@
 {
- "generated": "2026-11-26",
+ "generated": "2026-11-27",
  "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
  "defaults": {
+  "batt_at": "back",
   "shell_rl": 175,
   "shell_rw": 160,
   "run_l": 90,
+  "run_b": 60,
   "nb_len": 50,
   "nb_w": 12,
   "nb_t": 1.0,
@@ -20,6 +22,7 @@
  },
  "parts": {
   "pod_body": [
+   "batt_at",
    "shell_rl",
    "shell_rw",
    "nb_len",
@@ -32,6 +35,7 @@
    "batt_t"
   ],
   "pod_lid": [
+   "batt_at",
    "nb_len",
    "nb_w",
    "nb_t",
@@ -43,6 +47,7 @@
   ],
   "rocker_post": [],
   "keypad": [
+   "batt_at",
    "nb_len",
    "nb_w",
    "nb_t",
@@ -54,6 +59,7 @@
    "tact_h"
   ],
   "usb_plug": [
+   "batt_at",
    "shell_rl",
    "shell_rw",
    "nb_len",
@@ -76,9 +82,25 @@
    "boom_d"
   ],
   "cable_channel": [
+   "batt_at",
    "run_l",
    "nb_len",
    "nb_w",
+   "batt_l",
+   "batt_w"
+  ],
+  "bb_base": [
+   "batt_l",
+   "batt_w",
+   "batt_t"
+  ],
+  "bb_cover": [
+   "batt_l",
+   "batt_w",
+   "batt_t"
+  ],
+  "bb_channel": [
+   "run_b",
    "batt_l",
    "batt_w"
   ]

@@ -24,6 +24,7 @@
 | **Foam windscreen** | a lapel-mic foam cover (or a scrap of open-cell foam) | No | ₹0–150 (est.) |
 | **Wire** | 28–30 AWG wire (the switches; extending the mic and speaker wires) | No | ₹50–150 (est.) |
 | **Cables** | an old USB cable (4-core, for the speakers, about 1 m) and an old audio cable (shielded, for the mic, about 60 cm) | **Yes** (4.2 and 3.4 mm holes) | free (old cables) |
+| **Battery lead** (back box) | a thin 2-core cable, about 50 cm (26 AWG is plenty), and a **JST-PH 2-pin plug and socket** at the pod, so the back box can come off | **Yes** (`bat_cable`, 3 mm) | ₹20–60 (est.) |
 
 ## Optional (only if needed)
 
@@ -36,8 +37,8 @@
 
 ## Printing
 
-About 25 g of PETG or ASA and 8 g of TPU (the keypad, the USB plug and the cable channel are TPU; the rocker's pivot post is a tiny PETG part): about ₹200–400 (est.) from a print service.
+About 29 g of PETG or ASA and 11 g of TPU with the back box (the keypad, the USB plug, the cable channels and the back box's cover are TPU; the rocker's pivot post is a tiny PETG part): about ₹220–450 (est.) from a print service.
 
 ## Total
 
-About **₹1,850–3,250** (est.) with printing, most of it the neckband.
+About **₹1,900–3,350** (est.) with printing and the back box, most of it the neckband.

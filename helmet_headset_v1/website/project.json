@@ -1,8 +1,8 @@
 {
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
-  "summary": "Music, calls and navigation voice in your helmet for about ₹1,850–3,250 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board, battery and buttons go in a pod stuck to the outside of the shell on the left with VHB tape (small, about 60 × 37 mm, with room for most neckbands' parts, the board stacked on the battery; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of a flexible cable channel stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve is a setting, and the neckband's parts are too (a bigger neckband makes the pod grow).",
-  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. By default the pod has room for a board up to 50 × 12 mm and a battery up to 35 × 20 × 6 mm (300 mAh class) or a long thin one up to 12 × 50 mm (most neckbands, not all); enter a bigger neckband's sizes and the pod grows.",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹1,900–3,350 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (about 59 × 37 mm and 17 mm proud, with room for most neckbands' parts; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); its battery goes in its own slim box on the back of the helmet (41 × 26 × 9 mm, a TPU cover that snaps on), which takes 6 mm off the side pod (or keep it in the pod); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the wires go in from below, in the grooves of flexible cable channels stuck down the shell; besides the neckband, only small hardware bits. General purpose: the helmet's curve is a setting, and the neckband's parts are too (a bigger neckband makes the pod grow).",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. By default the battery goes in a box on the back of the helmet and the side pod holds the board (up to 50 × 12 mm) and the keys; the battery has room up to 35 × 20 × 6 mm (300 mAh class). Most neckbands fit, not all; enter a bigger neckband's sizes and the parts grow.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hh_helmet.png",
@@ -11,27 +11,35 @@
   "gallery": [
     {
       "src": "images/hh_helmet.png",
-      "caption": "The pod on the left of a modular helmet (a white stand-in), behind the chin bar's pivot: stuck on with VHB tape, no holes"
+      "caption": "The pod on the left of a modular helmet (a white stand-in), behind the chin bar's pivot: slim (17 mm proud) now the battery is in a box on the back"
     },
     {
       "src": "images/hh_pod.png",
-      "caption": "The pod: about 60 × 37 mm and 23 mm proud of the shell at its middle (the board stacked on the battery); a round play/call button and the volume rocker (raised + and −) in a screwed lid, the USB-C plug at its back end"
+      "caption": "The pod: about 59 × 37 mm and 17 mm proud of the shell at its middle; a round play/call button and the volume rocker in a screwed lid, USB-C at the back"
     },
     {
       "src": "images/hh_rocker.png",
-      "caption": "Cut through the pod at the volume rocker: one rubber key over 2 switches, its solid middle resting on a small printed post (top end louder, bottom end quieter); below, the neckband's board lying on its battery"
+      "caption": "Cut through the pod at the volume rocker: one rubber key over 2 switches, its solid middle on a pivot post; the neckband's board below, on the floor"
     },
     {
       "src": "images/hh_bottom.png",
-      "caption": "The pod's bottom long side (the cable channel pulled away): the 2 cable notches right at the shell, facing down so rain runs past them; the channel's top end butts against the side and covers them"
+      "caption": "The pod's bottom long side (the cable channel pulled away): the 3 cable notches (speakers, mic, battery) right at the shell, facing down"
     },
     {
       "src": "images/hh_channel.png",
       "caption": "The cable channel: the cables leave the pod's bottom side (facing down, away from rain), a flexible TPU strip takes them straight down to the shell's lower edge, then in under the edge trim (no hole in the helmet)"
     },
     {
+      "src": "images/hh_back.png",
+      "caption": "The back of the helmet: the battery's slim box (41 × 26 × 9 mm), its lead down a short grooved channel to the lower edge; the side pod on the left"
+    },
+    {
+      "src": "images/hh_backbox.png",
+      "caption": "The back box opened: the TPU cover (snaps on, no screws), the battery, the PETG base curved to the shell with the lead's notch"
+    },
+    {
       "src": "images/hh_exploded.png",
-      "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board, the neckband's board and the battery"
+      "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board and the neckband's board"
     },
     {
       "src": "images/hh_inside.png",
@@ -67,6 +75,14 @@
         "rocker_post",
         "usb_plug",
         "cable_channel"
+      ]
+    },
+    {
+      "label": "The battery's back box (outside, on the back)",
+      "parts": [
+        "bb_base",
+        "bb_cover",
+        "bb_channel"
       ]
     },
     {
@@ -143,6 +159,24 @@
       "what": "A flexible strip stuck to the shell: it runs straight down from the pod's bottom side (covering its cable notches) to the shell's lower edge. The 2 cables lie in the grooves on its underside, held flat against the shell, then go in under the edge trim. No hole in the helmet",
       "qty": "1",
       "material": "TPU 85A-95A. Flanges down"
+    },
+    "bb_base": {
+      "name": "Back box: base",
+      "what": "Holds the neckband's battery on the back of the helmet (batt_at = \"back\"): its underside curved to the shell, on VHB tape; a groove round its walls for the cover's bead; the lead's notch in its bottom side",
+      "qty": "1",
+      "material": "PETG / ASA (light colour). Underside down, supports under the curve"
+    },
+    "bb_cover": {
+      "name": "Back box: cover",
+      "what": "Snaps over the base (a bead into its groove) and presses its rim: the seal. No screws",
+      "qty": "1",
+      "material": "TPU 85A-95A. Top down"
+    },
+    "bb_channel": {
+      "name": "Back box: lead channel",
+      "what": "A short strip with one groove: the battery's lead from the box's bottom side down to the shell's lower edge",
+      "qty": "1",
+      "material": "TPU 85A-95A. Flanges down"
     }
   },
   "customize": {
@@ -155,6 +189,21 @@
       {
         "label": "Your helmet",
         "params": [
+          {
+            "name": "batt_at",
+            "label": "Where the battery goes",
+            "choices": [
+              [
+                "back",
+                "in its own box on the back of the helmet (a slimmer side pod)"
+              ],
+              [
+                "pod",
+                "in the side pod, under the board"
+              ]
+            ],
+            "help": "On the back, the side pod is about 6 mm thinner."
+          },
           {
             "name": "shell_rl",
             "label": "Shell's radius along the pod (front to back)",
@@ -180,6 +229,15 @@
             "min": 30,
             "max": 200,
             "help": "Along the shell, from the pod's bottom edge straight down to the shell's lower edge."
+          },
+          {
+            "name": "run_b",
+            "label": "Back box's channel length",
+            "unit": "mm",
+            "step": 1,
+            "min": 20,
+            "max": 150,
+            "help": "From the back box's bottom edge straight down to the shell's lower edge."
           }
         ]
       },
@@ -298,6 +356,9 @@
           }
         ]
       }
+    ],
+    "probe_with": [
+      "batt_at"
     ]
   }
 }

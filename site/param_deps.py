@@ -123,23 +123,32 @@ def main():
                 if h is not None: hashes.append(h)
         return (hashes, None) if hashes else (None, err or ["no test value in range"])
 
-    jobs = [(stem, name, make_args(cfg, stem, meta)) for stem, meta in parts.items() for name in [None] + [p["name"] for p in params]]
-    print(f"{len(parts)} parts x {len(params)} settings: {len(jobs)} probes", flush=True)
+    # Contexts: the defaults, and (opt-in, "probe_with" in the customize block) each other value of the listed choice
+    # settings: a setting that matters only with another choice (e.g. a battery's size only when it's in the pod) is
+    # then still found.
+    contexts = [[]] + [["-D", f"{c}={scad_literal(v)}"] for c in cfg.get("probe_with", []) for v in tests[c]]
+    jobs = [(stem, name, make_args(cfg, stem, meta) + ctx, k) for k, ctx in enumerate(contexts)
+            for stem, meta in parts.items() for name in [None] + [p["name"] for p in params]]
+    print(f"{len(parts)} parts x {len(params)} settings x {len(contexts)} context(s): {len(jobs)} probes", flush=True)
     with ThreadPoolExecutor(a.jobs) as ex:
-        results = dict(zip([(j[0], j[1]) for j in jobs], ex.map(probe, jobs)))
+        results = dict(zip([(j[0], j[1], j[3]) for j in jobs], ex.map(lambda j: probe(j[:3]), jobs)))
 
     deps, problems = {}, []
     for stem in parts:
-        base_h, base_err = results[(stem, None)]
-        if base_h is None:
-            problems.append(f"{stem}: the default export fails: {base_err}"); continue
         names = []
-        for p in params:
-            h, err = results[(stem, p["name"])]
-            if h is None:              # every test value refused: assume it matters to this part
-                names.append(p["name"]); problems.append(f"{stem} / {p['name']}: no test value accepted ({err})"); continue
-            if any(x != base_h for x in h): names.append(p["name"])
-        deps[stem] = names
+        for k in range(len(contexts)):
+            base_h, base_err = results[(stem, None, k)]
+            if base_h is None:
+                if k == 0: problems.append(f"{stem}: the default export fails: {base_err}")
+                continue                   # (another choice refused for this part: nothing to learn there)
+            for p in params:
+                if p["name"] in names: continue
+                h, err = results[(stem, p["name"], k)]
+                if h is None:              # every test value refused: assume it matters to this part
+                    if k == 0: names.append(p["name"]); problems.append(f"{stem} / {p['name']}: no test value accepted ({err})")
+                    continue
+                if any(x != base_h for x in h): names.append(p["name"])
+        deps[stem] = [p["name"] for p in params if p["name"] in names]
     out = {"generated": datetime.date.today().isoformat(),
            "note": "Made by site/param_deps.py: which customizer settings change each part. Regenerate after CAD changes.",
            "defaults": defaults, "parts": deps}
