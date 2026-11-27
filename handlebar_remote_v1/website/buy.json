@@ -1,6 +1,6 @@
 {
   "title": "What to buy",
-  "sub": "All the electronics and hardware for the remote (one collar: the controls on a face curved round the bar, the electronics in a bay underneath), besides the printed parts. Exact items in COMPONENTS.md.",
+  "sub": "All the electronics and hardware for the remote (one collar: the controls on a face curved round the bar, the joystick on its own platform, the electronics in a slim capsule underneath), besides the printed parts. Exact items in COMPONENTS.md.",
   "groups": [
     {
       "label": "The controls (in the collar's curved face)",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "label": "The electronics (in the collar's bay)",
+      "label": "The electronics (in the capsule under the bar)",
       "items": [
         {
           "name": "ESP32-C3 Super Mini",
@@ -56,9 +56,38 @@
           "stores": "modules"
         },
         {
-          "name": "SN65HVD230 CAN transceiver module",
-          "for": "The dash bus (remove its 120 Ω resistor). The dash's 3-pack has a spare",
+          "name": "SN65HVD230 CAN transceiver chip (SOIC-8, SN65HVD230DR)",
+          "for": "The dash bus: on a SOIC-8 adapter, stuck to the ESP32's back (the smallest bay)",
           "qty": 1,
+          "price": "₹40–100 (est.)",
+          "fits": true,
+          "search": "SN65HVD230 SOIC-8",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "SOIC-8 to DIP adapter board (about 10 x 12 mm)",
+          "for": "Carries the transceiver chip (no header pins: wires straight to the pads)",
+          "qty": 1,
+          "price": "₹10–40 (est.)",
+          "fits": true,
+          "search": "SOIC8 to DIP8 adapter board",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "100 nF ceramic capacitor",
+          "for": "The transceiver's supply, right at the chip",
+          "qty": 1,
+          "price": "₹1–5 (est.)",
+          "search": "100nF ceramic capacitor",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "Or: SN65HVD230 CAN transceiver module",
+          "for": "Instead of the chip (can_board = \"module\"; the capsule grows). Remove its 120 Ω resistor. The dash's 3-pack has a spare",
+          "qty": "0–1",
           "price": "₹150–300 (est.)",
           "fits": true,
           "buy": [
@@ -99,7 +128,7 @@
         },
         {
           "name": "Foam tape, heat shrink",
-          "for": "The boards in the bay; wiring",
+          "for": "The transceiver on the ESP32's back; the boards in the capsule; wiring",
           "qty": "a little",
           "price": "₹50–100 (est.)",
           "search": "double sided foam tape",
@@ -111,24 +140,6 @@
     {
       "label": "Screws, inserts and rubber",
       "items": [
-        {
-          "name": "M2 heat-set inserts (3.2 mm hole)",
-          "for": "The bay's cap",
-          "qty": 2,
-          "price": "",
-          "search": "M2 heat set insert",
-          "stores": "hardware",
-          "local": "Nagdevi Street"
-        },
-        {
-          "name": "M2 x 6 countersunk screws",
-          "for": "The bay's cap",
-          "qty": 2,
-          "price": "",
-          "search": "M2 screw stainless",
-          "stores": "hardware",
-          "local": "Nagdevi Street"
-        },
         {
           "name": "M2.5 heat-set insert (3.6 mm hole, 4 mm) + M2.5 x 8 socket cap screw",
           "for": "The front screw that closes the collar (from underneath)",
@@ -157,7 +168,7 @@
         },
         {
           "name": "Clear silicone",
-          "for": "Sealing the wire slot into the bay and the cable hole",
+          "for": "Sealing the wire slot into the capsule",
           "qty": 1,
           "price": "₹100–250 (est.) for this group",
           "search": "clear RTV silicone",
@@ -169,7 +180,7 @@
       "label": "3D printing (by a service)",
       "items": [
         {
-          "name": "Printing: about 25 g of ASA or PETG + 2 g of TPU (keypad, gasket)",
+          "name": "Printing: about 22 g of ASA or PETG + 3 g of TPU (keypad, the capsule's plug)",
           "for": "Upload the STLs for an exact quote",
           "qty": "1 set",
           "price": "₹150–400 (est.)",
@@ -198,7 +209,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹800–1,800 (est.); less with the dash's spare transceiver"
+      "about ₹700–1,650 (est.)"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

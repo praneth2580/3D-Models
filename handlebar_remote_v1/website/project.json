@@ -1,25 +1,25 @@
 {
   "title": "Handlebar Remote",
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
-  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick at the back under your thumb and 4 buttons going up over the top of the bar, on a face curved round the bar and tilted toward the grip, so nothing stands higher than the switch cube and it hides none of the bike's own instruments. The electronics sit in a slim bay underneath. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body: the switches in 2 printed carriers inside the face, a printed TPU keypad that seals it, the halves hinged at the back and closed by one hidden screw. General purpose: the bar size, the gap and the angles are settings.",
+  "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick at the back under your thumb, on its own raised platform angled toward your hand, and 4 buttons going up over the top of the bar, on a face curved round the bar and tilted toward the grip, so nothing stands higher than the switch cube and it hides none of the bike's own instruments. The electronics sit in a slim capsule underneath, closed by a rubber plug. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body: the switches in 2 printed carriers inside the face, a printed TPU keypad that seals it, the halves hinged at the back and closed by one hidden screw. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hr_rider.png",
   "see_title": "Pictures",
-  "see_sub": "One smooth collar, 19 mm wide, in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on a face curved round the back and the top of the bar, its highest point 27.7 mm above the bar's centre (the cube's top is at 30); the ESP32-C3 and the CAN transceiver in the bay underneath.",
+  "see_sub": "One smooth collar, 19 mm wide, in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on a face curved round the back and the top of the bar, its highest point 27.3 mm above the bar's centre (the cube's top is at 30); the joystick on its own platform; the ESP32-C3 and the CAN transceiver in a 13 mm wide capsule underneath.",
   "gallery": [
     {
       "src": "images/hr_rider.png",
-      "caption": "From the rider's seat: the collar between the grip and the switch cube (grey: a stand-in; measure yours), no higher than the cube: the joystick at the back under the thumb, the buttons over the top, the bay underneath"
+      "caption": "From the rider's seat: the collar between the grip and the switch cube (grey: a stand-in; measure yours), no higher than the cube: the joystick on its platform at the back under the thumb, the buttons over the top, the slim capsule underneath"
     },
     {
       "src": "images/hr_face.png",
-      "caption": "From the rider's side: the joystick at the back, buttons 1 and 2 (round) and 3 and 4 (pills) going up over the bar, each in its own cup, a ridge between 2 and 3"
+      "caption": "From the rider's side: the joystick on its own raised platform, angled toward the hand; buttons 1 and 2 (round) and 3 and 4 (pills) going up over the bar, each in its own cup"
     },
     {
       "src": "images/hr_side.png",
-      "caption": "Along the bar: the face curves round the back and the top of the bar, the joystick at the back; the hinge below it, the bay turned a little forward"
+      "caption": "Along the bar: the face curves round the back and the top of the bar, the joystick's platform at the back; the hinge under it, the slim capsule turned a little forward"
     },
     {
       "src": "images/hr_top.png",
@@ -27,11 +27,11 @@
     },
     {
       "src": "images/hr_bay.png",
-      "caption": "The bay under the bar, opened: the ESP32-C3 and the CAN transceiver on edge side by side, its cap and gasket below"
+      "caption": "The capsule under the bar, its rubber plug pulled off: the ESP32-C3 with the CAN transceiver on its back inside; the dash's cable goes through the plug"
     },
     {
       "src": "images/hr_exploded.png",
-      "caption": "Taken apart: the collar's top half (with the face) lifted, the keypad, the 2 switch carriers with their switches, the joystick's cap, the bottom half swung open on its hinge, the bay's gasket and cap"
+      "caption": "Taken apart: the collar's top half (with the face and the joystick's platform) lifted, the keypad, the 2 switch carriers with their switches, the joystick's cap, the bottom half swung open on its hinge, the capsule's plug"
     }
   ],
   "docs": [
@@ -55,8 +55,7 @@
         "carrier_btn",
         "keypad",
         "joy_cap",
-        "bay_cap",
-        "bay_gasket"
+        "bay_plug"
       ]
     },
     {
@@ -69,19 +68,19 @@
   "parts": {
     "collar_top": {
       "name": "Collar top (with the face)",
-      "what": "The smooth body's upper half: the ring's top and the face curved round the back and the top of the bar (the joystick's hole, a cup round each button's hole, the ridge), hollow inside and open toward the bar for the keypad and the switch carriers; 2 hinge knuckles at the back, the front screw's insert",
+      "what": "The smooth body's upper half: the ring's top and the face curved round the back and the top of the bar, with the joystick's raised platform (its hole), a cup round each button's hole and the ridge, hollow inside and open toward the bar for the keypad and the switch carriers; 2 hinge knuckles at the back, the front screw's insert",
       "qty": "1",
       "material": "ASA (PETG for a first try), 100% infill round the ring. On its flat switch-cube side"
     },
     "collar_bottom": {
-      "name": "Collar bottom (with the bay)",
-      "what": "The smooth body's lower half: the ring's bottom and the electronics bay (the ESP32-C3 and the CAN transceiver on edge inside); the middle hinge knuckle, 2 M2 inserts for its cap; the front screw comes up through it into the top half",
+      "name": "Collar bottom (with the capsule)",
+      "what": "The smooth body's lower half: the ring's bottom and the slim electronics capsule (the ESP32-C3 with the CAN transceiver on its back inside), open at the bottom for its plug, with the groove the plug's bead snaps into; the middle hinge knuckle; the front screw comes up through it into the top half",
       "qty": "1",
       "material": "ASA / PETG, 100% infill round the ring. On its flat switch-cube side"
     },
     "carrier_joy": {
       "name": "Switch carrier: joystick + button 1",
-      "what": "Holds the 5-way switch and button 1's tactile switch in flat pockets (their legs through it, soldered to the wires in the channel underneath); goes up into the top half from the bar's side, first, pressing the keypad's skirt against the face",
+      "what": "Holds the 5-way switch on a pedestal up in its platform (its legs through it, a well underneath for their wires) and button 1's tactile switch in a flat pocket; goes up into the top half from the bar's side, first, pressing the keypad against the face",
       "qty": "1",
       "material": "ASA / PETG. On its flat switch-cube side"
     },
@@ -93,7 +92,7 @@
     },
     "keypad": {
       "name": "Keypad",
-      "what": "A TPU liner inside the face, in one piece: the sheet under the face (its hollow domes are the buttons, round and pills; it hugs the joystick cap's sleeve) and a skirt round its edge that the carriers squeeze against the face: the seal",
+      "what": "A TPU liner inside the face, in one piece: the sheet under the face (its hollow domes are the buttons, round and pills), a turret rising into the joystick's platform round its switch (it hugs the cap's sleeve), and a skirt round its edge; the carriers squeeze the skirt and the turret's foot against the face: the seal",
       "qty": "1",
       "material": "TPU 85A-95A. As an arch, its sheet on top (supports under it)"
     },
@@ -103,17 +102,11 @@
       "qty": "1",
       "material": "ASA / PETG, or TPU for grip. Flat top down"
     },
-    "bay_cap": {
-      "name": "Bay cap",
-      "what": "A rounded dish that closes the bay from below (2 M2 x 6 countersunk); the dash's 4-core cable comes in through it",
+    "bay_plug": {
+      "name": "Capsule plug",
+      "what": "Closes the capsule from below, no screws: a rounded flange and a plug 0.1 mm tight in the mouth (the seal) with a bead that snaps into its groove; the dash's cable goes through it (it grips the cable). Pull it by its ridge to reach the ESP32's USB-C",
       "qty": "1",
-      "material": "ASA / PETG. Its outside down"
-    },
-    "bay_gasket": {
-      "name": "Bay gasket",
-      "what": "Between the bay and its cap, squeezed 0.2 mm",
-      "qty": "1",
-      "material": "TPU 85A-95A. Flat"
+      "material": "TPU 85A-95A. On its flange"
     },
     "remote_assembled": {
       "name": "Assembled",
@@ -160,18 +153,18 @@
             "label": "Gap between the grip and the switch cube",
             "unit": "mm",
             "step": 0.5,
-            "min": 19,
+            "min": 20,
             "max": 30,
-            "help": "The collar is 1 mm narrower. Slide the switch cube inboard to make room."
+            "help": "The collar is 1 mm narrower. Slide the switch cube inboard to make room. At least 20 mm (the joystick's tilted switch needs the width)."
           },
           {
             "name": "joy_a",
             "label": "Where the joystick sits, round the bar",
             "unit": "°",
             "step": 1,
-            "min": 185,
-            "max": 200,
-            "help": "From straight forward: 180 = straight back toward you, level with the bar's centre; 195 = a little below it. The buttons follow it up over the top."
+            "min": 187,
+            "max": 192,
+            "help": "From straight forward: 180 = straight back toward you, level with the bar's centre; 190 = a little below it. The buttons follow it up over the top."
           },
           {
             "name": "pod_tilt",
@@ -181,6 +174,30 @@
             "min": 0,
             "max": 25,
             "help": "So your thumb reaches them straight from the grip."
+          },
+          {
+            "name": "joy_rise",
+            "label": "The joystick's platform: how proud of the face",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 1,
+            "max": 3,
+            "help": "Its own flat top, on a separate plane from the buttons."
+          },
+          {
+            "name": "can_board",
+            "label": "CAN transceiver",
+            "choices": [
+              [
+                "chip",
+                "the SN65HVD230 chip on a small adapter (the smallest capsule)"
+              ],
+              [
+                "module",
+                "the common SN65HVD230 module (a bigger capsule)"
+              ]
+            ],
+            "help": "The chip sits on the ESP32's back; the module beside it."
           }
         ]
       },

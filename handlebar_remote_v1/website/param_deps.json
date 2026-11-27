@@ -5,8 +5,10 @@
   "buttons": 4,
   "bar_d": 22.2,
   "gap_w": 20,
-  "joy_a": 195,
+  "joy_a": 190,
   "pod_tilt": 20,
+  "joy_rise": 2.5,
+  "can_board": "chip",
   "nav_top": 7.0,
   "nav_stem_d": 3.5
  },
@@ -17,6 +19,8 @@
    "gap_w",
    "joy_a",
    "pod_tilt",
+   "joy_rise",
+   "can_board",
    "nav_top",
    "nav_stem_d"
   ],
@@ -25,14 +29,17 @@
    "bar_d",
    "gap_w",
    "joy_a",
-   "pod_tilt"
+   "pod_tilt",
+   "joy_rise",
+   "can_board"
   ],
   "carrier_joy": [
    "buttons",
    "bar_d",
    "gap_w",
    "joy_a",
-   "pod_tilt"
+   "pod_tilt",
+   "joy_rise"
   ],
   "carrier_btn": [
    "buttons",
@@ -46,23 +53,21 @@
    "bar_d",
    "gap_w",
    "joy_a",
-   "pod_tilt"
+   "pod_tilt",
+   "joy_rise"
   ],
   "joy_cap": [
    "bar_d",
    "gap_w",
    "joy_a",
    "pod_tilt",
+   "joy_rise",
    "nav_top",
    "nav_stem_d"
   ],
-  "bay_cap": [
+  "bay_plug": [
    "bar_d",
-   "gap_w"
-  ],
-  "bay_gasket": [
-   "bar_d",
-   "gap_w"
+   "can_board"
   ]
  }
 }
