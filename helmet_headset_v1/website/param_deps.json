@@ -5,7 +5,6 @@
   "batt_at": "back",
   "shell_rl": 175,
   "shell_rw": 160,
-  "run_l": 90,
   "run_b": 60,
   "nb_len": 50,
   "nb_w": 12,
@@ -80,14 +79,6 @@
   ],
   "boom_mount": [
    "boom_d"
-  ],
-  "cable_channel": [
-   "batt_at",
-   "run_l",
-   "nb_len",
-   "nb_w",
-   "batt_l",
-   "batt_w"
   ],
   "bb_base": [
    "batt_l",
