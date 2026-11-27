@@ -3,10 +3,13 @@
   "tagline": "A slim thumb controller between the grip and the switch cube, for the dash and your phone",
   "summary": "One slim collar on the left handlebar, between the grip and the bike's switch cube: a 5-way joystick at the back under your thumb, on its own raised platform angled toward your hand, and 4 buttons going up over the top of the bar, on a face curved round the bar and tilted toward the grip, so nothing stands higher than the switch cube and it hides none of the bike's own instruments. The electronics sit in a slim capsule underneath (the ESP32 lying lengthwise), closed by a rubber plug, with a button and 2 status LEDs at its back, facing you. It works the Handlebar Dash over its own wiring (one of the dash's expansion slots) and a phone or anything else over Bluetooth, as a keyboard with media keys. One smooth, rounded body: the switches in 2 printed carriers inside the face, a printed TPU keypad that seals it, the halves hinged at the back and closed by one hidden screw. General purpose: the bar size, the gap and the angles are settings.",
   "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). The switches and boards have no published drawings: measure yours first, and the gap you can make between the grip and the switch cube. The firmware comes next.",
+  "video": "video/remote_demo.mp4",
+  "poster": "images/hr_video_poster.png",
+  "video_title": "How it works",
   "order": 4,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hr_rider.png",
-  "see_title": "Pictures",
+  "see_title": "How it works",
   "see_sub": "One smooth collar, 19 mm wide, in a 20 mm gap between the grip and the switch cube (slide the cube inboard to make it): the controls on a face curved round the back and the top of the bar, its highest point 27.3 mm above the bar's centre (the cube's top is at 30); the joystick on its own platform; the ESP32-C3 lying lengthwise in a 13 mm wide capsule underneath, its button and LEDs at the back.",
   "gallery": [
     {

@@ -6,6 +6,8 @@ One slim collar on the **left handlebar, between the grip and the bike's switch 
 
 ![The control collar between the grip and the switch cube, from the rider's seat](images/hr_rider.png)
 
+**Video:** [`video/remote_demo.mp4`](video/remote_demo.mp4) (26 s): the remote on the bar, the joystick rocking round, the buttons, the capsule's back button and LEDs, and the parts taken apart. How it's made: [`video/README.md`](video/README.md).
+
 **Owner's choices:**
 - 2026-11-24: a 5-way joystick (up, down, left, right, press) and 2 buttons, glove-friendly and used without looking; wired to the dash (one of its expansion slots: power and the dash bus) **and** Bluetooth for a phone.
 - 2026-11-25: "between the grips and the control panel, a slim control unit".
