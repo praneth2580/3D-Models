@@ -1,6 +1,6 @@
 {
   "title": "What to buy",
-  "sub": "The neckband gives all the electronics and all the sound parts (board, battery, both speakers, mic). Besides it, only small hardware bits; the bigger speakers, a battery and a mic capsule are optional fallbacks. Exact items in COMPONENTS.md.",
+  "sub": "The neckband gives all the electronics and all the sound parts (board, battery, both speakers, mic). Besides it: 3 small magnetic connectors (so the pod and the back box clip off their cradles) and small hardware bits; the bigger speakers, a battery and a mic capsule are optional fallbacks. Exact items in COMPONENTS.md.",
   "groups": [
     {
       "label": "The neckband: everything electronic and everything you hear",
@@ -18,8 +18,32 @@
       ]
     },
     {
-      "label": "Small bits for the pod",
+      "label": "Small bits for the pod and the cradles",
       "items": [
+        {
+          "name": "5-pin magnetic pogo connector, 2.54 mm pitch (male + female pair)",
+          "for": "The contacts in the cradles, so the pod and the back box clip off for cleaning: 2 for the pod (speakers; mic and battery), 1 for the back box (battery). Measure yours and enter its size (mag_l, mag_h, mag_m, mag_f)",
+          "qty": 3,
+          "price": "₹239 each at Probots (checked 2026-11-27; size not published)",
+          "buy": [
+            {
+              "store": "Probots",
+              "url": "https://probots.co.in/5p-magnetic-spring-loaded-pogo-pin-male-female-connector-socket-2-54-mm-pitch-dip.html",
+              "price": "₹239"
+            }
+          ],
+          "search": "5 pin magnetic pogo connector 2.54mm",
+          "stores": "components"
+        },
+        {
+          "name": "5-minute epoxy (or more neutral-cure silicone)",
+          "for": "Gluing the connectors in, and potting the cradles' connector pockets over the solder tails",
+          "qty": 1,
+          "price": "₹80–200 (est.)",
+          "search": "5 minute epoxy",
+          "stores": "hardware",
+          "local": "Lamington Road"
+        },
         {
           "name": "Tactile switches, 6 × 6 × 7 mm (through-hole, round actuator)",
           "for": "The play/call button and the 2 ends of the volume rocker (the height matters: each actuator reaches up into its key)",
@@ -52,7 +76,7 @@
         },
         {
           "name": "3M VHB tape 4910 or 5952, about 1.1 mm",
-          "for": "Sticks the pod and the back box to the shell, and the back box's channel (thin strips under its flanges)",
+          "for": "Sticks the 2 cradles to the shell (they stay on; the pod and the back box clip onto them), and the back box's channel (thin strips under its flanges)",
           "qty": 1,
           "price": "₹150–400 (est.)",
           "fits": true,
@@ -69,7 +93,7 @@
         },
         {
           "name": "Neutral-cure clear silicone",
-          "for": "The cable holes, and dabs to hold the cables on the shell",
+          "for": "Sealing round the cables where they leave the cradles, and dabs to hold the cables on the shell",
           "qty": 1,
           "price": "₹100–200 (est.)",
           "search": "neutral cure silicone clear",
@@ -127,11 +151,11 @@
           "local": "Lamington Road"
         },
         {
-          "name": "Thin 2-core cable, about 50 cm (26 AWG), and a JST-PH 2-pin plug and socket",
-          "for": "The battery's lead from the back box to the pod (the plug lets the box come off)",
-          "qty": "1 + 1 pair",
-          "price": "₹20–60 (est.)",
-          "search": "JST PH 2 pin connector",
+          "name": "Thin 2-core cable, about 50 cm (26 AWG)",
+          "for": "The battery's lead on the helmet, from the back box's cradle round inside the lower edge to the pod's cradle",
+          "qty": "1",
+          "price": "₹10–30 (est.)",
+          "search": "2 core wire 26 AWG",
           "stores": "components",
           "local": "Lamington Road"
         }
@@ -214,8 +238,8 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹1,900–3,350 (est.), most of it the neckband"
+      "about ₹2,650–4,100 (est.), most of it the neckband and the 3 connectors (₹717)"
     ]
   ],
-  "note": "All prices here are estimates (not checked on listings)."
+  "note": "All prices here are estimates (not checked on listings), except the magnetic connectors (Probots, checked 2026-11-27)."
 }

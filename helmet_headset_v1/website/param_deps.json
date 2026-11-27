@@ -16,6 +16,11 @@
   "batt_t": 6,
   "spk_d": 10,
   "spk_t": 4,
+  "mag_l": 18,
+  "mag_h": 5,
+  "mag_m": 6,
+  "mag_f": 4.5,
+  "mag_tail": 3.0,
   "tact_h": 7,
   "boom_d": 5
  },
@@ -23,7 +28,6 @@
   "pod_body": [
    "batt_at",
    "shell_rl",
-   "shell_rw",
    "nb_len",
    "nb_w",
    "nb_t",
@@ -31,7 +35,11 @@
    "nb_over",
    "batt_l",
    "batt_w",
-   "batt_t"
+   "batt_t",
+   "mag_l",
+   "mag_h",
+   "mag_m",
+   "mag_tail"
   ],
   "pod_lid": [
    "batt_at",
@@ -42,7 +50,11 @@
    "nb_over",
    "batt_l",
    "batt_w",
-   "batt_t"
+   "batt_t",
+   "mag_l",
+   "mag_h",
+   "mag_m",
+   "mag_tail"
   ],
   "rocker_post": [],
   "keypad": [
@@ -55,20 +67,23 @@
    "batt_l",
    "batt_w",
    "batt_t",
+   "mag_l",
+   "mag_h",
+   "mag_m",
+   "mag_tail",
    "tact_h"
   ],
   "usb_plug": [
    "batt_at",
    "shell_rl",
-   "shell_rw",
    "nb_len",
-   "nb_w",
    "nb_t",
    "nb_under",
    "nb_over",
    "batt_l",
-   "batt_w",
-   "batt_t"
+   "batt_t",
+   "mag_l",
+   "mag_h"
   ],
   "speaker_puck": [
    "spk_d",
@@ -83,17 +98,51 @@
   "bb_base": [
    "batt_l",
    "batt_w",
-   "batt_t"
+   "batt_t",
+   "mag_l",
+   "mag_h",
+   "mag_f",
+   "mag_tail"
   ],
   "bb_cover": [
    "batt_l",
    "batt_w",
-   "batt_t"
+   "batt_t",
+   "mag_h",
+   "mag_f",
+   "mag_tail"
   ],
   "bb_channel": [
    "run_b",
    "batt_l",
-   "batt_w"
+   "batt_w",
+   "mag_l",
+   "mag_m",
+   "mag_f",
+   "mag_tail"
+  ],
+  "pod_cradle": [
+   "batt_at",
+   "shell_rl",
+   "shell_rw",
+   "nb_len",
+   "nb_w",
+   "batt_l",
+   "batt_w",
+   "mag_l",
+   "mag_h",
+   "mag_m",
+   "mag_f",
+   "mag_tail"
+  ],
+  "bb_cradle": [
+   "batt_l",
+   "batt_w",
+   "mag_l",
+   "mag_h",
+   "mag_m",
+   "mag_f",
+   "mag_tail"
   ]
  }
 }

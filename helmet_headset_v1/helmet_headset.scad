@@ -13,8 +13,8 @@
       tactile switches wired in parallel with the board's own buttons (multi-function, volume +, volume -). A TPU
       keypad (also the seam's gasket) under a screwed lid gives a round multi-function button and a dedicated VOLUME
       ROCKER across the pod (owner, 2026-11-26: "have a dedicated volumen button", chose a rocker): press its top for
-      louder, its bottom for quieter; it rocks on a small printed post glued to the switch board. Its underside is
-      curved to the shell (shell_rl, shell_rw: MEASURE) and stuck on with 1.1 mm VHB tape. A TPU plug seals the USB-C.
+      louder, its bottom for quieter; it rocks on a small printed post glued to the switch board. It clips onto a
+      CRADLE stuck to the shell (see DETACHABLE below). A TPU plug seals the USB-C.
     - SIZE: the neckband settings default to room for MOST cheap neckbands, not all (owner, 2026-11-26: "make the 3d
       pod fit most of the headsets", then "its too big ... it fine if some neckbands dont fit ... a lot smaller"):
       a board up to 50 x 12 and a battery up to 35 x 20 x 6 (300 mAh class), or a long thin one up to about 12 x 50,
@@ -51,7 +51,18 @@
       battery's 2-core lead runs down a short grooved channel under the back's lower edge, inside along the edge to the
       left, and out under the edge straight into the pod's third notch. batt_at = "pod" keeps it in the pod.
 
-  Frames: the POD frame has its origin on the pod's underside at its centre, x along the pod toward the helmet's
+    - DETACHABLE (owner, 2026-11-27: "i need detachable mounting for the battery as well as the control unit as i
+      would need to detach them while cleaning the helmet, so the mounting hardware will be permanently stuck to the
+      helmet and the hardware will be clipped on to it, and the electrical connection too will be in the mount
+      itself"): each unit (the pod, the back box) sits on its own PETG CRADLE, stuck to the shell with the VHB tape
+      (its underside curved to the shell: shell_rl, shell_rw, shell_bk: MEASURE) and never taken off. The unit drops
+      onto it `slide` mm high (2 dovetail tongues under it into windows in the cradle's grooves), slides down (the
+      tongues under the grooves' lips) and a springy tooth clicks up behind it; press the tooth and slide it up to
+      take it off. The contacts are 5-pin magnetic pogo connectors (2 for the pod, 1 for the back box): the males in
+      the units' bottom walls, the females potted in a ledge along each cradle's bottom side, all the helmet's wiring
+      (speakers, mic, the battery's lead) soldered to the females and leaving the ledge facing down.
+
+  Frames: the POD frame has its origin on the pod's underside (= its cradle's top) at its centre, x along the pod toward the helmet's
   BACK, y up, z out of the shell. The HELMET frame (the stand-in, for pictures only) has x forward, y to the
   rider's left, z up, origin at the centre of the stand-in's shell.
 */
@@ -116,13 +127,43 @@ bat_cable = 3.0;         // MEASURE: the battery's lead to the pod (a thin 2-cor
 shell_bk = [120, 140];   // MEASURE: the shell's radii where the back box goes: across (side to side), up and down
 bk_at = -38;             // where on the back (the stand-in: height of the box's middle, mm from the shell's centre)
 run_b = 60;              // MEASURE: the back box's channel: from its bottom side straight down to the shell's lower edge
-pod_edge = 3;            // SELECT: the pod sits this far above the shell's lower edge (its cables tuck straight in under the edge trim)
+pod_edge = 3;            // SELECT: the pod's cradle sits this far above the shell's lower edge (its cables tuck straight in under the edge trim)
+
+// ------------------------- DETACHABLE: CRADLES AND CONNECTORS -------------------------
+// (owner, 2026-11-27: "i need detachable mounting for the battery as well as the control unit as i would need to
+// detach them while cleaning the helmet, so the mounting hardware will be permanently stuck to the helmet and the
+// hardware will be clipped on to it, and the electrical connection too will be in the mount itself")
+// Each unit (the pod, the back box) sits on its own CRADLE (PETG), which stays stuck to the helmet with the VHB tape.
+// The unit's underside and the cradle's top are the same cylinder (curved along the unit like the shell, straight up
+// and down), so the unit can slide down it. Two short DOVETAIL TONGUES under the unit drop into WINDOWS in the
+// cradle's 2 grooves, then the unit slides down `slide` mm: the tongues go under the grooves' lips (it can't come
+// away from the helmet), and a springy TOOTH in the cradle clicks up behind the unit's top side (it can't slide back
+// up). To take it off: press the tooth, slide the unit up, lift it off. The contacts are off-the-shelf 5-pin MAGNETIC
+// POGO CONNECTORS (2.54 mm): the male (spring pins) in the unit's bottom wall, the female (flat contacts) in a ledge
+// along the cradle's bottom side, facing up; sliding down brings their faces together (the magnets pull it home).
+// All the wiring stays on the helmet with the cradles; the units come off clean.
+mag_l = 18;              // MEASURE: the 5-pin magnetic pogo connector's face: length (along its row of pins)
+mag_h = 5;               // MEASURE: ... height
+mag = [mag_l, mag_h];
+mag_m = 6;               // MEASURE: the male's body depth behind its face (its spring pins stand out of the face)
+mag_f = 4.5;             // MEASURE: the female's body depth
+mag_tail = 3.0;          // MEASURE: the solder tails behind each
+cr_t = 2.4;              // the cradle at its middle (thicker toward its top and bottom, where the shell curves away)
+slide = 6;               // the unit drops in this far above home, then slides down this far
+dt_w = 5;                // the dovetail tongues: width at the root ...
+dt_d = 1.2;              // ... depth (they flare 35 degrees each side) ...
+dt_s = 5;                // ... and each segment's length (2 segments per tongue)
+rcl = 0.2;               // the clearance round the tongues
+latch_l = 14;            // the latch: a springy arm in the cradle above the unit's top side, this long ...
+arm_w = 3.5;             // ... and wide ...
+arm_t = 1.4;             // ... and thick, with a tooth at its tip
+tooth = 1.0;             // the tooth's height (the arm bends down this far under the unit)
 
 // ------------------------- FIXED SIZES -------------------------
 wall = 2.2;      // pod wall at the seam (thicker lower down: the sides curve in toward the top)
 side_in = 1.2;   // how far the sides curve in from the bottom to the seam
 fl = 1.6;        // floor (at the middle; thicker toward the ends, where the shell curves away)
-rc = 16;         // the pod's corner radius in plan (outside, at the bottom): nearly round ends
+rc = 9;          // the pod's corner radius in plan (outside, at the bottom): its ends straight in the middle, for the cradle's rails
 rr = 3.5;        // the lid's rolled edge, sideways (its height is the lid's)
 kp_t = 1.0;      // keypad sheet
 squeeze = 0.2;   // the keypad squeezed at the rim
@@ -139,7 +180,10 @@ rc_in = rc - wall0;                           // the cavity's corner radius
 pil_o = rc_in - (rc_in - 2.8) / sqrt(2);      // the pillars sit in the cavity's rounded corners
 in_pod = batt_at == "pod";
 cabs = in_pod ? cable_d : concat(cable_d, [bat_cable]);   // the cables out of the pod's bottom side: speakers, mic (, the battery's lead)
-Wi = max(in_pod ? batt[1] + 2 * (max(cabs) + 0.4) : nb_pcb[1] + 2 * (max(cabs) + 0.4),   // inside width: the battery (or the board) with the cables' room beside it,
+mag_in = mag_m - 0.3 + mag_tail - wall0 + 0.3;      // the male connectors reach this far into the pod past its bottom wall
+pc_x = [-(mag[0]/2 + 0.6), mag[0]/2 + 0.6];          // the pod's 2 connectors, side by side in its bottom wall
+pc_z = 1.0;                                          // the connectors' bottom edge, above the units' underside (and the cradles' ledge)
+Wi = max((in_pod ? batt[1] : nb_pcb[1]) + 2 * (0.3 + mag_in),     // inside width: the battery (or the board) clear of the connectors,
          nb_pcb[1] + 2 * (pil_o + pil_d/2 + 0.35),                         // the board between the pillars,
          usb[0] + 2 * (rc_in - sqrt(pow(rc_in - 0.15, 2) - pow(rc_in - usb_gap, 2))) + 0.1,   // the USB-C socket clear of the rounded back end,
          2 * (rock_l/2 + hinge + 1 + rr + side_in + 0.1) - 2 * wall0);      // and the volume rocker on the lid's flat top
@@ -148,6 +192,7 @@ batt_narrow = batt[1]/2 + 0.3 <= Wi/2 - pil_o - pil_d/2;   // a narrow battery p
 batt_dy = max(0, batt[1]/2 - (Wi/2 - rc_in));
 batt_end = batt_narrow ? rc_in - sqrt(pow(rc_in - 0.3, 2) - pow(batt_dy, 2)) + 0.05 : room_end;
 Li = max(usb_gap + usb_out + nb_pcb[0] + 1.5, in_pod ? batt[0] + 2 * batt_end : 0,   // inside length: the board (from the back wall), the battery,
+         2 * (pc_x[1] + mag[0]/2 + 0.1 + 0.3 + pil_d/2 + pil_o),            // the connectors between the pillars,
          2 * (max([for (x = key_x) abs(x)]) + 3 + 0.4 + max(room_end, rc_in)));   // and the switch board under the keys
 sw_l = 2 * min(Li/2 - room_end, Li/2 - rc_in) - 0.4;   // the switch perfboard's length: between the pillars, on the straight sides
 L = Li + 2 * wall0;
@@ -160,7 +205,7 @@ z_pcb0 = fl + (in_pod ? batt[2] + 0.3 : 0.3) + nb_under;   // the board lies on 
 z_pcb1 = z_pcb0 + nb_pcb[2];
 usb_zc = z_pcb1 + usb[1]/2;
 z_board = max(z_pcb1 + nb_over, z_pcb1 + usb[1]);
-z_sw = z_board + 0.4;                         // the switch perfboard's underside (on ledges)
+z_sw = max(z_board + 0.4, pc_z + mag[1] + 1.8);   // the switch perfboard's underside (on ledges; over the connectors too)
 z_sw1 = z_sw + 1.6;
 z_seam = z_sw1 + tact_body + 0.6;            // the body's rim = the keypad's underside
 z_lid0 = z_seam + kp_t - squeeze;
@@ -172,7 +217,9 @@ KEY = [[key_x[0], main_d, main_d], [key_x[1], rock_w, rock_l]];   // the keys: x
 SW = [[key_x[0], 0], [key_x[1], rock_s], [key_x[1], -rock_s]];    // the switches: multi-function, volume +, volume -
 SW_KEY = [0, 1, 1];
 pocket_d = [main_d - 2*dome_w, rock_w - 2*dome_w - 2];          // the hollows over the switches (the rocker's are smaller: a solid middle)
-z_low = -(pow(L/2, 2)/(2*shell_rl) + pow(W/2, 2)/(2*shell_rw)) - 1;
+function zs(x, R) = sqrt(R*R - x*x) - R;      // the units' underside = the cradles' top: a cylinder, radius R, along y
+R_p = shell_rl + vhb_t + cr_t;                 // ... the pod's
+z_low = zs(L/2 + 3, R_p) - 1;                  // below the pod's lowest point (it's cut by the cylinder)
 pil = [for (sx = [-1, 1], sy = [-1, 1]) [sx * (Li/2 - pil_o), sy * (Wi/2 - pil_o)]];
 function side_d(z) = side_in * pow(max(0, z - z_low) / (z_seam - z_low), 2);   // the sides' inward curve
 usb_hole = [12.6, 6.6];                       // room for a USB-C plug's moulding
@@ -180,11 +227,9 @@ cab_gap = [for (i = [0:len(cabs) - 2]) max(6, (cabs[i] + cabs[i + 1])/2 + 0.4 + 
 cab_off = [for (i = [0:len(cabs) - 1]) i == 0 ? 0 : sum_to(cab_gap, i)];
 function sum_to(v, n) = n <= 0 ? 0 : v[n - 1] + sum_to(v, n - 1);
 cab_s = cab_off[len(cabs) - 1];                              // from the first cable to the last
-cab_xc = 0;                                                  // the cables leave the BOTTOM long side at its middle, beside the battery
+cab_xc = 0;                                                  // the cables leave the cradle's ledge at its middle, facing down
 cab_mid = ((cab_off[0] - (cabs[0] + 0.4)/2) + (cab_off[len(cabs) - 1] + (cabs[len(cabs) - 1] + 0.4)/2))/2;   // (the channel centred, not the cables)
 cab_x = [for (o = cab_off) cab_xc + o - cab_mid];           // speakers (toward the front), mic (, the battery)
-rib_n = max([for (x = cab_x) abs(x - cab_xc)]) + (max(cabs) + 0.4)/2 + 1.0;   // the ribs either side of the cable notches
-rib_x = [-max(batt[0]/2 - 3, rib_n + 3), -rib_n, rib_n, max(batt[0]/2 - 3, rib_n + 3)] + [1, 1, 1, 1] * 0.137;   // the battery sits on these (off the shell's facet corners)
 usb_tab = 5;                                                 // the plug's pull tab points up
 plug_x = L/2 - side_d(usb_zc - usb_hole[1]/2 - 1.2) + 0.2;   // the plug's flange: clear of the wall at its lowest point
 function zb_at(x, y) = -(x*x/(2*shell_rl) + y*y/(2*shell_rw)); // the shell under the pod (near enough: a parabola)
@@ -192,7 +237,7 @@ function zb_at(x, y) = -(x*x/(2*shell_rl) + y*y/(2*shell_rw)); // the shell unde
 puck_t = spk[1] + 1.5 + 1.2;                  // speaker + room for its solder tabs + back
 puck_d = max(spk[0] + 4, 40);
 
-echo(str("POD: ", L, " x ", W, " mm, ", z_top, " mm above the tape at its middle; battery in the ", batt_at, "; ",
+echo(str("POD: ", L, " x ", W, " mm, ", z_top + cr_t, " mm above the tape at its middle (with its cradle); cradle ", L, " x ", y_top(W) - y_low(W), " mm; battery in the ", batt_at, "; ",
          "lid screws 4 x M2 x 6 countersunk; speaker pucks ", puck_d, " x ", puck_t, " mm"));
 
 // ------------------------- CHECKS ON THE SETTINGS -------------------------
@@ -215,6 +260,10 @@ assert(act_top >= z_seam + 0.8, "the tactile switches are too short to reach up 
 assert(!in_pod || batt_narrow || bat_x1 <= Li/2 - room_end + 0.01, "the battery runs into the pillars");
 assert(!in_pod || norm([max(0, bat_x1 - (Li/2 - rc_in)), max(0, batt[1]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.3, "the battery's corners hit the pod's rounded ends");
 assert(batt_at == "pod" || batt_at == "back", "batt_at: \"pod\" or \"back\"");
+assert(pc_x[1] + mag[0]/2 + 0.3 <= Li/2 - rc_in, "the pod's connectors run off its bottom wall's straight part");
+assert(-Wi/2 + mag_in <= -nb_pcb[1]/2 - 0.3, "the pod's connectors run into the neckband's board");
+assert(pc_z + mag[1] + 0.2 <= z_sw - 1.6, "the pod's connectors run into the switch board's ledges");
+assert(norm([max(0, pc_x[1] + mag[0]/2 + 0.1 - (Li/2 - pil_o)), max(0, -Wi/2 + mag_in - (-(Wi/2 - pil_o)))]) >= pil_d/2 + 0.3 || pc_x[1] + mag[0]/2 + 0.1 <= Li/2 - pil_o - pil_d/2 - 0.3, "the pod's connectors hit the lid's pillars");
 assert(norm([max(0, -pcb_x0 - (Li/2 - rc_in)), max(0, nb_pcb[1]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.3, "the board's corners hit the pod's rounded front end");
 assert(norm([max(0, pcb_x1 + usb_out - (Li/2 - rc_in)), max(0, usb[0]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.15, "the USB-C socket's corners hit the pod's rounded back end");
 assert(norm([max(0, pcb_x1 - (Li/2 - rc_in)), max(0, nb_pcb[1]/2 - (Wi/2 - rc_in))]) <= rc_in - 0.3, "the board's corners hit the pod's rounded back end");
@@ -238,32 +287,28 @@ module ledges()                               // the switch board rests on these
     translate([-sw_l/2 - 2, s > 0 ? Wi/2 : -Wi/2 - 0.5, z_sw - 1.6]) cube([sw_l + 4, 0.5, 0.01]);
   }
 
-module pod_body() difference() {
-  union() {
-    difference() {
-      body_outer();
-      translate([0, 0, fl]) linear_extrude(z_seam) pod_2d(wall0);
-      difference() {                                         // below that, the floor follows the shell (fl - 0.25 thick)
-        translate([0, 0, z_low - 1]) linear_extrude(fl - z_low + 1.01) pod_2d(wall0);
-        shell_cut(fl - 0.25);                                // (not fl: tangent to the flat floor, non-manifold)
+module pod_body() union() {
+  difference() {
+    union() {
+      difference() {
+        body_outer();
+        translate([0, 0, fl]) linear_extrude(z_seam) pod_2d(wall0);
+      }
+      intersection() {
+        union() {
+          for (p = pil) translate([p[0], p[1], z_low]) cylinder(d = pil_d, h = z_seam - z_low);
+          ledges();
+        }
+        body_outer();
       }
     }
-    intersection() {
-      union() {
-        for (p = pil) translate([p[0], p[1], z_low - 1]) cylinder(d = pil_d, h = z_seam - z_low + 1);
-        ledges();
-        for (x = rib_x) translate([x - 0.6, -Wi/2 - 1, z_low - 1]) cube([1.2, Wi + 2, fl - z_low + 1]);   // the battery and board sit on these
-      }
-      body_outer();
-    }
+    iface(R_p);                                               // its underside: the cradle's cylinder
+    for (p = pil) translate([p[0], p[1], z_seam - 4.5]) cylinder(d = 3.2, h = 5);    // M2 inserts
+    translate([Li/2 - 0.5, 0, usb_zc]) rotate([0, 90, 0]) linear_extrude(wall0 + 2)    // USB-C plug
+      rotate(90) rrect(usb_hole, 2.5);
+    male_holes(W, pc_x);                                      // the 2 connectors, in its bottom wall
   }
-  shell_cut();
-  for (p = pil) translate([p[0], p[1], z_seam - 4.5]) cylinder(d = 3.2, h = 5);    // M2 inserts
-  translate([Li/2 - 0.5, 0, usb_zc]) rotate([0, 90, 0]) linear_extrude(wall0 + 2)    // USB-C plug
-    rotate(90) rrect(usb_hole, 2.5);
-  for (i = [0:len(cabs) - 1]) let(c = cabs[i] + 0.4, zb = zb_at(cab_x[i], W/2))
-    hull() for (z = [zb - 3, zb + c/2])                       // cables: notches at shell level in the bottom side, facing down, into the channel
-      translate([cab_x[i], -Wi/2 + 2.5, z]) rotate([90, 0, 0]) cylinder(d = c, h = wall0 + 4);   // (from 2.5 inside: through the curved floor)
+  tongues(R_p, dt_x(L));                                      // under it: they run in the cradle's grooves
 }
 
 module pod_lid() difference() {
@@ -339,16 +384,76 @@ module switches(pressed = 0) {
 }
 module insides() { board(); battery(); switches(); color("#5a6068") rocker_post(); }
 
-// ------------------------- CABLES OUT OF THE POD -------------------------
-// The pod sits at the shell's lower edge (owner, 2026-11-27: "cable channel from the side is not need but is need for
-// the back", choosing "pod at the lower edge"): its cables leave the notches in its bottom side and tuck straight in
-// under the edge trim, no channel on the side. The back box keeps its channel (below), built from these helpers.
-ch_wing = 4;                                                  // a channel's thin flanges either side, for the tape
+// ------------------------- CRADLES AND CONNECTORS (both units) -------------------------
+// A unit's frame: x along it, y up, z out of the shell; its underside is the cylinder zs(x, R); its outline Lu x Wu.
+// Its cradle's cables leave the ledge's bottom wall at shell level, facing down (the pod's straight in under the edge
+// trim, the back box's into its short channel).
+ch_wing = 4;                                                  // the back box's channel: thin flanges either side, for the tape
 ch_taper = 8;                                                 // its lower end slopes down to the flanges
-ch_in = 3;                                                    // it starts this far inside its box's side (cut to its outline)
-for (i = [0:len(cabs) - 2]) assert(cab_x[i + 1] - (cabs[i + 1] + 0.4)/2 - (cab_x[i] + (cabs[i] + 0.4)/2) >= 1.2, "the cables are too thick for the pod's notches' spacing");
-assert(cab_x[len(cabs) - 1] + (cabs[len(cabs) - 1] + 0.4)/2 + 1 <= Li/2 - rc_in && cab_x[0] - (cabs[0] + 0.4)/2 - 1 >= -(Li/2 - rc_in), "the cable notches run off the pod's straight side");
-assert(!in_pod || Wi/2 - 2.5 >= batt[1]/2, "the cable notches run into the battery's place");
+ch_in = 3;                                                    // it starts this far inside its cradle's bottom side (cut to its outline)
+dt_w1 = dt_w + 2 * dt_d * tan(35);                            // the tongues' width at their tips
+function dt_x(Lu) = Lu/2 - 9;                                 // the tongues: this far either side of the middle
+dt_y0 = -(dt_s + 2*slide)/2 - 2;                              // segment 0 starts here (segment 1 at + 2 slide); windows at + slide
+function y_mate(Wu) = -Wu/2 - 0.3;                            // the connectors' faces meet here (the male stands 0.3 proud)
+function y_low(Wu, dc = mag_f) = y_mate(Wu) - dc - mag_tail - 1.2;   // the cradle's bottom side (the ledge's; dc: its connector's depth)
+function y_top(Wu) = Wu/2 + 0.3 + arm_w + 0.8 + 1.4;          // its top side (above the latch)
+function zsh(sh, x, y) = sh == 0 ? zb_at(x, y) : zb_bk(x, y);  // the shell under a cradle (0: the side, 1: the back), below its tape
+module iface(R) translate([0, 0, -R]) rotate([90, 0, 0]) cylinder(r = R, h = 400, center = true, $fn = 360);   // below the units
+module at_x(x, R) translate([x, 0, zs(x, R)]) rotate([0, asin(x/R), 0]) children();   // on the cylinder, square to it
+module dt_2d(d = 0) offset(delta = d) polygon([[-dt_w/2, 0.8], [dt_w/2, 0.8], [dt_w/2, 0], [dt_w1/2, -dt_d], [-dt_w1/2, -dt_d], [-dt_w/2, 0]]);
+module along_y(y0, y1) translate([0, y1, 0]) rotate([90, 0, 0]) linear_extrude(y1 - y0) children();
+module tongues(R, dx) for (sx = [-1, 1], k = [0, 1]) at_x(sx * dx, R)
+  along_y(dt_y0 + 2*slide*k, dt_y0 + 2*slide*k + dt_s) dt_2d();
+module grooves(R, dx) for (sx = [-1, 1]) at_x(sx * dx, R) {
+  along_y(dt_y0 - 0.5, dt_y0 + 3*slide + dt_s + 0.5) dt_2d(rcl);       // the groove (open at the top, by dt_2d's root)
+  for (k = [0, 1]) along_y(dt_y0 + 2*slide*k + slide - 0.3, dt_y0 + 2*slide*k + slide + dt_s + 0.3)   // the windows
+    translate([-dt_w1/2 - rcl - 0.211, -dt_d - rcl]) square([dt_w1 + 2*rcl + 0.422, dt_d + rcl + 2]);   // (0.211: off the cylinder's facet corners)
+}
+// The pod has the males (spring pins) and its cradle the females; the back box the other way round (owner's safety:
+// a battery box off its cradle shows only flat, recessed contacts, no sprung pins to short on a key). du / dc: the
+// unit's and the cradle's connector depths.
+module male_block(Wu, cx, du = mag_m) for (c = cx) translate([c - mag[0]/2, y_mate(Wu), pc_z]) cube([mag[0], du, mag[1]]);   // the unit's
+module female_block(Wu, cx, dc = mag_f) for (c = cx) translate([c - mag[0]/2, y_mate(Wu) - dc, pc_z]) cube([mag[0], dc, mag[1]]);   // the cradle's
+module male_holes(Wu, cx, du = mag_m) for (c = cx)           // through the bottom wall: the body, its tails behind
+  translate([c - mag[0]/2 - 0.1, y_mate(Wu) - 1, pc_z - 0.1]) cube([mag[0] + 0.2, du + mag_tail + 1.3, mag[1] + 0.2]);
+function ledge_x(cx) = [cx[0] - mag[0]/2 - 1.6, cx[len(cx) - 1] + mag[0]/2 + 1.6];
+module cradle_2d(Lu, Wu, rcu, cx, dc = mag_f) hull() {
+  translate([0, (y_top(Wu) - Wu/2 - 1.3)/2]) rrect([Lu, y_top(Wu) + Wu/2 + 1.3], min(rcu, 6));
+  let(lx = ledge_x(cx)) translate([(lx[0] + lx[1])/2, (y_low(Wu, dc) - Wu/2)/2]) rrect([lx[1] - lx[0], -Wu/2 - y_low(Wu, dc)], 2);
+}
+// The cradle: Lu, Wu, rcu = the unit's outline; R its cylinder; cx its connectors; cxs, cds its cables' x and widths;
+// sh its shell (0 side, 1 back); pressed: the tooth pushed down (for the checks of putting the unit on)
+function z_cav(Wu, sh, dc = mag_f) = -cr_t + zsh(sh, 0, y_mate(Wu) - dc) + 0.8;   // the tails' cavity's floor (0.8 over the shell)
+module cradle(Lu, Wu, rcu, R, cx, cxs, cds, sh, pressed = false, dc = mag_f) {
+  lx = ledge_x(cx); ya = Wu/2 + 0.3; xt = latch_l/2;
+  difference() {
+    union() {
+      intersection() { translate([0, 0, -40]) linear_extrude(40) cradle_2d(Lu, Wu, rcu, cx, dc); iface(R); }
+      translate([lx[0], y_low(Wu, dc), -40]) cube([lx[1] - lx[0], y_mate(Wu) - y_low(Wu, dc), 40 + pc_z + mag[1]]);   // the ledge
+    }
+    if (sh == 0) shell_cut(-cr_t); else bb_shell(-cr_t);    // its underside on the tape
+    grooves(R, dt_x(Lu));
+    for (c = cx) translate([c - mag[0]/2 - 0.1, y_mate(Wu) - dc - 0.1, pc_z - 0.1]) cube([mag[0] + 0.2, dc + 1, 20]);   // the connectors
+    translate([cx[0] - mag[0]/2 - 0.1, y_mate(Wu) - dc - mag_tail, z_cav(Wu, sh, dc)])   // their tails, potted (open on top)
+      cube([cx[len(cx) - 1] - cx[0] + mag[0] + 0.2, mag_tail + 0.2, 30]);
+    for (i = [0:len(cxs) - 1]) translate([cxs[i], y_mate(Wu) - dc - mag_tail + 0.5, z_cav(Wu, sh, dc) + cds[i]/2])
+      rotate([90, 0, 0]) cylinder(d = cds[i], h = 4);       // the cables out of the bottom wall, facing down
+    translate([0, 0, -40]) linear_extrude(45) difference() {   // the latch: a slot round the arm ...
+      translate([-xt - 0.01, ya - 0.8]) square([2*xt + 0.8, arm_w + 1.6]);
+      translate([-xt - 1, ya]) square([2*xt + 1, arm_w]);
+    }
+    translate([-xt + 2, ya - 0.8, -40]) cube([2*xt - 1.2, arm_w + 1.6, 40 + zs(xt, R) - arm_t]);   // ... room under it to bend
+  }
+  if (!pressed) hull() {                                      // the tooth: a square face against the unit, a ramp behind
+    translate([xt - 4, ya, -0.5]) cube([4, 0.8, tooth + 0.5]);
+    translate([xt - 4, ya + arm_w - 0.01, -0.5]) cube([4, 0.01, 0.5]);
+  }
+}
+for (i = [0:len(cabs) - 2]) assert(cab_x[i + 1] - (cabs[i + 1] + 0.4)/2 - (cab_x[i] + (cabs[i] + 0.4)/2) >= 1.2, "the cables are too thick for the cradle's holes' spacing");
+assert(cab_x[len(cabs) - 1] + (cabs[len(cabs) - 1] + 0.4)/2 + 0.5 <= pc_x[1] + mag[0]/2 && cab_x[0] - (cabs[0] + 0.4)/2 - 0.5 >= pc_x[0] - mag[0]/2, "the cables don't fit the cradle's ledge");
+assert(dt_y0 + 3*slide + dt_s + 0.5 <= W/2 - 1.5 && dt_y0 - 0.5 >= -W/2 + 1.5, "the dovetails don't fit under the pod");
+assert(-cr_t + zb_at(0, W/2 + 0.3) <= zs(latch_l/2, R_p) - arm_t - tooth - 0.3, "the cradle is too thin for its latch to bend");
+assert(cr_t - dt_d - rcl >= 0.8, "the cradle is too thin under its grooves");
 assert(run_b > ch_taper + 2, "the back box's channel is too short");
 // (any channel: U = its grooves' positions across it, C = their widths)
 module run_dome_2d(U, C) let(u0 = U[0] - C[0]/2 - 1.2, u1 = U[len(U) - 1] + C[len(C) - 1]/2 + 1.2, h = max(C) + 1.0) hull() {
@@ -365,39 +470,44 @@ module run_2d(U, C) difference() { union() { run_dome_2d(U, C); run_wing_2d(U, C
 M_A = [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]];                         // (u, w, e) -> (e, u, w): along +x
 // ------------------------- THE BACK BOX (batt_at = "back") -------------------------
 // The neckband's battery in its own slim box on the back of the helmet. Box frame: x across the back (toward the
-// rider's right), y up, z out of the shell. A PETG BASE (its underside curved to the shell, on VHB tape) holds the
-// battery on foam; a TPU COVER snaps over its walls (a bead into a groove round them) and presses its rim (the seal).
-// The battery's lead leaves through a notch in the base's bottom side, at shell level, into a short TPU channel.
+// rider's right), y up, z out of the shell. A PETG BASE holds the battery on foam, its connector (the male) in its
+// bottom wall; a TPU COVER snaps over its walls (a bead into a groove round them) and presses its rim (the seal). The
+// base sits on its own cradle (the same as the pod's), whose single cable (the battery's lead) runs down a short TPU
+// channel to the shell's lower edge.
 bb_gap = 0.6;                                                 // round the battery (foam)
 bb_wall = 1.6;
 bb_fl = 1.4;                                                  // the floor at its middle
 bb_cov = 1.0;                                                 // the cover's skirt
 bb_top_t = 1.2;                                               // ... and its top
-bb_skirt = 3.2;                                               // how far the skirt reaches down the base's walls
-bb_in = [batt[0] + 2*bb_gap, batt[1] + 2*bb_gap];
+bb_skirt = 2.2;                                               // how far the skirt reaches down the base's walls
+bb_mag_in = mag_f - 0.3 + mag_tail - bb_wall + 0.3;           // its connector (a female: flat contacts) reaches this far in past its bottom wall
+bb_in = [max(batt[0], mag[0] + 1) + 2*bb_gap, max(batt[1] + 2*bb_gap + bb_mag_in, 2*(dt_y0 + 3*slide + dt_s + 2) - 2*bb_wall)];   // (tall enough for the dovetails)
 bb_out = [bb_in[0] + 2*bb_wall, bb_in[1] + 2*bb_wall];
 bb_r = 4;                                                     // the base's corners in plan
+bb_bat_y = -bb_in[1]/2 + bb_mag_in + bb_gap;                  // the battery's lower side (above the connector)
 function zb_bk(x, y) = -(x*x/(2*shell_bk[0]) + y*y/(2*shell_bk[1]));
-bb_low = zb_bk(bb_out[0]/2 + bb_cov, bb_out[1]/2 + bb_cov) - 1;
-bb_z1 = bb_fl + batt[2] + 0.6;                               // the base's rim (the cover's top presses it)
+R_b = shell_bk[0] + vhb_t + cr_t;                             // its cylinder (across the back)
+bb_low = zs(bb_out[0]/2 + 2, R_b) - 1;
+bb_z1 = max(bb_fl + batt[2] + 0.6, pc_z + mag[1] + 0.3 + bb_skirt);   // the base's rim (the cover's top presses it; its skirt clears the ledge)
 bb_top = bb_z1 + bb_top_t;
-bb_bead = bb_z1 - 1.6;                                        // the cover's bead, in a groove round the walls
+bb_bead = bb_z1 - 1.3;                                        // the cover's bead, in a groove round the walls
 BB_L = bb_out[0] + 2*bb_cov;
 BB_W = bb_out[1] + 2*bb_cov;
-echo(str("BACK BOX: ", BB_L, " x ", BB_W, " mm, ", bb_top, " mm above the tape at its middle"));
+bb_cx = [0];                                                  // its connector, in the middle of its bottom wall
+echo(str("BACK BOX: ", BB_L, " x ", BB_W, " mm, ", bb_top + cr_t, " mm above the tape at its middle (with its cradle)"));
+assert(dt_y0 + 3*slide + dt_s + 0.5 <= bb_out[1]/2 - 1.5 && dt_y0 - 0.5 >= -bb_out[1]/2 + 1.5, "the dovetails don't fit under the back box");
+assert(-cr_t + zb_bk(0, bb_out[1]/2 + 0.3) <= zs(latch_l/2, R_b) - arm_t - tooth - 0.3, "the back cradle is too thin for its latch to bend");
 module bb_2d(d = 0) offset(r = -d) rrect(bb_out, bb_r);
 module bb_shell(up = 0) translate([0, 0, up - shell_bk[1]]) scale([sqrt(shell_bk[0]*shell_bk[1]), shell_bk[1], shell_bk[1]]) sphere(1, $fn = 240);
-module bb_base() difference() {
-  union() {
-    difference() {
-      translate([0, 0, bb_low]) linear_extrude(bb_z1 - bb_low) bb_2d();
-      translate([0, 0, bb_fl]) linear_extrude(bb_z1) rrect(bb_in, 0.8);   // the battery's room (small corners: the cell's are square)
-      translate([0, 0, bb_bead - 0.45]) linear_extrude(0.9) difference() { bb_2d(-1); bb_2d(0.5); }   // the groove for the cover's bead
-    }
+module bb_base() union() {
+  difference() {
+    translate([0, 0, bb_low]) linear_extrude(bb_z1 - bb_low) bb_2d();
+    translate([0, 0, bb_fl]) linear_extrude(bb_z1) rrect(bb_in, 0.8);   // the battery's room (small corners: the cell's are square)
+    translate([0, 0, bb_bead - 0.45]) linear_extrude(0.9) difference() { bb_2d(-1); bb_2d(0.5); }   // the groove for the cover's bead
+    iface(R_b);                                               // its underside: the cradle's cylinder
+    male_holes(bb_out[1], bb_cx, mag_f);
   }
-  bb_shell();                                                 // its underside follows the shell
-  let(c = bat_cable + 0.4, zb = zb_bk(0, bb_out[1]/2)) hull() for (z = [zb - 3, zb + c/2])   // the lead's notch, bottom side, facing down
-    translate([0, -bb_in[1]/2 + 2.5, z]) rotate([90, 0, 0]) cylinder(d = c, h = bb_wall + 4);
+  tongues(R_b, dt_x(bb_out[0]));
 }
 module bb_cover() difference() {                              // TPU: snaps over the base
   hull() {
@@ -409,9 +519,10 @@ module bb_cover() difference() {                              // TPU: snaps over
 }
 module bb_bead() translate([0, 0, bb_bead - 0.4]) linear_extrude(0.8) difference() { bb_2d(-0.1); bb_2d(0.4); }   // the cover's bead (part of it)
 module bb_cover_all() union() { bb_cover(); bb_bead(); }
-// Its channel: one groove, straight down from the box's bottom side to the shell's lower edge (run_b).
+module bb_cradle(pressed = false) cradle(bb_out[0], bb_out[1], bb_r, R_b, bb_cx, [0], [bat_cable + 0.4], 1, pressed, mag_m);   // (the male on the cradle)
+// Its channel: one groove, straight down from the cradle's bottom side to the shell's lower edge (run_b).
 bk_u = [0]; bk_c = [bat_cable + 0.4];
-M_BK = [[1, 0, 0, 0], [0, 0, -1, -bb_out[1]/2 + ch_in], [0, 1, 0, 0], [0, 0, 0, 1]];
+M_BK = [[1, 0, 0, 0], [0, 0, -1, y_low(bb_out[1], mag_m) + ch_in], [0, 1, 0, -cr_t + zb_bk(0, y_low(bb_out[1], mag_m))], [0, 0, 0, 1]];
 module bb_channel() difference() {
   multmatrix(M_BK) intersection() {
     linear_extrude(ch_in + run_b) run_2d(bk_u, bk_c);
@@ -420,22 +531,33 @@ module bb_channel() difference() {
       translate([-20, -1, ch_in + run_b]) cube([40, 2.2, 0.01]);
     }
   }
-  translate([0, 0, -1]) linear_extrude(20) offset(r = 0.3) bb_2d(-bb_cov);
+  translate([0, 0, -20]) linear_extrude(40) offset(r = 0.3) cradle_2d(bb_out[0], bb_out[1], bb_r, bb_cx, mag_m);
 }
-module bb_battery() color("#3d5f9e") translate([-batt[0]/2, -batt[1]/2, bb_fl + 0.3]) cube(batt);
-module back_box(ex = 0) {
-  color(C_POD) bb_base();
+module bb_battery() color("#3d5f9e") translate([-batt[0]/2, bb_bat_y, bb_fl + 0.3]) cube(batt);
+module back_box(ex = 0) {                                     // the box (it comes off its cradle)
+  color(C_POD) render() bb_base();
   color(C_TPU) translate([0, 0, 4*ex]) bb_cover_all();
   translate([0, 0, 2*ex]) bb_battery();
+  color(C_MAG) male_block(bb_out[1], bb_cx, mag_f);     // (its connector: the female, flat contacts)
+}
+module back_dock(off = [0, 0, 0]) {                          // the box on its cradle (off: the box moved, e.g. lifted off)
+  color(C_CRADLE) render() bb_cradle(); color(C_MAG) female_block(bb_out[1], bb_cx, mag_m);
+  translate(off) back_box();
 }
 
 module half_x() render() intersection() { children(); translate([key_x[1], -60, -30]) cube([200, 120, 80]); }
-C_POD = "#454a52"; C_TPU = "#1a1a1a"; C_HELMET = "#e9e9e6"; C_EPS = "#bdbdb5";
+C_POD = "#454a52"; C_TPU = "#1a1a1a"; C_HELMET = "#e9e9e6"; C_EPS = "#bdbdb5"; C_CRADLE = "#6b717a"; C_MAG = "#c9a640";
 module pod_assembled(ex = 0) {
-  color(C_POD) pod_body();
+  color(C_POD) render() pod_body();
   color(C_TPU) translate([0, 0, 2.4*ex]) keypad();
   color(C_POD) translate([0, 0, 5*ex]) pod_lid();
   color(C_TPU) translate([1.5*ex, 0, 0]) usb_plug();
+  color(C_MAG) male_block(W, pc_x);
+}
+module pod_cradle(pressed = false) cradle(L, W, rc, R_p, pc_x, cab_x, [for (c = cabs) c + 0.4], 0, pressed);
+module pod_dock(off = [0, 0, 0]) {                           // the pod on its cradle (off: the pod moved)
+  color(C_CRADLE) render() pod_cradle(); color(C_MAG) female_block(W, pc_x);   // (render(): the preview drew its cuts wrongly)
+  translate(off) pod_assembled();
 }
 
 // ------------------------- SPEAKER PUCK, MIC, BOOM MOUNT -------------------------
@@ -491,9 +613,10 @@ function on_shell(x, z, a = H) = [x, a[1] * sqrt(1 - pow(x/a[0], 2) - pow(z/a[2]
 function normal_at(p, a = H) = unit([p[0]/(a[0]*a[0]), p[1]/(a[1]*a[1]), p[2]/(a[2]*a[2])]);
 function frame(p, n, fwd) = let(xa = unit(fwd - (fwd * n) * n), ya = cross(n, xa))
   [[xa[0], ya[0], n[0], p[0]], [xa[1], ya[1], n[1], p[1]], [xa[2], ya[2], n[2], p[2]], [0, 0, 0, 1]];
-// The pod along the lower edge (its x parallel to the edge, which rises toward the back), its bottom side pod_edge above it.
-function pod_m(z) = let(p = on_shell(pod_x, z), n = normal_at(p)) frame(p + vhb_t * n, n, [-1, 0, 0.12]);
-function pod_low(z) = (pod_m(z) * [0, -W/2, 0, 1])[2] - h_low((pod_m(z) * [0, -W/2, 0, 1])[0]);
+// The pod along the lower edge (its x parallel to the edge, which rises toward the back), its cradle's bottom side
+// pod_edge above it. (The frame's origin is on the cradle's top: the tape and the cradle under it.)
+function pod_m(z) = let(p = on_shell(pod_x, z), n = normal_at(p)) frame(p + (vhb_t + cr_t) * n, n, [-1, 0, 0.12]);
+function pod_low(z) = (pod_m(z) * [0, y_low(W), 0, 1])[2] - h_low((pod_m(z) * [0, y_low(W), 0, 1])[0]);
 pod_zs = [for (z = [-85:0.25:-20]) if (pod_low(z) >= pod_edge) z];
 POD_M = pod_m(min(pod_zs));                                   // pod x toward the helmet's back
 
@@ -508,17 +631,17 @@ module ellipsoid(a) scale(a) sphere(1, $fn = 160);
 function on_back(y, z, a = H) = [-a[0] * sqrt(1 - pow(y/a[1], 2) - pow(z/a[2], 2)), y, z];
 BK_P = on_back(0, bk_at);
 BK_N = normal_at(BK_P);
-BK_M = frame(BK_P + vhb_t * BK_N, BK_N, [0, -1, 0]);         // box x toward the rider's right, y up
+BK_M = frame(BK_P + (vhb_t + cr_t) * BK_N, BK_N, [0, -1, 0]);         // box x toward the rider's right, y up
 // The back box's channel on the stand-in: its centre line (box frame), each point pushed out radially onto the shell.
 function to_shell(p, M = POD_M) = let(q = M * [p[0], p[1], 0, 1], k = sqrt(pow(q[0]/H[0], 2) + pow(q[1]/H[1], 2) + pow(q[2]/H[2], 2)))
   [q[0], q[1], q[2]] / k;
-BK_ALL = [for (d = [-2:5:150]) to_shell([0, -bb_out[1]/2 - d], BK_M)];
+BK_ALL = [for (d = [-2:5:150]) to_shell([0, y_low(bb_out[1], mag_m) - d], BK_M)];
 BK_CP = [for (q = BK_ALL) if (q[2] > h_low(q[0]) + 1.5) q];
 module bk_slab(i, part) let(t = BK_CP[min(i + 1, len(BK_CP) - 1)] - BK_CP[max(i - 1, 0)])
   multmatrix(frame(BK_CP[i], normal_at(BK_CP[i]), t)) multmatrix(M_A) linear_extrude(0.01, center = true)
     if (part == 0) run_dome_2d(bk_u, bk_c); else run_wing_2d(bk_u, bk_c);
 module bk_channel_on_helmet() color(C_TPU) for (i = [0:len(BK_CP) - 2], part = [0, 1]) hull() { bk_slab(i, part); bk_slab(i + 1, part); }
-module back_on_helmet() if (!in_pod) { multmatrix(BK_M) back_box(); bk_channel_on_helmet(); }
+module back_on_helmet(off = [0, 0, 0]) if (!in_pod) { multmatrix(BK_M) back_dock(off); bk_channel_on_helmet(); }
 module helmet_solid(t = 0) hull() {
   ellipsoid(H - [t, t, t]);
   translate(CHIN[0]) ellipsoid(CHIN[1] - [t, t, t]);
@@ -567,19 +690,29 @@ module boom_mic() {
 }
 
 // ------------------------- OUTPUT -------------------------
-if (PART == "assembly") { helmet_shell(); helmet_details(); multmatrix(POD_M) pod_assembled(); back_on_helmet(); }
-else if (PART == "back_view") { back_box(); color(C_TPU) translate([0, -12, 0]) render() bb_channel(); }   // view: the back box, its channel pulled away
+if (PART == "assembly") { helmet_shell(); helmet_details(); multmatrix(POD_M) pod_dock(); back_on_helmet(); }
+else if (PART == "detached") { helmet_shell(); helmet_details(); multmatrix(POD_M) pod_dock([0, 30, 24]); back_on_helmet([0, 30, 18]); }   // view: both units off their cradles
+else if (PART == "dock_view") { pod_dock([0, slide, 16]); }        // view: the pod lifted off its cradle (at its drop-in place)
+else if (PART == "cradle_view") { color(C_CRADLE) render() pod_cradle(); color(C_MAG) female_block(W, pc_x); }   // view: the pod's cradle alone
+else if (PART == "back_view") { back_dock([0, slide, 12]); color(C_TPU) translate([0, -12, 0]) render() bb_channel(); }   // view: the back box lifted off its cradle, the channel pulled away
 else if (PART == "back_exploded") back_box(3);
-else if (PART == "bb_base") translate([0, 0, -bb_low]) bb_base();                                      // its underside down (supports under the curve)
+else if (PART == "bb_base") translate([0, 0, bb_z1]) rotate([180, 0, 0]) bb_base();                  // its rim down
+else if (PART == "bb_cradle") translate([0, 0, -zs(bb_out[0]/2, R_b)]) bb_cradle();                    // top up (supports under it)
+else if (PART == "pod_cradle") translate([0, 0, -zs(L/2, R_p)]) pod_cradle();                          // top up (supports under it)
 else if (PART == "bb_cover") translate([0, 0, bb_top]) rotate([180, 0, 0]) bb_cover_all();             // TPU, its top down
 else if (PART == "bb_channel") bb_channel();                                                            // TPU, flanges down
 else if (PART == "check_bb_fit") intersection() { bb_battery(); union() { bb_base(); bb_cover_all(); } }   // empty
 else if (PART == "check_bb_snap") intersection() { bb_cover_all(); bb_base(); }                         // must collide: the bead's snap and the rim's squeeze
-else if (PART == "check_bb_shell") intersection() { bb_base(); bb_shell(-vhb_t); }                      // empty: the tape's room
-else if (PART == "check_bb_notch") intersection() {                                                     // empty: the lead passes its notch
-  translate([0, -bb_in[1]/2 + 2, zb_bk(0, bb_out[1]/2) + bat_cable/2 + 0.2]) rotate([90, 0, 0]) cylinder(d = bat_cable, h = bb_wall + 4);
-  bb_base();
-}
+else if (PART == "check_bb_shell") intersection() { bb_cradle(); bb_shell(-cr_t - vhb_t); }             // empty: the tape's room
+else if (PART == "check_bb_dock") intersection() { bb_base(); bb_cradle(); }                            // touch only: on its cradle
+else if (PART == "check_bb_mate") intersection() { male_block(bb_out[1], bb_cx, mag_f); female_block(bb_out[1], bb_cx, mag_m); }   // touch only: the faces meet
+else if (PART == "check_bb_conn") intersection() { union() { male_block(bb_out[1], bb_cx, mag_f); bb_battery(); } union() { bb_base(); bb_cover_all(); } }   // empty
+else if (PART == "check_bb_female") intersection() { female_block(bb_out[1], bb_cx, mag_m); bb_cradle(); }     // empty
+else if (PART == "check_bb_hold") intersection() { translate([0, 0, 0.5]) bb_base(); bb_cradle(); }     // must collide: the dovetails hold it on
+else if (PART == "check_bb_latch") intersection() { translate([0, 0.5, 0]) bb_base(); bb_cradle(); }   // must collide: the tooth stops it sliding up
+else if (PART == "check_bb_drop") intersection() { translate([0, slide, 0]) bb_base(); bb_cradle(true); }   // touch only: it drops in
+else if (PART == "check_bb_slide") intersection() { translate([0, slide/2, 0]) bb_base(); bb_cradle(true); }   // touch only: it slides home
+else if (PART == "check_bb_cover") intersection() { bb_cover_all(); bb_cradle(); }                      // empty
 else if (PART == "channel_part") color("#5a6068") rotate([0, 180, 0]) render() bb_channel();   // view: the channel turned over, its grooves up
 else if (PART == "pod") pod_assembled();
 else if (PART == "rocker_section") {                                                 // view: cut through the volume rocker
@@ -589,9 +722,9 @@ else if (PART == "rocker_section") {                                            
   color("#999") half_x() for (p = SW) translate([p[0], p[1], z_sw1]) cylinder(d = 3.5, h = tact_h);
   color("#5a8fd0") half_x() rocker_post(); color("#1f6f3a") half_x() board(); color("#3d5f9e") half_x() battery();
 }
-else if (PART == "pod_cables") pod_assembled();   // view: the bottom side and its cable notches
+else if (PART == "pod_cables") pod_dock();   // view: the pod on its cradle from below: the cables out of the ledge
 else if (PART == "exploded") { pod_assembled(5); translate([0, 0, 6]) insides(); }
-else if (PART == "inside") { helmet_shell(true); liner(true); speakers(false); boom_mic(); multmatrix(POD_M) pod_assembled(); back_on_helmet(); }
+else if (PART == "inside") { helmet_shell(true); liner(true); speakers(false); boom_mic(); multmatrix(POD_M) pod_dock(); back_on_helmet(); }
 else if (PART == "headset_assembled") { pod_body(); translate([0, 0, -0.02]) keypad(); pod_lid(); usb_plug(); }   // view only (merged)
 else if (PART == "small_parts") {                                                     // view: the parts inside the helmet
   color("#30343a") speaker_puck();
@@ -615,10 +748,18 @@ else if (PART == "check_squeeze") intersection() { keypad(); pod_lid(); }       
 else if (PART == "check_press") intersection() { switches(0.5); keypad(); }                 // must collide: a press reaches the switch
 else if (PART == "check_pivot") intersection() { translate([0, 0, 0.05]) rocker_post(); keypad(); }   // must collide: the post touches the rocker
 else if (PART == "check_rest") intersection() { switches(0); keypad(); }                    // empty: the switches aren't held down
-else if (PART == "check_shell") intersection() { pod_body(); shell_cut(-vhb_t); }           // empty: the tape's room
-else if (PART == "check_notches") intersection() {                                          // empty: the cables pass the pod's notches
-  for (i = [0:len(cabs) - 1]) let(zb = zb_at(cab_x[i], W/2))
-    translate([cab_x[i], -Wi/2 + 2, zb + cabs[i]/2 + 0.2]) rotate([90, 0, 0]) cylinder(d = cabs[i], h = wall0 + 4);
-  pod_body();
+else if (PART == "check_shell") intersection() { pod_cradle(); shell_cut(-cr_t - vhb_t); }   // empty: the tape's room
+else if (PART == "check_dock") intersection() { pod_body(); pod_cradle(); }                 // touch only: on its cradle
+else if (PART == "check_mate") intersection() { male_block(W, pc_x); female_block(W, pc_x); }   // touch only: the faces meet
+else if (PART == "check_conn") intersection() { male_block(W, pc_x); union() { pod_body(); insides(); usb_plug(); } }   // empty
+else if (PART == "check_female") intersection() { female_block(W, pc_x); pod_cradle(); }   // empty
+else if (PART == "check_hold") intersection() { translate([0, 0, 0.5]) pod_body(); pod_cradle(); }   // must collide: the dovetails hold it on
+else if (PART == "check_latch") intersection() { translate([0, 0.5, 0]) pod_body(); pod_cradle(); }   // must collide: the tooth stops it sliding up
+else if (PART == "check_drop") intersection() { translate([0, slide, 0]) union() { pod_body(); usb_plug(); } pod_cradle(true); }   // touch only: it drops in
+else if (PART == "check_slide") intersection() { translate([0, slide/2, 0]) union() { pod_body(); usb_plug(); } pod_cradle(true); }   // touch only: it slides home
+else if (PART == "check_plug_dock") intersection() { usb_plug(); pod_cradle(); }           // empty
+else if (PART == "check_cables") intersection() {                                          // empty: the cables pass the cradle's holes
+  for (i = [0:len(cabs) - 1]) translate([cab_x[i], y_mate(W) - mag_f - mag_tail + 0.3, z_cav(W, 0) + cabs[i]/2 + 0.2]) rotate([90, 0, 0]) cylinder(d = cabs[i], h = 4);
+  pod_cradle();
 }
 else if (PART == "none") { }

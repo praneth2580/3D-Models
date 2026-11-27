@@ -1,45 +1,57 @@
 {
   "title": "Helmet Headset",
   "tagline": "A cheap Bluetooth neckband taken apart and rebuilt as a helmet headset",
-  "summary": "Music, calls and navigation voice in your helmet for about ₹1,900–3,350 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board and buttons go in a slim pod stuck to the outside of the shell on the left with VHB tape (about 59 × 37 mm and 17 mm proud, with room for most neckbands' parts; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); its battery goes in its own slim box on the back of the helmet (41 × 26 × 9 mm, a TPU cover that snaps on), which takes 6 mm off the side pod (or keep it in the pod); the earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the pod sits along the shell's lower edge, so its wires go straight in under the edge trim (the back box's lead comes down a short grooved channel); besides the neckband, only small hardware bits. General purpose: the helmet's curve is a setting, and the neckband's parts are too (a bigger neckband makes the pod grow).",
-  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. By default the battery goes in a box on the back of the helmet and the side pod holds the board (up to 50 × 12 mm) and the keys; the battery has room up to 35 × 20 × 6 mm (300 mAh class). Most neckbands fit, not all; enter a bigger neckband's sizes and the parts grow.",
+  "summary": "Music, calls and navigation voice in your helmet for about ₹2,650–4,100 instead of a ₹5,000+ communicator, using a cheap Bluetooth neckband's own parts: its board, battery, both speakers and its mic. Its board and buttons go in a slim pod on the outside of the shell on the left (about 59 × 34 mm and 19 mm proud, with room for most neckbands' parts; a round play/call button and a dedicated volume rocker for gloves, sealed, USB-C at the back); its battery goes in its own slim box on the back of the helmet (41 × 32 mm, 12 mm proud), which takes 6 mm off the side pod (or keep it in the pod). Both come off for cleaning: each clips onto a cradle stuck to the helmet with VHB tape (drop it on, slide it down, it clicks), and magnetic pogo connectors in the cradles carry all the wires, so nothing is unplugged. The earbuds' own 10 mm speakers go in printed pucks in the liner's ear pockets; its mic goes on a bendable boom held on the helmet's fixed part, so a modular helmet's chin bar flips up over it. No holes in the helmet: the pod sits along the shell's lower edge, so its wires go straight in under the edge trim (the back box's lead comes down a short grooved channel). General purpose: the helmet's curve is a setting, and the neckband's parts are too (a bigger neckband makes the pod grow).",
+  "status": "Designed and modelled (v1, checked in CAD, not printed or built yet). Designed first for a modular (flip-up) helmet. Both units clip onto cradles stuck to the helmet. By default the battery goes in a box on the back of the helmet and the side pod holds the board (up to 50 × 12 mm) and the keys; the battery has room up to 35 × 20 × 6 mm (300 mAh class). Most neckbands fit, not all; enter a bigger neckband's sizes and the parts grow.",
   "order": 5,
   "eyebrow": "Open-source &middot; 3D-printable &middot; parametric",
   "cover": "images/hh_helmet.png",
   "see_title": "Pictures",
-  "see_sub": "The pod on the left, behind the chin bar's pivot (the helmet is a plain stand-in); inside, the earbuds' speakers in the ear pockets and the neckband's mic on a boom.",
+  "see_sub": "The pod on the left along the lower edge, the battery's box on the back, each on a cradle that stays on the helmet (the helmet is a plain stand-in); inside, the earbuds' speakers in the ear pockets and the neckband's mic on a boom.",
   "gallery": [
     {
       "src": "images/hh_helmet.png",
-      "caption": "The pod low on the left of a modular helmet (a white stand-in), along the shell's lower edge behind the chin bar's pivot: 17 mm proud, the battery in a box on the back"
+      "caption": "The pod low on the left of a modular helmet (a white stand-in), along the shell's lower edge behind the chin bar's pivot: 19 mm proud with its cradle; the battery in a box on the back"
     },
     {
       "src": "images/hh_pod.png",
-      "caption": "The pod: about 59 × 37 mm and 17 mm proud of the shell at its middle; a round play/call button and the volume rocker in a screwed lid, USB-C at the back"
+      "caption": "The pod: about 59 × 34 mm; a round play/call button and the volume rocker in a screwed lid, USB-C at the back, its 2 magnetic connectors in its bottom side"
     },
     {
       "src": "images/hh_rocker.png",
       "caption": "Cut through the pod at the volume rocker: one rubber key over 2 switches, its solid middle on a pivot post; the neckband's board below, on the floor"
     },
     {
+      "src": "images/hh_dock.png",
+      "caption": "Taking it off: the pod lifted off its cradle, which stays stuck to the helmet with the connectors' other halves (magnetic pogo, 5 pins each) in its ledge. Drop it on, slide it down 6 mm, it clicks"
+    },
+    {
+      "src": "images/hh_cradle.png",
+      "caption": "The pod's cradle: 2 dovetail grooves with drop-in windows, a springy tooth at the top (press it to slide the pod off), the connectors in the ledge at the bottom, 3 cable holes facing down"
+    },
+    {
+      "src": "images/hh_detached.png",
+      "caption": "Both units off for cleaning the helmet: the cradles and all the wiring stay on it"
+    },
+    {
       "src": "images/hh_bottom.png",
-      "caption": "The pod's bottom long side: the 3 cable notches (speakers, mic, battery) right at the shell, facing down"
+      "caption": "The pod's cradle from below: its 3 cables (speakers, mic, battery) leave the ledge facing down, right at the shell's lower edge"
     },
     {
       "src": "images/hh_channel.png",
-      "caption": "The pod along the shell's lower edge: its cables leave the notches in its bottom side (facing down, away from rain) and go straight in under the edge trim"
+      "caption": "The pod on its cradle along the shell's lower edge: the cables go straight in under the edge trim"
     },
     {
       "src": "images/hh_back.png",
-      "caption": "The back of the helmet: the battery's slim box (41 × 26 × 9 mm), its lead down a short grooved channel to the lower edge; the side pod low on the left"
+      "caption": "The back of the helmet: the battery's slim box (41 × 32 mm, 12 mm proud) on its cradle, its lead down a short grooved channel to the lower edge; the side pod low on the left"
     },
     {
       "src": "images/hh_backbox.png",
-      "caption": "The back box opened: the TPU cover (snaps on, no screws), the battery, the PETG base curved to the shell with the lead's notch"
+      "caption": "The back box lifted off its cradle: the TPU cover (snaps on, no screws), the battery in the base, the cradle with its connector; the lead's channel pulled away"
     },
     {
       "src": "images/hh_exploded.png",
-      "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board and the neckband's board"
+      "caption": "Opened up: the lid, the TPU keypad (also the gasket), the switch board, the neckband's board and the 2 connectors in the bottom wall"
     },
     {
       "src": "images/hh_inside.png",
@@ -67,13 +79,14 @@
   "viewer_default": "headset_assembled",
   "part_groups": [
     {
-      "label": "The pod (outside, left, along the lower edge)",
+      "label": "The pod and its cradle (outside, left, along the lower edge)",
       "parts": [
         "pod_body",
         "pod_lid",
         "keypad",
         "rocker_post",
-        "usb_plug"
+        "usb_plug",
+        "pod_cradle"
       ]
     },
     {
@@ -81,6 +94,7 @@
       "parts": [
         "bb_base",
         "bb_cover",
+        "bb_cradle",
         "bb_channel"
       ]
     },
@@ -102,7 +116,7 @@
   "parts": {
     "pod_body": {
       "name": "Pod body",
-      "what": "Holds the neckband's board, its battery and the switch board. Its underside is curved to the shell and stuck on with VHB tape; the USB-C hole at its back end, 2 cable notches in its bottom long side, right at the shell and facing down, lined up with the cable channel; 4 pillars for M2 heat-set inserts",
+      "what": "Holds the neckband's board (and its battery with batt_at = \"pod\") and the switch board. Its underside sits on the pod's cradle, with 2 short dovetail tongues under it; the 2 magnetic connectors (spring-pin halves) glued in its bottom wall; the USB-C hole at its back end; 4 pillars for M2 heat-set inserts",
       "qty": "1",
       "material": "PETG or ASA, a light colour if you can. Open side down"
     },
@@ -155,9 +169,9 @@
     },
     "bb_base": {
       "name": "Back box: base",
-      "what": "Holds the neckband's battery on the back of the helmet (batt_at = \"back\"): its underside curved to the shell, on VHB tape; a groove round its walls for the cover's bead; the lead's notch in its bottom side",
+      "what": "Holds the neckband's battery on the back of the helmet (batt_at = \"back\"): it sits on its cradle (2 dovetail tongues under it); its connector (the flat half: no live pins when it's off) in its bottom wall; a groove round its walls for the cover's bead",
       "qty": "1",
-      "material": "PETG / ASA (light colour). Underside down, supports under the curve"
+      "material": "PETG / ASA (light colour). Rim down"
     },
     "bb_cover": {
       "name": "Back box: cover",
@@ -167,9 +181,21 @@
     },
     "bb_channel": {
       "name": "Back box: lead channel",
-      "what": "A short strip with one groove: the battery's lead from the box's bottom side down to the shell's lower edge",
+      "what": "A short strip with one groove: the battery's lead from the back cradle's bottom side down to the shell's lower edge",
       "qty": "1",
       "material": "TPU 85A-95A. Flanges down"
+    },
+    "pod_cradle": {
+      "name": "Pod cradle",
+      "what": "Stays stuck to the shell with VHB tape (its underside curved to it): the pod drops on, slides down 6 mm under the grooves' lips and a springy tooth clicks up behind it. The connectors' flat halves in its ledge (pocket open on top, potted), the cables out of the ledge facing down",
+      "qty": "1",
+      "material": "PETG / ASA. Top up, supports under it"
+    },
+    "bb_cradle": {
+      "name": "Back box: cradle",
+      "what": "The back box's cradle (batt_at = \"back\"), stuck to the back of the shell: the same clip-on as the pod's; its connector (the spring-pin half) in its ledge, the battery's lead out of the bottom into the channel",
+      "qty": "1",
+      "material": "PETG / ASA. Top up, supports under it"
     }
   },
   "customize": {
@@ -310,6 +336,52 @@
             "step": 0.1,
             "min": 2,
             "max": 10
+          }
+        ]
+      },
+      {
+        "label": "The magnetic connectors (measure yours)",
+        "params": [
+          {
+            "name": "mag_l",
+            "label": "Connector face: length",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 14,
+            "max": 22,
+            "help": "Along its row of 5 pins, magnets included."
+          },
+          {
+            "name": "mag_h",
+            "label": "Connector face: height",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 3.5,
+            "max": 6.5
+          },
+          {
+            "name": "mag_m",
+            "label": "Spring-pin half: depth behind its face",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 3,
+            "max": 9
+          },
+          {
+            "name": "mag_f",
+            "label": "Flat half: depth behind its face",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 2.5,
+            "max": 8
+          },
+          {
+            "name": "mag_tail",
+            "label": "Solder tails behind each",
+            "unit": "mm",
+            "step": 0.5,
+            "min": 1,
+            "max": 5
           }
         ]
       },
