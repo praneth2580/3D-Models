@@ -21,6 +21,8 @@ No switch board: the face curves round the bar, so the switches sit in **2 print
 | **Microcontroller** | **ESP32-C3 Super Mini** (22.52 × 18 mm, USB-C): Bluetooth LE and a CAN controller | **Yes** (MEASURE its thickness) | ₹250–450 (est.) |
 | **CAN transceiver** | **SN65HVD230 chip, SOIC-8 (SN65HVD230DR)** on a **SOIC-8 adapter board** (about 10 × 12 mm), + a **100 nF** capacitor; stuck to the ESP32's bare back with foam tape (the smallest bay). No terminator on it (the dash bus has its two). Or, with `can_board` = "module", the common SN65HVD230 module (the dash's 3-pack has a spare; remove its 120 Ω resistor; the capsule is then wider and deeper) | **Yes** (MEASURE the adapter) | ₹60–150 (est.) for the chip, adapter and capacitor |
 | **Cable to the dash** | 4-core cable (shielded is better), 1–1.5 m, and a **GX12 6-pin plug** (the dash's expansion slots) | **Yes** (through the capsule's rubber plug: a 4.8 mm cable) | ₹150–350 (est.) |
+| **Back button** | a **6 × 6 × 5 mm tactile switch** (the model picks the height; through-hole) on a small piece of perfboard (about 9 × 13.5 mm) at the capsule's back | **Yes** (MEASURE) | ₹10–30 (est.) |
+| **Status LEDs** | **2 × 3 mm LEDs** (green: power; blue: Bluetooth / status) + **2 × 1 kΩ** resistors, on the same small board | **Yes** (MEASURE their length: 5.3 mm from the board to the tip) | ₹10–30 (est.) |
 | **Without the dash** | a USB-A plug or an old USB cable to cut (5 V from the bike's USB socket) | No | ₹50–100 (est.) |
 | Foam tape, heat shrink | | No | ₹50–100 (est.) |
 
@@ -35,8 +37,8 @@ About ₹100–250 (est.).
 
 ## Printing
 
-About 22 g of ASA or PETG and 3 g of TPU (the keypad and the capsule's plug): about ₹150–400 (est.) from a print service.
+About 24 g of ASA or PETG and 3 g of TPU (the keypad, the capsule's plug, the back pad and the USB-C plug): about ₹150–400 (est.) from a print service.
 
 ## Rough total
 
-About **₹700–1,650 (est.)** with printing (the transceiver chip is cheaper than the module).
+About **₹750–1,700 (est.)** with printing (the transceiver chip is cheaper than the module).

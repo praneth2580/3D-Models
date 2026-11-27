@@ -134,6 +134,35 @@
           "search": "double sided foam tape",
           "stores": "general",
           "local": "Lamington Road"
+        },
+        {
+          "name": "Tactile switch 6 x 6 x 5 mm (through-hole)",
+          "for": "The back button (dash / phone; held: Bluetooth pairing)",
+          "qty": 1,
+          "price": "₹5–15 (est.)",
+          "fits": true,
+          "search": "tactile switch 6x6x5",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "3 mm LEDs (1 green, 1 blue) + 2 x 1 kΩ resistors",
+          "for": "The status lights at the capsule's back (power; Bluetooth / status)",
+          "qty": "2 + 2",
+          "price": "₹10–30 (est.)",
+          "fits": true,
+          "search": "3mm LED",
+          "stores": "components",
+          "local": "Lamington Road"
+        },
+        {
+          "name": "A small piece of perfboard (about 9 x 13.5 mm)",
+          "for": "Carries the back button and the LEDs",
+          "qty": 1,
+          "price": "(from a ₹50–100 sheet)",
+          "search": "perfboard",
+          "stores": "modules",
+          "local": "Lamington Road"
         }
       ]
     },
@@ -180,7 +209,7 @@
       "label": "3D printing (by a service)",
       "items": [
         {
-          "name": "Printing: about 22 g of ASA or PETG + 3 g of TPU (keypad, the capsule's plug)",
+          "name": "Printing: about 24 g of ASA or PETG + 3 g of TPU (keypad, the capsule's plugs, the back pad)",
           "for": "Upload the STLs for an exact quote",
           "qty": "1 set",
           "price": "₹150–400 (est.)",
@@ -209,7 +238,7 @@
   "totals": [
     [
       "Everything, with printing",
-      "about ₹700–1,650 (est.)"
+      "about ₹750–1,700 (est.)"
     ]
   ],
   "note": "All prices here are estimates (not checked on listings)."

@@ -49,7 +49,7 @@
 
 // ------------------------- OUTPUT SELECTION -------------------------
 // "assembly", "exploded", "collar_top", "collar_bottom", "carrier_joy", "carrier_btn", "keypad" (TPU), "joy_cap",
-// "bay_plug" (TPU); views "bay_view", "section"; checks "check_*" (see the end).
+// "bay_plug", "back_pad", "usb_plug" (TPU); views "bay_view", "section"; checks "check_*" (see the end).
 PART = "assembly";
 
 // ------------------------- YOUR BIKE (MEASURE) ------------------------
@@ -79,12 +79,15 @@ btn_gap = 13;               //   button 1 to button 2 (the two switch carriers m
 btn_pitch = 10.5;           //   button 2 to 3, 3 to 4
 
 // ------------------------- THE BOARDS IN THE BAY (MEASURE) -------------
-mcu = [22.52, 18, 4.5];     // ESP32-C3 Super Mini: length (down the bay), width (nologo.tech), thickness with its parts (MEASURE)
+mcu = [22.52, 18, 4.5];     // ESP32-C3 Super Mini: length (front to back in the bay), width (nologo.tech), thickness with its parts (MEASURE)
+mcu_pcb = 1.0;              // MEASURE: its board alone (the USB-C and the parts are on one side, the back bare)
+usb_c = [8.94, 3.26];       // its USB-C socket (width, thickness)
+usb_out = 0.8;              // MEASURE: how far the socket stands out of the board's end
 // The CAN transceiver (owner, 2026-11-27: "make the electronics housing a lot smaller"):
 can_board = "chip";         // SELECT: "chip" = an SN65HVD230 (SOIC-8) on a small SOIC-8 adapter board, stuck to the
                             //   ESP32's bare back (the smallest bay); "module" = the common SN65HVD230 module (the bay is
                             //   deeper and wider)
-can_pcb = can_board == "chip" ? [12, 10, 3.6] : [26, 16, 6];   // MEASURE: down the bay, round the bar, thickness
+can_pcb = can_board == "chip" ? [12, 10, 3.6] : [26, 16, 6];   // MEASURE: front to back, height, thickness
 
 // ------------------------- COLLAR --------------------------------------
 collar_w = gap_w - 1;       // the collar's width along the bar (0.5 mm either side)
@@ -130,16 +133,27 @@ knuckle_r = 3.0;            // the hinge's knuckles
 pin_d = 2.0;                // the hinge pin (a 2 mm steel pin, 19 mm long; or an M2 x 20 screw)
 
 // ------------------------- BAY -----------------------------------------
-// A slim capsule under the bar, closed by a TPU plug (no screws): pull the plug for the ESP32's USB-C; the dash's cable
-// comes in through it (it grips the cable: the grommet).
+// A slim capsule under the bar (owner, 2026-11-27: "instead of mounting the microcontroller vertically how about
+// horizontally ... a button could be added on the back and some status LEDs"): the ESP32 on its side, lengthwise (front
+// to back), its USB-C at the FRONT end behind a small TPU plug; at the BACK end (facing you) a button and 2 status LEDs on
+// a small board, behind a TPU pad; closed underneath by a TPU plug (no screws), the dash's cable through it.
 bay_wall = 1.6;
 bay_gap = 1.0;              // between the ESP32 and the transceiver (foam tape)
-bay_side = 1.3;             // beside the boards round the bar: the wires to the ESP32's pins along its edges
-bay_top = 1.0;              // above the boards (the switches' wires come in there)
+bay_top = 1.3;              // above the boards (the ESP32's top row of pins: the switches' wires)
+bay_bot = 1.3;              // under them (its bottom row: the cable's wires)
 plug_d = 3.0;               // the plug goes this far into the bay's mouth, under the boards
 plug_t = 1.6;               // its flange, under the bay
 bead = 0.4;                 // its bead, in a groove round the mouth (holds it in)
 cable_d = 4.8;              // the 4-core cable to the dash, through the plug (the hole grips it 0.4)
+// The back: a small board (perfboard) facing back with 2 status LEDs (3 mm) and a button (a 6 x 6 tactile switch), its
+// LEDs and switch through holes in the back wall; a TPU pad inside the wall: a dome over the switch, and it hugs the LEDs.
+aux_t = 1.6;                // the small board
+aux_gap = 1.5;              // between the ESP32's end and the small board (a foam pad there holds both in place)
+led_d = 3;                  // the LEDs
+led_len = 5.3;              // MEASURE: from the board to the LED's tip
+back_t = 0.8;               // the TPU pad's sheet (the switch's body presses it 0.2 against the wall: the seal)
+btn_hole = 7.2;             // the button's hole in the back wall (the pad's dome fills it)
+btn_proud = 1.0;            // the dome stands this far out of the wall
 
 // ------------------------- DERIVED --------------------------------------
 $fn = 64;
@@ -236,13 +250,28 @@ top_z = max(concat([(a_face_top <= 90 && a_face_bot >= 90) ? face_top_r : face_t
 E = [0, cos(bay_a), sin(bay_a)];
 YB = [0, sin(bay_a), -cos(bay_a)];
 BAY_M = [[1, 0, 0, 0], [0, YB[1], E[1], 0], [0, YB[2], E[2], 0], [0, 0, 0, 1]];
-bay_in = [mcu[2] + bay_gap + can_pcb[2] + 0.6, max(mcu[1], can_pcb[1]) + 2*bay_side, bay_top + max(mcu[0], can_pcb[0]) + 0.3 + plug_d];   // across, round, down
+// Front to back inside (bay frame y, + = back): the ESP32's front end (its USB-C into the front wall), its back end, the
+// small board, its switch's body pressing the pad, the back wall.
+bay_len = max(mcu[0], can_pcb[0]);
+aux_D = tact_body + back_t - 0.2;            // the small board's front face to the back wall's inside
+bay_in = [mcu[2] + bay_gap + can_pcb[2] + 0.6, 0.2 + bay_len + aux_gap + aux_t + aux_D, bay_top + max(mcu[1], can_pcb[1]) + bay_bot + 0.3 + plug_d];   // across, front to back, down
 bay_out = [bay_in[0] + 2*bay_wall, bay_in[1] + 2*bay_wall];
 bay_r0 = bore_r + 1.0;                       // the bay's inside starts here (below the bore)
 bay_r1 = bay_r0 + bay_in[2];                 // its mouth (the plug)
+// The capsule sits as far back as the hinge allows (its back top corner 4 degrees past the split), the rest forward.
+bay_y0 = min(0, bay_r0*tan(bay_a - a_b - 4) - bay_out[1]/2);
+y_fi = bay_y0 - bay_in[1]/2;                 // the front wall's inside
+y_m1 = y_fi + 0.2 + bay_len;                 // the boards' back end
+y_a = y_m1 + aux_gap + aux_t;                // the small board's back face (its parts on it)
+y_bi = y_fi + bay_in[1];                     // the back wall's inside
+z_m0 = bay_r0 + bay_top;                     // the boards' top
+z_btn = z_m0 + 3.5 + tact[1]/2;              // the button (clear of the hinge above it)
+z_led = z_btn + tact[1]/2 + 1.5 + led_d/2;   // the LEDs, under it
+aux_z = [z_btn - tact[1]/2 - 1.5, z_led + led_d/2 + 1.5];
+back_h = max([for (h = tact_heights) if (h <= aux_D + bay_wall + btn_proud - 0.8 - 0.3) h]);   // the button's switch: its actuator 0.3 under the dome's roof
 function ang_of(p) = let(a = atan2(p[2], p[1])) a < 0 ? a + 360 : a;   // round the bar (0 = forward, 90 = up)
-bay_back_a = ang_of(BAY_M*[0, bay_out[1]/2, bay_r0, 1]);     // the bay's back wall, at its top
-bay_front_a = ang_of(BAY_M*[0, -bay_out[1]/2, bay_r0, 1]);
+bay_back_a = ang_of(BAY_M*[0, bay_y0 + bay_out[1]/2, bay_r0, 1]);     // the bay's back wall, at its top
+bay_front_a = ang_of(BAY_M*[0, bay_y0 - bay_out[1]/2, bay_r0, 1]);
 slot_x = (car_x[0] + car_x[1])/2;            // the wires' groove, along the bar (under the carriers)
 // The front screw: square to the split at a_f, its head in the bottom half, into an insert in the top half.
 F_A = ear_f*nrm(a_f);
@@ -254,17 +283,16 @@ front_len = front_seat + 4;
 function cross2(p, q) = p[1]*q[2] - p[2]*q[1];
 function ray_hit(p, q, a) = cross2(p, q)/cross2(nrm(a), q - p);           // where segment p-q meets the ray at a (its radius)
 face_end_pts = [for (k = [0:3]) let(d = 0.9*end_r*k/3, sh = k == 0 ? 0 : end_r - sqrt(end_r*end_r - d*d)) (face_top_r - sh)*nrm(a_face_bot + d/R_f*180/PI)];
-bay_back_pts = [for (z = [bay_r0 - 1, bay_r1]) let(p = BAY_M*[0, bay_out[1]/2, z, 1]) [0, p[1], p[2]]];
+bay_back_pts = [for (z = [bay_r0 - 1, bay_r1]) let(p = BAY_M*[0, bay_y0 + bay_out[1]/2, z, 1]) [0, p[1], p[2]]];
 // (the body is two hulls: the ring with the face, the ring with the bay; each meets the ring along a tangent)
 function tan_pt(p, s) = let(d = norm([p[1], p[2]]), a = ang_of(p) + s*acos(ring_r/d)) ring_r*nrm(a);
 hinge_out = max(concat([ring_r],
-  [for (f = face_end_pts) let(T = tan_pt(f, 1)) if (ang_of(f) < a_b && ang_of(T) > a_b) ray_hit(f, T, a_b)],
-  [for (b = bay_back_pts) let(T = tan_pt(b, -1)) if (ang_of(T) < a_b && ang_of(b) > a_b) ray_hit(T, b, a_b)]));
+  [for (f = face_end_pts) let(T = tan_pt(f, 1)) if (ang_of(f) < a_b && ang_of(T) > a_b) ray_hit(f, T, a_b)]));
 hinge_r = max(bore_r + knuckle_r + 0.6, hinge_out + 2.2 - knuckle_r);   // (the knuckles' room clears what's within knuckle_r of the pin)
 Q = hinge_r*nrm(a_b);
 echo(face_r = R_f, joystick_at = joy_a, buttons_at = btn_a, top_above_bar = top_z, switch_cube_top = cube[2],
      tactile_switches = str("6 x 6 x ", tact_h), front_screw = str("M2.5 x ", front_len, " socket cap"),
-     face_from = a_face_top, face_to = a_face_bot, hinge_r = hinge_r, x_c = x_c, carriers_at = g_a, bay_below_axis = bay_r1 + plug_t, bay_size = [bay_out[0], bay_out[1], bay_r1 + plug_t - bore_r]);
+     face_from = a_face_top, face_to = a_face_bot, hinge_r = hinge_r, x_c = x_c, carriers_at = g_a, bay_below_axis = bay_r1 + plug_t, bay_size = [bay_out[0], bay_out[1], bay_r1 + plug_t - bore_r], back_button = str("6 x 6 x ", back_h));
 
 // ------------------------- CHECKS ------------------------------------
 assert(collar_w >= 19, "The gap is too narrow for the collar: make gap_w at least 20 mm (slide the switch cube inboard).");
@@ -287,6 +315,8 @@ assert(car_x[0] - 0.15 >= -collar_w/2 + 1.0, "The carriers come too close to the
 assert(a_face_top >= a_f + 15, "The face's top end comes too close to the front screw: turn the controls back (joy_a up).");
 assert(a_face_bot <= a_b - 9, "The face's bottom end comes too close to the hinge: turn the controls forward (joy_a down).");
 assert(a_b - a_f <= 210, "The top half wraps too far round the bar to go on (a_b - a_f up to 210 degrees).");
+assert(back_h != undef, "No tactile switch height in tact_heights suits the back button.");
+assert(aux_z[1] <= z_m0 + max(mcu[1], can_pcb[1]), "The back button and LEDs don't fit the capsule's height.");
 assert(bay_back_a >= a_b + 3 && bay_front_a <= a_f + 360 - 15, "The bay comes too close to the hinge or the front screw (bay_a).");
 assert(abs(slot_x) + groove[0]/2 <= collar_w/2 - 1, "The wires' groove runs off the collar: less pod_tilt.");
 assert(pod_tilt >= 0 && pod_tilt <= 25, "pod_tilt: 0 to 25 degrees (steeper, the joystick's switch can't pass the keypad's skirt on its way in).");
@@ -328,13 +358,30 @@ module group_switches(g, stem=true) {
   if (g == 0) { joy_switch(stem); btn_switch(0); }
   else for (i = [1:btn_n - 1]) btn_switch(i);
 }
-// In the bay (bay frame): the ESP32-C3 on edge against one wall, its USB-C at the bottom (at the plug); the transceiver
-// behind it (stuck to its bare back with foam tape).
+// In the capsule (bay frame: x across, y front to back, z down): the ESP32-C3 on its side, lengthwise, its parts and
+// USB-C toward the -x wall, its USB-C into the front wall; the transceiver stuck to its bare back; the small board at the
+// back with its LEDs and the button's switch.
 mcu_x = -bay_in[0]/2 + 0.3;
 can_x = mcu_x + mcu[2] + bay_gap;
+usb_x = mcu_x + mcu[2] - mcu_pcb - usb_c[1]/2;   // the USB-C's middle (across)
+usb_z = z_m0 + mcu[1]/2;
 module bay_boards() bay_frame() {
-  color([0.15, 0.15, 0.17]) translate([mcu_x, -mcu[1]/2, bay_r0 + bay_top]) cube([mcu[2], mcu[1], mcu[0]]);
-  color([0.1, 0.3, 0.6]) translate([can_x, -can_pcb[1]/2, bay_r0 + bay_top]) cube([can_pcb[2], can_pcb[1], can_pcb[0]]);
+  color([0.15, 0.15, 0.17]) translate([mcu_x, y_fi + 0.2, z_m0]) cube([mcu[2], mcu[0], mcu[1]]);
+  color([0.75, 0.75, 0.77]) translate([usb_x - usb_c[1]/2, y_fi + 0.2 - usb_out, usb_z - usb_c[0]/2]) cube([usb_c[1], usb_out + 0.01, usb_c[0]]);   // the USB-C
+  color([0.1, 0.3, 0.6]) translate([can_x, y_fi + 0.2, z_m0 + 1]) cube([can_pcb[2], can_pcb[0], can_pcb[1]]);
+  back_parts();
+}
+module back_parts(body=true) {
+  color([0.1, 0.45, 0.2]) translate([-(bay_in[0] - 0.6)/2, y_a - aux_t, aux_z[0]]) cube([bay_in[0] - 0.6, aux_t, aux_z[1] - aux_z[0]]);
+  for (x = [-1, 1]) translate([x*(led_d/2 + 0.8), y_a, z_led]) rotate([-90, 0, 0]) {
+    color([0.2, 0.8, 0.3]) cylinder(d=led_d + 0.8, h=1.0, $fn=24);                       // the LED's rim
+    color([0.2, 0.8, 0.3]) cylinder(d=led_d, h=led_len - led_d/2, $fn=24);
+    color([0.2, 0.8, 0.3]) translate([0, 0, led_len - led_d/2]) sphere(d=led_d, $fn=24);
+  }
+  translate([0, y_a, z_btn]) rotate([-90, 0, 0]) {
+    if (body) color([0.15, 0.15, 0.16]) translate([-tact[0]/2, -tact[1]/2, 0]) cube([tact[0], tact[1], tact_body]);
+    color([0.3, 0.3, 0.32]) cylinder(d=3.5, h=back_h, $fn=24);
+  }
 }
 
 // ------------------------- THE BODY ------------------------------------
@@ -362,7 +409,7 @@ module shell() union() {
     at_Q() cylinder(r=knuckle_r, h=collar_w - 2*ring_round, center=true, $fn=32);   // the hinge, inside the smooth form (on the side that stays put)
   }
   hull() {                                                                    // the ring and the bay: a slim capsule
-    ring_solid();
+    intersection() { ring_solid(); bay_frame() translate([-50, bay_y0 - bay_out[1]/2, 0]) cube([100, bay_out[1], 100]); }   // (only the ring right above it: its front and back faces go straight up)
     bay_frame() for (z = [bay_r0 - 1, bay_r1 - 0.01]) translate([0, 0, z]) linear_extrude(0.01) bay_outline();
   }
 }
@@ -532,6 +579,9 @@ module collar_bottom() difference() {
   bay_frame() {
     translate([0, 0, bay_r0]) linear_extrude(bay_in[2] + 1) bay_inner_2d();     // open at the mouth
     translate([0, 0, bay_r1 - plug_d/2 - 0.5]) linear_extrude(1.0) offset(bead + 0.1) bay_inner_2d();   // the groove for the plug's bead
+    translate([usb_x, y_fi + 0.01, usb_z]) rotate([90, 0, 0]) linear_extrude(bay_wall + 1) rrect([usb_hole[1], usb_hole[0]], 0.4);   // the USB-C
+    translate([0, y_bi - 0.01, z_btn]) rotate([-90, 0, 0]) cylinder(d=btn_hole, h=bay_wall + 1, $fn=40);   // the button
+    for (x = [-1, 1]) translate([x*(led_d/2 + 0.8), y_bi - 0.01, z_led]) rotate([-90, 0, 0]) cylinder(d=led_d + 0.2, h=bay_wall + 1, $fn=24);   // the LEDs
   }
   wire_path();
   front_clear();
@@ -583,9 +633,32 @@ module joy_cap_local(k=0) difference() {
 module joy_cap() joy_frame() joy_cap_local();
 
 // ------------------------- BAY CAP AND GASKET -------------------------
-module bay_outline() rrect(bay_out, bay_out[0]/2 - 0.01);                       // a stadium
-module bay_inner_2d() rrect([bay_in[0], bay_in[1]], min(2, bay_in[0]/2 - 0.01));
-cable_y = bay_in[1]/2 - cable_d/2 - 0.3;                                         // the cable, at the front end of the plug
+module bay_outline() translate([0, bay_y0]) rrect(bay_out, 3.2);                  // rounded (its back end flat for the button)
+module bay_inner_2d() translate([0, bay_y0]) rrect([bay_in[0], bay_in[1]], 0.5);   // (small corners: the boards run into them)
+cable_y = y_bi - cable_d/2 - 0.8;                                                // the cable, at the back end of the plug (under the small board)
+// The back pad (TPU), inside the back wall: a sheet over the small board's parts, a dome through the button's hole,
+// holes that hug the LEDs.
+module back_pad() bay_frame() difference() {
+  union() {
+    translate([-(bay_in[0] - 0.4)/2, y_bi - back_t, aux_z[0]]) cube([bay_in[0] - 0.4, back_t, aux_z[1] - aux_z[0]]);
+    translate([0, y_bi - 0.01, z_btn]) rotate([-90, 0, 0]) hull() {
+      cylinder(d=btn_hole - 0.2, h=bay_wall + 0.01, $fn=40);
+      translate([0, 0, bay_wall + btn_proud - 0.4]) cylinder(d=btn_hole - 1.6, h=0.4, $fn=40);
+    }
+  }
+  translate([0, y_bi - back_t - 1, z_btn]) rotate([-90, 0, 0]) cylinder(d=4.4, h=back_t + 1 + bay_wall + btn_proud - 0.8, $fn=32);   // the dome's hollow
+  for (x = [-1, 1]) translate([x*(led_d/2 + 0.8), y_bi - back_t - 1, z_led]) rotate([-90, 0, 0]) cylinder(d=led_d - 0.1, h=back_t + 2, $fn=24);   // hugs the LEDs
+}
+// The USB-C's plug (TPU): fills the socket's hole in the front wall, a tab to pull it by.
+usb_hole = [usb_c[0] + 0.3, usb_c[1] + 0.3];
+module usb_plug() bay_frame() translate([usb_x, y_fi, usb_z]) rotate([90, 0, 0]) {
+  translate([0, 0, usb_out - 0.2 + 0.1]) linear_extrude(bay_wall - (usb_out - 0.1) + 0.01) offset(0.1) rrect([usb_hole[1], usb_hole[0]], 0.4);   // the stub (0.1 tight)
+  translate([0, 0, bay_wall - 0.01]) hull() {                                     // the cap and its tab
+    linear_extrude(0.01) rrect([usb_hole[1] + 2.4, usb_hole[0] + 2.4], 2);
+    translate([0, 0, 0.99]) linear_extrude(0.01) rrect([usb_hole[1] + 1.6, usb_hole[0] + 1.6], 1.6);
+  }
+  translate([0, usb_hole[0]/2 + 1.2, bay_wall + 0.5]) rotate([0, 90, 0]) cylinder(d=1.6, h=usb_hole[1] + 1, center=true, $fn=12);   // a ridge to pull it by
+}
 // The plug (TPU): a flange under the bay's mouth, rounded off, and a plug into the mouth (0.1 tighter each side: the
 // seal) with a bead that snaps into the groove; the cable through it; a ridge underneath to pull it by.
 module bay_plug() bay_frame() difference() {
@@ -596,7 +669,7 @@ module bay_plug() bay_frame() difference() {
     }
     translate([0, 0, bay_r1 - plug_d]) linear_extrude(plug_d + 0.01) offset(0.1) bay_inner_2d();
     translate([0, 0, bay_r1 - plug_d/2 - 0.4]) linear_extrude(0.8) offset(bead) bay_inner_2d();
-    translate([0, -cable_y + 1, bay_r1 + plug_t - 0.3]) rotate([0, 90, 0]) cylinder(d=2.4, h=bay_out[0] - 4, center=true, $fn=16);   // the pull ridge
+    translate([0, y_fi + 3, bay_r1 + plug_t - 0.3]) rotate([0, 90, 0]) cylinder(d=2.4, h=bay_out[0] - 4, center=true, $fn=16);   // the pull ridge
   }
   translate([0, cable_y, bay_r1 - plug_d - 1]) cylinder(d=cable_d - 0.4, h=plug_d + plug_t + 3, $fn=24);
 }
@@ -619,6 +692,8 @@ module remote_parts(e=0, eb=0) {   // e: taken apart; eb: only the bay's cap and
   translate(e*2.2*nrm((a_f + a_b)/2)) color([0.1, 0.1, 0.11]) render(convexity=4) keypad();
   translate(e*4.4*nrm((a_f + a_b)/2)) color([0.85, 0.45, 0.1]) joy_cap();
   rot_Q(e*4) translate((e*1.2 + eb)*E) color([0.1, 0.1, 0.11]) bay_plug();
+  rot_Q(e*4) translate(-(e*0.6 + eb/2)*YB) color([0.1, 0.1, 0.11]) usb_plug();
+  rot_Q(e*4) translate((e*0.6 + eb/2)*YB) color([0.12, 0.12, 0.13]) back_pad();
 }
 module switches_g(g) group_switches(g);
 // For the print poses: each carrier on its flat switch-cube side.
@@ -634,6 +709,8 @@ else if (PART == "carrier_joy") carrier_print(0);
 else if (PART == "carrier_btn") carrier_print(1);
 else if (PART == "keypad") translate([0, 0, -r_base(-inner0/2)*cos((a_bot_in - a_top_in)/2) + 0.6]) rotate([90 - (a_top_in + a_bot_in)/2, 0, 0]) keypad();   // TPU: an arch, its sheet on top (print with supports)
 else if (PART == "joy_cap") rotate([180, 0, 0]) translate([0, 0, -joy_z0 - cap_h]) multmatrix(invert(ctl_M(joy_a))) joy_cap();   // flat top down
+else if (PART == "back_pad") multmatrix(invert(BAY_M*tr([0, y_bi - back_t, 0])*rx(-90))) back_pad();   // TPU, its sheet down
+else if (PART == "usb_plug") multmatrix(invert(BAY_M*tr([usb_x, y_fi - bay_wall - 1, usb_z])*rx(-90))) usb_plug();   // TPU, its cap down
 else if (PART == "bay_plug") translate([0, 0, bay_r1 + plug_t]) rotate([180, 0, 0]) multmatrix(invert(BAY_M)) bay_plug();   // TPU, its flange down
 else if (PART == "section") { color([0.75, 0.75, 0.75]) intersection() { bar_x(bar_d, 60); translate([slot_x - 100, -100, -100]) cube([100, 200, 200]); } intersection() { remote_parts(0); translate([slot_x - 100, -100, -100]) cube([100, 200, 200]); } }
 // Checks: must be empty (or only touch), unless marked "must collide".
@@ -642,7 +719,10 @@ else if (PART == "check_carriers") {                       // touch only: the sw
   intersection() { group_switches(0, false); carrier_joy(); }
   intersection() { group_switches(1, false); carrier_btn(); }
 }
-else if (PART == "check_bay") intersection() { bay_boards(); union() { collar_bottom(); bay_plug(); } }
+else if (PART == "check_bay") intersection() { bay_boards(); union() { collar_bottom(); bay_plug(); usb_plug(); } }
+else if (PART == "check_back") intersection() { bay_frame() back_parts(false); back_pad(); }   // must collide lightly: the pad hugs the LEDs
+else if (PART == "check_back_squeeze") intersection() { bay_frame() translate([0, y_a, z_btn]) rotate([-90, 0, 0]) translate([-tact[0]/2, -tact[1]/2, 0]) cube([tact[0], tact[1], tact_body]); back_pad(); }   // must collide: the seal
+else if (PART == "check_back_fit") intersection() { union() { back_pad(); usb_plug(); } union() { collar_bottom(); bay_plug(); } }   // must collide: the plugs and the pad in their holes
 else if (PART == "check_stem") intersection() { switches(); joy_cap(); }                       // must collide: the cap's grip
 else if (PART == "check_squeeze") intersection() { keypad(); union() { carrier_joy(); carrier_btn(); } }   // must collide: the seal
 else if (PART == "check_bay_squeeze") intersection() { bay_plug(); collar_bottom(); }         // must collide: the plug's seal
@@ -671,7 +751,7 @@ else if (PART == "check_screws") intersection() {          // the screw, its hea
   union() { inside(); bay_frame() translate([0, 0, bay_r0]) linear_extrude(bay_in[2]) bay_inner_2d(); wire_path(); bar_x(2*bore_r, 100); }
 }
 else if (PART == "check_screws_in") difference() { union() { front_clear(false); front_insert(); } body(); }   // must be empty
-else if (PART == "check_bike") intersection() { union() { collar_top(); collar_bottom(); joy_cap(); bay_plug(); }
+else if (PART == "check_bike") intersection() { union() { collar_top(); collar_bottom(); joy_cap(); bay_plug(); usb_plug(); back_pad(); }
   union() { translate([grip_x - 65, 0, 0]) bar_x(grip_d, 130); translate([cube_x, -cube[1]/2, -cube[3]]) cube([cube[0], cube[1], cube[2] + cube[3]]); } }
 else if (PART == "check_height") intersection() {           // must be empty: nothing above the switch cube's top (less top_room)
   union() { collar_top(); keypad(); joy_cap(); }

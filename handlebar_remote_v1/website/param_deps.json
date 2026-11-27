@@ -68,6 +68,14 @@
   "bay_plug": [
    "bar_d",
    "can_board"
+  ],
+  "back_pad": [
+   "bar_d",
+   "can_board"
+  ],
+  "usb_plug": [
+   "bar_d",
+   "can_board"
   ]
  }
 }
